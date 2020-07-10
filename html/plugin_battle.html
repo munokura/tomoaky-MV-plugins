@@ -1,0 +1,240 @@
+<section>
+	<h1 class="contents_title"><a id="index">バトル系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMBattleMist">バトルミスト</a></span>
+		<span class="bloq_m">■<a href="#TMBattlerEx">バトラー表示拡張</a></span>
+		<span class="bloq_m">■<a href="#TMFutureSight">エネミー行動予測</a></span><br>
+		<span class="bloq_m">■<a href="#TMSpeedFix">行動順から乱数を除外</a></span>
+		<span class="bloq_m">■<a href="#TMLuckFix">因果の調律</a></span>
+		<span class="bloq_m">■<a href="#TMTpReset">戦闘開始時ＴＰ初期化</a></span><br>
+		<span class="bloq_m">■<a href="#TMEnemyActionEx">行動パターン拡張</a></span>
+		<span class="bloq_m">■<a href="#TMBattleCommandEx">バトルコマンド拡張</a></span>
+		<span class="bloq_m">■<a href="#TMActorBattle">アクターバトル</a></span><br>
+		■<a href="#TMCalcFix">HP再生率を倍率ではなく回復量にします</a>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBattleMist">バトルミスト</a></h1>
+	<div class="contents_back">
+	戦闘シーンにそれっぽい霧を表示します。<br>
+	<br>
+	<a href="http://www.nicovideo.jp/watch/sm27659296">デモ動画(niconico)</a><br>
+	<br>
+	必要な画像<br>
+	<img src="img/plugin/system/mist.png"><br>
+	img/system/mist.png<br>
+	<br>
+	◆<a href="plugin/TMBattleMist.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2018/11/28</span> Ver2.1.0<br>
+	・ゲーム中に霧の流れ（フロント/サイド）を切り替えるプラグインコマンドを追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・霧の最大不透明度を設定するパラメータを追加<br>
+		<br>
+		<span class="red">2016/06/27</span> <a href="plugin/old120/TMBattleMist.js">Ver1.2</a><br>
+		・霧の移動方向を反転させるプラグインコマンドを追加（サイドビューのみ）<br>
+		<br>
+		<span class="red">2016/03/04</span> Ver1.11<br>
+		・ツクールMV1.1.0の未使用ファイル削除ツールに対応<br>
+		<br>
+		<span class="red">2015/12/25</span> Ver1.1<br>
+		・ゲーム画面の解像度を大きくしたときの表示の乱れに対応<br>
+		・不具合修正<br>
+		<br>
+		<span class="red">2015/11/24</span> Ver1.0<br>
+		・フロントビューに対応<br>
+		・ミストを無効にするプラグインコマンドを追加<br>
+		・不具合修正<br>
+		<br>
+		<span class="red">2015/10/24</span> Ver0.1b<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBattlerEx">バトラー表示拡張</a></h1>
+	<div class="contents_back">
+	エネミーに遠近感や息づかいの表現を追加します。<br>
+	<br>
+	エネミーのダメージエフェクトを点滅から振動に変更することもできます。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMBattlerEx.jpg" class="fancybox" data-fancybox-group="SS" title="TMBattlerEx"><img src="img/plugin/screen_shot/TMBattlerEx_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMBattlerEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/08/12</span> Ver2.0.0<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/03/28</span> <a href="plugin/old120/TMBattlerEx.js">Ver1.01</a><br>
+		・拡大率の個別設定が正しく動作しない不具合の修正<br>
+		<br>
+		<span class="red">2015/11/24</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMFutureSight">エネミー行動予測</a></h1>
+	<div class="contents_back">
+	敵キャラの次の行動のヒントなどをテキストで表示します。<br>
+	より戦略的なターンバトルが実現できるかもしれません。<br>
+	<br>
+	表示されるテキストはスキルごとに設定することもできます。<br>
+	（設定がされていないスキルはスキル名をそのまま表示します）<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMFutureSight.jpg" class="fancybox" data-fancybox-group="SS" title="TMFutureSight"><img src="img/plugin/screen_shot/TMFutureSight_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMFutureSight.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+	<br>
+	<span class="red">2018/08/22</span> Ver1.1.0<br>
+	・予測テキストの頭にアイコンを表示する機能を追加<br>
+	・プラグインパラメータ『backColor』が正しく機能しない不具合を修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/12/13</span> Ver1.0.3<br>
+		・複数回行動の予測表示に対応<br>
+		　<span class="red">プラグインパラメータ maxLines に想定される行動回数分の行数を設定してください</span><br>
+		<br>
+		<span class="red">2016/09/13</span> Ver1.0.2<br>
+		・パーティが先手をとったときにも行動予測が表示されていた不具合を修正<br>
+		・バトルミスト(TMBattleMist.js)との競合不具合を修正<br>
+		<br>
+		<span class="red">2016/09/12</span> Ver1.0.1<br>
+		・yanflyさんのYEP_BattleEngineCore.jsとの競合不具合を修正<br>
+		<br>
+		<span class="red">2016/08/16</span> Ver1.0.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSpeedFix">行動順から乱数を除外</a></h1>
+	<div class="contents_back">
+	バトルの行動順からランダムな要素を除外します。<br>
+	逃走成功率を固定値にするおまけ機能付きです。<br>
+	<br>
+	speed（敏捷性 + 速度補正）が拮抗した場合に別のパラメータで<br>
+	比較する機能もあります。<br>
+	<br>
+	◆<a href="plugin/TMSpeedFix.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/08/17</span> Ver2.0.0<br>
+	・ゲーム中に行動順の計算式を切り替えるコマンドを追加<br>
+	・逃走成功率を固定するコマンドを追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2015/12/15</span> <a href="plugin/old120/TMSpeedFix.js">Ver1.0</a><br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMLuckFix">因果の調律</a></h1>
+	<div class="contents_back">
+	運の値が影響する要素をカスタマイズします。<br>
+	<br>
+	ステートや弱体効果の成功率に運の値が影響する度合いを調整できるようになります。<br>
+	<br>
+	◆<a href="plugin/TMLuckFix.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2017/10/16</span> Ver1.0.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTpReset">戦闘開始時ＴＰ初期化</a></h1>
+	<div class="contents_back">
+	戦闘開始時のＴＰを固定値、乱数、ゲーム変数の値によって初期化します。<br>
+	装備品やステートに初期ＴＰを変化させる効果を設定したり、アクターや<br>
+	敵キャラごとに初期ＴＰを設定することもできます。<br>
+	<br>
+	◆<a href="plugin/TMTpReset.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/07/05</span> Ver1.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMEnemyActionEx">行動パターン拡張</a></h1>
+	<div class="contents_back">
+	敵キャラの行動パターン決定処理を修正します。<br>
+	<br>
+	１ターンに３回行動できる敵キャラが、高コストのスキルを３回使おうとして<br>
+	結局１回行動になってしまうという状況を回避することができるようになります。<br>
+	この修正は敵キャラ単位で設定することができます。<br>
+	<span class="red">魔法使用前に沈黙を付加されるなど、上記以外の要因で行動不可になった場合も<br>
+	実行可能な行動に切り替わるようになります。</span><br>
+	<br>
+	◆<a href="plugin/TMEnemyActionEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/07/29</span> Ver0.1a<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBattleCommandEx">バトルコマンド拡張</a></h1>
+	<div class="contents_back">
+	バトルシーンのアクターコマンドサイズを変更します。<br>
+	パーティコマンドを省略することもできます。<br>
+	<br>
+	スキルタイプを複数持っているアクターのコマンドウィンドウが<br>
+	自動で縦に伸びるようになります。<br>
+	<br>
+	◆<a href="plugin/TMBattleCommandEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2019/11/06</span> Ver1.0.1<br>
+	・omitPartyCommandが無効の場合にバトルが止まってしまう不具合を修正<br>
+	・プラグインパラメータの設定方法を微修正（旧版に上書きする場合は再設定が必要です）<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/07/21</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMActorBattle">アクターバトル</a></h1>
+	<div class="contents_back">
+	アクター同士のバトル（サイドビュー限定）を追加します。<br>
+	<br>
+	トループ名に &lt;actorBattle:2,3&gt; というタグがあれば、アクターバトルが<br>
+	有効になり、２番と３番のアクターがエネミーの代わりに出現します。<br>
+	パーティ内にいるアクターをエネミーにすることはできません。<br>
+	<br>
+	◆<a href="plugin/TMActorBattle.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2019/02/08</span> Ver0.1.0a<br>
+	・開発途中版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCalcFix">HP再生率を倍率ではなく回復量にします</a></h1>
+	<div class="contents_back">
+	HP再生率などを倍率ではなく回復量として扱うように変更します。<br>
+	<br>
+	◆<a href="plugin/TMCalcFix.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.2</span><br>
+	<br>
+	<span class="red">2020/03/15</span> ver0.1.0b<br>
+	・初版公開<br>
+	</div>
+</section>

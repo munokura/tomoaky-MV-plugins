@@ -1,0 +1,184 @@
+<section>
+	<h1 class="contents_title"><a id="index">アイテム系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMMaxItems">アイテム所持上限設定</a></span>
+		<span class="bloq_m">■<a href="#TMGreedShop">欲張りショップ</a></span>
+		<span class="bloq_m">■<a href="#TMCostume">衣装アイテム</a></span><br>
+		<span class="bloq_m">■<a href="#TMItemRestriction">アイテム制約拡張</a></span>
+		<span class="bloq_m">■<a href="#TMEquipSlotEx">装備スロット拡張</a></span>
+		<span class="bloq_m">■<a href="#TMItemShortCut">アイテムショートカット</a></span><br>
+		■<a href="#TMItemTouch">利便性を捨てたアイテムウィンドウ</a><br>
+	</div>
+</section>
+	
+<section>
+	<h1 class="contents_title"><a id="TMMaxItems">アイテム所持上限設定</a></h1>
+	<div class="contents_back">
+		アイテムの所持上限数を個別に設定します。<br>
+		<br>
+		アイテムのメモ欄に &lt;maxItems:9999&gt; というタグで所持上限数を設定します。<br>
+		タグがないアイテムの所持上限数は 99 のままです。<br>
+		<br>
+		個数表示のフォントサイズなどを調整することもできます。<br>
+		<br>
+		◆<a href="plugin/TMMaxItems.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2018/04/27</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMGreedShop">欲張りショップ</a></h1>
+	<div class="contents_back">
+		お金以外にアイテムも要求されるショップ機能を追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMGreedShop.jpg" class="fancybox" data-fancybox-group="SS" title="欲張りショップ"><img src="img/plugin/screen_shot/TMGreedShop_thum.jpg"></a>
+		<a href="img/plugin/screen_shot/TMGreedShop2.png" class="fancybox" data-fancybox-group="SS" title="欲張りショップ_メモ欄サンプル"><img src="img/plugin/screen_shot/TMGreedShop2_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMGreedShop.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/07/17</span> Ver2.2.0<br>
+		・新しく追加したmatKeyタグでレシピ扱いのアイテムを複数設定できるようになりました。<br>
+		・素材ウィンドウの表示位置などを設定するプラグインパラメータを追加しました。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/02/16</span> <a href="plugin/old150/TMGreedShop.js">ver2.1.1</a><br>
+			・欲張りショップで購入時に鳴らす効果音を変更する機能を追加<br>
+			<br>
+			<span class="red">2017/02/10</span> Ver2.1.0<br>
+			・キー素材機能を追加<br>
+			・素材情報を非表示にするプラグインパラメータを追加<br>
+			<br>
+			<span class="red">2016/12/27</span> Ver2.0.0<br>
+			・ツクールMV1.3.4での動作確認とヘルプの加筆、機能追加や修正はありません。<br>
+			<br>
+			<span class="red">2016/05/04</span> Ver1.03<br>
+			・materialMaxの値によってボタンがウィンドウ外にはみ出る場合がある不具合を修正<br>
+			<br>
+			<span class="red">2016/01/05</span> Ver1.02<br>
+			・素材に設定した武器、防具を消費しない不具合を修正<br>
+			・素材に設定した武器、防具を消費させないための &lt;noConsume&gt; タグを追加<br>
+			<br>
+			<span class="red">2015/12/11</span> Ver1.01<br>
+			・致命的な不具合の修正<br>
+			・欲張りショップの購入コマンド名を変更するパラメータを追加<br>
+			<br>
+			<span class="red">2015/12/10</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCostume">衣装アイテム</a></h1>
+	<div class="contents_back">
+		アイテムによるグラフィック変更機能を追加します。<br>
+		<br>
+		◆<a href="plugin/TMCostume.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/01/11</span> Ver1.0.1<br>
+		・プラグイン導入前のセーブデータでエラー落ちする不具合を修正<br>
+		・アクターが衣装アイテムを使用しているかどうかを判定する機能を追加<br>
+		・初期状態（衣装の再使用で適用するグラフィック）を変更する機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/10</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMItemRestriction">アイテム制約拡張</a></h1>
+	<div class="contents_back">
+		アイテムのメモ欄にタグをつけることで対象として選択できるアクターを<br>
+		制限できるようになります。<br>
+		<br>
+		『同じアクターに対して 1 回しか使えない』『ハロルドとマーシャにしか使えない』<br>
+		といったアイテムを作ることができます。<br>
+		<br>
+		◆<a href="plugin/TMItemRestriction.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/02/14</span> Ver1.0.1<br>
+		・プラグインが単体で動作しない致命的な不具合を修正。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/19</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMEquipSlotEx">装備スロット拡張</a></h1>
+	<div class="contents_back">
+		アクターごとに部位設定を自由に変更できるようにします。<br>
+		<br>
+		◆<a href="plugin/TMEquipSlotEx.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/02/09</span> Ver1.0.0<br>
+		・指定アクターの装備をすべてはずすプラグインコマンドを追加<br>
+		・致命的な不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/06/13</span> <a href="plugin/old120/TMEquipSlotEx.js">Ver0.11b</a><br>
+			・装備変更のためのプラグインコマンドを追加<br>
+			<br>
+			<span class="red">2016/05/12</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMItemShortCut">アイテムショートカット</a></h1>
+	<div class="contents_back">
+		マップシーンで直接アイテムを使用する機能を追加します。<br>
+		<br>
+		アクションやパズル系のゲームで、メニューを開かずにすばやくアイテムを<br>
+		使用するような使用方法を想定しています。<br>
+		<br>
+		◆<a href="plugin/TMItemShortCut.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/11/07</span> Ver1.0.3<br>
+		・機能を一時的に無効化するプラグインコマンドを追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/06/23</span> Ver1.0.2<br>
+			・アイテムシーンでショートカットウィンドウが画面外にはみ出す不具合を修正<br>
+			・スロット数の設定が表示位置に反映されていなかった不具合を修正<br>
+			<br>
+			<span class="red">2017/01/09</span> Ver1.0.1<br>
+			・ウィンドウの背景タイプを設定するプラグインパラメータを追加<br>
+			<br>
+			<span class="red">2016/11/04</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMItemTouch">利便性を捨てたアイテムウィンドウ</a></h1>
+	<div class="contents_back">
+		アイテムシーンをアイコンベースのものに変更します。<br>
+		<br>
+		タッチ（マウス）操作でドット単位での並び替えが可能です、<br>
+		アイテムアイコンをパズルのピースのように使うことで<br>
+		集めるとひとつの絵が完成するような仕掛けを作ることもできます。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMItemTouch.jpg" class="fancybox" data-fancybox-group="SS" title="利便性を捨てたアイテムウィンドウ"><img src="img/plugin/screen_shot/TMItemTouch_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMItemTouch.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2015/11/23</span> Ver1.0<br>
+		・初版公開<br>
+	</div>
+</section>

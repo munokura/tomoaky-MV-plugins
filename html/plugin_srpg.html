@@ -1,0 +1,464 @@
+<section>
+	<h1 class="contents_title"><a id="top">シミュレーションRPG</a></h1>
+	<div class="contents_back">
+		<span class="red">現在公開しているものはアルファ版です。<br>
+		アルファ版の機能は今後のアップデートで大きく変更する可能性があります。</span><br>
+		<br>
+		いわゆるシミュレーションRPGぽい機能を追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMSrpg_top_1.jpg" class="fancybox" data-fancybox-group="SS" title="シミュレーションRPGぽいシーン"><img src="img/plugin/screen_shot/TMSrpg_top_1_thum.jpg"></a>
+		<br>
+		■<a href="http://game.nicovideo.jp/atsumaru/games/gm2152">動作サンプル (RPGアツマール)</a><br>
+		<br>
+		◆<a href="zip/TMSrpgSample.zip">サンプルプロジェクト (ダウンロード版)</a><br>
+		簡単なシミュレーションRPGのサンプルです、RPGツクールMVをお持ちの方は<br>
+		こちらをダウンロードしてください。<br>
+		別途必要になる SAN_TileToner.js (作者: <a href="https://twitter.com/rev2nym" target="_blank">サンシロ様</a>) も導入済みとなっています。<br>
+		<span class="red">利用の際にはプラグインヘルプ内の利用規約を一読してください。<br>
+		また、TMSrpg.jsに関する質問、不具合報告等は必ず tomoaky へお願いします。</span><br>
+		<br>
+		◆<a href="plugin/TMSrpg.js">プラグイン（ TMSrpg.js ）のダウンロード</a><br>
+		<br>
+		<span class="red">2017/04/07</span> Ver0.1.3a<br>
+		・背後攻撃によるダメージ補正機能を追加<br>
+		・反撃機能を追加<br>
+		・魔法反射機能を追加<br>
+		・細かい不具合の修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/03/24</span> Ver0.1.2a<br>
+			・地形効果の機能を追加<br>
+			・特殊効果『逃げる』に対応<br>
+			・エネミーユニットの行動後の移動処理を変更（敵対勢力と距離をとるようになります）<br>
+			・ステートをユニットに自動付加する機能を追加<br>
+			・エネミーユニットに目的地を設定する機能を追加<br>
+			・ユニットの足元にHPゲージを表示する機能を追加<br>
+			・ユニットの頭上にステートアイコンを表示する機能を追加<br>
+			<br>
+			<span class="red">2017/03/17</span> Ver0.1.1a<br>
+			・ユニットコマンド表示中に移動可能範囲をクリックするだけで<br>
+			　移動コマンドを実行できる機能を追加（要:プラグインパラメータ設定）<br>
+			・ユニット行動後にイベントを実行する機能を追加<br>
+			・移動と行動を済ませた後、自動的に待機コマンドを実行する機能を追加<br>
+			・すべてのアクターユニットが移動と行動を済ませた後、自動的にターン終了確認へ<br>
+			　移行する機能を追加<br>
+			・話す/調べるスキルを追加<br>
+			・ユニットに索敵距離を設定するタグを追加<br>
+			・残りユニット数にカウントしないようにするタグ &lt;neutral&gt; を追加<br>
+			・行動制約『味方を攻撃』を常時付加するタグ &lt;traitor&gt; を追加<br>
+			・カーソルを指定座標（指定イベント）へ移動させる機能を追加<br>
+			・アクターユニット戦闘不能時に歩行グラフィックが正しく適用されない不具合の修正<br>
+			<br>
+			<span class="red">2017/03/10</span> Ver0.1.0a<br>
+			・アルファ版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="index">インデックス</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#howto">使い方</a></span>
+		<span class="bloq_m">■<a href="#managerEvent">SRPG管理イベント</a></span>
+		<span class="bloq_m">■<a href="#unitEvent">ユニットイベント</a></span><br>
+		<span class="bloq_m">■<a href="#mapInfo">マップ情報</a></span>
+		<span class="bloq_m">■<a href="#control">操作方法</a></span>
+		<span class="bloq_m">■<a href="#eventTag">メモ欄タグ (イベント)</a></span><br>
+		<span class="bloq_m">■<a href="#statusTag">メモ欄タグ (アクター…)</a></span>
+		<span class="bloq_m">■<a href="#usableTag">メモ欄タグ (スキル…)</a></span>
+		<span class="bloq_m">■<a href="#enemyTag">メモ欄タグ (敵キャラ)</a></span><br>
+		<span class="bloq_m">■<a href="#pluginCmd">プラグインコマンド</a></span>
+		<span class="bloq_m">■<a href="#scriptCmd">スクリプトコマンド</a></span>
+		<span class="bloq_m">■<a href="#unitParam">ユニット情報の取得</a></span><br>
+		<span class="bloq_m">■<a href="#unitMethod">ユニット情報の操作</a></span>
+		<span class="bloq_m">■<a href="#checkSkill">話す/調べる</a></span>
+		<span class="bloq_m">■<a href="#regionEffect">地形効果</a></span><br>
+		<span class="bloq_m">■<a href="#specification">仕様メモ</a></span>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="howto">使い方</a></h1>
+	<div class="contents_back">
+		必要な準備は以下のとおりです。<br>
+		<br>
+		プロジェクトの準備<br>
+		　・プラグイン TMSrpg.js の導入<br>
+		　・プラグイン SAN_TileToner.js (作者: <a href="https://twitter.com/rev2nym" target="_blank">サンシロ様</a>) の導入<br>
+		　・画像ファイルの準備<br>
+		　　　　サンプルプロジェクトから以下の画像を同じ位置へコピー＆ペーストしてください。<br>
+		　　　　・img/characters/!$SrpgCursor.png<br>
+		　　　　・img/system/SrpgStatusArrow.png<br>
+		<br>
+		シミュレーションRPGマップの準備<br>
+		　・SRPG管理イベントの設定<br>
+		　・アクターユニットイベントの設定<br>
+		　・エネミーユニットイベントの設定<br>
+		　・マップ情報の設定<br>
+		<br>
+		シミュレーションRPGシーンの起動方法<br>
+		　・プラグインコマンド reserveSrpg を実行した後にイベントコマンド『場所移動』で<br>
+		　　シミュレーションRPGマップとして設定したマップへプレイヤーを移動させてください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="managerEvent">SRPG管理イベント</a></h1>
+	<div class="contents_back">
+		SRPG管理イベントとは、ターン切り替え時や敵ユニットの行動前、行動後などに<br>
+		自動的に起動するイベントのことです。<br>
+		イベントのメモ欄に &lt;srpgManager&gt; というタグがついていると、そのイベントは<br>
+		SRPG管理イベントとして扱われるようになります。<br>
+		<br>
+		スクリプトコマンド『this.isSrpgTurnStart()』や『this.srpgNextEnemy()』を<br>
+		使い、状況に応じたイベント内容を設定してください。<br>
+		ターン切り替え時の演出や、特定イベントが行動する際の演出などなど。<br>
+		<br>
+		また、味方あるいは敵ユニットがすべて戦闘不能になった場合、<br>
+		SRPG管理イベントのセルフスイッチＡ（味方ならＢ）がオンになり、<br>
+		自動的にイベントが起動します。<br>
+		<span class="red">必ずセルフスイッチＡ、Ｂを出現条件とするイベントページを作成し、<br>
+		そのページでSRPGを終了させるためにイベントコマンド『場所移動』を実行してください。</span><br>
+		<br>
+		ちなみにサンプルプロジェクトのSRPG管理イベントはマップの左上にあります。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="unitEvent">ユニットイベント</a></h1>
+	<div class="contents_back">
+		イベントのメモ欄に &lt;srpgActor:0&gt; というタグがあれば味方ユニット、<br>
+		&lt;srpgEnemy:1&gt; というタグがあれば敵ユニットとして扱われます。<br>
+		<br>
+		ユニットが戦闘不能になると、ユニットイベントのセルフスイッチＡがオンになり、<br>
+		自動的にイベントが起動します。<br>
+		<span class="red">必ずセルフスイッチＡを出現条件とするイベントページを作成し、<br>
+		そのページの最後にイベントコマンド『イベントの一時消去』を実行してください。</span><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="mapInfo">マップ情報</a></h1>
+	<div class="contents_back">
+		マップのメモ欄に &lt;srpgInfo&gt; と &lt;/srpgInfo&gt; というタグにはさまれた内容が<br>
+		マップ情報として扱われ、メニューコマンド『マップ情報』に表示されます。<br>
+		<br>
+		イベントコマンド『文章の表示』と同じように \V[1] などの制御文字が使えます、<br>
+		これにより、現在のターン数や残りの敵ユニット数などを表示することができます。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="control">操作方法</a></h1>
+	<div class="contents_back">
+		マウスでの操作を想定して制作しています。<br>
+		<br>
+		・ユニットコマンドを開く<br>
+		　　　ユニットイベントを左クリック<br>
+		<br>
+		・メニューコマンドを開く<br>
+		　　　右クリック<br>
+		<br>
+		・コマンドの決定<br>
+		　　　左クリック<br>
+		<br>
+		・コマンドのキャンセル<br>
+		　　　右クリック<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="eventTag">メモ欄タグ (イベント)</a></h1>
+	<div class="contents_back">
+		&lt;srpgManager&gt;<br>
+		　このタグのついたイベントをSRPG管理イベントとして利用します。<br>
+		<br>
+		&lt;srpgActor:0&gt;<br>
+		　このタグのついたイベントを味方ユニットとして利用します。<br>
+		　数値はパーティ内の並び順（ 0 が先頭）です。<br>
+		<br>
+		&lt;srpgEnemy:3&gt;<br>
+		　このタグのついたイベントを敵ユニットとして利用します。<br>
+		　数値は敵キャラのデータベース上の番号です。<br>
+		<br>
+		&lt;neutral&gt;<br>
+		　このタグのついたイベントは残りユニット数のカウントから除外します。<br>
+		<br>
+		&lt;traitor&gt;<br>
+		　このタグのついたイベントに行動制約『味方を攻撃』が常時付加されます。<br>
+		<br>
+		&lt;autoState:5 9&gt;<br>
+		　SRPG開始時、またはsrpgAddUnitコマンド実行時に 5 番と 9 番のステートを<br>
+		　自動的に付加します。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="statusTag">メモ欄タグ (アクター、職業、武器、防具、敵キャラ、ステート)</a></h1>
+	<div class="contents_back">
+		&lt;mov:4&gt;<br>
+		　移動力を設定します。アクターの場合は現在の職業、装備品、ステートの値も<br>
+		　含めた合計値が採用されます。<br>
+		<br>
+		&lt;shipMove&gt;<br>
+		　通常は進入不可能な水の上も移動することができるようになります。<br>
+		<br>
+		&lt;floatMove&gt;<br>
+		　地形を無視して移動することができるようになります。<br>
+		<br>
+		&lt;search:5&gt;<br>
+		　索敵距離を設定します。一番近くにいる敵対ユニットとの距離が<br>
+		　この値よりも大きい場合、移動も行動もしなくなります。<br>
+		　タグを省略、または 0 を指定するとこの機能はオフになります。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="usableTag">メモ欄タグ (スキル、アイテム)</a></h1>
+	<div class="contents_back">
+		&lt;range:diamond 2&gt;<br>
+		　スキルの射程距離を設定します。射程タイプと射程距離を半角スペースで区切って<br>
+		　指定してください。射程タイプは下記の中から選んでください。<br>
+		　　diamond = ひし形<br>
+		　　rect = 四角形<br>
+		　　line = 直線（上下左右）<br>
+		　また、&lt;range:diamond 2 rect 0&gt; のように続けてもうひとつタイプと距離を<br>
+		　指定すると、範囲の中心に穴をあけることができます。<br>
+		<br>
+		&lt;effect:rect 3&gt;<br>
+		　スキルの効果範囲を設定します。範囲タイプと大きさを半角スペースで区切って<br>
+		　指定してください。指定する値は射程距離と同じです。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="enemyTag">メモ欄タグ (敵キャラ)</a></h1>
+	<div class="contents_back">
+		&lt;face:Monster 2&gt;<br>
+		　敵キャラの顔グラフィックを設定します。ファイル名とインデックスを<br>
+		　半角スペースで区切って指定してください。<br>
+		　インデックスは画像のどの部分を使用するかを決める番号です。<br>
+		　0 1 2 3<br>
+		　4 5 6 7<br>
+		<br>
+		&lt;level:10&gt;<br>
+		　敵キャラのレベルを設定します、この値はステータス表示のためのダミーです、<br>
+		　数値によって能力値が変化するようなことはありません。<br>
+		<br>
+		&lt;class:3&gt;<br>
+		　敵キャラの職業を設定します、この値はステータス表示のためのダミーです、<br>
+		　数値によって能力値が変化するようなことはありません。<br>
+		<br>
+		&lt;nickname:乱暴者&gt;<br>
+		　敵キャラの二つ名を設定します。<br>
+		<br>
+		&lt;profile:人間が大嫌いなオーク族の戦士&gt;<br>
+		　敵キャラのプロフィールを設定します。<br>
+		<br>
+		&lt;equips:2 0 0 3 0&gt;<br>
+		　敵キャラの装備品を設定します、この値はステータス表示のためのダミーです、<br>
+		　数値によって能力値が変化するようなことはありません。<br>
+		　装備スロットの上から順に装備品の番号を半角スペースで区切って<br>
+		　指定してください。<br>
+		<br>
+		&lt;attackAnimation:6&gt;<br>
+		　敵キャラの通常攻撃のアニメーション番号を設定します。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="pluginCmd">プラグインコマンド</a></h1>
+	<div class="contents_back">
+		値は \V[10] のように制御文字を使ってゲーム変数で指定することもできます。<br>
+		<br>
+		reserveSrpg<br>
+		　SRPG機能を有効化する予約をします、このコマンドを実行したあとに<br>
+		　イベントコマンド『場所移動』でマップが切り替わるとSRPG機能が有効になります。<br>
+		<br>
+		srpgCursorMove 10 5<br>
+		　SRPGカーソルを座標 (10, 5) へ移動させます。<br>
+		<br>
+		srpgCursorMoveToEvent 2<br>
+		　SRPGカーソルをイベント 2 番へ移動させます。<br>
+		<br>
+		setSrpgDestination 4 10 15<br>
+		　4 番のイベントの目的地を座標 (10, 15) に設定します。<br>
+		<br>
+		clearSrpgDestination 4<br>
+		　4 番のイベントの目的地設定を解除します。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="scriptCmd">スクリプトコマンド</a></h1>
+	<div class="contents_back">
+		this.isSrpgTurnStart()<br>
+		　ターン開始フラグが立っているかどうかを返します。<br>
+		<br>
+		this.isSrpgActorTurn()<br>
+		　味方ターンかどうかを返します。<br>
+		<br>
+		this.srpgNextUnit()<br>
+		　次に行動するイベント番号を返します。<br>
+		<br>
+		this.srpgLastUnit()<br>
+		　直前に行動したイベント番号を返します。<br>
+		<br>
+		this.srpgBattler(0)<br>
+		　ユニットイベントのバトラーオブジェクトを返します。<br>
+		　括弧内に取得したいユニットイベントのイベント番号を指定してください。<br>
+		　0 を指定した場合はこのコマンドを実行しているイベントが対象となります。<br>
+		　何も指定しなかった場合は次に行動するイベント、または直前に行動した<br>
+		　イベントが対象となります。<br>
+		　このコマンドを使って<a href="#unitParam">ユニット情報の取得</a>、<a href="#unitMethod">ユニット情報の操作</a>ができます。<br>
+		<br>
+		this.srpgRemoveUnit(0)<br>
+		　ユニットイベントを強制的に排除します。<br>
+		　戦闘不能になった場合と同じ扱いとなり、セルフスイッチＡが自動的に<br>
+		　オンになり、イベント内容も実行されます。<br>
+		　対象の指定方法は this.srpgBattler と同じです。<br>
+		　正しく実行された場合は 1、失敗した場合は 0 を返します。<br>
+		<br>
+		this.srpgAddUnit(10, 1)<br>
+		　イベント番号 10 番を敵キャラ 1 番のエネミーユニットとして設定します。<br>
+		　敵の増援を演出する場合は、別途イベントコマンドで画像の変更等を<br>
+		　実行してください。<br>
+		　正しく実行された場合は 1、失敗した場合は 0 を返します。<br>
+		　<span class="red">このコマンドを使用するイベントには &lt;srpgEnemy:0&gt; タグを付けてください、<br>
+		　これによりSRPG開始時にセルフスイッチAをオフにする機能の対象となります。</span><br>
+		<br>
+		this.srpgActorEventId(1)<br>
+		　1 番のアクターがアクターユニットとして生存していればイベント番号を返し、<br>
+		　そうでなければ 0 を返します。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="unitParam">ユニット情報の取得</a></h1>
+	<div class="contents_back">
+		スクリプトコマンド this.srpgBattler() を使って取得できる主なパラメータです。<br>
+		<br>
+		　hp, mp, tp, mhp, mmp, atk, def, mat, mdf, agi, luk<br>
+		　(HP, MP, TP, 最大HP, 最大MP, 攻撃力, 防御力, 魔法力, 魔法防御, 敏捷性, 運)<br>
+		<br>
+		　hit, eva, cri, cev, mev, mrf, cnt, hrg, mrg, trg<br>
+		　(命中率, 回避率, 会心率, 会心回避率, 魔法回避率, 魔法反射率, 反撃率, HP再生率, MP再生率, TP再生率)<br>
+		<br>
+		　tgr, grd, rec, pha, mcr, tcr<br>
+		　(狙われ率, 防御効果率, 回復効果率, 薬の知識, MP消費率, TPチャージ率)<br>
+		<br>
+		　pdr, mdr, fdr, exr<br>
+		　(物理ダメージ率, 魔法ダメージ率, 床ダメージ率, 経験獲得率)<br>
+		<br>
+		　name()<br>
+		　(名前)<br>
+		<br>
+		　isActor()<br>
+		　(ユニットがアクターなら真、エネミーなら偽)<br>
+		<br>
+		以下はアクターユニットにのみ有効なパラメータです。<br>
+		<br>
+		　actorId()<br>
+		　(アクター番号)<br>
+		<br>
+		以下はエネミーユニットにのみ有効なパラメータです。<br>
+		<br>
+		　enemyId(), exp(), gold()<br>
+		　(敵キャラ番号, 経験値, お金)<br>
+		<br>
+		使用例:<br>
+		<img src="img/plugin/screen_shot/TMSrpg_unitParam_1.jpg"><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="unitMethod">ユニット情報の操作</a></h1>
+	<div class="contents_back">
+		スクリプトコマンド this.srpgBattler() を使い、対象ユニットにダメージを与える、<br>
+		ステートを付加する、などの操作ができます。<br>
+		<br>
+		　srpgGainHp(100)<br>
+		　対象ユニットのHPを 100 回復します、負の値ならダメージになります。<br>
+		<br>
+		　gainMp(50)<br>
+		　対象ユニットのMPを 50 回復します、負の値ならダメージになります。<br>
+		<br>
+		　gainTp(2)<br>
+		　対象ユニットのTPを 2 回復します、負の値ならダメージになります。<br>
+		<br>
+		　addState(4)<br>
+		　ステート番号 4 番を対象ユニットに付加します。<br>
+		<br>
+		　removeState(4)<br>
+		　対象ユニットのステート番号 4 番を解除します。<br>
+		<br>
+		使用例:<br>
+		<img src="img/plugin/screen_shot/TMSrpg_unitMethod_1.jpg"><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="checkSkill">話す/調べる</a></h1>
+	<div class="contents_back">
+		プラグインパラメータ checkSkillId に 1 以上の値を設定することで、<br>
+		その番号のスキルが『話す/調べる』として機能するようになります。<br>
+		<br>
+		このスキルはアクターユニットの行動コマンドに自動的に追加され、<br>
+		対象のイベント内容を実行するという効果があります。<br>
+		<br>
+		これにより、通常のスキル効果では表現できない特殊な演出を<br>
+		生み出すことができます。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="regionEffect">地形効果</a></h1>
+	<div class="contents_back">
+		プラグインパラメータ regionEffect でリージョンごとの地形効果を設定します。<br>
+		初期値『1,11 2,12』の場合、リージョン 1 番が設定された座標に移動すると<br>
+		ステート 11 番を付加、別の座標へ移動すれば解除されます。<br>
+		リージョン 2 番ならステート 12 番が対象になります。<br>
+		<br>
+		リージョン番号とステート番号をカンマで区切ったものが 1 セット、これを<br>
+		スペースで区切って必要なだけ設定してください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="specification">仕様メモ</a></h1>
+	<div class="contents_back">
+		・スクリプトコマンド this.srpgAddUnit で指定したイベントの現在位置に<br>
+		　他のユニットイベントが存在している場合、地形タグ 1 番が設定されていて、<br>
+		　なおかつ、元の出現位置に一番近い位置に出現します。<br>
+		　上記の条件を満たす場所が見つからない場合、コマンドは無効となります。<br>
+		<br>
+		・ユニットが戦闘不能になると、自動的にセルフスイッチＡをオンにして<br>
+		　イベントが起動しますが、アクターとエネミーで歩行グラフィックの扱いに違いがあります。<br>
+		　アクターユニットの場合、セルフスイッチＡを条件にしたページの設定は無視され、<br>
+		　アクターの歩行グラフィックが適用されます。<br>
+		<br>
+		・混乱状態（敵を攻撃、誰かを攻撃、味方を攻撃）のユニット、または<br>
+		　目的地が設定されているユニットは強制的に索敵距離が 0 になります。<br>
+		<br>
+		・プライオリティが『通常キャラと同じ』に設定されているイベントがある座標は<br>
+		　移動先として選択できません。<br>
+		　ただし、通過することはできます。<br>
+		<br>
+		・エネミーユニットは下記のように移動と行動を実行します。<br>
+		　1: 索敵範囲内に敵対ユニットがいなければ 8 へ進む<br>
+		　2: データベースで設定されたとおりに行動内容を決定<br>
+		　3: 行動内容がなければ 8 へ進む<br>
+		　4: 行動が有効な相手が射程範囲内にいれば行動<br>
+		　5: 行動が有効な一番近くの対象に近づくように移動<br>
+		　6: 4 で行動済みなら 8 へ進む<br>
+		　7: 行動が有効な相手が射程範囲内にいれば行動<br>
+		　8: 次のユニットへ<br>
+		<br>
+		・ユニットに対して背後から攻撃した場合、与えるダメージにプラグインパラメータの<br>
+		　backAttackPhysical / backAttackMagical に設定した倍率補正が適用されます。<br>
+		　背後判定は行動者に対して標的が背を向けているかどうかで決まります、<br>
+		　行動を実行する座標は関係ありません。<br>
+		　ダメージが負（回復）の場合、この倍率補正は適用されません。<br>
+	</div>
+</section>

@@ -1,0 +1,644 @@
+<section>
+	<h1 class="contents_title"><a id="top">ジャンプアクション</a></h1>
+	<div class="contents_back">
+		マップシーンをそれっぽいアクションゲームにします。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMJumpAction_top.jpg" class="fancybox" data-fancybox-group="SS" title="ジャンプアクション"><img src="img/plugin/screen_shot/TMJumpAction_top_thum.jpg"></a><br>
+		<br>
+		◆<a href="zip/TMJumpAction.zip">サンプルプロジェクト（ダウンロード版）</a><br>
+		暗号化していないので、エディタで中身を確認することができます。<br>
+		データベースやイベントの設定例として参考にしてみてください。<br>
+		zip形式で18MBほどあります。<br>
+		<span class="red">お手数ですが TMJumpAction.js の最新版は下にあるプラグイン単体のリンクから<br>
+		ダウンロードをお願いします。</span><br>
+		<br>
+		◆<a href="plugin/TMJumpAction.js">プラグインのダウンロード</a><br>
+		こちらからプラグイン単体のダウンロードができますが、必要な画像等が<br>
+		含まれていないため、初めて利用するかたは上にあるサンプルプロジェクトを<br>
+		ダウンロードしてください。<br>
+		<br>
+		<span class="red">2018/02/21</span> Ver1.0.4<br>
+		・eventCollapse がオフのとき、戦闘不能になったイベントが正しく表示されない不具合の修正<br>
+		・足が地面についているときのみジャンプを可能にする設定を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/01/04</span> Ver1.0.3<br>
+			・はじき飛ばしのダメージ計算用スキルに bullet_anime タグが反映されるように修正<br>
+			<br>
+			<span class="red">2017/11/24</span> Ver1.0.2<br>
+			・イベントコマンド『イベントの位置設定』で変数指定が正しく動作しない不具合を修正<br>
+			<br>
+			<span class="red">2017/07/28</span> Ver1.0.1<br>
+			・足踏みアニメの 1 コマのフレーム数を調整する機能を追加<br>
+			・オプション項目『パッドボタン配置』を無効化する機能を追加<br>
+			・ダッシュにＭＰコストを設定するタグを追加<br>
+			・イベントのダメージ効果音が正しく再生されない不具合の修正<br>
+			<br>
+			<span class="red">2017/07/21</span> Ver1.0.0<br>
+			・アクション系の拡張プラグインを本体に統合<br>
+			・防御アクションの追加<br>
+			・投げアクションに方向キー入力によるバリエーションを追加<br>
+			・足元ＨＰゲージの追加<br>
+			・跳弾、爆発する弾、重力の影響を受ける弾を追加<br>
+			・その他、細かい機能追加と不具合修正、一部コマンド名変更<br>
+			<br>
+			◆ジャンプアクション（本体）<br>
+			<br>
+			<span class="red">2017/01/12</span> Ver0.41b<br>
+			・移動コマンド 左下に移動 / 右下に移動 / 左上に移動 / 右上に移動 の 4 つに対応。<br>
+			<br>
+			<span class="red">2016/03/08</span> Ver0.4b<br>
+			・プライオリティとすり抜けの仕様を変更（ツクールMVの元々の仕様に近いものに変更）<br>
+			　プライオリティが『通常キャラと同じ』のもの同士でのみ移動干渉が発生します。<br>
+			　すり抜けをオンにすると地形の干渉を受けません。<br>
+			・移動する接触起動イベントとの接触時にエラー落ちする不具合を修正<br>
+			・wタグ、hタグをアクターのメモ欄に対応<br>
+			・イベントコマンド『移動ルートの設定』◇ジャンプの仕様を変更<br>
+			　オフセットのＹの値の正負によって挙動が変化するようになりました。<br>
+			・メニュー操作で攻撃ボタンとジャンプボタンを使えるようにする設定を追加<br>
+			・プラグインコマンド force_stop を追加<br>
+			<br>
+			<span class="red">2016/01/19</span> Ver0.3b<br>
+			・バトラーイベント撃破時に経験値、お金、アイテムを獲得する機能を追加<br>
+			・バトラーイベントにリポップ機能を追加<br>
+			<br>
+			<span class="red">2015/11/13</span> Ver0.2b<br>
+			・すべる床、移動速度半減の床、移動できない床リージョンを追加<br>
+			　（この関係でメモタグから&lt;friction&gt;を削除しました）<br>
+			・パーティメンバー不在の際にエラー落ちする不具合を修正<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/06</span> Ver0.13b<br>
+			・ダッシュによるはじき飛ばしにスキルを設定する機能を追加<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/03</span> Ver0.12b<br>
+			・拡張プラグイン シューティングに対応<br>
+			<br>
+			<span class="red">2015/11/02</span> Ver0.11b<br>
+			・プラグインコマンドの追加<br>
+			・イベントページごとにアクションパラメータを設定する機能を追加<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/10/30</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			◆落下ダメージ<br>
+			<br>
+			<span class="red">2015/11/02</span> Ver0.11b<br>
+			・着水時に落下ダメージがリセットされない不具合を修正<br>
+			<br>
+			<span class="red">2015/10/30</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			◆シューティング<br>
+			<br>
+			<span class="red">2015/11/13</span> Ver0.2b<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/06</span> Ver0.11b<br>
+			・弾発射時に武器グラフィックを表示する機能を追加<br>
+			・効果音設定をプラグインパラメータからメモタグへ変更<br>
+			・shot_delayタグが正しく動作していない不具合を修正<br>
+			・ダメージポップアップのMissとクリティカル演出を追加<br>
+			<br>
+			<span class="red">2015/11/03</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			◆持ち上げ<br>
+			<br>
+			<span class="red">2015/11/13</span> Ver0.2b<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/06</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			<br>
+			◆ＨＰゲージ<br>
+			<br>
+			<span class="red">2016/01/19</span> Ver0.3b<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/13</span> Ver0.2b<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2015/11/06</span> Ver0.11b<br>
+			・プレイヤーと重なったとき半透明になる機能を追加<br>
+			・加入直後の仲間の顔グラフィックが表示されない不具合を修正<br>
+			<br>
+			<span class="red">2015/11/04</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			◆ログウィンドウ<br>
+			<br>
+			<span class="red">2016/01/19</span> Ver0.1b<br>
+			・初版公開<br>
+			<br>
+			◆アイテムショートカット<br>
+			<br>
+			<span class="red">2016/06/30</span> Ver0.12b<br>
+			・プラグインコマンドが動作しない不具合の修正<br>
+			<br>
+			<span class="red">2016/03/08</span> Ver0.11b<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2016/01/19</span> Ver0.1b<br>
+			・初期バージョン公開<br>
+			<br>
+			◆パッドコンフィグ<br>
+			<br>
+			<span class="red">2015/11/16</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="index">インデックス</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#need">動作に必要なもの</a></span>
+		<span class="bloq_m">■<a href="#other">併用可能プラグイン</a></span>
+		<span class="bloq_m">■<a href="#control">操作方法</a></span><br>
+		<span class="bloq_m">■<a href="#attack">攻撃</a></span>
+		<span class="bloq_m">■<a href="#guard">防御</a></span>
+		<span class="bloq_m">■<a href="#dash">ダッシュ</a></span><br>
+		<span class="bloq_m">■<a href="#carry">持ち上げ＆投げ</a></span>
+		<span class="bloq_m">■<a href="#memotagA">メモ欄タグ(アクター他)</a></span>
+		<span class="bloq_m">■<a href="#memotagE">メモ欄タグ(イベント)</a></span><br>
+		<span class="bloq_m">■<a href="#memotagS">メモ欄タグ(スキル)</a></span>
+		<span class="bloq_m">■<a href="#evcommand">イベントコマンド</a></span>
+		<span class="bloq_m">■<a href="#command">プラグインコマンド</a></span><br>
+		<span class="bloq_m">■<a href="#map">マップ作成</a></span>
+		<span class="bloq_m">■<a href="#ladder">はしご</a></span>
+		<span class="bloq_m">■<a href="#lift">リフト</a></span><br>
+		<span class="bloq_m">■<a href="#collide">地形との接触判定</a></span>
+		<span class="bloq_m">■<a href="#option">パッドボタン配置</a></span>
+		<span class="bloq_m">■<a href="#spec">その他の仕様</a></span><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="need">動作に必要なもの</a></h1>
+	<div class="contents_back">
+		プラグインファイル（TMJumpAction.js）以外にも必要なものがあります、<br>
+		これらはすべてサンプルプロジェクトに含まれています。<br>
+		また、プラグインパラメータの設定によっては必要なものが増える場合があります。<br>
+		<br>
+		img/system/Bullet1.png<br>
+		　弾として使用する画像ファイルです。<br>
+		　プラグインパラメータで使用するファイルを変更することができます。<br>
+		<br>
+		img/system/TMJumpActionShield.png<br>
+		　防御アクションで使用する画像ファイルです。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="other">併用可能プラグイン</a></h1>
+	<div class="contents_back">
+		TMJumpAction.jsはツクールMVの機能を大きく変更するプラグインです。<br>
+		他のプラグインを併用する場合、エディタのプラグイン管理画面での並び順が<br>
+		ジャンプアクションよりも下になるように追加してください。<br>
+		<br>
+		以下は動作確認済みの併用可能なプラグインです。<br>
+		・<a href="index.php?article=plugin_system#TMBitmapEx">ビットマップ拡張（TMBitmapEx.js）</a><br>
+		・<a href="index.php?article=plugin_item#TMItemShortCut">アイテムショートカット（TMItemShortCut.js）</a><br>
+		・<a href="index.php?article=plugin_map#TMMapHpGauge">マップＨＰゲージ（TMMapHpGauge.js）</a><br>
+		・<a href="index.php?article=plugin_map#TMBossHpGauge">ボスＨＰゲージ（TMBossHpGauge.js）</a><br>
+		・<a href="index.php?article=plugin_map#TMCommonEventKey">コモンイベントキー（TMCommonEventKey.js）</a><br>
+		・<a href="index.php?article=plugin_map#TMLogWindow">ログウィンドウ（TMLogWindow.js）</a><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="control">操作方法</a></h1>
+	<div class="contents_back">
+		<span class="bloq_s">← / →</span>: 移動<br>
+		<span class="bloq_s">↑ / ↓</span>: はしご移動<br>
+		<span class="bloq_s">↓(長押し)</span>: 防御<br>
+		<span class="bloq_s">Z</span>: 攻撃 / 投げる<br>
+		<span class="bloq_s">↓+Z</span>: 持ち上げる<br>
+		<span class="bloq_s">X</span>: ジャンプ<br>
+		<span class="bloq_s">C</span>: ダッシュ<br>
+		<span class="bloq_s">Q / W</span>: アクター変更<br>
+		<span class="bloq_s">Enter / Space</span>: 決定 / 話す(調べる)<br>
+		<span class="bloq_s">Esc / Num0</span>: キャンセル / メニューを開く<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="attack">攻撃</a></h1>
+	<div class="contents_back">
+		Z キーを押すことで弾を発射し、弾が当たった相手にダメージを<br>
+		与えることができます。<br>
+		<br>
+		操作キャラクターの shot_way タグの合計値が 0 以下の場合は<br>
+		弾を発射することができません。<br>
+		<br>
+		プラグインパラメータ『weaponSprite』がON(true)の場合、攻撃時に<br>
+		武器の画像が表示されます。<br>
+		この機能と合わせて、弾の飛距離を短くし、透明の弾画像を適用することで<br>
+		近距離攻撃を表現することもできます。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="guard">防御</a></h1>
+	<div class="contents_back">
+		操作キャラクターの guard_speed タグの合計値が 1 以上の場合に<br>
+		↓を押し続けることで防御アクションを実行できます。<br>
+		合計値が高いほど必要な入力時間が短くなります。<br>
+		合計値が 0 以下の場合は、いくら↓を押し続けても防御アクションは実行されません。<br>
+		<br>
+		防御アクションの実行中は防御ステートが付加され、移動速度が低下します。<br>
+		↓入力をやめると防御アクションも解除されます。<br>
+		付加されるステートと移動速度の補正率はプラグインパラメータで変更できます。<br>
+		<span class="red">防御ステートに自動解除が設定されている場合、↓を押し続けていても<br>
+		定期的にステートが解除されてしまいます、自動解除のタイミングは なし に設定してください。</span><br>
+		<br>
+		以下の状況では防御アクションが実行されません。<br>
+		・ジャンプ中<br>
+		・はしご移動中<br>
+		・持ち上げ中<br>
+		・泳ぎ中<br>
+		・攻撃後の再攻撃不可時間中<br>
+		・ダッシュ後の再ダッシュ不可時間中<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="dash">ダッシュ</a></h1>
+	<div class="contents_back">
+		C キーを押すことで素早く移動することができます。<br>
+		<br>
+		ダッシュの効果時間中に自分よりも軽い（weight タグの合計値が低い）相手に<br>
+		ぶつかることで、相手をはじき飛ばすことができます。<br>
+		<br>
+		はじき飛ばしによるダメージの計算式として使用するスキルは<br>
+		プラグインパラメータで変更できます。<br>
+		また、このスキルに bullet_anime タグでアニメーションを設定することで<br>
+		はじき飛ばしが発生した対象にアニメーションを適用することができます。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="carry">持ち上げ＆投げ</a></h1>
+	<div class="contents_back">
+		相手の上に乗った状態で↓を押しながら Z キーを押すと相手を<br>
+		持ち上げることができます。<br>
+		<br>
+		ただし、持ち上げ力（carry_power タグの合計値）が相手の重さよりも<br>
+		低い場合は持ち上げることができません。<br>
+		<br>
+		持ち上げた後、再び Z キーを押すと相手を投げます。<br>
+		このとき、どの方向にキー入力があるかで投げ方が変化します。<br>
+		<span class="bloq_s">↑+Z</span>: 上方向へ投げる<br>
+		<span class="bloq_s">↓+Z</span>: 向いている方向へ弱く投げる<br>
+		<span class="bloq_s">Z</span>: 向いている方向へ強く投げる<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="memotagA">メモ欄タグ（アクター、装備、ステート）</a></h1>
+	<div class="contents_back">
+		アクション用のパラメータ（ジャンプ力など）はメモ欄を使って設定します。<br>
+		たとえば、アクターのメモ欄に &lt;jump_speed:0.1&gt; と書き込んだ場合は<br>
+		そのアクターのジャンプ力が 0.1 に設定されます。<br>
+		<br>
+		武器と防具、ステートにも同様のタグを書き込むことができ、最終的なパラメータは<br>
+		装備や付加されているステートに設定されている値をすべて加算したものとなります。<br>
+		<br>
+		また、アクターにタグがなかった場合には自動的に初期値が設定されます。<br>
+		<span class="red">（以下、数値はタグがなかった場合の初期値）</span><br>
+		<br>
+		&lt;move_speed:0.05&gt;<br>
+		　← / → による移動の最高速度を設定します。<br>
+		<br>
+		&lt;accele:0.003&gt;<br>
+		　← / → による移動の加速度を設定します。<br>
+		　この値が低いと、キー入力が移動速度に反映されるまでの時間が長くなります。<br>
+		　<br>
+		<br>
+		&lt;jump_speed:0.14&gt;<br>
+		　X によるジャンプの初速を設定します。<br>
+		<br>
+		&lt;jump_input:0&gt;<br>
+		　X によるジャンプが重力の影響を受けずに初速を維持する時間を設定します。<br>
+		　たとえばこの値が 20 の場合、X キーを押し続けることで 20 フレームの間は<br>
+		　減速せずに上昇し続けることができます。<br>
+		　ジャンプの高さをキー入力で調節したい場合に設定してください。<br>
+		<br>
+		&lt;ladder_speed:0.04&gt;<br>
+		　はしごで ↑ / ↓ による移動をする際の最高速度を設定します。<br>
+		<br>
+		&lt;ladder_accele:0.003&gt;<br>
+		　はしごで ↑ / ↓ による移動をする際の加速度を設定します。<br>
+		　この値が低いと、キー入力が移動速度に反映されるまでの時間が長くなります。<br>
+		<br>
+		&lt;swim_speed:0.02&gt;<br>
+		　水中で ← / → による移動をする際の最高速度を設定します。<br>
+		<br>
+		&lt;swim_jump:0.1&gt;<br>
+		　水中で X によるジャンプをする際の初速を設定します。<br>
+		<br>
+		&lt;dash_speed_x:0.14&gt;<br>
+		　C によるダッシュ移動の初速（横方向）を設定します。<br>
+		<br>
+		&lt;dash_speed_y:0.03&gt;<br>
+		　C によるダッシュ移動の初速（縦方向）を設定します。<br>
+		<br>
+		&lt;dash_count:15&gt;<br>
+		　C によるダッシュの持続時間を設定します。<br>
+		<br>
+		&lt;dash_delay:30&gt;<br>
+		　C によるダッシュ開始から次にダッシュが可能になるまでの時間を設定します。<br>
+		<br>
+		&lt;dash_mp_cost:0&gt;<br>
+		　C によるダッシュ使用時に消費するＭＰを設定します。<br>
+		　この値が 1 以上のとき、残りＭＰが不足していればダッシュが使用できません。<br>
+		<br>
+		&lt;mulch_jump:1&gt;<br>
+		　X によるジャンプを着地せずに何回連続で実行できるかを設定します。<br>
+		　2 以上の値を設定することで、いわゆる空中ジャンプが可能になります。<br>
+		<br>
+		&lt;wall_jump&gt;<br>
+		　X によるジャンプ後、隣接する壁の方を向いて再度 X を押すことで<br>
+		　さらに高くジャンプする、いわゆる壁ジャンプができるかどうかを設定します。<br>
+		<br>
+		&lt;gravity:0.0045&gt;<br>
+		　重力（下方向への加速度）を設定します。<br>
+		<br>
+		&lt;weight:0&gt;<br>
+		　C によるダッシュでどれだけ重い相手まではじき飛ばせるかを設定します。<br>
+		<br>
+		&lt;carry_power:0&gt;<br>
+		　↓+Z による持ち上げがどれだけ重い相手にまで実行可能かを設定します。<br>
+		　この値が相手の重さ以上なら持ち上げが可能となります。<br>
+		<br>
+		&lt;fall_guard:0&gt;<br>
+		　落下ダメージ（高所から落ちた際に受けるダメージ）の軽減率を設定します。<br>
+		　この値が 50 ならダメージ半減、100 の場合は落下ダメージの処理自体を無視します。<br>
+		<br>
+		&lt;guard_speed:0&gt;<br>
+		　↓を押し始めてから防御状態になるまでの速さを設定します。<br>
+		　値が 10 なら約 1 秒、20 なら約 0.5 秒となります。<br>
+		　0 の場合は防御アクションが使用できません。<br>
+		<br>
+		&lt;invincible_time:30&gt;<br>
+		　弾に当たった後の無敵時間を設定します。<br>
+		　この値が 30 の場合、当たった瞬間から 30 フレームの間は弾に当たっても<br>
+		　ダメージを受けません。<br>
+		<br>
+		&lt;shot_way:0&gt;<br>
+		　Z による攻撃で同時に発射される弾の数を設定します。<br>
+		<br>
+		&lt;shot_space:0.2&gt;<br>
+		　Z による攻撃で同時に発射される弾同士の間隔（角度の差）を設定します。<br>
+		　単位はラジアンで、3.141592 を設定すると 180度の差になります。<br>
+		　shot_way の値が 1 以下の場合、このパラメータは無視されます。<br>
+		<br>
+		&lt;shot_speed:1.0&gt;<br>
+		　Z による攻撃で発射された弾が移動する速度を設定します。<br>
+		<br>
+		&lt;shot_count:30&gt;<br>
+		　Z による攻撃で発射された弾が消えるまでの時間を設定します。<br>
+		<br>
+		&lt;shot_delay:10&gt;<br>
+		　Z による攻撃後に、再度攻撃が可能になるまでの時間を設定します。<br>
+		<br>
+		&lt;shot_type:1&gt;<br>
+		　Z による攻撃で発射される弾のタイプを設定します。<br>
+		　タイプごとの違いはプラグインパラメータで設定することができます。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+		<br>
+		&lt;shot_index:0&gt;<br>
+		　Z による攻撃で発射される弾の画像インデックスを設定します。<br>
+		　0 なら画像の左端のもの、値が 1 増えると画像も右へひとつずれていきます。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+		<br>
+		&lt;shot_skill:0&gt;<br>
+		　Z による攻撃のダメージ計算に使用するスキルを設定します。<br>
+		　この値が 0 の場合、通常攻撃の計算式が採用されます。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+		<br>
+		&lt;shot_se_name:Wind1&gt;<br>
+		　Z による攻撃の効果音のファイル名を設定します。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+		<br>
+		&lt;shot_se_volume:90&gt;<br>
+		　Z による攻撃の効果音の音量を設定します。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+		<br>
+		&lt;shot_se_pitch:100&gt;<br>
+		　Z による攻撃の効果音のピッチを設定します。<br>
+		　<span class="red">この値は加算されず、ステート&gt;装備&gt;アクターの順で最初に見つかったタグを採用します。</span><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="memotagE">メモ欄タグ（イベント）</a></h1>
+	<div class="contents_back">
+		イベントのメモ欄にタグを書き込むことで当たり判定を変更したり、<br>
+		敵キャラクターとしてのパラメータを設定することができます。<br>
+		<br>
+		メモ欄ではなく、イベント実行内容の先頭にある注釈コマンドにタグを書き込むことで<br>
+		ページごとに異なったパラメータを設定することができます。<br>
+		メモ欄と注釈の両方に同じタグがある場合、注釈の方が優先されます。<br>
+		<br>
+		&lt;w:0.375&gt;<br>
+		　当たり判定（中心から左右の端までのサイズ）を設定します。<br>
+		　1.0 が 48ドット に相当します、幅が 96ドット のキャラクターを<br>
+		　左端から右端まで全体に当たり判定をつけたい場合は 1.0 に設定してください。<br>
+		　中心から左に1.0(48ドット)＋右に1.0(48ドット)で実質2.0(96ドット)になります。<br>
+		　<span class="red">このタグはアクターのメモ欄でも利用できます。</span><br>
+		<br>
+		&lt;h:0.75&gt;<br>
+		　当たり判定（足元から頭までのサイズ）を設定します。<br>
+		　1.0 が 48ドット に相当します、高さが 96ドットのキャラクターを<br>
+		　足元から頭まで全体に当たり判定をつけたい場合は 2.0 に設定してください。<br>
+		　<span class="red">このタグはアクターのメモ欄でも利用できます。</span><br>
+		<br>
+		&lt;enemy:1&gt;<br>
+		　エネミーの番号を設定します。<br>
+		　イベントのＨＰや弾の攻撃力などは、このタグで設定したエネミーの<br>
+		　パラメータによって決定されます。<br>
+		<br>
+		&lt;dead:A&gt;<br>
+		　このイベントが戦闘不能になった際にオンになるセルフスイッチを設定します。<br>
+		<br>
+		&lt;repop:300&gt;<br>
+		　dead で指定したセルフスイッチがオフになるまでの時間を設定します。<br>
+		　ページ 1 に通常状態、ページ 2 に戦闘不能状態を作成する場合、<br>
+		　メモ欄に dead と repop を書き込み、ページ 1 の注釈に enemy タグを<br>
+		　書き込んでください。<br>
+		<br>
+		&lt;lift&gt;<br>
+		　イベントにリフト属性を付加します。<br>
+		　リフト属性をもつイベントを移動させると、上に乗っているイベントやプレイヤーも<br>
+		一緒に動かすことができます。<br>
+		<br>
+		&lt;weight:0&gt;<br>
+		　C によるダッシュはじき、↓+Z による持ち上げの耐性となる重さを設定します。<br>
+		<br>
+		&lt;gravity:0.004&gt;<br>
+		　重力（下方向への加速度）を設定します。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="memotagS">メモ欄タグ（スキル）</a></h1>
+	<div class="contents_back">
+		主に Z による攻撃の弾の挙動を細かく設定するために書き込みます。<br>
+		<br>
+		&lt;bullet_anime:67&gt;<br>
+		　着弾時に再生するアニメーション番号を設定します。<br>
+		　このタグがなければアニメーションは表示されません。<br>
+		　はじき飛ばしのダメージ計算用スキルにこのタグをつけることで、<br>
+		はじき飛ばしが発生した対象にアニメーションを再生することもできます。<br>
+		<br>
+		&lt;map_through&gt;<br>
+		　弾が地形を貫通するかどうかを設定します。<br>
+		　このタグがある場合、通行不可のタイルと接触しても弾が消えなくなります。<br>
+		<br>
+		&lt;map_reflect&gt;<br>
+		　弾が地形と接触した際に跳ね返るかどうかを設定します。<br>
+		　このタグがある場合、通行不可のタイルと接触しても弾は消えず、<br>
+		　跳ね返るように移動し続けます。<br>
+		<br>
+		&lt;gravity:0.004&gt;<br>
+		　弾に重力（下方向への加速度）を設定します。<br>
+		<br>
+		&lt;time_bomb 6 0 0.2 45 1 0 1&gt;<br>
+		　弾が時間切れで削除される際に新しい弾を発射します。<br>
+		　このタグにはプラグインコマンド『nallShot』の n ～ skillId まで、<br>
+		　計 7 つの値を半角スペースで区切って設定してください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="evcommand">イベントコマンド</a></h1>
+	<div class="contents_back">
+		一部のイベントコマンドはジャンプアクション用に挙動が変更されています。<br>
+		<br>
+		移動ルートの設定◇ジャンプ<br>
+		　オフセットの X の値が横方向の移動量になり、Y の値がジャンプ力になります。<br>
+		　X の値が 0 の場合はその場でジャンプする動作になります。<br>
+		　Y の値が 0 の場合はそのイベントに設定されているジャンプ力でジャンプします。<br>
+		　<span class="red">上方向へジャンプする場合は Y の値を 0、または負の値に設定してください。</span><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="command">プラグインコマンド</a></h1>
+	<div class="contents_back">
+		イベントコマンド『プラグインコマンド』で実行することにより<br>
+		ジャンプアクションに関わるパラメータを取得、変更することができます。<br>
+		<br>
+		actGainHp -1 -5<br>
+		　プレイヤーに 5 のダメージを与える。<br>
+		<br>
+		actGainHp 1 -100<br>
+		　イベント 1 番に 100 のダメージを与える。<br>
+		<br>
+		actHp 1 2<br>
+		　イベント 1 番のＨＰをゲーム変数 2 番に代入する。<br>
+		<br>
+		actForceX -1 0.1<br>
+		　プレイヤーの横方向の速度を 0.1 に強制変更する。<br>
+		<br>
+		actForceY 1 -0.15<br>
+		　イベント 1 番の縦方向の速度を -0.15 に強制変更する。<br>
+		<br>
+		actForceStop -1<br>
+		　プレイヤーの速度を縦横ともに 0 に強制変更する。<br>
+		<br>
+		actChangeActor 2<br>
+		　操作キャラクターをアクター 2 番に変更する。<br>
+		　<span class="red">（指定したアクターがパーティにいない、または戦闘不能のときは無視されます）</span><br>
+		<br>
+		actHideHpGauge<br>
+		　足元ＨＰゲージを隠す。<br>
+		<br>
+		actShowHpGauge<br>
+		　足元ＨＰゲージを表示する。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="map">マップ作成</a></h1>
+	<div class="contents_back">
+		マップを新規に作成した直後の空白部分は通行不可ですので、<br>
+		最初に透明かつ通行可能なタイルで塗りつぶしてください。<br>
+		<br>
+		横方向、縦方向ともにループマップには対応していません。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="ladder">はしご</a></h1>
+	<div class="contents_back">
+		はしごの一番上を床に重ねるような設置を想定しています。<br>
+		床に重ねる部分のはしごは、４方向通行設定で下だけを通行不可にしてください。<br>
+		<img src="img/plugin/screen_shot/TMJumpAction_ladder.jpg"><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="lift">リフト</a></h1>
+	<div class="contents_back">
+		メモ欄あるいは実行内容の一番上にある注釈コマンドに &lt;lift&gt; タグが<br>
+		書き込まれているイベントはリフトとして扱われます。<br>
+		<br>
+		リフトは他のキャラクターと接触しても止まらず、相手を押して進み続けます。<br>
+		また、リフトの上に乗っているキャラクターはリフトと一緒に移動します。<br>
+		<span class="red">リフトと壁にはさまれた場合、予期せぬ場所へ移動させられてしまうことがあります。</span><br>
+		<br>
+		プレイヤーのダッシュはじきでリフトの移動ルートを狂わせることができます、<br>
+		これを防ぎたい場合はリフトの重さをプレイヤーよりも大きく設定してください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="collide">地形との接触判定</a></h1>
+	<div class="contents_back">
+		このプラグインは地形を真横からではなく、若干上から見下ろすような<br>
+		イメージで調整しているため、通行不可タイルよりも浮いた位置に<br>
+		プレイヤーやイベントが着地するようになっています。<br>
+		<br>
+		どれだけ浮かせるかはプラグインパラメータ『tileMarginTop』で<br>
+		設定することができます。真横からの視点に近づけたい場合は<br>
+		この値を 0 に変更してください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="option">パッドボタン配置</a></h1>
+	<div class="contents_back">
+		<a href="index.php?article=plugin_map#TMCommonEventKey">コモンイベントキー（TMCommonEventKey.js）</a>を併用して追加したキーを<br>
+		ゲームパッドに登録したい場合は以下のように設定してください。<br>
+		　D キーを追加したい場合<br>
+		　・プラグインパラメータ『padButtons』に commonKeyD を追加する<br>
+		　・プラグインパラメータ『padButtonNames』に ボタンの名前 を追加する<br>
+		他のキーを追加したい場合は、commonKeyD の D の部分を変えてください。<br>
+		<br>
+		<a href="index.php?article=plugin_item#TMItemShortCut">アイテムショートカット（TMItemShortCut.js）</a>を併用して追加される呼び出しキーを<br>
+		ゲームパッドに登録したい場合は以下のように設定してください。<br>
+		　・TMItemShortCut.js側の呼び出しキーをジャンプアクションと重複しないキーに設定する<br>
+		　・プラグインパラメータ『padButtons』に shortCut を追加する<br>
+		　・プラグインパラメータ『padButtonNames』に ボタンの名前 を追加する<br>
+		padButtons には呼び出しキー設定に関わらず shortCut を追加してください。<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="spec">その他の仕様</a></h1>
+	<div class="contents_back">
+		足踏み速度の計算式<br>
+		　足踏みアニメ 1 コマのフレーム数 = ( Ａ - 移動速度 - Ｃ ) * Ｂ<br>
+		　Ａ = プラグインパラメータ『stepAnimeConstantA』の値<br>
+		　Ｂ = プラグインパラメータ『stepAnimeConstantB』の値<br>
+		　Ｃ = ダッシュ状態なら 0.01、そうでないなら 0<br>
+		　<span class="red">ゲーム内の最高移動速度に合わせて調整してください。</span><br>
+	</div>
+</section>

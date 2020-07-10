@@ -1,0 +1,286 @@
+<section>
+	<h1 class="contents_title"><a id="index">イベント系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMCharacterEx">キャラクター表示拡張</a></span>
+		<span class="bloq_m">■<a href="#TMCloudDust">つちけむり</a></span>
+		<span class="bloq_m">■<a href="#TMEventClick">イベントクリック</a></span><br>
+		<span class="bloq_m">■<a href="#TMActorEvent">アクターイベント</a></span>
+		<span class="bloq_m">■<a href="#TMMoveRouteEx">自律移動拡張</a></span>
+		<span class="bloq_m">■<a href="#TMBalloonLoop">フキダシループ</a></span><br>
+		<span class="bloq_m">■<a href="#TMNamePop">ネームポップ</a></span>
+		<span class="bloq_m">■<a href="#TMAnimeLight">アニメ付き明かり</a></span>
+		<span class="bloq_m">■<a href="#TMTurnMove">ターン移動</a></span><br>
+		<span class="bloq_m">■<a href="#TMXpCharacter">XPキャラクター</a><br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCharacterEx">キャラクター表示拡張</a></h1>
+	<div class="contents_back">
+	イベントに表示位置補正、回転、拡大の機能を追加します。<br>
+	<br>
+	◆<a href="plugin/TMCharacterEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/12/03</span> Ver2.0.2<br>
+	・メモ欄タグ chrAnchor が正しく動作しない不具合を修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/12/02</span> Ver2.0.1<br>
+		・メモ欄タグ chrAngle が正しく動作しない不具合を修正<br>
+		<br>
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・一部プラグインコマンドの変更<br>
+		・プラグインコマンドが制御文字 \V[n] に対応<br>
+		・ジャンプ後の着地時に反動を演出する機能を追加<br>
+		<br>
+		<span class="red">2015/11/27</span> <a href="plugin/old120/TMCharacterEx.js">Ver1.0</a><br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCloudDust">つちけむり</a></h1>
+	<div class="contents_back">
+	ジャンプとダッシュに土煙のエフェクトを追加します。<br>
+	任意のタイミングで土煙を表示することもできます。<br>
+	<br>
+	◆<a href="plugin/TMCloudDust.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+	<br>
+	このプラグインには以下の画像も必要です、img/system フォルダに名前を変更せずに<br>
+	保存してください。<span class="red">ファイル名を変更する必要がある場合は、プラグインパラメータも<br>
+	一緒に変更する必要があります。</span><br>
+	<img src="img/plugin/system/Dust1.png"><br>
+	img/system/Dust1.png<br>
+	<br>
+	<span class="red">2017/08/10</span> Ver2.1.0<br>
+	・ジャンプ、ダッシュ時のつちけむりをゲーム中に変更するコマンドを追加<br>
+	・つちけむりの表示を停止するコマンドを追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・プラグインコマンドに土煙の数、速度の設定を追加<br>
+		<br>
+		<span class="red">2016/07/21</span> <a href="plugin/old120/TMCloudDust.js">Ver1.01</a><br>
+		・ロード時にエラー落ちする致命的な不具合を修正<br>
+		<br>
+		<span class="red">2016/07/14</span> ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMEventClick">イベントクリック</a></h1>
+	<div class="contents_back">
+	イベントをクリックして起動、ドラッグで移動させる機能を追加します。<br>
+	<br>
+	◆<a href="plugin/TMEventClick.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+	<br>
+	<span class="red">2018/10/04</span> Ver0.3.1b<br>
+	・未出現のイベントをクリック等で起動しようとするとエラー落ちする不具合を修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2018/09/14</span> Ver0.3.0b<br>
+		・一時消去されたイベントをクリック等で起動しようとするとエラー落ちする不具合を修正<br>
+		<br>
+		<span class="red">2016/05/07</span> Ver0.22b<br>
+		・プラグインコマンド startEventClick でエラー落ちしてしまう致命的な不具合を修正<br>
+		<br>
+		<span class="red">2016/04/12</span> Ver0.21b<br>
+		・プラグインパラメータ noDropRegions が初期値のときにプラグインが動作しない不具合を修正<br>
+		<br>
+		<span class="red">2016/04/07</span> Ver0.2b<br>
+		・ドラッグ＆ドロップの実行時にイベントを起動する機能を追加<br>
+		・イベントごとにクリック（ドラッグ）を禁止するメモ欄タグを追加<br>
+		・ドラッグ＆ドロップによる移動先をリージョン等で制限する機能を追加<br>
+		・イベント起動時の振り向きを抑制する機能を追加<br>
+		<br>
+		<span class="red">2016/04/04</span> Ver0.1b<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMActorEvent">アクターイベント</a></h1>
+	<div class="contents_back">
+	このプラグインを導入し、イベントのメモ欄に actor タグをつけることで<br>
+	そのイベントと指定したアクターがほどよく同期します。<br>
+	<br>
+	アクターがパーティに加入するとイベントは消え、パーティから外れると<br>
+	イベントが出現します。<br>
+	また、イベントの見た目もアクターと同じものになります。<br>
+	<br>
+	◆<a href="plugin/TMActorEvent.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2017/02/03</span> Ver1.1.0<br>
+	・同期しているアクターが最後にパーティから外れた位置を記憶する機能を追加<br>
+	・<a href="index.php?article=plugin_menu#TMByeCommand">さよならコマンド</a>と併用時に特定条件下で発生する競合エラーを修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/01/12</span> ver1.0.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMoveRouteEx">自律移動拡張</a></h1>
+	<div class="contents_back">
+	イベントに新しい自律移動パターンを追加します。<br>
+	壁に右手（左手）をついて壁づたいに移動させることができるようになります。<br>
+	リージョンを使って移動範囲を限定することもできます。<br>
+	<br>
+	イベントコマンド『移動ルートの設定』でも使用することができます。<br>
+	<br>
+	◆<a href="plugin/TMMoveRouteEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/04/12</span> Ver1.1<br>
+	・指定イベントに近づく（遠ざかる）コマンドを追加<br>
+	・向いている方向からみて右斜め前や左斜め後ろへ移動するコマンドを追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/03/22</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBalloonLoop">フキダシループ</a></h1>
+	<div class="contents_back">
+	フキダシアイコンをループ表示させます。<br>
+	<br>
+	◆<a href="plugin/TMBalloonLoop.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/06/20</span> Ver1.11<br>
+	・フキダシアイコンのループ時に一瞬フキダシが非表示になる不都合を修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/06/17</span> Ver1.1<br>
+		・致命的不具合を修正、これにともないコマンド名や使用方法にも変更があります。<br>
+		<br>
+		<span class="red">2016/06/16</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMNamePop">ネームポップ</a></h1>
+	<div class="contents_back">
+	イベントの頭上に文字列を表示する機能を追加します。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMNamePop.jpg" class="fancybox" data-fancybox-group="SS" title="TMNamePop"><img src="img/plugin/screen_shot/TMNamePop_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMNamePop.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/08/12</span> Ver2.0.0<br>
+	・縁取りの色をイベントごとに設定する機能を追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/07/05</span> <a href="plugin/old120/TMNamePop.js">Ver1.32</a><br>
+		・制御文字による文字列置換のタイミングを調整<br>
+		<br>
+		<span class="red">2016/06/23</span> Ver1.31<br>
+		・プラグインコマンド namePop でＹ座標補正値を省略すると<br>
+		　ネームポップが表示されない不具合を修正<br>
+		<br>
+		<span class="red">2016/04/16</span> Ver1.3<br>
+		・背景を角丸矩形にする機能を追加（<a href="index.php?article=plugin_system#TMBitmapEx">TMBitmapEx.js</a>が必要です）<br>
+		<br>
+		<span class="red">2016/03/18</span> Ver1.2<br>
+		・ネームポップのＹ座標を調整する機能を追加<br>
+		・制御文字を使用したときに余白がおかしくなる不具合を修正<br>
+		<br>
+		<span class="red">2015/12/09</span> Ver1.1<br>
+		・制御文字（\V, \N, \P, \G, \\, \C）が使えるようになりました。<br>
+		・縁取りの太さと色の設定をプラグインパラメータに追加。<br>
+		・プラグインコマンド TMNamePop set を namePop に短縮しました。<br>
+		　（Ver1.1 では両方のコマンドが使用可能です）<br>
+		<br>
+		<span class="red">2015/11/26</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMAnimeLight">アニメ付き明かり</a></h1>
+	<div class="contents_back">
+	イベントにアニメーション付きの明かりを灯します。<br>
+	<br>
+	以下の画像もご自由にお使いください、img/system フォルダに置けば<br>
+	このプラグインで使用できます。<br>
+	<img src="img/plugin/system/TMAnimeLight1.png"><br>
+	img/system/TMAnimeLight1.png<br>
+	<img src="img/plugin/system/TMAnimeLight2.png"><br>
+	img/system/TMAnimeLight2.png<br>
+	<br>
+	◆<a href="plugin/TMAnimeLight.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/12/02</span> Ver2.0.1<br>
+	・アニメーションを止めて明かり画像をそのまま表示する機能を追加<br>
+	　Ｚ座標のあとに 1 という値を追加することでアニメーションを無効化します。<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・一部プラグインコマンドの変更<br>
+		・明かりのＺ座標を設定するパラメータを追加<br>
+		・アニメーションのフレーム数を設定するパラメータを追加<br>
+		<br>
+		<span class="red">2015/12/15</span> <a href="plugin/old120/TMAnimeLight.js">Ver1.0</a><br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTurnMove">ターン移動</a></h1>
+	<div class="contents_back">
+	プレイヤーとタイミングを合わせて移動するイベントを作成できます。<br>
+	<br>
+	◆<a href="plugin/TMTurnMove.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2017/10/08</span> Ver1.0.2<br>
+	・すべてのページが出現条件を満たしていないイベントがあるとエラー落ちする不具合を修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/09/23</span> Ver1.0.1<br>
+		・プレイヤーを移動させずにターンを経過させるプラグインコマンドを追加<br>
+		<br>
+		<span class="red">2017/09/22</span> Ver1.0.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMXpCharacter">XPキャラクター</a></h1>
+	<div class="contents_back">
+	RPGツクールXP規格のキャラクター素材に対応します。<br>
+	<br>
+	ファイル名の末尾に _xp という文字列がついている歩行グラフィックを<br>
+	自動的にXP規格のキャラクターとして認識します。<br>
+	1キャラクターのみの画像であればファイル名の先頭に $ が必要になります。<br>
+	<br>
+	◆<a href="plugin/TMXpCharacter.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2018/04/21</span> Ver1.0.0<br>
+	・初版公開<br>
+	</div>
+</section>

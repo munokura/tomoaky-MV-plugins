@@ -1,0 +1,150 @@
+<section>
+	<h1 class="contents_title"><a id="index">スキル系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMAttackSkillEx">通常攻撃スキル拡張</a></span>
+		<span class="bloq_m">■<a href="#TMSkillCostEx">スキルコスト拡張</a></span>
+		<span class="bloq_m">■<a href="#TMPassiveSkill">パッシヴスキル</a></span><br>
+		<span class="bloq_m">■<a href="#TMMagicSlot">魔法スロット</a></span>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMAttackSkillEx">通常攻撃スキル拡張</a></h1>
+	<div class="contents_back">
+		攻撃コマンドや防御コマンドで使用するスキルを<br>
+		アクターや装備ごとに変更できるようにします。<br>
+		<br>
+		◆<a href="plugin/TMAttackSkillEx.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2019/04/15</span> Ver1.1.0<br>
+		・アクター以外のメモ欄タグに対応<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/07/03</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSkillCostEx">スキルコスト拡張</a></h1>
+	<div class="contents_back">
+		スキルにＭＰ（ＴＰ）以外のコストを設定できるようになります。<br>
+		・ＨＰ（指定した値、または最大ＨＰに対する割合）<br>
+		・ＭＰ（最大ＭＰに対する割合、特徴『ＭＰ消費率』無効設定あり）<br>
+		・アイテム（または武器、防具） n 個<br>
+		・経験値（レベルダウン禁止設定あり）<br>
+		・お金（指定した値）<br>
+		・変数 n 番（指定した値）<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMSkillCostEx.jpg" class="fancybox" data-fancybox-group="SS" title="TMSkillCostEx"><img src="img/plugin/screen_shot/TMSkillCostEx_thum.jpg"></a><br>
+		<br>
+		下記のプラグインを併用することで、上記コストの一部を<br>
+		スキルウィンドウや説明文に表示できるようになります。<br>
+		■<a href="index.php?article=plugin_menu#TMCostShow">コスト表示拡張</a><br>
+		■<a href="index.php?article=plugin_system#TMTextEscape">メッセージ制御文字拡張</a><br>
+		<br>
+		◆<a href="plugin/TMSkillCostEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/08/23</span> Ver1.2.0<br>
+		・ダメージ計算の直前にコスト（HP/MP/TP）を変数に代入する機能を追加<br>
+		　既存の『残りHP(MP/TP)』を代入する機能もそのまま残しています。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/09/25</span> Ver1.1.1<br>
+			・説明文一部修正（機能に変更はありません）<br>
+			<br>
+			<span class="red">2016/12/27</span> Ver1.1.0<br>
+			・残りTPに対する割合をコストにするタグを追加<br>
+			・残りTPがコスト未満の場合、全TPを消費してスキルを発動させるタグを追加<br>
+			・コスト支払い直前に残りTPを変数に自動的に代入する機能を追加<br>
+			<br>
+			<span class="red">2016/12/05</span> Ver1.0.0<br>
+			・HPが 0 のときコスト支払いができないと判断されてしまう不具合を修正<br>
+			<br>
+			<span class="red">2016/06/13</span> <a href="plugin/old120/TMSkillCostEx.js">Ver0.22b</a><br>
+			・メモ欄タグvnCostが制御文字\V[n]に対応<br>
+			<br>
+			<span class="red">2016/05/09</span> Ver0.21b<br>
+			・敵がスキルを使用したときのアイテムコストを無視するプラグインパラメータを追加<br>
+			<br>
+			<span class="red">2016/03/21</span> Ver0.2b<br>
+			・残りHP(MP)に対する割合をコストにするタグを追加<br>
+			・消費したコストをダメージ計算式に組み込む補助機能（プラグインパラメータ）を追加<br>
+			<br>
+			<span class="red">2015/12/31</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMPassiveSkill">パッシヴスキル</a></h1>
+	<div class="contents_back">
+		使用せずとも常に効果が発動しつづけるスキルを追加します。<br>
+		・習得しているだけで最大ＨＰが１００ポイント上昇するスキル<br>
+		・習得していると剣を装備しているときだけ攻撃力が２０ポイント上昇するスキル<br>
+		・習得しているとＴＰが７５以上のときだけＭＰ消費率が半減するスキル<br>
+		・習得していると毒状態のときだけ回避率が１５％上昇するスキル<br>
+		・習得していると３ターン目だけ防御力が３０ポイント上昇するスキル<br>
+		などを作成することができます。<br>
+		<br>
+		このプラグインは、データベースに設定されているスキルと武器を紐付けて<br>
+		パッシヴスキルを作成します。<br>
+		スキルのメモ欄に &lt;passive:50&gt; というタグを書き込むと、<br>
+		このスキルを習得している間、50 番の武器を装備したときと<br>
+		同じ効果が得られるようになります。<br>
+		<br>
+		発動条件の設定方法、注意点はプラグインヘルプを確認してください。<br>
+		<br>
+		◆<a href="plugin/TMPassiveSkill.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/17</span> Ver1.1.1<br>
+		・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/20</span> Ver1.1.0<br>
+			・発動条件に戦闘中のターン数を追加<br>
+			<br>
+			<span class="red">2016/01/25</span> <a href="plugin/old120/TMPassiveSkill.js">Ver1.0</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMagicSlot">魔法スロット</a></h1>
+	<div class="contents_back">
+		通常の装備とは別に魔法を記憶するシステムを追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMMagicSlot.jpg" class="fancybox" data-fancybox-group="SS" title="TMMagicSlot"><img src="img/plugin/screen_shot/TMMagicSlot_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMMagicSlot.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/10/25</span> Ver1.2.0<br>
+		・callMagicEquip コマンドに対象アクターを指定するオプションを追加<br>
+		・魔法記憶シーン内でアクターを変更する機能を追加<br>
+		　（プラグインパラメータ actorSelectCommand の設定が必要です）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/01/19</span> Ver1.1.0<br>
+			・魔法ごとに記憶可能なアクターまたは職業を制限するタグを追加<br>
+			<br>
+			<span class="red">2017/02/09</span> Ver1.0.2<br>
+			・記憶中の魔法をリストから除外するように変更<br>
+			<br>
+			<span class="red">2016/10/06</span> Ver1.0.1<br>
+			・魔法記憶シーンに最大MP表示を追加<br>
+			<br>
+			<span class="red">2016/08/19</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>

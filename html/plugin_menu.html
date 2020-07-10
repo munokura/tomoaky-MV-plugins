@@ -1,0 +1,478 @@
+<section>
+	<h1 class="contents_title"><a id="index">メニュー系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMSoloMenu">一人旅メニュー</a></span>
+		<span class="bloq_m">■<a href="#TMRingCommand">リングコマンド</a></span>
+		<span class="bloq_m">■<a href="#TMStripeWindow">ストライプウィンドウ</a></span><br>
+		<span class="bloq_m">■<a href="#TMBackButton">戻るボタン</a></span>
+		<span class="bloq_m">■<a href="#TMTopFix">先頭並び替え不可</a></span>
+		<span class="bloq_m">■<a href="#TMByeCommand">さよならコマンド</a></span><br>
+		<span class="bloq_m">■<a href="#TMLineHeightEx">行の高さを変更</a></span>
+		<span class="bloq_m">■<a href="#TMEquipStatusEx">装備ステータス編集</a></span>
+		<span class="bloq_m">■<a href="#TMOmitEquipCommand">最強全脱ぎコマンド削除</a></span><br>
+		<span class="bloq_m">■<a href="#TMOmitSkillCategory">スキルカテゴリからの解放</a></span>
+		<span class="bloq_m">■<a href="#TMOmitShopCommand">ショップコマンド省略</a></span>
+		<span class="bloq_m">■<a href="#TMDescriptionEx">詳細説明ウィンドウ</a></span><br>
+		<span class="bloq_m">■<a href="#TMStatusMenuEx">ステータス表示拡張</a></span>
+		<span class="bloq_m">■<a href="#TMCostShow">コスト表示拡張</a></span>
+		<span class="bloq_m">■<a href="#TMItemCategoryEx">アイテムカテゴリ拡張</a></span><br>
+		<span class="bloq_m">■<a href="#TMEventItemEx">アイテム選択拡張</a></span>
+		<span class="bloq_m">■<a href="#TMMenuLabel">メニューラベル</a></span>
+		<span class="bloq_m">■<a href="#TMSaveDataLabel">セーブデータラベル</a></span><br>
+		<span class="bloq_m">■<a href="#TMCommonCommand">コモンコマンド</a></span>
+		<span class="bloq_m">■<a href="#TMMenuBattler">メニューバトラー</a></span>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSoloMenu">一人旅メニュー</a></h1>
+	<div class="contents_back">
+		一人旅に特化したメインメニューを導入します。<br>
+		<br>
+		プラグインパラメータの値を変更することで、ほぼすべての表示物の<br>
+		表示位置、文字サイズなどを自由にカスタマイズすることができます。<br>
+		また、メニュー系シーンにおけるアクター選択の処理も省略されます。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMSoloMenu.jpg" class="fancybox" data-fancybox-group="SS" title="TMSoloMenu"><img src="img/plugin/screen_shot/TMSoloMenu_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMSoloMenu.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/10/22</span> Ver0.1.3b<br>
+		・メニューから味方が対象ではないアイテムやスキルを使うとエラー落ちする不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/05/10</span> Ver0.1.2b<br>
+			・アイテムシーンにステータスウィンドウを追加<br>
+			<br>
+			<span class="red">2018/05/02</span> Ver0.1.1b<br>
+			・データベース上に存在しないステートの有効度を表示しようとすると<br>
+			　エラー落ちしてしまう不都合を修正。<br>
+			<br>
+			<span class="red">2018/02/13</span> Ver0.1.0b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMRingCommand">リングコマンド</a></h1>
+	<div class="contents_back">
+		マップシーンで使えるリングコマンドを追加します。<br>
+		<a href="img/plugin/screen_shot/TMRingCommand.jpg" class="fancybox" data-fancybox-group="SS" title="TMRingCommand"><img src="img/plugin/screen_shot/TMRingCommand_thum.jpg"></a><br>
+		<br>
+		<a href="http://www.nicovideo.jp/watch/sm27896561">デモ動画(niconico)</a><br>
+		<br>
+		◆<a href="plugin/TMRingCommand.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2016/04/13</span> Ver0.4b<br>
+		・戦闘開始演出中にリングコマンドを操作できてしまう不具合を修正<br>
+		・アイテムシーンなどで顔グラフィックが表示されない場合がある不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/01/26</span> Ver0.3b<br>
+			・選択中のアイコンの拡大率補正パラメータ iconSelectScale を追加<br>
+			・選択中のコマンド名を字幕で表示する機能を追加<br>
+			・パラメータ openResetIndex が saveLastIndex を無視していた不具合を修正<br>
+			・<a href="index.php?article=plugin_system#TMGoldLevelUp">TMGoldLevelUp.js（お金でレベルアップ）</a>の Ver1.11 以上に対応<br>
+			<br>
+			<span class="red">2016/01/13</span> Ver0.22b<br>
+			・useEscape が 0 のとき、Ctrlを押しながらメニューを閉じるとエラー落ちする不具合を修正<br>
+			<br>
+			<span class="red">2015/12/29 18:10</span> Ver0.21b<br>
+			・所持金ウィンドウの開閉設定を追加<br>
+			<br>
+			<span class="red">2015/12/29</span> Ver0.2b<br>
+			・並び替えコマンドに対応<br>
+			・マウスでのリング操作に対応<br>
+			・デフォルトメニューを乗っ取る機能を追加<br>
+			<br>
+			<span class="red">2015/12/21</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMStripeWindow">ストライプウィンドウ</a></h1>
+	<div class="contents_back">
+		項目が 1 列に並ぶコマンドウィンドウの背景を縞々にします。<br>
+		<img src="img/plugin/screen_shot/TMStripeWindow.jpg"><br>
+		<br>
+		◆<a href="plugin/TMStripeWindow.js">プラグインのダウンロード</a><br>
+		<br>
+		必須というわけではありませんが、このプラグインと相性がいいかもしれない<br>
+		システム画像素材 (Window.png) も用意しました。<br>
+		画像単体での使用も可能です、改造や再配布もご自由にどうぞ。<br>
+		<img src="img/plugin/system/stripeWindow/Window.png"><br>
+		<br>
+		<span class="red">2017/01/05</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBackButton">戻るボタン</a></h1>
+	<div class="contents_back">
+		メニューシーンにタップ操作用の戻るボタンを表示します。<br>
+		<img src="img/plugin/screen_shot/TMBackButton.jpg"><br>
+		<br>
+		◆<a href="plugin/TMBackButton.js">プラグインのダウンロード</a><br>
+		<br>
+		このプラグインには以下の画像も必要です、img/system フォルダに名前を変更せずに<br>
+		保存してください。<span class="red">ファイル名を変更する必要がある場合は、プラグインパラメータも<br>
+		一緒に変更する必要があります。</span><br>
+		<img src="img/plugin/system/backButton.png"><br>
+		img/system/backButton.png<br>
+		<br>
+		<span class="red">2016/10/28</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTopFix">先頭並び替え不可</a></h1>
+	<div class="contents_back">
+		パーティの先頭にいるアクターの並び替えを禁止します。<br>
+		<br>
+		◆<a href="plugin/TMTopFix.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/02/17</span> Ver1.0.1<br>
+		・プラグインコマンドを短縮<br>
+		・ツクールMV最新版(Version 1.3.5)環境での動作確認<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2015/12/04</span> <a href="plugin/old120/TMTopFix.js">Ver1.0</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMByeCommand">さよならコマンド</a></h1>
+	<div class="contents_back">
+		このプラグインを導入するとメニューコマンドに『別れる』が追加されます。<br>
+		パーティメンバーが 1 名以下の場合、コマンドを実行することはできません。<br>
+		<br>
+		◆<a href="plugin/TMByeCommand.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/01/12</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMLineHeightEx">行の高さを変更</a></h1>
+	<div class="contents_back">
+		ウィンドウの行の高さを変更します。<br>
+		<span class="red">対応しているウィンドウは ヘルプ、アイテムリスト、スキルリスト、<br>
+		装備ステータス、装備スロット のみとなっています。</span><br>
+		<br>
+		◆<a href="plugin/TMLineHeightEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/10/17</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMEquipStatusEx">装備ステータス編集</a></h1>
+	<div class="contents_back">
+		装備ステータスの項目を自由に編集します。<br>
+		<br>
+		装備変更時のパラメータ比較にHPとMPを追加したり、不要な項目を<br>
+		削除することができるようになります。<br>
+		<br>
+		◆<a href="plugin/TMEquipStatusEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/10/17</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMOmitEquipCommand">最強全脱ぎコマンド削除</a></h1>
+	<div class="contents_back">
+		装備シーンからコマンドウィンドウを削除し、<br>
+		スロットウィンドウに２行分のスペースを追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMOmitEquipCommand.jpg" class="fancybox" data-fancybox-group="SS" title="TMOmitEquipCommand"><img src="img/plugin/screen_shot/TMOmitEquipCommand_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMOmitEquipCommand.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/10/06</span> Ver1.1.1<br>
+		・ショートカットキー使用時にアイテムウィンドウが再描画されない不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/10/10</span> Ver1.1.0<br>
+			・最強装備、全て外すのショートカットキー無効化パラメータを追加<br>
+			<br>
+			<span class="red">2016/02/05</span> <a href="plugin/old120/TMOmitEquipCommand.js">Ver1.01</a><br>
+			・公式プラグイン AltMenuScreen3.js との競合エラーに対応<br>
+			<br>
+			<span class="red">2015/12/22</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMOmitSkillCategory">スキルカテゴリからの解放</a></h1>
+	<div class="contents_back">
+		スキルシーンからカテゴリ選択の処理を除外します。<br>
+		<br>
+		◆<a href="plugin/TMOmitSkillCategory.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/10/05</span> Ver1.0.1<br>
+		・RPGツクール1.5.1環境でエラーが発生する不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/29</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMOmitShopCommand">ショップコマンド省略</a></h1>
+	<div class="contents_back">
+		購入または売却のみの場合にショップコマンドを省略します。<br>
+		<br>
+		イベントコマンド『ショップの処理』で、購入のみ にチェックが入れる、<br>
+		または、商品をひとつも設定せずに実行した場合にショップコマンドが省略されます。<br>
+		<br>
+		◆<a href="plugin/TMOmitShopCommand.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2018/04/25</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMDescriptionEx">詳細説明ウィンドウ</a></h1>
+	<div class="contents_back">
+		アイテムやスキルの詳細情報を表示する機能を追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMDescriptionEx.jpg" class="fancybox" data-fancybox-group="SS" title="TMDescriptionEx"><img src="img/plugin/screen_shot/TMDescriptionEx_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMDescriptionEx.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/02/21</span> Ver2.0.3<br>
+		・一部の特徴の数値に誤差が発生する不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/12/27</span> Ver2.0.2<br>
+			・<a href="index.php?article=plugin_item#TMGreedShop">欲張りショップ</a>との競合不具合を修正<br>
+			<br>
+			<span class="red">2016/12/13</span> Ver2.0.1<br>
+			・HP/MP回復効果の%指定が正しく表示されない不具合を修正<br>
+			・一部の特徴の数値に誤差が発生する不具合を修正<br>
+			<br>
+			<span class="red">2016/09/12</span> Ver2.0.0<br>
+			・使用効果『ステート付加』に通常攻撃が設定されている場合にエラー落ちする不具合を修正。<br>
+			<br>
+			<span class="red">2016/02/27</span> <a href="plugin/old120/TMDescriptionEx.js">Ver1.1</a><br>
+			・TMSkillCostEx.jsに対応、変数以外のコストを自動表示<br>
+			・TMPassiveSkill.jsに対応、パッシヴ効果と制限を自動表示<br>
+			・横線の高さ（余白含む）を設定するプラグインパラメータを追加<br>
+			・細かな不具合の修正<br>
+			<br>
+			<span class="red">2016/02/25</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMStatusMenuEx">ステータス表示拡張</a></h1>
+	<div class="contents_back">
+		ステータスシーンに表示するパラメータを追加します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMStatusMenuEx.jpg" class="fancybox" data-fancybox-group="SS" title="TMStatusMenuEx"><img src="img/plugin/screen_shot/TMStatusMenuEx_thum.jpg"></a>
+		<a href="img/plugin/screen_shot/TMStatusMenuEx2.jpg" class="fancybox" data-fancybox-group="SS" title="TMStatusMenuEx2"><img src="img/plugin/screen_shot/TMStatusMenuEx2_thum.jpg"></a><br>
+		命中率や反撃率、薬の知識、属性有効度など、ほぼすべてのパラメータを<br>
+		２ページに詰め込みました。<br>
+		レベル上限の表示や、二つ名と職業名を結合して表示するおまけ機能も搭載。<br>
+		<br>
+		◆<a href="plugin/TMStatusMenuEx.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2016/02/26</span> Ver1.0<br>
+		・大幅に変更しました、一部機能にいたっては削除しているものもありますので<br>
+		　<a href="plugin/TMStatusMenuExOld.js">旧バージョン</a>も残しておきます。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2015/12/27</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCostShow">コスト表示拡張</a></h1>
+	<div class="contents_back">
+		ＭＰ消費とＴＰ消費が両方設定されたスキルのコストを<br>
+		無理やり両方表示します。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMCostShow.jpg" class="fancybox" data-fancybox-group="SS" title="TMCostShow"><img src="img/plugin/screen_shot/TMCostShow_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMCostShow.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2017/09/25</span> Ver1.0.0<br>
+		・説明文一部修正（機能に変更はありません）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2015/12/31</span> Ver0.2b<br>
+			・<a href="index.php?article=plugin_skill#TMSkillCostEx">スキルコスト拡張</a>の補助機能を追加<br>
+			<br>
+			<span class="red">2015/12/29</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMItemCategoryEx">アイテムカテゴリ拡張</a></h1>
+	<div class="contents_back">
+		通常のアイテムカテゴリ『アイテム、武器、防具、大事なもの』に<br>
+		新しいカテゴリを追加したり、不要なカテゴリを削除したりできます。<br>
+		また、カテゴリが 1 種類だけの場合はカテゴリ選択の処理が省略されます。<br>
+		<br>
+		◆<a href="plugin/TMItemCategoryEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2018/05/01</span> Ver1.0.1<br>
+		・RPGツクールMV ver1.5.1 での動作確認のみ、機能追加等はありません。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/31</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMEventItemEx">アイテム選択拡張</a></h1>
+	<div class="contents_back">
+		イベントコマンド『アイテム選択の処理』において、アイテムタイプごとに<br>
+		以下の設定を追加します。<br>
+		・ヘルプウィンドウを表示するかどうか<br>
+		・個数を表示するかどうか<br>
+		・アイテム選択ウィンドウの表示行数<br>
+		<br>
+		メモ欄タグとプラグインコマンドを使い、候補として表示するアイテムを<br>
+		さらに細かく分類することもできます。<br>
+		<br>
+		◆<a href="plugin/TMEventItemEx.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/01/24</span> Ver1.1.0<br>
+		・サブカテゴリーで表示アイテムを分類する機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/05</span> Ver1.0.1<br>
+			・メッセージウィンドウが表示されていないときのアイテム選択ウィンドウの<br>
+			　表示位置を固定するプラグインパラメータを追加<br>
+			<br>
+			<span class="red">2015/12/24</span> <a href="plugin/old120/TMEventItemEx.js">ver1.0</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMenuLabel">メニューラベル</a></h1>
+	<div class="contents_back">
+		メニューシーンに変数の値を表示します。<br>
+		歩数や戦闘回数などを表示することもできます。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMMenuLabel.jpg" class="fancybox" data-fancybox-group="SS" title="TMMenuLabel"><img src="img/plugin/screen_shot/TMMenuLabel_thum.jpg"></a><br>
+		最大で４つまでゲーム変数や歩数などの値を表示することができます。<br>
+		<br>
+		◆<a href="plugin/TMMenuLabel.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2017/02/07</span> Ver1.1.1<br>
+		・フッターとラベル値の間隔を設定するプラグインパラメータを追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/25</span> Ver1.1.0<br>
+			・メニューシーンのウィンドウ配置を左右反転する機能を追加<br>
+			・メニューコマンドのテキスト位置を変更する機能を追加<br>
+			<br>
+			<span class="red">2016/10/19</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSaveDataLabel">セーブデータラベル</a></h1>
+	<div class="contents_back">
+		セーブファイルウィンドウに変数の値を表示します。<br>
+		<br>
+		<img src="img/plugin/screen_shot/TMSaveDataLabel.jpg"><br>
+		最大で２つまでゲーム変数の値をセーブファイルに表示することができます。<br>
+		<br>
+		◆<a href="plugin/TMSaveDataLabel.js">プラグインのダウンロード</a><br>
+		<br>
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・値の後ろに文字列を表示する機能を追加<br>
+		・ラベルの文字色を設定するパラメータを追加<br>
+		・最大値のときに文字色を変化させる機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/07/29</span> <a href="plugin/old120/TMSaveDataLabel.js">Ver1.0</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMCommonCommand">コモンコマンド</a></h1>
+	<div class="contents_back">
+		メインメニューにコモンイベント実行用のコマンドを追加します。<br>
+		<br>
+		◆<a href="plugin/TMCommonCommand.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/09/21</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMenuBattler">メニューバトラー</a></h1>
+	<div class="contents_back">
+		メニュー画面の顔画像をサイドビューバトラーに変更します。<br>
+		<span class="red">このプラグインの機能を有効化するには、データベース：システムの<br>
+		『サイドビュー戦闘を使用』にチェックをいれる必要があります。</span><br>
+		<br>
+		◆<a href="plugin/TMMenuBattler.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.2</span><br>
+		<br>
+		<span class="red">2020/04/06</span> ver0.1.1b<br>
+		・戦闘から逃げた後にメニューを開くとメニューバトラーまで逃げる不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2020/03/23</span> ver0.1.0b</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>

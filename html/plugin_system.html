@@ -1,0 +1,625 @@
+<section>
+	<h1 class="contents_title"><a id="index">システム系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMPreloadEx">プリロード設定</a></span>
+		<span class="bloq_m">■<a href="#TMBitmapEx">ビットマップ拡張</a></span>
+		<span class="bloq_m">■<a href="#TMTyping">タイピング</a></span><br>
+		<span class="bloq_m">■<a href="#TMScreenSize">ゲーム画面解像度変更</a></span>
+		<span class="bloq_m">■<a href="#TMServerRTP">サーバーRTP</a></span>
+		<span class="bloq_m">■<a href="#TMNewGameEx">別マップでニューゲーム</a></span><br>
+		<span class="bloq_m">■<a href="#TMSecondName">付け替え二つ名</a></span>
+		<span class="bloq_m">■<a href="#TMLinkCredit">リンククレジット</a></span>
+		<span class="bloq_m">■<a href="#TMShooting">シューティング</a></span><br>
+		<span class="bloq_m">■<a href="#TMTimerEx">タイマー拡張</a></span>
+		<span class="bloq_m">■<a href="#TMSimpleWindow">シンプルウィンドウ</a></span>
+		<span class="bloq_m">■<a href="#TMBtnPicture">ボタンピクチャ</a></span><br>
+		<span class="bloq_m">■<a href="#TMDontTouch">ドントタッチ</a></span>
+		<span class="bloq_m">■<a href="#TMAutoNewGame">自動ニューゲーム</a></span>
+		<span class="bloq_m">■<a href="#TMFollowerEx">隊列拡張</a></span><br>
+		<span class="bloq_m">■<a href="#TMMaxLevel">レベル上限操作</a></span>
+		<span class="bloq_m">■<a href="#TMTextEscape">メッセージ制御文字拡張</a></span>
+		<span class="bloq_m">■<a href="#TMGradientText">グラデーション文字</a></span><br>
+		<span class="bloq_m">■<a href="#TMWindowCaption">ウィンドウキャプション</a></span>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMPreloadEx">プリロード設定</a></h1>
+	<div class="contents_back">
+		ゲーム起動時にシステム画像をプリロードするかどうかを、<br>
+		画像ごとに設定します。<br>
+		<br>
+		◆<a href="plugin/TMPreloadEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2018/04/05</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBitmapEx">ビットマップ拡張</a></h1>
+	<div class="contents_back">
+		角丸の矩形や星を描画する機能を追加します。<br>
+		各種ゲージの形状を角丸矩形に自動変更する機能もあります。<br>
+		<br>
+		◆<a href="plugin/TMBitmapEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/30</span> Ver2.0.2<br>
+		・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/08/16</span> Ver2.0.1<br>
+			・角丸ゲージが短すぎる場合に表示が乱れる不具合を修正<br>
+			<br>
+			<span class="red">2016/08/12</span> Ver2.0.0<br>
+			・角丸ゲージ (TMRoundRectGauge.js) の機能を統合<br>
+			<br>
+			<span class="red">2016/04/18</span> <a href="plugin/old120/TMBitmapEx.js">Ver1.1</a><br>
+			・星（★）を描画する機能を追加<br>
+			・グラデーションを付加する機能を追加<br>
+			<br>
+			<span class="red">2016/04/16</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTyping">タイピング</a></h1>
+	<div class="contents_back">
+	ミニタイピングゲームが遊べるコマンドを追加します。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMTyping.jpg" class="fancybox" data-fancybox-group="SS" title="TMTyping"><img src="img/plugin/screen_shot/TMTyping_thum.jpg"></a>
+	<a href="img/plugin/screen_shot/TMTyping2.jpg" class="fancybox" data-fancybox-group="SS" title="TMTyping-オプション"><img src="img/plugin/screen_shot/TMTyping2_thum.jpg"></a>
+	<a href="img/plugin/screen_shot/TMTyping3.jpg" class="fancybox" data-fancybox-group="SS" title="TMTyping-使用例"><img src="img/plugin/screen_shot/TMTyping3_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMTyping.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/03/16</span><br>
+	Ver1.1 公開<br>
+	・ツクールMV1.1.0の未使用ファイル削除ツールに対応<br>
+	　<span class="red">この修正にともない効果音の指定方法が変更されています、Ver1.01以前の<br>
+	　バージョンを使っている方はプラグイン上書き後にパラメータの再設定が必要です。</span><br>
+	・トゥ(TWU)、ドゥ(DWU)、イェ(YE)、ウォ(WHO)を追加<br>
+	・０～９と"、"と"。"を追加<br>
+	・！と？を追加、Shiftキーを押しながらタイプする必要があります。<br>
+	・ァ(LA)、ィ(LI)、…ョ(LYO)などの小さい文字を単独で使用できるように追加<br>
+	　ひとつ前の文字とセットでタイプする方法がない場合に置き換わります。<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/02/02</span> Ver1.01<br>
+		・一部の文字が問題文に使用できない不具合を修正<br>
+		<br>
+		<span class="red">2016/02/01</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMScreenSize">ゲーム画面解像度変更</a></h1>
+	<div class="contents_back">
+	ゲーム画面の解像度を変更します。<br>
+	<br>
+	◆<a href="plugin/TMScreenSize.js">プラグインのダウンロード</a><br>
+	<span class="red">＊ツクールMV最新版では動作しません</span><br>
+	<br>
+	<span class="red">2015/12/25</span> Ver1.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMServerRTP">サーバーRTP</a></h1>
+	<div class="contents_back">
+	ひとつ上の階層にある audio, img を参照することで、<br>
+	複数のプロジェクトで画像、音声ファイルを共用します。<br>
+	<br>
+	ブラウザ版としてサーバーにプロジェクトをアップロードするたびに<br>
+	画像、音声ファイルを転送する手間を省くことができます。<br>
+	<br>
+	◆<a href="plugin/TMServerRTP.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/08/12</span> Ver2.0.0<br>
+	・内部処理をちょっと修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/07/23</span> <a href="plugin/old120/TMServerRTP.js">Ver1.1</a><br>
+		・img/system フォルダだけ元の階層を参照するオプションを追加<br>
+		<br>
+		<span class="red">2015/11/19</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMNewGameEx">別マップでニューゲーム</a></h1>
+	<div class="contents_back">
+	タイトルコマンドに別マップからゲームを始めるコマンドを追加します。<br>
+	<br>
+	◆<a href="plugin/TMNewGameEx.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2017/10/04</span> Ver2.0.0<br>
+	・既存のコマンドを含め、並び順を設定する機能を追加<br>
+	・タイトルコマンドの表示行数を設定する機能を追加<br>
+	・プラグインパラメータを大幅変更<span class="red">(注意)</span><br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/01/12</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSecondName">付け替え二つ名</a></h1>
+	<div class="contents_back">
+	二つ名に実績機能と付け替えによるパラメータ変化を追加します。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMSecondName.jpg" class="fancybox" data-fancybox-group="SS" title="TMSecondName"><img src="img/plugin/screen_shot/TMSecondName_thum.jpg"></a><br>
+	いわゆる実績（トロフィー）のような機能も併せ持つ、追加の防具スロットの<br>
+	ように動作します。<br>
+	<br>
+	◆<a href="plugin/TMSecondName.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2018/06/03</span> Ver1.0.1<br>
+	・パーティメンバーの二つ名装備状況を無視するオプションを追加<br>
+	　一人旅ゲームにおいて先頭アクター以外を隠したい時のための機能です。<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/07/03</span> Ver1.0.0<br>
+		・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+		<br>
+		<span class="red">2016/07/29</span> Ver0.1b<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMLinkCredit">リンククレジット</a></h1>
+	<div class="contents_back">
+	タイトルコマンドにリンク機能付きクレジットを追加します。<br>
+	利用素材の配布元サイトなどを設定すれば、<br>
+	ゲーム内からそのサイトを開けるようになります。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMLinkCredit.jpg" class="fancybox" data-fancybox-group="SS" title="TMLinkCredit"><img src="img/plugin/screen_shot/TMLinkCredit_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMLinkCredit.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2019/04/17</span> Ver3.0.0<br>
+	・RPGアツマールのAPIに対応<br>
+	・設定できるクレジットの上限を撤廃<br>
+	　（プラグインパラメータ変更のため<span class="red">旧バージョンとの互換性はありません</span>）<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・サイト名と説明を制御文字に対応<br>
+		<br>
+		<span class="red">2016/07/26</span> <a href="plugin/old120/TMLinkCredit.js">Ver1.21</a><br>
+		・タイトル画面用テキストの文字色を変更するパラメータを追加<br>
+		<br>
+		<span class="red">2016/07/15</span> Ver1.2<br>
+		・タイトル画面にバージョン情報と著作権情報を書き込む機能を追加<br>
+		<br>
+		<span class="red">2016/03/18</span>	Ver1.11<br>
+		・URLの最大文字数を設定するパラメータを追加<br>
+		<br>
+		<span class="red">2016/03/09</span> Ver1.1<br>
+		・ヘルプの表示方法などを変更するパラメータを追加<br>
+		<br>
+		<span class="red">2015/12/01</span> Ver1.01<br>
+		・URL表示がおかしくなっていた不具合を修正<br>
+		<br>
+		<span class="red">2015/11/16</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMShooting">シューティング</a></h1>
+	<div class="contents_back">
+	プレイヤーとイベントに弾を発射する機能を追加します。<br>
+	<br>
+	◆<a href="plugin/TMShooting.js">プラグイン ver1.3.9 のダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+	ゲームパッド設定の部分を<a href="https://twitter.com/Sigureya/" target="_blank">しぐれんさん</a>の<a href="http://tm.lucky-duet.com/viewtopic.php?f=5&t=4712" target="_blank">Mano_InputConfig.js</a>にお任せするようになりました。<br>
+	キーボードとゲームパッドを細かくいじりたおせる素敵プラグインです。<br>
+	<br>
+	◆<a href="plugin/tmshooting_old/TMShooting.js">プラグイン ver1.2.0 のダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	◆<a href="zip/TMShooting.zip">サンプルプロジェクトのダウンロード</a><br>
+	<span class="red">9MBほどのzipファイルで、プラグインはver1.2.0となっています。<br>
+	動作に必要な画像も入っていますので、初めて利用する方は<br>
+	このサンプルプロジェクトをダウンロードしてください。</span><br>
+	<br>
+	<span class="red">2019/07/26</span> Ver1.3.9<br>
+	・timeBomb タグが付与された弾が装備シーンで正しく動作しない不具合を修正。<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2019/06/29</span> Ver1.3.8<br>
+		・発射後に爆発する弾を作成する timeBomb タグを追加。<br>
+		<br>
+		<span class="red">2018/10/23</span> Ver1.3.7<br>
+		・deletePlayerBullets / deleteEnemyBullets で消去した弾が再利用できなくなる不具合を修正。<br>
+		<br>
+		<span class="red">2018/10/08</span> Ver1.3.6<br>
+		・イベントの当たり判定サイズと弾発射位置補正を変更するプラグインコマンドを追加。<br>
+		<br>
+		<span class="red">2018/06/14</span> Ver1.3.5<br>
+		・すべての弾を一時的に停止させるプラグインコマンドを追加。<br>
+		<br>
+		<span class="red">2018/04/23</span> Ver1.3.4<br>
+		・SAN_AnalogMove.js ver3系と併用した際、ホールドによる向き固定が動作しない問題に対応。<br>
+		<br>
+		<span class="red">2018/01/18</span> Ver1.3.3<br>
+		・武器ごとに弾発射効果音を設定するタグを追加<br>
+		　武器にタグがなければ今までどおりプラグインパラメータの設定が適用されます。<br>
+		<br>
+		<span class="red">2017/11/01</span> Ver1.3.2<br>
+		・地形タグとリージョンで弾の通行不可領域を設定する機能を追加<br>
+		・フォロワーを無敵にする設定を追加<br>
+		・レベルアップ時のアニメーション設定を追加<br>
+		・SAN_MapGenerator.js ver1.1.8 の壁を壊す機能に対応<br>
+		<br>
+		<span class="red">2017/10/30</span> Ver1.3.1<br>
+		・<a href="http://rev2nym.blog.fc2.com/" target="_blank">サンシロさん</a>の下記プラグインに対応しました。<br>
+		　SAN_AnalogMove.js ver3.0.3<br>
+		　SAN_AnalogStick.js ver1.0.0 (SAN_AnalogMove.js ver3.0.3 との併用)<br>
+		　SAN_MapGenerator.js ver1.00a<br>
+		　<span class="red">併用する際はTMShooting.jsよりも上に上記プラグインを導入してください。</span><br>
+		<br>
+		<span class="red">2017/10/24</span> Ver1.3.0<br>
+		・<a href="https://twitter.com/Sigureya/" target="_blank">しぐれんさん</a>の<a href="http://tm.lucky-duet.com/viewtopic.php?f=5&t=4712" target="_blank">Mano_InputConfig.js</a>に対応（重複部分を削除）<br>
+		　対応のための修正作業までしぐれんさんにしていただきました、ありがとうございます！<br>
+		<br>
+		<span class="red">2017/10/23</span> Ver1.2.0<br>
+		・キー入力によって一時的にプレイヤーの向きを固定する機能を追加<br>
+		・被弾時に発生する無敵時間を追加（&lt;shotInvincible:60&gt; タグで設定）<br>
+		<br>
+		<span class="red">2017/07/24</span> Ver1.1.1<br>
+		・プラグインパラメータ『padConfigCommand』を空にすることでパッドボタン配置を<br>
+		　変更できないようにする機能を追加<br>
+		<br>
+		<span class="red">2017/07/24</span> Ver1.1.0<br>
+		・イベントコマンド『文章の表示』実行中のみ弾発射を禁止する機能を追加<br>
+		・弾発射禁止状態でも発射効果音が再生されてしまう不具合を修正<br>
+		・弾画像ファイル名の変更機能を削除、shootingBullet1 ～ 8 のみ使用可能<br>
+		・未使用ファイル削除機能に対応<br>
+		<br>
+		<span class="red">2017/01/19</span> Ver1.0.2<br>
+		・resetDeadSwitch が正しく動作しない不具合を修正<br>
+		<br>
+		<span class="red">2017/01/10</span> Ver1.0.1<br>
+		・プレイヤーの弾発射時に効果音を鳴らす機能を追加<br>
+		<br>
+		<span class="red">2016/10/10</span><br>
+		・ヘルプ内に以下を追記<br>
+		　　nwayShot などのコマンドに味方対象のスキルを設定した場合、イベント同士<br>
+		　　での攻撃が表現できますが、スキルの設定によっては命中判定が正しく機能<br>
+		　　しません。<br>
+		　　弾が当たらない場合はスキルの使用効果にステート付加 0 %などの無意味な<br>
+		　　効果を設定することでこの問題を回避することができます。<br>
+		<br>
+		<span class="red">2016/10/04</span> Ver1.0.0<br>
+		・弾の発射位置（Ｙ座標）を調整する &lt;shiftFiringY:0&gt; タグを追加<br>
+		・弾の発射不可時間を倍率補正する &lt;shotIntervalRate:1.0&gt; タグを追加<br>
+		・着弾時のアニメーションを指定する &lt;bulletAnime:1&gt; タグを追加<br>
+		・下記のタグがステートのメモ欄でも利用できるようになります、<br>
+		　設定した値は加算ではなく上書き（武器よりステートを優先）されます。<br>
+		　対象タグ: shotType / shotIndex / shotSkill<br>
+		・レベルアップメッセージの表示を抑制するプラグインパラメータを追加<br>
+		・弾に設定されたスキルの範囲が味方を対象としている場合、イベント同士<br>
+		　でも弾が当たるようになります<br>
+		<br>
+		<span class="red">2016/08/18</span> <a href="plugin/old120/TMShooting.js">Ver0.13b</a><br>
+		・データロード時にエラー落ちする致命的な不具合を修正<br>
+		<br>
+		<span class="red">2016/07/18</span> Ver0.12b<br>
+		・エネミー弾に正しい攻撃力が反映されない不具合の修正<br>
+		・プレイヤーに弾を発射させるコマンド forceShot を追加<br>
+		・貫通弾を設定する &lt;penetrate&gt; タグを追加<br>
+		<br>
+		<span class="red">2016/06/03</span> Ver0.11b<br>
+		・メニューのオプションにパッドボタン配置を追加<br>
+		・弾発射禁止、全弾消去などのプラグインコマンドを追加<br>
+		<br>
+		<span class="red">2016/05/31</span> Ver0.1b<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMExtraShot">エクストラショット（TMShooting.js拡張）</a></h1>
+	<div class="contents_back">
+	TMShooting.jsにもうひとつのショットを追加します。<br>
+	このショットはアクターのパラメータに影響されません<br>
+	<br>
+	<span class="red">このプラグインは TMShooting.js の拡張プラグインです、単体では正しく動作しません。</span><br>
+	<br>
+	◆<a href="plugin/TMExtraShot.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2017/10/23</span> Ver1.2.0<br>
+	・TMShooting.js ver1.2.0に対応<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/09/09</span> Ver1.0.1<br>
+		・プラグインパラメータを正しく読めない不具合の修正<br>
+		<br>
+		<span class="red">2017/09/04</span> Ver1.0.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTimerEx">タイマー拡張</a></h1>
+	<div class="contents_back">
+	タイマー表示を秒単位からミリ秒単位に変更します。<br>
+	<br>
+	<img src="img/plugin/screen_shot/TMTimerEx.jpg"><br>
+	こんな表示になります、表示する位置もプラグインパラメータで指定できます。<br>
+	<br>
+	◆<a href="plugin/TMTimerEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/07/29</span> Ver1.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMSimpleWindow">シンプルウィンドウ</a></h1>
+	<div class="contents_back">
+	ウィンドウをピクチャ機能に近い感覚で使えるようにします。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMSimpleWindow.jpg" class="fancybox" data-fancybox-group="SS" title="TMSimpleWindow"><img src="img/plugin/screen_shot/TMSimpleWindow_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMSimpleWindow.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2017/11/03</span> Ver1.2.0<br>
+	・ウィンドウ背景（文章の表示コマンド準拠）を指定してウィンドウを開くコマンドを追加<br>
+	・シーン切り替え時にウィンドウを隠す設定を追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/04/20</span> Ver1.1.0<br>
+		・変数の値が変化した際に自動でウィンドウを再描画する機能を追加<br>
+		<br>
+		<span class="red">2017/04/05</span> Ver1.0.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBtnPicture">ボタンピクチャ</a></h1>
+	<div class="contents_back">
+	ピクチャをタップ（クリック）でコモンイベントを起動します。<br>
+	<br>
+	◆<a href="plugin/TMBtnPicture.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2015/11/05</span> Ver1.02(Ver1.01)<br>
+	・不具合修正<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2015/11/05</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMDontTouch">ドントタッチ</a></h1>
+	<div class="contents_back">
+	指定したリージョンをタップ（クリック）できなくします。<br>
+	<br>
+	◆<a href="plugin/TMDontTouch.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2015/11/07</span> Ver1.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMAutoNewGame">自動ニューゲーム</a></h1>
+	<div class="contents_back">
+	起動時に自動ではじめからゲームを開始します。<br>
+	Web用ミニゲームなど、タイトルが不要な場合に使えます。<br>
+	<br>
+	セーブデータがある場合、自動で続きからゲームを開始する機能もあります。<br>
+	<br>
+	◆<a href="plugin/TMAutoNewGame.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+	<br>
+	<span class="red">2018/10/25</span> Ver2.1.1<br>
+	・本体ver1.6.1で autoDevTool がONの場合にエラーが発生する不具合を修正<br>
+	・ゲームオーバー / ゲーム終了 によるシーン遷移の挙動を変更する設定を追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2018/03/02</span> Ver2.1.0<br>
+		・自動セーブ機能を追加<br>
+		・一部プラグインパラメータを変更（旧verに上書きする場合は再設定が必要です）<br>
+		<br>
+		<span class="red">2016/08/12</span> Ver2.0.0<br>
+		・自動コンティニュー機能を追加<br>
+		<span class="red">2015/12/25</span> <a href="plugin/old120/TMAutoNewGame.js">Ver1.1</a><br>
+		・デベロッパツールを自動起動する機能を追加<br>
+		・ゲームウィンドウを常に最前面に表示する機能を追加<br>
+		<br>
+		<span class="red">2015/10/30</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMFollowerEx">隊列拡張</a></h1>
+	<div class="contents_back">
+	隊列人数を増やしたり、パーティ外のアクターを隊列に加えたりすることができます。<br>
+	<br>
+	◆<a href="plugin/TMFollowerEx.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/02/02</span> Ver1.1<br>
+	・イベントと隊列メンバーの接触でもイベントを起動する機能を追加<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2015/12/15</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMGoldLevelUp">お金でレベルアップ</a></h1>
+	<div class="contents_back">
+	経験値ではなくお金を消費して任意のタイミングで<br>
+	アクターをレベルアップさせることができます。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMGoldLevelUp.jpg" class="fancybox" data-fancybox-group="SS" title="TMGoldLevelUp"><img src="img/plugin/screen_shot/TMGoldLevelUp_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMGoldLevelUp.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2017/01/17</span> Ver1.2.1<br>
+	・アクターごとに必要金額の倍率を補正する &lt;goldLevelUpRate:1.5&gt; タグを追加<br>
+	・未使用ファイル削除ツールに対応<br>
+	　これにともない再度プラグインパラメータの再設定が必要になりますm(_ _)m<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/01/09</span> Ver1.2.0<br>
+		・プラグインコマンドからレベルアップシーンへ移行した場合に<br>
+		　顔グラフィックが表示されないことがある不具合を修正。<br>
+		・プラグインパラメータ levelUpSe の書式を変更しました。<br>
+		　プラグインを上書き更新する場合は再設定が必要になります。<br>
+		<br>
+		<span class="red">2016/01/26</span> <a href="plugin/old120/TMGoldLevelUp.js">Ver1.11</a><br>
+		・<a href="index.php?article=plugin_menu.html#TMRingCommand">TMRingCommand.js（リングコマンド）</a>の Ver0.3b 以上に対応<br>
+		<br>
+		<span class="red">2016/01/22</span> Ver1.1<br>
+		・マウス（タップ）操作用のアクター切り替えボタンを追加<br>
+		<br>
+		<span class="red">2016/01/21</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMaxLevel">レベル上限操作</a></h1>
+	<div class="contents_back">
+	レベル上限をゲーム中に増やすことができます。<br>
+	<br>
+	◆<a href="plugin/TMMaxLevel.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2015/12/29</span> Ver1.0<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMTextEscape">メッセージ制御文字拡張</a></h1>
+	<div class="contents_back">
+	文章の表示などに使える制御文字を追加します。<br>
+	使用方法はプラグインヘルプを参照してください。<br>
+	<br>
+	◆<a href="plugin/TMTextEscape.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+	<br>
+	<span class="red">2018/05/01</span> Ver1.4.1<br>
+	・RPGツクールMV ver1.5.1 での動作確認のみ、機能追加等はありません。<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2017/01/13</span> Ver1.4.0<br>
+		・顔グラフィックを指定したアクターのものに設定する制御文字を追加<br>
+		<br>
+		<span class="red">2016/03/15</span> <a href="plugin/old120/TMTextEscape.js">Ver1.31</a><br>
+		・マップ名（表示名ではない）に置き換える制御文字を追加<br>
+		<br>
+		<span class="red">2016/02/26</span> Ver1.3<br>
+		・二つ名に置き換える制御文字を追加<br>
+		<br>
+		<span class="red">2015/12/31</span> Ver1.2<br>
+		・アイテム、武器、防具の所持数、所持金に置き換える制御文字を追加<br>
+		（所持金は 0 番のアイテムとして扱われます）<br>
+		<br>
+		<span class="red">2015/12/29</span> Ver1.1<br>
+		・アクターのレベル上限を表示する制御文字 \ML[n] を追加<br>
+		<br>
+		<span class="red">2015/12/15</span> Ver1.0<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMGradientText">グラデーション文字</a></h1>
+	<div class="contents_back">
+	文字の描画色として縦方向のグラデーションを適用します。<br>
+	制御文字を使えばキャプションの位置を左上以外に変更できます。<br>
+	<br>
+	<a href="plugin/screen_shot/TMGradientText.jpg" class="fancybox" data-fancybox-group="SS" title="TMGradientText"><img src="plugin/screen_shot/TMGradientText_thum.jpg"></a><br>
+	<br>
+	◆<a href="plugin/TMGradientText.js">プラグインのダウンロード</a><br>
+	<span class="red">* 動作確認 RPGツクールMV Version 1.6.2</span><br>
+	<br>
+	<span class="red">2020/03/09</span> ver0.1.0b<br>
+	・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMWindowCaption">ウィンドウキャプション</a></h1>
+	<div class="contents_back">
+	ウィンドウの左上にキャプションを追加します。<br>
+	制御文字を使えばキャプションの位置を左上以外に変更できます。<br>
+	<br>
+	<a href="img/plugin/screen_shot/TMWindowCaption.jpg" class="fancybox" data-fancybox-group="SS" title="TMWindowCaption"><img src="img/plugin/screen_shot/TMWindowCaption_thum.jpg"></a><br>
+	<br>
+	必要な画像<br>
+	<img src="img/plugin/system/TMWindowCaption.png"><br>
+	img/system/TMWindowCaption.png<br>
+	<img src="img/plugin/system/TMWindowCaptionVR.png"><br>
+	img/system/TMWindowCaptionVR.png<br>
+	<br>
+	◆<a href="plugin/TMWindowCaption.js">プラグインのダウンロード</a><br>
+	<br>
+	<span class="red">2016/03/04</span> Ver0.31b<br>
+	・ツクールMV1.1.0の未使用ファイル削除ツールに対応<br>
+	<br>
+	<span class="toggle">過去の更新履歴</span>
+	<p class="release_notes">
+		<span class="red">2015/12/26</span> Ver0.3b<br>
+		・フォント設定機能を追加<br>
+		<br>
+		<span class="red">2015/12/23</span> Ver0.2b<br>
+		・一部の制御文字に対応<br>
+		・キャプションの位置を調整する制御文字を追加<br>
+		<span class="red">・必要な画像がひとつ増えました</span><br>
+		<br>
+		<span class="red">2015/12/20</span> Ver0.1b<br>
+		・初版公開<br>
+	</p>
+	</div>
+</section>

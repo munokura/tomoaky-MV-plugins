@@ -1,0 +1,301 @@
+<section>
+	<h1 class="contents_title"><a id="index">マップ系プラグイン</a></h1>
+	<div class="contents_back">
+		<span class="bloq_m">■<a href="#TMCommonEventKey">コモンイベントキー</a></span>
+		<span class="bloq_m">■<a href="#TMMoveEx">移動機能拡張</a></span>
+		<span class="bloq_m">■<a href="#TMRegionPassable">リージョン通行設定</a></span><br>
+		<span class="bloq_m">■<a href="#TMMapNameEx">マップ名表示拡張</a></span>
+		<span class="bloq_m">■<a href="#TMMapFadeEx">フェードイン調整</a></span>
+		<span class="bloq_m">■<a href="#TMMapHpGauge">マップＨＰゲージ</a></span><br>
+		<span class="bloq_m">■<a href="#TMMultiHpGauge">マルチＨＰゲージ</a></span>
+		<span class="bloq_m">■<a href="#TMBossHpGauge">ボスＨＰゲージ</a></span>
+		<span class="bloq_m">■<a href="#TMLogWindow">ログウィンドウ</a></span><br>
+		<span class="bloq_m">■<a href="#TMRegionColor">リージョンカラー</a></span>
+	</div>
+</section>
+		
+<section>
+	<h1 class="contents_title"><a id="TMCommonEventKey">コモンイベントキー</a></h1>
+	<div class="contents_back">
+		任意のキーにコモンイベントを設定し、マップシーンで<br>
+		ショートカットキーとして利用できるようにします。<br>
+		<br>
+		アイテムシーンなどを呼び出すショートカットキーを作成する際に便利なスクリプトを<br>
+		<a href="index.php?article=plugin_guide#script">こちら</a>にまとめてあります、参考にしてみてください。<br>
+		<br>
+		◆<a href="plugin/TMCommonEventKey.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/28</span> Ver1.0.2<br>
+		・プレイヤーが移動中でもキーを有効にする機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/06/16</span> Ver1.0.1<br>
+			・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+			<br>
+			<span class="red">2016/03/15</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMoveEx">移動機能拡張</a></h1>
+	<div class="contents_back">
+		壁衝突音やリージョンによる通行設定などの機能を追加します。<br>
+		<br>
+		◆<a href="plugin/TMMoveEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/16</span> Ver1.3.1<br>
+		・未使用ファイル削除ツールに対応<br>
+		・メモ欄タグを注釈にも使えるように修正<br>
+		・一部プラグインパラメータ変更（更新する場合は再設定が必要です）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/07/04</span> Ver1.3<br>
+			・イベントがリージョンを踏んだときにセルフスイッチを操作する機能を追加<br>
+			・指定したリージョンのどこかへランダムに場所移動させる機能を追加<br>
+			<br>
+			<span class="red">2016/04/11</span> Ver1.2<br>
+			・イベントごとに移動可能リージョンを設定する機能を追加<br>
+			<br>
+			<span class="red">2016/03/11</span> Ver1.1<br>
+			・その場で向き変更する機能を追加<br>
+			<br>
+			<span class="red">2015/12/01</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMRegionPassable">リージョン通行設定</a></h1>
+	<div class="contents_back">
+		その場所が通行可能かどうかをリージョンで設定できるようになります。<br>
+		<span class="red">(このプラグインは TMMoveEx.js から一部機能を切り出したものです)</span><br>
+		<br>
+		◆<a href="plugin/TMRegionPassable.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.1</span><br>
+		<br>
+		<span class="red">2018/03/02</span> Ver1.0.0<br>
+		・初版公開<br>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMapNameEx">マップ名表示拡張</a></h1>
+	<div class="contents_back">
+		マップ名の表示を調整し、一部の制御文字に対応します。<br>
+		<br>
+		◆<a href="plugin/TMMapNameEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/16</span> Ver1.0.1<br>
+		・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/08/14</span> Ver1.0.0<br>
+			<br>
+			<span class="red">2015/12/26</span> <a href="plugin/old120/TMMapNameEx.js">ver0.2b</a><br>
+			・フォント設定機能を追加<br>
+			<br>
+			<span class="red">2015/12/17</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMapFadeEx">フェードイン調整</a></h1>
+	<div class="contents_back">
+		プラグインパラメータを変更することで各種フェードイン（アウト）時間を<br>
+		調整することができます。<br>
+		<br>
+		メニュー背景のブラー効果を解除するおまけ機能付きです。<br>
+		<br>
+		◆<a href="plugin/TMMapFadeEx.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.5.0</span><br>
+		<br>
+		<span class="red">2017/06/16</span> Ver1.0.1<br>
+		・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/01/28</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMapHpGauge">マップＨＰゲージ</a></h1>
+	<div class="contents_back">
+		マップシーンに顔グラフィックとＨＰゲージを表示します。<br>
+		必要に応じてＭＰや変数などをゲージで表示することもできます。<br>
+		<br>
+		◆<a href="plugin/TMMapHpGauge.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.2</span><br>
+		<br>
+		<span class="red">2019/11/04</span> Ver1.4.4<br>
+		・ステートアイコンの拡大率と不透明度を設定するプラグインパラメータを追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/09/12</span> Ver1.4.3<br>
+			・HPダメージと顔グラフィックの変更が同時に発生した際、ウィンドウが揺れない不具合を修正<br>
+			<br>
+			<span class="red">2018/08/24</span> Ver1.4.2<br>
+			・イベントコマンド『アクターの画像変更』による顔グラフィックの変更に対応<br>
+			<br>
+			<span class="red">2018/06/22</span> Ver1.4.1 <span class="red">*機能面の変更点は一切ありません</span><br>
+			・実際の挙動と矛盾していたプラグインパラメータの説明を修正<br>
+			・プラグインパラメータ vnMax に関する補足説明をヘルプに追加<br>
+			<br>
+			<span class="red">2017/11/03</span> Ver1.4.0<br>
+			・戦闘シーンにＨＰゲージウィンドウを表示する設定を追加<br>
+			・ゲージパラメータの設定方法を変更<br>
+			　<span class="red">旧バージョンを使用しているプロジェクトに適用する場合、プラグインパラメータの再設定が必要です。</span><br>
+			<br>
+			<span class="red">2017/10/20</span> Ver1.3.4<br>
+			・顔グラフィックを非表示にする機能を追加<br>
+			<br>
+			<span class="red">2017/09/23</span> Ver1.3.3<br>
+			・ゲーム中にウィンドウ位置を変更する moveHpGaugeWindow コマンドを追加<br>
+			<br>
+			<span class="red">2017/09/15</span> Ver1.3.2<br>
+			・変数ゲージに最大値を表示させるプラグインパラメータを追加<br>
+			<br>
+			<span class="red">2017/06/15</span> Ver1.3.1<br>
+			・RPGツクールMV Version 1.5.0 での動作確認（機能的な変更はありません）<br>
+			<br>
+			<span class="red">2017/02/02</span> Ver1.3.0<br>
+			・レベルと経験値ゲージを表示する機能を追加<br>
+			・ゲージよりも上に顔グラフィックが表示される場合がある不具合を修正<br>
+			<br>
+			<span class="red">2017/01/27</span> Ver1.2.1<br>
+			・不要なプラグインパラメータの削除漏れを修正<br>
+			・プレイヤーとウィンドウが重なった際の不透明度の処理を変更<br>
+			　windowOpacity と collideOpacity のより低い値の方を適用します。<br>
+			<br>
+			<span class="red">2017/01/26</span> Ver1.2.0<br>
+			・ゲージＤを追加<br>
+			・ゲージごとに表示、非表示を切り替えるプラグインコマンドを追加<br>
+			<br>
+			<span class="red">2016/10/20</span> Ver1.1.0<br>
+			・ウィンドウ（フレームと背景）の透明度を設定するパラメータを追加<br>
+			・所持金を表示する機能を追加<br>
+			<br>
+			<span class="red">2016/08/14</span> Ver1.0.0<br>
+			<br>
+			<span class="red">2016/05/21</span> <a href="plugin/old120/TMMapHpGauge.js">Ver0.11b</a><br>
+			・ＨＰゲージウィンドウを隠す機能が動作しない不具合を修正<br>
+			<br>
+			<span class="red">2016/05/14</span> Ver0.1b<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMMultiHpGauge">マルチＨＰゲージ</a></h1>
+	<div class="contents_back">
+		マップシーンにパーティ(バトルメンバー)人数分のＨＰゲージを表示します。<br>
+		ＨＰの他にもＭＰ、ＴＰ、レベルと経験値、変数、所持金、ステートアイコン、アクター名などを<br>
+		表示することができます。<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMMultiHpGauge.jpg" class="fancybox" data-fancybox-group="SS" title="マルチＨＰゲージ"><img src="img/plugin/screen_shot/TMMultiHpGauge_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMMultiHpGauge.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/07/02</span> Ver1.0.0<br>
+		・プラグインパラメータを追加（既存のものにも変更があります）<br>
+		・戦闘シーンに表示する際、マップシーンでの不透明度が適用される不具合を修正<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/05/09</span> <a href="plugin_map/old150/TMMultiHpGauge.js">ver0.1.0b</a><br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMBossHpGauge">ボスＨＰゲージ</a></h1>
+	<div class="contents_back">
+		マップシーンに任意のイベントのＨＰゲージを表示します。<br>
+		<span class="red">このプラグインは以下のいずれかのプラグインと併用する必要があります。</span><br>
+		・<a href="index.php?article=plugin_action">ジャンプアクション(TMJumpAction.js)</a><br>
+		・<a href="index.php?article=plugin_system#TMShooting">シューティング(TMShooting.js)</a><br>
+		<br>
+		◆<a href="plugin/TMBossHpGauge.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2018/09/25</span> Ver1.1.0<br>
+		・ウィンドウ生成時にイベント指定がリセットされる不具合を修正<br>
+		・ボスの名前とＨＰの値を非表示にする機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2017/07/21</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMLogWindow">ログウィンドウ</a></h1>
+	<div class="contents_back">
+		マップシーンにログウィンドウを表示します。<br>
+		<br>
+		◆<a href="plugin/TMLogWindow.js">プラグインのダウンロード</a><br>
+		<span class="red">* 動作確認 RPGツクールMV Version 1.6.1</span><br>
+		<br>
+		<span class="red">2019/03/11</span> Ver1.1.1<br>
+		・一番古いテキストを削除するコマンドを追加。<br>
+		・古いテキストから自動的に削除していく機能を追加。<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2018/09/11</span> Ver1.1.0<br>
+			・ウィンドウフレームと背景の不透明度を設定する機能を追加。<br>
+			<br>
+			<span class="red">2018/03/20</span> Ver1.0.1<br>
+			・ログに表示した変数が、値の変更を反映してしまう不具合を修正。<br>
+			<br>
+			<span class="red">2017/07/21</span> Ver1.0.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
+
+<section>
+	<h1 class="contents_title"><a id="TMRegionColor">リージョンカラー</a></h1>
+	<div class="contents_back">
+		指定したリージョンにだけ色をつけて表示します。<br>
+		対象となるリージョンや色はプラグインコマンドで変更できます。<br>
+		<br>
+		ゲーム中にリージョンを変更する機能も追加されます。<br>
+		（この機能は一時的なもので、マップ移動によって変更は解除されます）<br>
+		<br>
+		<a href="img/plugin/screen_shot/TMRegionColor.jpg" class="fancybox" data-fancybox-group="SS" title="RegionColor"><img src="img/plugin/screen_shot/TMRegionColor_thum.jpg"></a><br>
+		<br>
+		◆<a href="plugin/TMRegionColor.js">プラグインのダウンロード</a><br>
+		<span class="red">* ツクールMV最新版では動作しません</span><br>
+		<br>
+		<span class="red">2016/04/07</span> Ver1.1<br>
+		・指定座標のリージョンを変更するプラグインコマンドを追加<br>
+		・マップ内の指定リージョンを一括変更するプラグインコマンドを追加<br>
+		・プレイヤーが移動したルートに沿ってリージョンを変更する機能を追加<br>
+		<br>
+		<span class="toggle">過去の更新履歴</span>
+		<p class="release_notes">
+			<span class="red">2016/03/01</span> Ver1.0<br>
+			・初版公開<br>
+		</p>
+	</div>
+</section>
