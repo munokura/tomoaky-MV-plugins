@@ -9,10 +9,13 @@
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
 
+// linkscape Modified 2020/08/10
+// バージョン: 2.0.4
+
 /*:
- * @plugindesc アイテムやスキルの詳細情報を表示する機能を追加します。
+ * @plugindesc アイテムやスキルの詳細情報の表示機能追加。(FTKR_CardGamesとの競合解消)
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
+ * @author tomoaky (http://hikimoki.sakura.ne.jp/) linkscape
  *
  * @param descriptionKeyCode
  * @desc 説明ボタンとして使うキー
@@ -603,10 +606,11 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     this._descriptionExWindow = descriptionExWindow;
   };
 
+  ///modify by linkscape
   var _Window_Message_isAnySubWindowActive = Window_Message.prototype.isAnySubWindowActive;
   Window_Message.prototype.isAnySubWindowActive = function() {
     return (_Window_Message_isAnySubWindowActive.call(this) ||
-            this._descriptionExWindow.active);
+            (this._descriptionExWindow && this._descriptionExWindow.active));
   };
 
   //-----------------------------------------------------------------------------
