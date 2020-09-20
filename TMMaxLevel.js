@@ -6,50 +6,58 @@
 //=============================================================================
 
 /*:
- * @plugindesc レベル上限をゲーム中に増やすことができます。
+ * @plugindesc v1.0.1 レベル上限をゲーム中に増やすことができます。
  *
  * @author tomoaky (http://hikimoki.sakura.ne.jp/)
  *
  * @param maxMaxLevel
+ * @text レベル上限
+ * @type number
+ * @min 1
+ * @max 99
  * @desc 加算値込みのレベル上限
  * 初期値: 99
  * @default 99
  *
  * @help
  * プラグインコマンド:
- *   gainMaxLevel 1 5     # アクター１番のレベル上限を５増やす
- *   getMaxLevel 2 10     # アクター２番のレベル上限を変数１０番に代入
- *   getMaxLevel 2 3      # アクター２番のレベル上限(加算値)を変数３番に代入
+ * gainMaxLevel 1 5
+ *      # アクター１番のレベル上限を５増やす
+ * getMaxLevel 2 10
+ *      # アクター２番のレベル上限を変数１０番に代入
+ * getMaxLevelPlus 2 3
+ *      # アクター２番のレベル上限(加算値)を変数３番に代入
  * 
+ * v1.0.1 プラグインパラメーターの調整と、ヘルプの誤字を修正 by ムノクラ
  */
 
 var Imported = Imported || {};
 Imported.TMMaxLevel = true;
 
-(function() {
+(function () {
 
   var parameters = PluginManager.parameters('TMMaxLevel');
   var maxMaxLevel = parameters['maxMaxLevel'];
-  
+
   //-----------------------------------------------------------------------------
   // Game_Interpreter
   //
 
   var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
-  Game_Interpreter.prototype.pluginCommand = function(command, args) {
+  Game_Interpreter.prototype.pluginCommand = function (command, args) {
     _Game_Interpreter_pluginCommand.call(this, command, args);
     if (command === 'gainMaxLevel') {
       var actor = $gameActors.actor(args[0]);
       if (actor) {
         actor.gainMaxLevel(Number(args[1]));
       }
-    } else 
-    if (command === 'getMaxLevel') {
-      var actor = $gameActors.actor(args[0]);
-      if (actor) {
-        $gameVariables.setValue(args[1], actor.maxLevel())
+    } else
+      if (command === 'getMaxLevel') {
+        var actor = $gameActors.actor(args[0]);
+        if (actor) {
+          $gameVariables.setValue(args[1], actor.maxLevel())
+        }
       }
-    }
     if (command === 'getMaxLevelPlus') {
       var actor = $gameActors.actor(args[0]);
       if (actor) {
@@ -60,26 +68,26 @@ Imported.TMMaxLevel = true;
       }
     }
   };
-  
+
   //-----------------------------------------------------------------------------
   // Game_Actor
   //
 
   var _Game_Actor_initMembers = Game_Actor.prototype.initMembers;
-  Game_Actor.prototype.initMembers = function() {
+  Game_Actor.prototype.initMembers = function () {
     _Game_Actor_initMembers.call(this);
     this._maxLevelPlus = 0;
   };
 
   var _Game_Actor_maxLevel = Game_Actor.prototype.maxLevel;
-  Game_Actor.prototype.maxLevel = function() {
+  Game_Actor.prototype.maxLevel = function () {
     if (this._maxLevelPlus === undefined) {
       this._maxLevelPlus = 0;
     }
     return _Game_Actor_maxLevel.call(this) + this._maxLevelPlus;
   };
-  
-  Game_Actor.prototype.gainMaxLevel = function(n) {
+
+  Game_Actor.prototype.gainMaxLevel = function (n) {
     if (this._maxLevelPlus === undefined) {
       this._maxLevelPlus = 0;
     }
