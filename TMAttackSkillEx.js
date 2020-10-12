@@ -17,6 +17,7 @@
  * アクターや装備ごとに変更できるようにします。
  *
  * @param skillNameCommand
+ * @text コマンドにスキル名を表示
  * @type boolean
  * @desc コマンドにスキル名を適用する。
  * @default true
