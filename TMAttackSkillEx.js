@@ -10,10 +10,11 @@
 //=============================================================================
 
 /*:
+ * @target MZ MV
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMAttackSkillEx.js
+ * @author tomoaky (https://twitter.com/tomoaky/)
  * @plugindesc 攻撃コマンドや防御コマンドで使用するスキルを
  * アクターや装備ごとに変更できるようにします。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
  *
  * @param skillNameCommand
  * @type boolean
@@ -31,11 +32,6 @@
  *   ステート ＞ 武器 ＞ 防具 ＞ 職業 ＞ アクター
  *   となっています。
  * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
  * 
  * メモ欄タグ（アクター、職業、武器、防具、ステート）:
  * 
@@ -44,12 +40,20 @@
  *
  *   <guardSkill:7>
  *   アクターが防御コマンドで使用するスキルを７番のものに変更します。
+ *
+ * 
+ * 利用規約:
+ *   MITライセンスです。
+ *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+ *   作者に無断で改変、再配布が可能で、
+ *   利用形態（商用、18禁利用等）についても制限はありません。
  */
 
 var Imported = Imported || {};
 Imported.TMAttackSkillEx = true;
 
-(function() {
+(function () {
+	'use strict';
 
 	var parameters = PluginManager.parameters('TMAttackSkillEx');
 	var skillNameCommand = JSON.parse(parameters['skillNameCommand'] || 'true');
@@ -59,23 +63,23 @@ Imported.TMAttackSkillEx = true;
 	//
 
 	var _Game_Actor_attackSkillId = Game_Actor.prototype.attackSkillId;
-	Game_Actor.prototype.attackSkillId = function() {
-		var a = this.traitObjectsTMASE().filter(function(obj) {
+	Game_Actor.prototype.attackSkillId = function () {
+		var a = this.traitObjectsTMASE().filter(function (obj) {
 			return obj.meta.attackSkill;
 		});
 		return a[0] ? +a[0].meta.attackSkill : _Game_Actor_attackSkillId.call(this);
 	};
 
 	var _Game_Actor_guardSkillId = Game_Actor.prototype.guardSkillId;
-	Game_Actor.prototype.guardSkillId = function() {
-		var a = this.traitObjectsTMASE().filter(function(obj) {
+	Game_Actor.prototype.guardSkillId = function () {
+		var a = this.traitObjectsTMASE().filter(function (obj) {
 			return obj.meta.guardSkill;
 		});
 		return a[0] ? +a[0].meta.guardSkill : _Game_Actor_guardSkillId.call(this);
 	};
 
 	// ステート、武器、防具、職業、アクターの順で並ぶ効果オブジェクト配列を返す
-	Game_Actor.prototype.traitObjectsTMASE = function() {
+	Game_Actor.prototype.traitObjectsTMASE = function () {
 		var objects = Game_Battler.prototype.traitObjects.call(this);
 		var equips = this.equips();
 		for (var i = 0; i < equips.length; i++) {
@@ -93,7 +97,7 @@ Imported.TMAttackSkillEx = true;
 	//
 
 	var _Window_ActorCommand_addAttackCommand = Window_ActorCommand.prototype.addAttackCommand;
-	Window_ActorCommand.prototype.addAttackCommand = function() {
+	Window_ActorCommand.prototype.addAttackCommand = function () {
 		_Window_ActorCommand_addAttackCommand.call(this);
 		if (skillNameCommand) {
 			var skill = $dataSkills[this._actor.attackSkillId()];
@@ -102,7 +106,7 @@ Imported.TMAttackSkillEx = true;
 	};
 
 	var _Window_ActorCommand_addGuardCommand = Window_ActorCommand.prototype.addGuardCommand;
-	Window_ActorCommand.prototype.addGuardCommand = function() {
+	Window_ActorCommand.prototype.addGuardCommand = function () {
 		_Window_ActorCommand_addGuardCommand.call(this);
 		if (skillNameCommand) {
 			var skill = $dataSkills[this._actor.guardSkillId()];
