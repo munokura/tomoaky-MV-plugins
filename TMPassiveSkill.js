@@ -10,11 +10,14 @@
 //=============================================================================
 
 /*:
+ * @target MZ MV
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMPassiveSkill.js
  * @plugindesc 使用せずとも常に効果が発動しつづけるスキルを追加します。
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
+ * @author tomoaky (https://twitter.com/tomoaky/)
  *
  * @param passiveCommands
+ * @text 戦闘中非表示スキルタイプ
  * @type string
  * @desc パッシヴスキルのスキルタイプ番号を半角数字で設定します。
  * 複数指定する場合は半角スペースで区切ってください。
@@ -40,9 +43,7 @@
  *
  *   プラグインコマンドはありません。
  * 
- *   このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
  *
- *  
  * メモ欄タグ（スキル）:
  * 
  *   <passive:50>     # 50 番の武器を効果とするパッシヴスキルになる
@@ -60,97 +61,105 @@
  *   表示されなくなります。
  *   パッシヴスキルのスキルタイプ番号を指定すれば、コマンドからパッシヴスキルを
  *   除外することができます。
+ * 
+ * 
+ * 利用規約:
+ *   MITライセンスです。
+ *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+ *   作者に無断で改変、再配布が可能で、
+ *   利用形態（商用、18禁利用等）についても制限はありません。
  */
 
 var Imported = Imported || {};
 Imported.TMPassiveSkill = true;
 
 (function() {
+    'use strict';
 
-  var parameters = PluginManager.parameters('TMPassiveSkill');
-  var passiveCommands = parameters['passiveCommands'].split('').map(Number);
+    var parameters = PluginManager.parameters('TMPassiveSkill');
+    var passiveCommands = parameters['passiveCommands'].split('').map(Number);
 
-  //-----------------------------------------------------------------------------
-  // Game_Actor
-  //
+    //-----------------------------------------------------------------------------
+    // Game_Actor
+    //
 
-  var _Game_Actor_paramPlus = Game_Actor.prototype.paramPlus;
-  Game_Actor.prototype.paramPlus = function(paramId) {
-    var passiveWeapons = this.passiveWeapons();
-    return passiveWeapons.reduce(function(r, weapon) {
-      return r + weapon.params[paramId];
-    }, _Game_Actor_paramPlus.call(this, paramId));
-  };
+    var _Game_Actor_paramPlus = Game_Actor.prototype.paramPlus;
+    Game_Actor.prototype.paramPlus = function(paramId) {
+        var passiveWeapons = this.passiveWeapons();
+        return passiveWeapons.reduce(function(r, weapon) {
+            return r + weapon.params[paramId];
+        }, _Game_Actor_paramPlus.call(this, paramId));
+    };
 
-  var _Game_Actor_traitObjects = Game_Actor.prototype.traitObjects;
-  Game_Actor.prototype.traitObjects = function() {
-    var objects = _Game_Actor_traitObjects.call(this);
-    var passiveWeapons = this.passiveWeapons();
-    for (var i = 0; i < passiveWeapons.length; i++) {
-      objects.push(passiveWeapons[i]);
-    }
-    return objects;
-  };
-  
-  Game_Actor.prototype.passiveWeapons = function() {
-    var result = [];
-    var objects = this.equips();
-    this._skills.forEach(function(id) {
-      objects.push($dataSkills[id]);
-    }, this);
-    objects.forEach(function(item) {
-      if (item && !result.contains(item)) {
-        var passiveWeapon = this.passiveWeapon(item);
-        if (passiveWeapon) result.push(passiveWeapon);
-      }
-    }, this);
-    return result;
-  };
-  
-  Game_Actor.prototype.passiveWeapon = function(item) {
-    if (item.meta.passive &&
-        this.isPassiveSkillTpOk(item) &&
-        this.isPassiveSkillStateOk(item) &&
-        this.isPassiveSkillTurnOk(item) &&
-        (!DataManager.isSkill(item) || this.isSkillWtypeOk(item))) {
-      return $dataWeapons[+item.meta.passive];
-    }
-    return null;
-  };
-
-  Game_Actor.prototype.isPassiveSkillTpOk = function(item) {
-    if (item.meta.passiveTp) {
-      var n = +item.meta.passiveTp;
-      var tp = this.tp;
-      if ((n > 0 && n > tp) || (n < 0 && -n <= tp)) return false;
-    }
-    return true;
-  };
-  
-  Game_Actor.prototype.isPassiveSkillStateOk = function(item) {
-    if (item.meta.passiveState) {
-      return this.isStateAffected(+item.meta.passiveState);
-    }
-    return true;
-  };
-
-  Game_Actor.prototype.isPassiveSkillTurnOk = function(item) {
-    if (item.meta.passiveTurn) {
-      return $gameParty.inBattle() && $gameTroop.turnCount() === +item.meta.passiveTurn;
-    }
-    return true;
-  };
-  
-  Game_Actor.prototype.addedSkillTypes = function() {
-    var skillTypes = Game_BattlerBase.prototype.addedSkillTypes.call(this);
-    if ($gameParty.inBattle()) {
-      for (var i = 0; i < skillTypes.length; i++) {
-        if (passiveCommands.contains(skillTypes[i])) {
-          skillTypes.splice(i--, 1);
+    var _Game_Actor_traitObjects = Game_Actor.prototype.traitObjects;
+    Game_Actor.prototype.traitObjects = function() {
+        var objects = _Game_Actor_traitObjects.call(this);
+        var passiveWeapons = this.passiveWeapons();
+        for (var i = 0; i < passiveWeapons.length; i++) {
+            objects.push(passiveWeapons[i]);
         }
-      }
-    }
-    return skillTypes;
-  };
+        return objects;
+    };
+
+    Game_Actor.prototype.passiveWeapons = function() {
+        var result = [];
+        var objects = this.equips();
+        this._skills.forEach(function(id) {
+            objects.push($dataSkills[id]);
+        }, this);
+        objects.forEach(function(item) {
+            if (item && !result.contains(item)) {
+                var passiveWeapon = this.passiveWeapon(item);
+                if (passiveWeapon) result.push(passiveWeapon);
+            }
+        }, this);
+        return result;
+    };
+
+    Game_Actor.prototype.passiveWeapon = function(item) {
+        if (item.meta.passive &&
+            this.isPassiveSkillTpOk(item) &&
+            this.isPassiveSkillStateOk(item) &&
+            this.isPassiveSkillTurnOk(item) &&
+            (!DataManager.isSkill(item) || this.isSkillWtypeOk(item))) {
+            return $dataWeapons[+item.meta.passive];
+        }
+        return null;
+    };
+
+    Game_Actor.prototype.isPassiveSkillTpOk = function(item) {
+        if (item.meta.passiveTp) {
+            var n = +item.meta.passiveTp;
+            var tp = this.tp;
+            if ((n > 0 && n > tp) || (n < 0 && -n <= tp)) return false;
+        }
+        return true;
+    };
+
+    Game_Actor.prototype.isPassiveSkillStateOk = function(item) {
+        if (item.meta.passiveState) {
+            return this.isStateAffected(+item.meta.passiveState);
+        }
+        return true;
+    };
+
+    Game_Actor.prototype.isPassiveSkillTurnOk = function(item) {
+        if (item.meta.passiveTurn) {
+            return $gameParty.inBattle() && $gameTroop.turnCount() === +item.meta.passiveTurn;
+        }
+        return true;
+    };
+
+    Game_Actor.prototype.addedSkillTypes = function() {
+        var skillTypes = Game_BattlerBase.prototype.addedSkillTypes.call(this);
+        if ($gameParty.inBattle()) {
+            for (var i = 0; i < skillTypes.length; i++) {
+                if (passiveCommands.contains(skillTypes[i])) {
+                    skillTypes.splice(i--, 1);
+                }
+            }
+        }
+        return skillTypes;
+    };
 
 })();
