@@ -10,9 +10,11 @@
 //============================================================================
 
 /*:
+ * @target MZ MV
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMOmitShopCommand.js
  * @plugindesc 購入または売却のみの場合にショップコマンドを省略します。SupponShopStockの競合対策
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/) 改変 Suppon
+ * @author tomoaky (改変 Suppon)
  *
  * @help
  * TMPlugin - ショップコマンド省略 ver1.0.0
@@ -25,38 +27,40 @@
  *
  *   プラグインコマンドはありません。
  *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
+ * 利用規約:
+ *   MITライセンスです。
+ *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+ *   作者に無断で改変、再配布が可能で、
+ *   利用形態（商用、18禁利用等）についても制限はありません。
  */
 
 var Imported = Imported || {};
 Imported.TMOmitShopCommand = true;
 
 (function() {
+    'use strict';
 
-  //----------------------------------------------------------------------------
-  // Scene_Shop
-  //
+    //----------------------------------------------------------------------------
+    // Scene_Shop
+    //
 
-  var _Scene_Shop_create = Scene_Shop.prototype.create;
-  Scene_Shop.prototype.create = function() {
-    _Scene_Shop_create.call(this);
-    if(this._goods.length==0){return}//★ここを追加 Suppon
-    if (this._goods[0][1] === 0) {
-      this._commandWindow.hide();
-      this._commandWindow.deactivate();
-      this._commandWindow.select(1);
-      this._categoryWindow.setHandler('cancel', this.popScene.bind(this));
-      this.commandSell();
-    } else if (this._purchaseOnly) {
-      this._commandWindow.hide();
-      this._commandWindow.deactivate();
-      this._commandWindow.select(0);
-      this._buyWindow.setHandler('cancel', this.popScene.bind(this));
-      this.commandBuy();
-    }
-  };
+    var _Scene_Shop_create = Scene_Shop.prototype.create;
+    Scene_Shop.prototype.create = function() {
+        _Scene_Shop_create.call(this);
+        if (this._goods.length == 0) { return } //★ここを追加 Suppon
+        if (this._goods[0][1] === 0) {
+            this._commandWindow.hide();
+            this._commandWindow.deactivate();
+            this._commandWindow.select(1);
+            this._categoryWindow.setHandler('cancel', this.popScene.bind(this));
+            this.commandSell();
+        } else if (this._purchaseOnly) {
+            this._commandWindow.hide();
+            this._commandWindow.deactivate();
+            this._commandWindow.select(0);
+            this._buyWindow.setHandler('cancel', this.popScene.bind(this));
+            this.commandBuy();
+        }
+    };
 
 })();
