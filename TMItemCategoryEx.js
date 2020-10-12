@@ -10,11 +10,13 @@
 //=============================================================================
 
 /*:
+ * @target MZ MV
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMItemCategoryEx.js
+ * @author tomoaky (https://twitter.com/tomoaky/)
  * @plugindesc アイテムカテゴリの追加、削除をおこないます。
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
  * @param categoryList
+ * @text アイテムカテゴリ一覧
  * @desc アイテムカテゴリの一覧 (詳しくはヘルプにて)
  * 初期値: item weapon armor keyItem
  * @default item weapon armor keyItem
@@ -39,12 +41,7 @@
  *   カテゴリが 1 個しかない場合はカテゴリ選択の処理自体が省略されます。
  * 
  *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *  
+ * 
  * 
  * メモ欄タグ（アイテム）:
  * 
@@ -52,12 +49,20 @@
  *     このアイテムのカテゴリを 書物 に設定します。
  *     プラグインパラメータ categoryList に 書物 というカテゴリが
  *     あればそこに表示されます。
+ *
+ * 
+ * 利用規約:
+ *   MITライセンスです。
+ *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+ *   作者に無断で改変、再配布が可能で、
+ *   利用形態（商用、18禁利用等）についても制限はありません。
  */
 
 var Imported = Imported || {};
 Imported.TMItemCategoryEx = true;
 
-(function() {
+(function () {
+  'use strict';
 
   var parameters = PluginManager.parameters('TMItemCategoryEx');
   var categoryList = (parameters['categoryList'] || 'item weapon armor keyItem').split(' ');
@@ -66,11 +71,11 @@ Imported.TMItemCategoryEx = true;
   // Window_ItemCategory
   //
 
-  Window_ItemCategory.prototype.maxCols = function() {
+  Window_ItemCategory.prototype.maxCols = function () {
     return categoryList.length;
   };
 
-  Window_ItemCategory.prototype.makeCommandList = function() {
+  Window_ItemCategory.prototype.makeCommandList = function () {
     var symbol;
     for (var i = 0; i < this.maxCols(); i++) {
       symbol = categoryList[i];
@@ -87,13 +92,13 @@ Imported.TMItemCategoryEx = true;
       }
     }
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_ItemList
   //
 
   var _Window_ItemList_includes = Window_ItemList.prototype.includes;
-  Window_ItemList.prototype.includes = function(item) {
+  Window_ItemList.prototype.includes = function (item) {
     if (item && item.meta.itemCategory) return this._category === item.meta.itemCategory;
     return _Window_ItemList_includes.call(this, item);
   };
@@ -103,13 +108,13 @@ Imported.TMItemCategoryEx = true;
   //
 
   var _Scene_Item_create = Scene_Item.prototype.create;
-  Scene_Item.prototype.create = function() {
+  Scene_Item.prototype.create = function () {
     _Scene_Item_create.call(this);
     if (categoryList.length === 1) {
       this._categoryWindow.deactivate();
       this._categoryWindow.hide();
       this._itemWindow.move(this._itemWindow.x, this._categoryWindow.y, this._itemWindow.width,
-                            this._itemWindow.height + this._categoryWindow.height);
+        this._itemWindow.height + this._categoryWindow.height);
       this._itemWindow.setHandler('cancel', this.popScene.bind(this));
       this._itemWindow.setCategory(this._categoryWindow.currentSymbol());
       this.onCategoryOk();
@@ -121,17 +126,17 @@ Imported.TMItemCategoryEx = true;
   //
 
   var _Scene_Shop_create = Scene_Shop.prototype.create;
-  Scene_Shop.prototype.create = function() {
+  Scene_Shop.prototype.create = function () {
     _Scene_Shop_create.call(this);
     if (categoryList.length === 1) {
       this._sellWindow.move(this._sellWindow.x, this._categoryWindow.y, this._sellWindow.width,
-                            this._sellWindow.height + this._categoryWindow.height);
+        this._sellWindow.height + this._categoryWindow.height);
       this._sellWindow.setCategory(this._categoryWindow.currentSymbol());
     }
   };
 
   var _Scene_Shop_commandSell = Scene_Shop.prototype.commandSell;
-  Scene_Shop.prototype.commandSell = function() {
+  Scene_Shop.prototype.commandSell = function () {
     _Scene_Shop_commandSell.call(this);
     if (categoryList.length === 1) {
       this._sellWindow.activate();
@@ -142,7 +147,7 @@ Imported.TMItemCategoryEx = true;
   };
 
   var _Scene_Shop_onSellCancel = Scene_Shop.prototype.onSellCancel;
-  Scene_Shop.prototype.onSellCancel = function() {
+  Scene_Shop.prototype.onSellCancel = function () {
     _Scene_Shop_onSellCancel.call(this);
     if (categoryList.length === 1) {
       this.onCategoryCancel();
