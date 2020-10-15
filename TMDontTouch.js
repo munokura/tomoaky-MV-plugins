@@ -7,7 +7,7 @@
 
 /*:
  * @target MZ MV
- * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMDontTou.js
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMDontTouch.js
  * @author tomoaky (https://twitter.com/tomoaky/)
  * @plugindesc 指定したリージョンをタップ（クリック）できなくします。
  *
