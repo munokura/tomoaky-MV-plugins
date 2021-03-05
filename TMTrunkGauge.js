@@ -1,4 +1,4 @@
-﻿//=============================================================================
+//=============================================================================
 // TMPlugin - 体幹ゲージ
 // バージョン: 0.1.1b
 // 最終更新日: 2019/05/13
@@ -10,36 +10,43 @@
 //=============================================================================
 
 /*:
+ * @target MV
  * @plugindesc バトルに体幹による崩し要素を追加します。
  *
  * @author tomoaky (https://hikimoki.sakura.ne.jp/)
  *
  * @param trunkState
+ * @text 付与ステート
  * @type state
  * @desc 体幹が崩れた際に付与されるステート
  * @default 10
  * 
  * @param trunkMax
+ * @text 体幹の最大値
  * @type number
  * @desc 体幹の最大値
  * @default 100
  * 
  * @param trunkRecover
+ * @text 回復体幹値
  * @type number
  * @desc ターン終了時に回復する体幹値
  * @default 50
  * 
  * @param trunkWidth
+ * @text 体幹ゲージ幅
  * @type number
  * @desc 体幹ゲージの横幅
  * @default 120
  * 
  * @param trunkHeight
+ * @text 体幹ゲージ高
  * @type number
  * @desc 体幹ゲージの高さ
  * @default 12
  * 
  * @param trunkAnimation
+ * @text 付与アニメーション
  * @type animation
  * @desc 体幹が崩れた際のアニメーション
  * @default 39
@@ -122,7 +129,7 @@
 var Imported = Imported || {};
 Imported.TMTrunkGauge = true;
 
-(function() {
+(function () {
 
 	var parameters = PluginManager.parameters('TMTrunkGauge');
 	var trunkState = +(parameters['trunkState'] || 10);
@@ -137,12 +144,12 @@ Imported.TMTrunkGauge = true;
 	//
 
 	var _Game_Action_apply = Game_Action.prototype.apply;
-	Game_Action.prototype.apply = function(target) {
+	Game_Action.prototype.apply = function (target) {
 		_Game_Action_apply.call(this, target);
 		this.applyTrunkDamage(target);
 	};
 
-	Game_Action.prototype.applyTrunkDamage = function(target) {
+	Game_Action.prototype.applyTrunkDamage = function (target) {
 		var item = this.item();
 		var damage = +(item.meta.trunkAtk || 0);
 		var result = target.result();
@@ -172,48 +179,48 @@ Imported.TMTrunkGauge = true;
 	//
 
 	var _Game_BattlerBase_initialize = Game_BattlerBase.prototype.initialize;
-	Game_BattlerBase.prototype.initialize = function() {
+	Game_BattlerBase.prototype.initialize = function () {
 		_Game_BattlerBase_initialize.call(this);
 		this.initTrunk();
 	};
 
-	Game_BattlerBase.prototype.initTrunk = function() {
+	Game_BattlerBase.prototype.initTrunk = function () {
 		this._trunk = 0;
 	};
 
-	Game_BattlerBase.prototype.trunk = function() {
+	Game_BattlerBase.prototype.trunk = function () {
 		return this._trunk;
 	};
 
-	Game_BattlerBase.prototype.trunkMax = function() {
-		return this.traitObjects().reduce(function(r, obj) {
+	Game_BattlerBase.prototype.trunkMax = function () {
+		return this.traitObjects().reduce(function (r, obj) {
 			var n = +(obj.meta.trunkMax || 0);
 			return r + n;
 		}, trunkMax);
 	};
 
-	Game_BattlerBase.prototype.trunkAtk = function() {
-		return this.traitObjects().reduce(function(r, obj) {
+	Game_BattlerBase.prototype.trunkAtk = function () {
+		return this.traitObjects().reduce(function (r, obj) {
 			var n = +(obj.meta.trunkAtk || 0);
 			return r + n;
 		}, 0);
 	};
 
-	Game_BattlerBase.prototype.trunkDef = function() {
-		return this.traitObjects().reduce(function(r, obj) {
+	Game_BattlerBase.prototype.trunkDef = function () {
+		return this.traitObjects().reduce(function (r, obj) {
 			var n = +(obj.meta.trunkDef || 0);
 			return r + n;
 		}, 0);
 	};
 
-	Game_BattlerBase.prototype.trunkCnt = function() {
-		return this.traitObjects().reduce(function(r, obj) {
+	Game_BattlerBase.prototype.trunkCnt = function () {
+		return this.traitObjects().reduce(function (r, obj) {
 			var n = +(obj.meta.trunkCnt || 0);
 			return r + n;
 		}, 0);
 	};
 
-	Game_BattlerBase.prototype.trunkWidth = function() {
+	Game_BattlerBase.prototype.trunkWidth = function () {
 		var battler = this.isActor() ? this.actor() : this.enemy();
 		if (battler) {
 			return +(battler.meta.trunkWidth || trunkWidth);
@@ -221,7 +228,7 @@ Imported.TMTrunkGauge = true;
 		return trunkWidth;
 	};
 
-	Game_BattlerBase.prototype.trunkHeight = function() {
+	Game_BattlerBase.prototype.trunkHeight = function () {
 		var battler = this.isActor() ? this.actor() : this.enemy();
 		if (battler) {
 			return +(battler.meta.trunkHeight || trunkHeight);
@@ -229,7 +236,7 @@ Imported.TMTrunkGauge = true;
 		return trunkHeight;
 	};
 
-	Game_BattlerBase.prototype.trunkShiftX = function() {
+	Game_BattlerBase.prototype.trunkShiftX = function () {
 		var battler = this.isActor() ? this.actor() : this.enemy();
 		if (battler) {
 			return +(battler.meta.trunkShiftX || 0);
@@ -237,7 +244,7 @@ Imported.TMTrunkGauge = true;
 		return 0;
 	};
 
-	Game_BattlerBase.prototype.trunkShiftY = function() {
+	Game_BattlerBase.prototype.trunkShiftY = function () {
 		var battler = this.isActor() ? this.actor() : this.enemy();
 		if (battler) {
 			return +(battler.meta.trunkShiftY || 0);
@@ -245,7 +252,7 @@ Imported.TMTrunkGauge = true;
 		return 0;
 	};
 
-	Game_BattlerBase.prototype.applyTrunkDamage = function(damage) {
+	Game_BattlerBase.prototype.applyTrunkDamage = function (damage) {
 		var trunkMax = this.trunkMax();
 		if (this._trunk < trunkMax) {
 			this._trunk = (this._trunk + damage).clamp(0, trunkMax);
@@ -255,24 +262,24 @@ Imported.TMTrunkGauge = true;
 		}
 	};
 
-	Game_BattlerBase.prototype.trunkOver = function() {
+	Game_BattlerBase.prototype.trunkOver = function () {
 		this.addState(trunkState);
 		this.startAnimation(trunkAnimation, false, 0);
 	};
-	
+
 	//-----------------------------------------------------------------------------
 	// Game_Battler
 	//
 
 	var _Game_Battler_regenerateAll = Game_Battler.prototype.regenerateAll;
-	Game_Battler.prototype.regenerateAll = function() {
+	Game_Battler.prototype.regenerateAll = function () {
 		_Game_Battler_regenerateAll.call(this);
 		if (this.isAlive()) {
 			this.regenerateTrunk();
 		}
 	};
-	
-	Game_Battler.prototype.regenerateTrunk = function() {
+
+	Game_Battler.prototype.regenerateTrunk = function () {
 		if (this._trunk === trunkMax) {
 			this.initTrunk();
 		} else {
@@ -283,26 +290,26 @@ Imported.TMTrunkGauge = true;
 			}
 		}
 	};
-	
+
 	var _Game_Battler_onBattleStart = Game_Battler.prototype.onBattleStart;
-	Game_Battler.prototype.onBattleStart = function() {
+	Game_Battler.prototype.onBattleStart = function () {
 		_Game_Battler_onBattleStart.call(this);
 		this.initTrunk();
 	};
-	
+
 	//-----------------------------------------------------------------------------
 	// Sprite_Battler
 	//
 
 	var _Sprite_Battler_update = Sprite_Battler.prototype.update;
-	Sprite_Battler.prototype.update = function() {
+	Sprite_Battler.prototype.update = function () {
 		_Sprite_Battler_update.call(this);
 		if (this._battler) {
 			this.updateTrunk();
 		}
 	};
 
-	Sprite_Battler.prototype.updateTrunk = function() {
+	Sprite_Battler.prototype.updateTrunk = function () {
 		if (!this._trunkGaugeSprite && this.parent) {
 			this._trunkGaugeSprite = new Sprite_TrunkGauge(this);
 			this.parent.addChild(this._trunkGaugeSprite);
@@ -320,7 +327,7 @@ Imported.TMTrunkGauge = true;
 	Sprite_TrunkGauge.prototype = Object.create(Sprite.prototype);
 	Sprite_TrunkGauge.prototype.constructor = Sprite_TrunkGauge;
 
-	Sprite_TrunkGauge.prototype.initialize = function(battlerSprite) {
+	Sprite_TrunkGauge.prototype.initialize = function (battlerSprite) {
 		Sprite.prototype.initialize.call(this);
 		this._battlerSprite = battlerSprite;
 		this._battler = battlerSprite._battler;
@@ -334,7 +341,7 @@ Imported.TMTrunkGauge = true;
 		this._trunkMax = null;
 	};
 
-	Sprite_TrunkGauge.prototype.refresh = function() {
+	Sprite_TrunkGauge.prototype.refresh = function () {
 		this.bitmap.clear();
 		this._battler = this._battlerSprite._battler;
 		if (this._battler) {
@@ -359,11 +366,11 @@ Imported.TMTrunkGauge = true;
 		}
 	};
 
-	Sprite_TrunkGauge.prototype.update = function() {
+	Sprite_TrunkGauge.prototype.update = function () {
 		Sprite.prototype.update.call(this);
 		var battler = this._battlerSprite._battler;
 		if (this._battler !== battler ||
-				(battler && (this._trunk !== battler.trunk() || this._trunkMax !== battler.trunkMax()))) {
+			(battler && (this._trunk !== battler.trunk() || this._trunkMax !== battler.trunkMax()))) {
 			this.refresh();
 		}
 		this.x = this._battlerSprite.x + (battler ? battler.trunkShiftX() : 0);
