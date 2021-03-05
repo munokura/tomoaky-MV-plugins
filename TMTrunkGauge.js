@@ -264,7 +264,9 @@ Imported.TMTrunkGauge = true;
 
 	Game_BattlerBase.prototype.trunkOver = function () {
 		this.addState(trunkState);
-		this.startAnimation(trunkAnimation, false, 0);
+		if (trunkAnimation > 0) {
+			this.startAnimation(trunkAnimation, false, 0);
+		}
 	};
 
 	//-----------------------------------------------------------------------------
