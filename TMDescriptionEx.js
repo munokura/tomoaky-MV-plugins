@@ -13,391 +13,469 @@
 // バージョン: 2.0.4
 
 /*:
+ * @target MV
  * @plugindesc アイテムやスキルの詳細情報の表示機能追加。(FTKR_CardGamesとの競合解消)
  *
  * @author tomoaky (http://hikimoki.sakura.ne.jp/) linkscape
  *
  * @param descriptionKeyCode
+ * @text 説明キー
  * @desc 説明ボタンとして使うキー
  * 初期値: 65
  * @default 65
  *
  * @param leftPaneWidth
+ * @text 左パラメータ幅
  * @desc 左側のパラメータの幅
  * 初期値: 300
  * @default 300
  *
  * @param rightPaneWidth
+ * @text 右パラメータ幅
  * @desc 右側のパラメータの幅
  * 初期値: 400
  * @default 400
  *
  * @param horzLineHeight
+ * @text 横線高
  * @desc 横線の余白も含めた高さ
  * 初期値: 28
  * @default 28
  *
  * @param secretItemA
+ * @text 隠しアイテムＡのタイプ名
  * @desc 隠しアイテムＡのタイプ名
  * 初期値: 隠しアイテムＡ
  * @default 隠しアイテムＡ
  *
  * @param secretItemB
+ * @text 隠しアイテムＢのタイプ名
  * @desc 隠しアイテムＢのタイプ名
  * 初期値: 隠しアイテムＢ
  * @default 隠しアイテムＢ
  *
  * @param consumableText
+ * @text 消耗の項目名
  * @desc 消耗の項目名
  * 初期値: 消耗
  * @default 消耗
  *
  * @param occasionText
+ * @text 使用可能時の項目名
  * @desc 使用可能時の項目名
  * 初期値: 制限
  * @default 制限
  *
  * @param scopeText
+ * @text 範囲の項目名
  * @desc 範囲の項目名
  * 初期値: 範囲
  * @default 範囲
  *
  * @param speedText
+ * @text 速度補正の項目名
  * @desc 速度補正の項目名
  * 初期値: 速度補正
  * @default 速度補正
  *
  * @param successRateText
+ * @text 成功率の項目名
  * @desc 成功率の項目名
  * 初期値: 成功率
  * @default 成功率
  *
  * @param repeatsText
+ * @text 連続回数の項目名
  * @desc 連続回数の項目名
  * 初期値: 連続回数
  * @default 連続回数
  *
  * @param tpGainText
+ * @text 得ＴＰの項目名
  * @desc 得ＴＰの項目名
  * 初期値: 獲得ＴＰ
  * @default 獲得ＴＰ
  *
  * @param hitTypeText
+ * @text 命中タイプの項目名
  * @desc 命中タイプの項目名
  * 初期値: 命中判定
  * @default 命中判定
  *
  * @param priceText
+ * @text 価格の項目名
  * @desc 価格の項目名
  * 初期値: 売却額
  * @default 売却額
  *
  * @param priceRate
+ * @text 価格の表示倍率
  * @desc 価格の表示倍率
  * 初期値: 0.5
  * @default 0.5
  *
  * @param mpCostText
+ * @text 消費ＭＰの項目名
  * @desc 消費ＭＰの項目名
  * 初期値: 消費ＭＰ
  * @default 消費ＭＰ
  *
  * @param tpCostText
+ * @text 消費ＴＰの項目名
  * @desc 消費ＴＰの項目名
  * 初期値: 消費ＴＰ
  * @default 消費ＴＰ
  *
  * @param requiredWtypeText
+ * @text 必要武器の項目名
  * @desc 必要武器の項目名
  * 初期値: 必要武器
  * @default 必要武器
  *
  * @param effectText
+ * @text 使用効果の項目名
  * @desc 使用効果の項目名
  * 初期値: 効果
  * @default 効果
  *
  * @param traitText
+ * @text 特徴の項目名
  * @desc 特徴の項目名
  * 初期値: 特徴
  * @default 特徴
  *
  * @param effectTextRecoverHp
+ * @text ＨＰ回復の書式
  * @desc ＨＰ回復の書式
  * 初期値: ＨＰが%1回復
  * @default ＨＰが%1回復
  *
  * @param effectTextRecoverMp
+ * @text ＭＰ回復の書式
  * @desc ＭＰ回復の書式
  * 初期値: ＭＰが%1回復
  * @default ＭＰが%1回復
  *
  * @param effectTextGainTp
+ * @text ＴＰ増加の書式
  * @desc ＴＰ増加の書式
  * 初期値: ＴＰが%1増加
  * @default ＴＰが%1増加
  *
  * @param effectTextAddState
+ * @text ステート付加の書式
  * @desc ステート付加の書式
  * 初期値: %2%の確率で%1を付加
  * @default %2%の確率で%1を付加
  *
  * @param effectTextRemoveState
+ * @text ステート解除の書式
  * @desc ステート解除の書式
  * 初期値: %2%の確率で%1を解除
  * @default %2%の確率で%1を解除
  *
  * @param effectTextAddBuff
+ * @text 強化の書式
  * @desc 強化の書式
  * 初期値: %2ターンの間だけ%1アップ
  * @default %2ターンの間だけ%1アップ
  *
  * @param effectTextAddDebuff
+ * @text 弱体の書式
  * @desc 弱体の書式
  * 初期値: %2ターンの間だけ%1ダウン
  * @default %2ターンの間だけ%1ダウン
  *
  * @param effectTextRemoveBuff
+ * @text 強化の解除の書式
  * @desc 強化の解除の書式
  * 初期値: %1アップの効果を解除
  * @default %1アップの効果を解除
  *
  * @param effectTextRemoveDebuff
+ * @text 弱体の解除の書式
  * @desc 弱体の解除の書式
  * 初期値: %1ダウンの効果を解除
  * @default %1ダウンの効果を解除
  *
  * @param effectTextSpecial
+ * @text 特殊効果の書式
  * @desc 特殊効果の書式
  * 初期値: 戦闘から離脱する
  * @default 戦闘から離脱する
  *
  * @param effectTextGrow
+ * @text 成長の書式
  * @desc 成長の書式
  * 初期値: %1が永続的に%2上がる
  * @default %1が永続的に%2上がる
  *
  * @param effectTextLearnSkill
+ * @text スキル習得の書式
  * @desc スキル習得の書式
  * 初期値: %1を習得する
  * @default %1を習得する
  *
  * @param damageTextDamageHp
+ * @text 『ＨＰダメージ』の書式
  * @desc ダメージタイプ『ＨＰダメージ』の書式
  * 初期値: ＨＰに%1ダメージを与える
  * @default ＨＰに%1ダメージを与える
  *
  * @param damageTextDamageMp
+ * @text 『ＭＰダメージ』の書式
  * @desc ダメージタイプ『ＭＰダメージ』の書式
  * 初期値: ＭＰに%1ダメージを与える
  * @default ＭＰに%1ダメージを与える
  *
  * @param damageTextRecoverHp
+ * @text 『ＨＰ回復』の書式
  * @desc ダメージタイプ『ＨＰ回復』の書式
  * 初期値: ＨＰを回復する
  * @default ＨＰを回復する
  *
  * @param damageTextRecoverMp
+ * @text 『ＭＰ回復』の書式
  * @desc ダメージタイプ『ＭＰ回復』の書式
  * 初期値: ＭＰを回復する
  * @default ＭＰを回復する
  *
  * @param damageTextDrainHp
+ * @text 『ＨＰ吸収』の書式
  * @desc ダメージタイプ『ＨＰ吸収』の書式
  * 初期値: 与えたダメージをＨＰとして吸収する
  * @default 与えたダメージをＨＰとして吸収する
  *
  * @param damageTextDrainMp
+ * @text 『ＭＰ吸収』の書式
  * @desc ダメージタイプ『ＭＰ吸収』の書式
  * 初期値: 与えたダメージをＭＰとして吸収する
  * @default 与えたダメージをＭＰとして吸収する
  *
  * @param traitTextElementRate
+ * @text 属性有効度の書式
  * @desc 属性有効度の書式
  * 初期値: %1耐性%2%
  * @default %1耐性%2%
  *
  * @param traitTextDebuffRate
+ * @text 弱体有効度の書式
  * @desc 弱体有効度の書式
  * 初期値: %1ダウン耐性%2%
  * @default %1ダウン耐性%2%
  *
  * @param traitTextStateRate
+ * @text ステート有効度の書式
  * @desc ステート有効度の書式
  * 初期値: %1耐性%2%
  * @default %1耐性%2%
  *
  * @param traitTextStateResist
+ * @text ステート無効化の書式
  * @desc ステート無効化の書式
  * 初期値: %1無効
  * @default %1無効
  *
  * @param traitTextParam
+ * @text 通常能力値の書式
  * @desc 通常能力値の書式
  * 初期値: %1%2%
  * @default %1%2%
  *
  * @param traitTextXparam
+ * @text 追加能力値の書式
  * @desc 追加能力値の書式
  * 初期値: %1%2
  * @default %1%2
  *
  * @param traitTextSparam
+ * @text 特殊能力値の書式
  * @desc 特殊能力値の書式
  * 初期値: %1%2%
  * @default %1%2%
  *
  * @param traitTextAttackElement
+ * @text 攻撃時属性の書式
  * @desc 攻撃時属性の書式
  * 初期値: 攻撃に%1付加
  * @default 攻撃に%1付加
  *
  * @param traitTextAttackState
+ * @text 攻撃時ステートの書式
  * @desc 攻撃時ステートの書式
  * 初期値: 攻撃時に%2%の確率で%1を付加
  * @default 攻撃時に%2%の確率で%1を付加
  *
  * @param traitTextAttackSpeed
+ * @text 攻撃速度補正の書式
  * @desc 攻撃速度補正の書式
  * 初期値: 攻撃速度%1
  * @default 攻撃速度%1
  *
  * @param traitTextAttackTimes
+ * @text 攻撃追加回数の書式
  * @desc 攻撃追加回数の書式
  * 初期値: 攻撃回数%1
  * @default 攻撃回数%1
  *
  * @param traitTextStypeAdd
+ * @text スキルタイプ追加の書式
  * @desc スキルタイプ追加の書式
  * 初期値: %1使用可能
  * @default %1使用可能
  *
  * @param traitTextStypeSeal
+ * @text スキルタイプ封印の書式
  * @desc スキルタイプ封印の書式
  * 初期値: %1使用不可
  * @default %1使用不可
  *
  * @param traitTextSkillAdd
+ * @text スキル追加の書式
  * @desc スキル追加の書式
  * 初期値: %1使用可能
  * @default %1使用可能
  *
  * @param traitTextSkillSeal
+ * @text スキル封印の書式
  * @desc スキル封印の書式
  * 初期値: %1使用不可
  * @default %1使用不可
  *
  * @param traitTextEquipWtype
+ * @text 武器タイプ装備の書式
  * @desc 武器タイプ装備の書式
  * 初期値: %1装備可能
  * @default %1装備可能
  *
  * @param traitTextEquipAtype
+ * @text 防具タイプ装備の書式
  * @desc 防具タイプ装備の書式
  * 初期値: %1装備可能
  * @default %1装備可能
  *
  * @param traitTextEquipLock
+ * @text 装備固定の書式
  * @desc 装備固定の書式
- * 初期値: 
- * @default 
+ * 初期値:
+ * @default
  *
  * @param traitTextEquipSeal
+ * @text 装備封印の書式
  * @desc 装備封印の書式
  * 初期値: %1装備不可
  * @default %1装備不可
  *
  * @param traitTextActionPlus
+ * @text 行動回数追加の書式
  * @desc 行動回数追加の書式
  * 初期値: %1%の確率で連続行動
  * @default %1%の確率で連続行動
  *
  * @param xparamText
+ * @text 追加能力値の項目名
  * @desc 追加能力値の項目名（カンマ区切りで１０項目）
  * 初期値: 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,…
- * @default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,ＴＰ再生
+ * @default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,Ｔ *再 生
  *
  * @param sparamText
+ * @text 特殊能力値の項目名
  * @desc 特殊能力値の項目名（カンマ区切りで１０項目）
  * 初期値: 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,…
- * @default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,物理ダメージ,魔法ダメージ,床ダメージ,経験値獲得
+ * @default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,物理ダメ ジ*, 魔法ダメージ,床ダメージ,経験値獲得
  *
  * @param consumableValue
+ * @text 消費の値
  * @desc 消費の値
  * 初期値: する,しない
  * @default する,しない
  *
  * @param occasionValue
+ * @text 使用可能時の値
  * @desc 使用可能時の値
  * 初期値: なし,バトルのみ,メニューのみ,使用不可
  * @default なし,バトルのみ,メニューのみ,使用不可
  *
  * @param scopeValue
+ * @text 範囲の値
  * @desc 範囲の値（カンマ区切りで１２項目）
  * 初期値: なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,…
- * @default なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,味方全体,味方単体,味方全体,使用者
+ * @default なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,味方全体,味 *単 体,味方全体,使用者
  *
  * @param hitTypeValue
+ * @text 命中タイプの値
  * @desc 命中タイプの値
  * 初期値: 必中,物理,魔法
  * @default 必中,物理,魔法
  *
  * @param slotTypeValue
+ * @text 特殊能力値の値
  * @desc 特殊能力値の値
  * 初期値: 二刀流使用不可,二刀流使用可能
  * @default 二刀流使用不可,二刀流使用可能
  *
  * @param specialFlagValue
+ * @text 特殊フラグの値
  * @desc 特殊フラグの値
  * 初期値: 自動戦闘,防御,身代わり,ＴＰ持ち越し
  * @default 自動戦闘,防御,身代わり,ＴＰ持ち越し
  *
  * @param partyAbilityValue
+ * @text パーティ能力の値
  * @desc パーティ能力の値（カンマ区切りで６項目）
  * 初期値: エンカウント半減,エンカウント無効,不意打ち無効,…
- * @default エンカウント半減,エンカウント無効,不意打ち無効,先制攻撃率アップ,獲得金額２倍,アイテム入手率２倍
+ * @default エンカウント半減,エンカウント無効,不意打ち無効,先制攻撃率アップ,獲 金* 額２倍,アイテム入手率２倍
  *
  * @param elementFooter
+ * @text 属性の接尾語
  * @desc 属性の接尾語
  * 初期値: 属性
  * @default 属性
  *
  * @param costExTextHp
+ * @text 消費ＨＰの書式
  * @desc 消費ＨＰの書式（ TMSkillCostEx.js が必要）
  * 初期値: ＨＰを%1消費する
  * @default ＨＰを%1消費する
  *
  * @param costExTextItem
+ * @text 消費アイテムの書式
  * @desc 消費アイテムの書式（ TMSkillCostEx.js が必要）
  * 初期値: %1を%2個消費する
  * @default %1を%2個消費する
  *
  * @param costExTextExp
+ * @text 消費経験値の書式
  * @desc 消費経験値の書式（ TMSkillCostEx.js が必要）
  * 初期値: 経験値を%1消費する
  * @default 経験値を%1消費する
  *
  * @param costExTextGold
+ * @text 消費金額の書式
  * @desc 消費金額の書式（ TMSkillCostEx.js が必要）
  * 初期値: お金を%1消費する
  * @default お金を%1消費する
  *
  * @param passiveAlwaysText
+ * @text 常時発動の書式
  * @desc 常時発動の書式（ TMPassiveSkill.js が必要）
  * 初期値: 常に効果が適用される
  * @default 常に効果が適用される
  *
  * @param passiveTpText
+ * @text ＴＰ○○以上で発動の書式
  * @desc ＴＰ○○以上で発動の書式（ TMPassiveSkill.js が必要）
  * 初期値: ＴＰ%1以上で効果が適用される
  * @default ＴＰ%1以上で効果が適用される
  *
  * @param passiveTpText2
+ * @text ＴＰ○○未満で発動の書式
  * @desc ＴＰ○○未満で発動の書式（ TMPassiveSkill.js が必要）
  * 初期値: ＴＰ%1未満で効果が適用される
  * @default ＴＰ%1未満で効果が適用される
  *
  * @param passiveStateText
+ * @text ○○状態で発動の書式
  * @desc ○○状態で発動の書式（ TMPassiveSkill.js が必要）
  * 初期値: %1状態で効果が適用される
  * @default %1状態で効果が適用される
@@ -464,12 +542,12 @@ TMPlugin.DescriptionEx.EffectTextRemoveDebuff = TMPlugin.DescriptionEx.Parameter
 TMPlugin.DescriptionEx.EffectTextSpecial = TMPlugin.DescriptionEx.Parameters['effectTextSpecial'];
 TMPlugin.DescriptionEx.EffectTextGrow = TMPlugin.DescriptionEx.Parameters['effectTextGrow'];
 TMPlugin.DescriptionEx.EffectTextLearnSkill = TMPlugin.DescriptionEx.Parameters['effectTextLearnSkill'];
-TMPlugin.DescriptionEx.DamageTextDamageHp  = TMPlugin.DescriptionEx.Parameters['damageTextDamageHp'];
-TMPlugin.DescriptionEx.DamageTextDamageMp  = TMPlugin.DescriptionEx.Parameters['damageTextDamageMp'];
+TMPlugin.DescriptionEx.DamageTextDamageHp = TMPlugin.DescriptionEx.Parameters['damageTextDamageHp'];
+TMPlugin.DescriptionEx.DamageTextDamageMp = TMPlugin.DescriptionEx.Parameters['damageTextDamageMp'];
 TMPlugin.DescriptionEx.DamageTextRecoverHp = TMPlugin.DescriptionEx.Parameters['damageTextRecoverHp'];
 TMPlugin.DescriptionEx.DamageTextRecoverMp = TMPlugin.DescriptionEx.Parameters['damageTextRecoverMp'];
-TMPlugin.DescriptionEx.DamageTextDrainHp   = TMPlugin.DescriptionEx.Parameters['damageTextDrainHp'];
-TMPlugin.DescriptionEx.DamageTextDrainMp   = TMPlugin.DescriptionEx.Parameters['damageTextDrainMp'];
+TMPlugin.DescriptionEx.DamageTextDrainHp = TMPlugin.DescriptionEx.Parameters['damageTextDrainHp'];
+TMPlugin.DescriptionEx.DamageTextDrainMp = TMPlugin.DescriptionEx.Parameters['damageTextDrainMp'];
 TMPlugin.DescriptionEx.TraitTextElementRate = TMPlugin.DescriptionEx.Parameters['traitTextElementRate'];
 TMPlugin.DescriptionEx.TraitTextDebuffRate = TMPlugin.DescriptionEx.Parameters['traitTextDebuffRate'];
 TMPlugin.DescriptionEx.TraitTextStateRate = TMPlugin.DescriptionEx.Parameters['traitTextStateRate'];
@@ -500,16 +578,16 @@ TMPlugin.DescriptionEx.SlotTypeValue = TMPlugin.DescriptionEx.Parameters['slotTy
 TMPlugin.DescriptionEx.SpecialFlagValue = TMPlugin.DescriptionEx.Parameters['specialFlagValue'].split(',');
 TMPlugin.DescriptionEx.PartyAbilityValue = TMPlugin.DescriptionEx.Parameters['partyAbilityValue'].split(',');
 TMPlugin.DescriptionEx.ElementFooter = TMPlugin.DescriptionEx.Parameters['elementFooter'];
-TMPlugin.DescriptionEx.CostExTextHp   = TMPlugin.DescriptionEx.Parameters['costExTextHp'];
+TMPlugin.DescriptionEx.CostExTextHp = TMPlugin.DescriptionEx.Parameters['costExTextHp'];
 TMPlugin.DescriptionEx.CostExTextItem = TMPlugin.DescriptionEx.Parameters['costExTextItem'];
-TMPlugin.DescriptionEx.CostExTextExp  = TMPlugin.DescriptionEx.Parameters['costExTextExp'];
+TMPlugin.DescriptionEx.CostExTextExp = TMPlugin.DescriptionEx.Parameters['costExTextExp'];
 TMPlugin.DescriptionEx.CostExTextGold = TMPlugin.DescriptionEx.Parameters['costExTextGold'];
 TMPlugin.DescriptionEx.PassiveAlwaysText = TMPlugin.DescriptionEx.Parameters['passiveAlwaysText'];
 TMPlugin.DescriptionEx.PassiveTpText = TMPlugin.DescriptionEx.Parameters['passiveTpText'];
 TMPlugin.DescriptionEx.PassiveTpText2 = TMPlugin.DescriptionEx.Parameters['passiveTpText2'];
 TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['passiveStateText'];
 
-(function() {
+(function () {
 
   //-----------------------------------------------------------------------------
   // Input
@@ -522,30 +600,30 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Window_Selectable_processHandling = Window_Selectable.prototype.processHandling;
-  Window_Selectable.prototype.processHandling = function() {
+  Window_Selectable.prototype.processHandling = function () {
     if (this.isOpenAndActive() && this.isDescriptionEnabled() &&
-        this.isDescriptionTriggered()) {
+      this.isDescriptionTriggered()) {
       this.processDescription();
     } else {
       _Window_Selectable_processHandling.call(this);
     }
   };
 
-  Window_Selectable.prototype.isDescriptionEnabled = function() {
+  Window_Selectable.prototype.isDescriptionEnabled = function () {
     return this.isHandled('description');
   };
 
-  Window_Selectable.prototype.isDescriptionTriggered = function() {
+  Window_Selectable.prototype.isDescriptionTriggered = function () {
     if (this._helpWindow && TouchInput.isTriggered()) {
       var wx = (Graphics.width - Graphics.boxWidth) / 2 + this._helpWindow.x;
       var wy = (Graphics.height - Graphics.boxHeight) / 2 + this._helpWindow.y;
       return (TouchInput.x >= wx && TouchInput.x < wx + this._helpWindow.width &&
-              TouchInput.y >= wy && TouchInput.y < wy + this._helpWindow.height);
+        TouchInput.y >= wy && TouchInput.y < wy + this._helpWindow.height);
     }
     return Input.isRepeated('description');
   };
 
-  Window_Selectable.prototype.processDescription = function() {
+  Window_Selectable.prototype.processDescription = function () {
     if (this.isCurrentItemDescriptionEnabled()) {
       SoundManager.playOk();
       this.updateInputData();
@@ -556,61 +634,61 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
   };
 
-  Window_Selectable.prototype.isCurrentItemDescriptionEnabled = function() {
+  Window_Selectable.prototype.isCurrentItemDescriptionEnabled = function () {
     return true;
   };
-  
-  Window_Selectable.prototype.callDescriptionHandler = function() {
+
+  Window_Selectable.prototype.callDescriptionHandler = function () {
     if (this.isHandled('description')) {
       this._handlers['description'](this);
     }
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_ItemList
   //
 
-  Window_ItemList.prototype.isCurrentItemDescriptionEnabled = function() {
+  Window_ItemList.prototype.isCurrentItemDescriptionEnabled = function () {
     return this.item();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_SkillList
   //
 
-  Window_SkillList.prototype.isCurrentItemDescriptionEnabled = function() {
+  Window_SkillList.prototype.isCurrentItemDescriptionEnabled = function () {
     return this.item();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_EquipSlot
   //
 
-  Window_EquipSlot.prototype.isCurrentItemDescriptionEnabled = function() {
+  Window_EquipSlot.prototype.isCurrentItemDescriptionEnabled = function () {
     return this.item();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_ShopBuy
   //
 
-  Window_ShopBuy.prototype.isCurrentItemDescriptionEnabled = function() {
+  Window_ShopBuy.prototype.isCurrentItemDescriptionEnabled = function () {
     return this.item();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Window_Message
   //
-  
-  Window_Message.prototype.setDescriptionExWindow = function(descriptionExWindow) {
+
+  Window_Message.prototype.setDescriptionExWindow = function (descriptionExWindow) {
     this._descriptionExWindow = descriptionExWindow;
   };
 
   ///modify by linkscape
   var _Window_Message_isAnySubWindowActive = Window_Message.prototype.isAnySubWindowActive;
-  Window_Message.prototype.isAnySubWindowActive = function() {
+  Window_Message.prototype.isAnySubWindowActive = function () {
     return (_Window_Message_isAnySubWindowActive.call(this) ||
-            (this._descriptionExWindow && this._descriptionExWindow.active));
+      (this._descriptionExWindow && this._descriptionExWindow.active));
   };
 
   //-----------------------------------------------------------------------------
@@ -624,21 +702,21 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   Window_DescriptionEx.prototype = Object.create(Window_Selectable.prototype);
   Window_DescriptionEx.prototype.constructor = Window_DescriptionEx;
 
-  Window_DescriptionEx.prototype.initialize = function() {
+  Window_DescriptionEx.prototype.initialize = function () {
     var width = Graphics.boxWidth;
     var height = Graphics.boxHeight;
     Window_Selectable.prototype.initialize.call(this, 0, 0, width, height);
     this.openness = 0;
   };
 
-  Window_DescriptionEx.prototype.setItem = function(item) {
+  Window_DescriptionEx.prototype.setItem = function (item) {
     if (this._item !== item) {
       this._item = item;
       this.refresh();
     }
   };
 
-  Window_DescriptionEx.prototype.refresh = function() {
+  Window_DescriptionEx.prototype.refresh = function () {
     this.contents.clear();
     if (this._item) {
       if (DataManager.isItem(this._item)) {
@@ -653,7 +731,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
   };
 
-  Window_DescriptionEx.prototype.refreshItem = function() {
+  Window_DescriptionEx.prototype.refreshItem = function () {
     var y = 0;
     this.drawItemName(this._item, 0, y);
     this.drawItemType();
@@ -665,7 +743,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     this.drawProfile(0, y);
   };
 
-  Window_DescriptionEx.prototype.refreshWeapon = function() {
+  Window_DescriptionEx.prototype.refreshWeapon = function () {
     var y = 0;
     this.drawItemName(this._item, 0, y);
     this.drawWeaponType();
@@ -677,7 +755,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     this.drawProfile(0, y);
   };
 
-  Window_DescriptionEx.prototype.refreshArmor = function() {
+  Window_DescriptionEx.prototype.refreshArmor = function () {
     var y = 0;
     this.drawItemName(this._item, 0, y);
     this.drawArmorType();
@@ -688,8 +766,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     y = this.drawHorzLine(profileY);
     this.drawProfile(0, y);
   };
-  
-  Window_DescriptionEx.prototype.refreshSkill = function() {
+
+  Window_DescriptionEx.prototype.refreshSkill = function () {
     var y = 0;
     this.drawItemName(this._item, 0, y);
     this.drawSkillType();
@@ -705,7 +783,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     this.drawProfile(0, y);
   };
 
-  Window_DescriptionEx.prototype.drawItemType = function() {
+  Window_DescriptionEx.prototype.drawItemType = function () {
     if (this._item.meta.dType) {
       var text = this._item.meta.dType;
     } else if (this._item.itypeId === 1) {
@@ -719,36 +797,36 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     this.drawText(text, 0, 0, this.contents.width - this.textPadding(), 'right');
   };
-  
-  Window_DescriptionEx.prototype.drawWeaponType = function() {
+
+  Window_DescriptionEx.prototype.drawWeaponType = function () {
     var text = this._item.meta.dType ? this._item.meta.dType :
-               $dataSystem.weaponTypes[this._item.wtypeId];
+      $dataSystem.weaponTypes[this._item.wtypeId];
     this.drawText(text, 0, 0, this.contents.width - this.textPadding(), 'right');
   };
-  
-  Window_DescriptionEx.prototype.drawArmorType = function() {
+
+  Window_DescriptionEx.prototype.drawArmorType = function () {
     var text = this._item.meta.dType ? this._item.meta.dType :
-               $dataSystem.armorTypes[this._item.atypeId];
+      $dataSystem.armorTypes[this._item.atypeId];
     this.drawText(text, 0, 0, this.contents.width - this.textPadding(), 'right');
   };
-  
-  Window_DescriptionEx.prototype.drawSkillType = function() {
+
+  Window_DescriptionEx.prototype.drawSkillType = function () {
     var text = this._item.meta.dType ? this._item.meta.dType :
-               $dataSystem.skillTypes[this._item.stypeId];
+      $dataSystem.skillTypes[this._item.stypeId];
     this.drawText(text, 0, 0, this.contents.width - this.textPadding(), 'right');
   };
-  
-  Window_DescriptionEx.prototype.drawItemParameters = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawItemParameters = function (x, y) {
     var lineHeight = this.lineHeight();
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.ConsumableText,
-                               TMPlugin.DescriptionEx.ConsumableValue[this._item.consumable ? 0 : 1]);
+      TMPlugin.DescriptionEx.ConsumableValue[this._item.consumable ? 0 : 1]);
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.OccasionText,
-                               TMPlugin.DescriptionEx.OccasionValue[this._item.occasion]);
+      TMPlugin.DescriptionEx.OccasionValue[this._item.occasion]);
     y = this.drawBattleItemParameters(x, y + lineHeight);
     this.drawPrice(x, y + lineHeight);
   };
-  
-  Window_DescriptionEx.prototype.drawEquipParameters = function(x, y, item) {
+
+  Window_DescriptionEx.prototype.drawEquipParameters = function (x, y, item) {
     item = item || this._item;
     var lineHeight = this.lineHeight();
     for (var i = 0; i < 8; i++) {
@@ -762,8 +840,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     this.drawPrice(x, y + lineHeight);
   };
-  
-  Window_DescriptionEx.prototype.drawSkillParameters = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawSkillParameters = function (x, y) {
     var lineHeight = this.lineHeight();
     this.changeTextColor(this.systemColor());
     this.drawText(TMPlugin.DescriptionEx.MpCostText, x, y + lineHeight * 0, TMPlugin.DescriptionEx.LeftPaneWidth);
@@ -779,11 +857,11 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     text = TMPlugin.DescriptionEx.OccasionValue[this._item.occasion];
     this.drawText(text, x, y + lineHeight * 2, TMPlugin.DescriptionEx.LeftPaneWidth, 'right');
     this.drawLeftParameter(x, y + lineHeight * 3, TMPlugin.DescriptionEx.RequiredWtypeText,
-                           this.requiredWtypeValue());
+      this.requiredWtypeValue());
     this.drawBattleItemParameters(x, y + lineHeight * 5);
   };
-  
-  Window_DescriptionEx.prototype.elementText = function(elementId) {
+
+  Window_DescriptionEx.prototype.elementText = function (elementId) {
     if (elementId > 0) {
       return $dataSystem.elements[elementId] + TMPlugin.DescriptionEx.ElementFooter;
     } else if (elementId === 0) {
@@ -792,8 +870,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
       return '';
     }
   };
-  
-  Window_DescriptionEx.prototype.requiredWtypeValue = function() {
+
+  Window_DescriptionEx.prototype.requiredWtypeValue = function () {
     if (this._item.requiredWtypeId1 > 0) {
       text = $dataSystem.weaponTypes[this._item.requiredWtypeId1];
       if (this._item.requiredWtypeId2 > 0) {
@@ -806,29 +884,29 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     return text;
   };
-  
-  Window_DescriptionEx.prototype.valueToText = function(value) {
+
+  Window_DescriptionEx.prototype.valueToText = function (value) {
     return (value >= 0 ? '+' : '') + value;
   };
-  
-  Window_DescriptionEx.prototype.rateToText = function(rate, useSign) {
+
+  Window_DescriptionEx.prototype.rateToText = function (rate, useSign) {
     if (useSign === undefined) useSign = true;
     return (useSign && rate > 1 ? '+' : '') + (rate * 1000000 - 1000000) / 10000;
   };
-  
-  Window_DescriptionEx.prototype.drawBattleItemParameters = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawBattleItemParameters = function (x, y) {
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.ScopeText,
-                               TMPlugin.DescriptionEx.ScopeValue[this._item.scope]);
+      TMPlugin.DescriptionEx.ScopeValue[this._item.scope]);
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.SpeedText, this._item.speed);
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.SuccessRateText, this._item.successRate + '%');
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.RepeatsText, this._item.repeats);
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.TpGainText, this._item.tpGain);
     y = this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.HitTypeText,
-                               TMPlugin.DescriptionEx.HitTypeValue[this._item.hitType]);
+      TMPlugin.DescriptionEx.HitTypeValue[this._item.hitType]);
     return y;
   };
-  
-  Window_DescriptionEx.prototype.drawLeftParameter = function(x, y, text, value) {
+
+  Window_DescriptionEx.prototype.drawLeftParameter = function (x, y, text, value) {
     if (text === '') return y;
     this.changeTextColor(this.systemColor());
     this.drawText(text, x, y, TMPlugin.DescriptionEx.LeftPaneWidth);
@@ -836,8 +914,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     this.drawText(value, x, y, TMPlugin.DescriptionEx.LeftPaneWidth, 'right');
     return y + this.lineHeight();
   };
-  
-  Window_DescriptionEx.prototype.drawRightParameter = function(x, y, text) {
+
+  Window_DescriptionEx.prototype.drawRightParameter = function (x, y, text) {
     if (text === '') return y;
     var lineHeight = this.lineHeight();
     y += lineHeight;
@@ -847,17 +925,17 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     return y;
   };
-  
-  Window_DescriptionEx.prototype.drawPrice = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawPrice = function (x, y) {
     if (TMPlugin.DescriptionEx.PriceText === '' || this._item.price === undefined) return y;
     this.changeTextColor(this.systemColor());
     this.drawText(TMPlugin.DescriptionEx.PriceText, x, y, TMPlugin.DescriptionEx.LeftPaneWidth);
     this.drawCurrencyValue((this._item.price * TMPlugin.DescriptionEx.PriceRate).toFixed(0),
-        TextManager.currencyUnit, x, y, TMPlugin.DescriptionEx.LeftPaneWidth);
+      TextManager.currencyUnit, x, y, TMPlugin.DescriptionEx.LeftPaneWidth);
     return y + this.lineHeight();
   };
-  
-  Window_DescriptionEx.prototype.drawEffects = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawEffects = function (x, y) {
     this.changeTextColor(this.systemColor());
     this.drawText(TMPlugin.DescriptionEx.EffectText, x, y, TMPlugin.DescriptionEx.RightPaneWidth);
     this.resetTextColor();;
@@ -883,11 +961,11 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
       } else if (effect.code === Game_Action.EFFECT_ADD_STATE) {
         if (effect.dataId > 0) {
           text = TMPlugin.DescriptionEx.EffectTextAddState.format($dataStates[effect.dataId].name,
-                 Math.floor(effect.value1 * 1000000 / 10000));
+            Math.floor(effect.value1 * 1000000 / 10000));
         }
       } else if (effect.code === Game_Action.EFFECT_REMOVE_STATE) {
         text = TMPlugin.DescriptionEx.EffectTextRemoveState.format($dataStates[effect.dataId].name,
-               Math.floor(effect.value1 * 1000000 / 10000));
+          Math.floor(effect.value1 * 1000000 / 10000));
       } else if (effect.code === Game_Action.EFFECT_ADD_BUFF) {
         text = TMPlugin.DescriptionEx.EffectTextAddBuff.format(TextManager.param(effect.dataId), effect.value1);
       } else if (effect.code === Game_Action.EFFECT_ADD_DEBUFF) {
@@ -907,12 +985,12 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     this.drawOptionText(x, y);
   };
-  
-  Window_DescriptionEx.prototype.profileY = function() {
+
+  Window_DescriptionEx.prototype.profileY = function () {
     return this.contents.height - this.lineHeight() * 2 - TMPlugin.DescriptionEx.HorzLineHeight;
   };
-  
-  Window_DescriptionEx.prototype.drawDamage = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawDamage = function (x, y) {
     var text = '';
     if (this._item.damage.type === 1 || this._item.damage.type === 5) {
       text = TMPlugin.DescriptionEx.DamageTextDamageHp.format(this.elementText(this._item.damage.elementId));
@@ -926,13 +1004,13 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     y = this.drawRightParameter(x, y, text);
     if (this._item.damage.type >= 5) {
       text = this._item.damage.type === 5 ? TMPlugin.DescriptionEx.DamageTextDrainHp :
-             TMPlugin.DescriptionEx.DamageTextDrainMp;
+        TMPlugin.DescriptionEx.DamageTextDrainMp;
       y = this.drawRightParameter(x, y, text);
     }
     return y;
   };
-  
-  Window_DescriptionEx.prototype.drawTraits = function(x, y, item) {
+
+  Window_DescriptionEx.prototype.drawTraits = function (x, y, item) {
     item = item || this._item
     this.changeTextColor(this.systemColor());
     this.drawText(TMPlugin.DescriptionEx.TraitText, x, y, TMPlugin.DescriptionEx.RightPaneWidth);
@@ -945,29 +1023,29 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
       var text = '';
       if (trait.code === Game_BattlerBase.TRAIT_ELEMENT_RATE) {
         text = TMPlugin.DescriptionEx.TraitTextElementRate.format(this.elementText(trait.dataId),
-               this.rateToText(trait.value));
+          this.rateToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_DEBUFF_RATE) {
         text = TMPlugin.DescriptionEx.TraitTextDebuffRate.format(TextManager.param(trait.dataId),
-               this.rateToText(trait.value));
+          this.rateToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_STATE_RATE) {
         text = TMPlugin.DescriptionEx.TraitTextStateRate.format($dataStates[trait.dataId].name,
-               this.rateToText(trait.value));
+          this.rateToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_STATE_RESIST) {
         text = TMPlugin.DescriptionEx.TraitTextStateResist.format($dataStates[trait.dataId].name);
       } else if (trait.code === Game_BattlerBase.TRAIT_PARAM) {
         text = TMPlugin.DescriptionEx.TraitTextParam.format(TextManager.param(trait.dataId),
-               this.rateToText(trait.value));
+          this.rateToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_XPARAM) {
         text = TMPlugin.DescriptionEx.TraitTextXparam.format(TMPlugin.DescriptionEx.XparamText[trait.dataId],
-               this.valueToText(trait.value * 1000000 / 10000));
+          this.valueToText(trait.value * 1000000 / 10000));
       } else if (trait.code === Game_BattlerBase.TRAIT_SPARAM) {
         text = TMPlugin.DescriptionEx.TraitTextSparam.format(TMPlugin.DescriptionEx.SparamText[trait.dataId],
-               this.rateToText(trait.value));
+          this.rateToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_ATTACK_ELEMENT) {
         text = TMPlugin.DescriptionEx.TraitTextAttackElement.format(this.elementText(trait.dataId));
       } else if (trait.code === Game_BattlerBase.TRAIT_ATTACK_STATE) {
         text = TMPlugin.DescriptionEx.TraitTextAttackState.format($dataStates[trait.dataId].name,
-               trait.value * 1000000 / 10000);
+          trait.value * 1000000 / 10000);
       } else if (trait.code === Game_BattlerBase.TRAIT_ATTACK_SPEED) {
         text = TMPlugin.DescriptionEx.TraitTextAttackSpeed.format(this.valueToText(trait.value));
       } else if (trait.code === Game_BattlerBase.TRAIT_ATTACK_TIMES) {
@@ -1001,8 +1079,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     this.drawOptionText(x, y);
   };
-  
-  Window_DescriptionEx.prototype.drawOptionText = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawOptionText = function (x, y) {
     if (this._item.meta.dText) {
       var textArray = this._item.meta.dText.split(/\r\n|\r|\n/);
       for (var i = 0; i < textArray.length; i++) {
@@ -1010,8 +1088,8 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
       }
     }
   };
-  
-  Window_DescriptionEx.prototype.drawHorzLine = function(y) {
+
+  Window_DescriptionEx.prototype.drawHorzLine = function (y) {
     var lineY = y + TMPlugin.DescriptionEx.HorzLineHeight / 2 - 1;
     this.contents.paintOpacity = 48;
     this.contents.fillRect(0, lineY, this.contentsWidth(), 2, this.lineColor());
@@ -1019,15 +1097,15 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     return y + TMPlugin.DescriptionEx.HorzLineHeight;
   };
 
-  Window_DescriptionEx.prototype.lineColor = function() {
+  Window_DescriptionEx.prototype.lineColor = function () {
     return this.normalColor();
   };
 
-  Window_DescriptionEx.prototype.drawProfile = function(x, y) {
+  Window_DescriptionEx.prototype.drawProfile = function (x, y) {
     this.drawTextEx(this._item.description, x + this.textPadding(), y);
   };
 
-  Window_DescriptionEx.prototype.drawCostEx = function(x, y) {
+  Window_DescriptionEx.prototype.drawCostEx = function (x, y) {
     var dummyActor = new Game_Actor(1);
     var text = '';
     if (this._item.meta.hpRateCost) {
@@ -1047,21 +1125,21 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     if (this._item.meta.goldCost) {
       text = TMPlugin.DescriptionEx.CostExTextGold.format(this._item.meta.goldCost +
-             TextManager.currencyUnit);
+        TextManager.currencyUnit);
       y = this.drawRightParameter(x, y, text);
     }
     return y;
   };
-  
-  Window_DescriptionEx.prototype.drawPassiveSkillParameters = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawPassiveSkillParameters = function (x, y) {
     var item = $dataWeapons[+this._item.meta.passive];
     this.drawTraits(this.contents.width - this.textPadding() - TMPlugin.DescriptionEx.RightPaneWidth, y, item);
     this.drawLeftParameter(x, y, TMPlugin.DescriptionEx.RequiredWtypeText, this.requiredWtypeValue());
     y += this.lineHeight() * 2;
     this.drawEquipParameters(this.textPadding(), y, item);
   };
-  
-  Window_DescriptionEx.prototype.drawPassiveSkillOccasion = function(x, y) {
+
+  Window_DescriptionEx.prototype.drawPassiveSkillOccasion = function (x, y) {
     var lastY = y;
     if (this._item.meta.passiveTp) {
       if (+this._item.meta.passiveTp > 0) {
@@ -1080,26 +1158,26 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
     }
     return y;
   };
-  
+
   //-----------------------------------------------------------------------------
   // Scene_Base
   //
 
-  Scene_Base.prototype.createDescriptionExWindow = function() {
+  Scene_Base.prototype.createDescriptionExWindow = function () {
     this._descriptionExWindow = new Window_DescriptionEx();
     this._descriptionExWindow.setHandler('description', this.descriptionClose.bind(this));
-    this._descriptionExWindow.setHandler('cancel',      this.descriptionClose.bind(this));
+    this._descriptionExWindow.setHandler('cancel', this.descriptionClose.bind(this));
     this.addWindow(this._descriptionExWindow);
   };
-  
-  Scene_Base.prototype.descriptionOpen = function(mainWindow) {
+
+  Scene_Base.prototype.descriptionOpen = function (mainWindow) {
     this._descriptionMainWindow = mainWindow;
     this._descriptionExWindow.setItem(this._descriptionMainWindow.item());
     this._descriptionExWindow.open();
     this._descriptionExWindow.activate();
   };
-  
-  Scene_Base.prototype.descriptionClose = function() {
+
+  Scene_Base.prototype.descriptionClose = function () {
     this._descriptionExWindow.close();
     this._descriptionMainWindow.activate();
   };
@@ -1109,10 +1187,10 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Map_createMessageWindow = Scene_Map.prototype.createMessageWindow;
-  Scene_Map.prototype.createMessageWindow = function() {
+  Scene_Map.prototype.createMessageWindow = function () {
     _Scene_Map_createMessageWindow.call(this);
     this._messageWindow._itemWindow.setHandler('description',
-        this.descriptionOpen.bind(this));
+      this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
     this._messageWindow.setDescriptionExWindow(this._descriptionExWindow);
   };
@@ -1122,7 +1200,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Item_createItemWindow = Scene_Item.prototype.createItemWindow;
-  Scene_Item.prototype.createItemWindow = function() {
+  Scene_Item.prototype.createItemWindow = function () {
     _Scene_Item_createItemWindow.call(this);
     this._itemWindow.setHandler('description', this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
@@ -1133,7 +1211,7 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Skill_createItemWindow = Scene_Skill.prototype.createItemWindow;
-  Scene_Skill.prototype.createItemWindow = function() {
+  Scene_Skill.prototype.createItemWindow = function () {
     _Scene_Skill_createItemWindow.call(this);
     this._itemWindow.setHandler('description', this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
@@ -1144,14 +1222,14 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Equip_createItemWindow = Scene_Equip.prototype.createItemWindow;
-  Scene_Equip.prototype.createItemWindow = function() {
+  Scene_Equip.prototype.createItemWindow = function () {
     _Scene_Equip_createItemWindow.call(this);
     this._itemWindow.setHandler('description', this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
   };
 
   var _Scene_Equip_createSlotWindow = Scene_Equip.prototype.createSlotWindow;
-  Scene_Equip.prototype.createSlotWindow = function() {
+  Scene_Equip.prototype.createSlotWindow = function () {
     _Scene_Equip_createSlotWindow.call(this);
     this._slotWindow.setHandler('description', this.descriptionOpen.bind(this));
   };
@@ -1161,28 +1239,28 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Shop_createBuyWindow = Scene_Shop.prototype.createBuyWindow;
-  Scene_Shop.prototype.createBuyWindow = function() {
+  Scene_Shop.prototype.createBuyWindow = function () {
     _Scene_Shop_createBuyWindow.call(this);
     this._buyWindow.setHandler('description', this.descriptionOpen.bind(this));
   };
 
   var _Scene_Shop_createSellWindow = Scene_Shop.prototype.createSellWindow;
-  Scene_Shop.prototype.createSellWindow = function() {
+  Scene_Shop.prototype.createSellWindow = function () {
     _Scene_Shop_createSellWindow.call(this);
     this._sellWindow.setHandler('description', this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
   };
 
   var _Scene_Shop_descriptionOpen = Scene_Shop.prototype.descriptionOpen;
-  Scene_Shop.prototype.descriptionOpen = function(mainWindow) {
+  Scene_Shop.prototype.descriptionOpen = function (mainWindow) {
     _Scene_Shop_descriptionOpen.call(this, mainWindow);
     if (Imported.TMGreedShop) {
       if (this._materialWindow) this._materialWindow.hide();
     }
   };
-  
+
   var _Scene_Shop_descriptionClose = Scene_Shop.prototype.descriptionClose;
-  Scene_Shop.prototype.descriptionClose = function() {
+  Scene_Shop.prototype.descriptionClose = function () {
     _Scene_Shop_descriptionClose.call(this);
     if (Imported.TMGreedShop) {
       if (this._materialWindow) this._materialWindow.show();
@@ -1194,28 +1272,28 @@ TMPlugin.DescriptionEx.PassiveStateText = TMPlugin.DescriptionEx.Parameters['pas
   //
 
   var _Scene_Battle_isAnyInputWindowActive = Scene_Battle.prototype.isAnyInputWindowActive;
-  Scene_Battle.prototype.isAnyInputWindowActive = function() {
+  Scene_Battle.prototype.isAnyInputWindowActive = function () {
     return _Scene_Battle_isAnyInputWindowActive.call(this) ||
-           this._descriptionExWindow.active;
+      this._descriptionExWindow.active;
   };
 
   var _Scene_Battle_createSkillWindow = Scene_Battle.prototype.createSkillWindow;
-  Scene_Battle.prototype.createSkillWindow = function() {
+  Scene_Battle.prototype.createSkillWindow = function () {
     _Scene_Battle_createSkillWindow.call(this);
     this._skillWindow.setHandler('description', this.descriptionOpen.bind(this));
   };
 
   var _Scene_Battle_createItemWindow = Scene_Battle.prototype.createItemWindow;
-  Scene_Battle.prototype.createItemWindow = function() {
+  Scene_Battle.prototype.createItemWindow = function () {
     _Scene_Battle_createItemWindow.call(this);
     this._itemWindow.setHandler('description', this.descriptionOpen.bind(this));
   };
 
   var _Scene_Battle_createMessageWindow = Scene_Battle.prototype.createMessageWindow;
-  Scene_Battle.prototype.createMessageWindow = function() {
+  Scene_Battle.prototype.createMessageWindow = function () {
     _Scene_Battle_createMessageWindow.call(this);
     this._messageWindow._itemWindow.setHandler('description',
-        this.descriptionOpen.bind(this));
+      this.descriptionOpen.bind(this));
     this.createDescriptionExWindow();
     this._messageWindow.setDescriptionExWindow(this._descriptionExWindow);
   };
