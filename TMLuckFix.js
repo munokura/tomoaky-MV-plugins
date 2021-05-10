@@ -10,16 +10,19 @@
 //=============================================================================
 
 /*:
+ * @target MZ MV
+ * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMLuckFix.js
  * @plugindesc 運の値が影響する要素をカスタマイズします。
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
+ * @author tomoaky
  *
  * @param effectRate
+ * @text 補正倍率
  * @type number
  * @decimals 3
  * @desc ステート付与成功率の補正倍率。
  * 初期値: 0.001
- * @default 0.001
+ * @default ツクールデフォルト:0.001
  *
  * @help
  * TMPlugin - 因果の調律 ver1.0.0
@@ -47,7 +50,7 @@
 var Imported = Imported || {};
 Imported.TMLuckFix = true;
 
-(function() {
+(function () {
 
   var parameters = PluginManager.parameters('TMLuckFix');
   var effectRate = +(parameters['effectRate'] || 0.001);
@@ -56,7 +59,7 @@ Imported.TMLuckFix = true;
   // Game_Action
   //
 
-  Game_Action.prototype.lukEffectRate = function(target) {
+  Game_Action.prototype.lukEffectRate = function (target) {
     return Math.max(1.0 + (this.subject().luk - target.luk) * effectRate, 0.0);
   };
 
