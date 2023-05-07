@@ -10,9 +10,9 @@
 //=============================================================================
 
 /*:
- * @plugindesc イベントの頭上に文字列を表示する機能を追加します。
+ * @plugindesc v2.1 イベントの頭上に文字列を表示する機能を追加します。
  *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
+ * @author tomoaky (改変munokura)
  *
  * @param backOpacity
  * @text 背景不透明度
@@ -51,6 +51,11 @@
  * @default 6
  *
  * @help
+ * このプラグインはTMNamePopを改変したものです。
+ * お問い合わせは改変者（munokura）へお願いいたします。
+ * 原作者にご迷惑をおかけしないよう、お願いいたします。
+ * 
+ * 
  * 使い方:
  *
  *   イベントのメモ欄（または注釈コマンド）にタグを書き込むか、あるいは
@@ -60,8 +65,6 @@
  *   イベントの透明化をオンにするとネームポップも非表示になります。
  *   ネームポップだけを表示したい場合はイベントの画像を (なし) に
  *   してください。
- *
- *   このプラグインは RPGツクールMV Version 1.3.0 で動作確認をしています。
  *
  *
  * プラグインコマンド:
@@ -118,6 +121,18 @@
  *     TMBitmapEx.js をこのプラグインよりも上の位置に導入し、
  *     このパラメータの値を 1 以上にすることで、ネームポップ背景を
  *     角丸の矩形にすることができます。
+ * 
+ * 改変（機能追加）部分
+ * 
+ * 1.メモ欄（イベント）タグ・注釈コマンド:
+ *   <namePop:名前 24,12 red>
+ *     頭上に 名前 という文字列を、右24ドット・下12ドットずらして、
+ *     文字の縁取りを赤色にして表示します。
+ * 
+ * 2.プラグインコマンド:
+ *   namePop 1 名前 -12,-48
+ *     ネームポップを左12ドット・上48ドットずらして表示します。
+ * 
  */
 
 var Imported = Imported || {};
@@ -214,12 +229,22 @@ if (!TMPlugin.InterpreterBase) {
   // Game_CharacterBase
   //
 
-  Game_CharacterBase.prototype.setNamePop = function (namePop, shiftY) {
+  // Game_CharacterBase.prototype.setNamePop = function(namePop, shiftY) {
+  Game_CharacterBase.prototype.setNamePop = function (namePop, shiftArr) {
     if (namePop) {
       namePop = $gameMap._interpreter.convertEscapeCharactersTM(namePop);
     }
     this._namePop = namePop;
-    this._namePopY = shiftY || 0;
+
+    this._namePopX = 0;
+    this._namePopY = 0;
+    if (shiftArr.length === 1) {
+      this._namePopY = shiftArr[0] || 0;
+    }
+    if (shiftArr.length === 2) {
+      this._namePopX = shiftArr[0] || 0;
+      this._namePopY = shiftArr[1] || 0;
+    }
   };
 
   Game_CharacterBase.prototype.namePopOutlineColor = function () {
@@ -253,7 +278,14 @@ if (!TMPlugin.InterpreterBase) {
       var namePop = this.loadTagParam('namePop');
       if (namePop) {
         var arr = namePop.split(' ');
-        this.setNamePop(arr[0], arr[1]);
+        // this.setNamePop(arr[0], arr[1]);
+
+        var shiftArr = [];
+        if (arr[1]) {
+          shiftArr = arr[1].split(',');
+        }
+        this.setNamePop(arr[0], shiftArr);
+
         this.setNamePopOutlineColor(arr[2]);
       }
     } else {
@@ -273,7 +305,14 @@ if (!TMPlugin.InterpreterBase) {
       var arr = args.map(this.convertEscapeCharactersTM, this);
       var character = this.character(+arr[0]);
       if (character) {
-        character.setNamePop(args[1], arr[2]);
+        // character.setNamePop(args[1], arr[2]);
+
+        var shiftArr = [];
+        if (arr[2]) {
+          shiftArr = arr[2].split(',');
+        }
+        character.setNamePop(args[1], shiftArr);
+
         character.setNamePopOutlineColor(arr[3]);
         character.requestNamePop();
       }
@@ -299,6 +338,7 @@ if (!TMPlugin.InterpreterBase) {
         if (!this._namePopSprite) {
           this._namePopSprite = new Sprite_NamePop();
           this.addChild(this._namePopSprite);
+          this._namePopSprite.x = this.namePopShiftX();
           this._namePopSprite.y = this.namePopShiftY();
         }
         this._namePopSprite.refresh(this._namePop,
@@ -308,6 +348,10 @@ if (!TMPlugin.InterpreterBase) {
         this._namePopSprite = null;
       }
     }
+  };
+
+  Sprite_Character.prototype.namePopShiftX = function () {
+    return this._character._namePopX;
   };
 
   Sprite_Character.prototype.namePopShiftY = function () {
@@ -336,6 +380,7 @@ if (!TMPlugin.InterpreterBase) {
 
   Sprite_NamePop.prototype.update = function () {
     Sprite.prototype.update.call(this);
+    this.x = this.parent.namePopShiftX();
     this.y = this.parent.namePopShiftY();
   };
 
