@@ -15,31 +15,37 @@
  * @author tomoaky (http://hikimoki.sakura.ne.jp/)
  *
  * @param backOpacity
+ * @text 背景不透明度
  * @desc ネームポップの背景の不透明度。
  * 初期値: 96 ( 0 ～ 255 )
  * @default 96
  *
  * @param fontSize
+ * @text フォントサイズ
  * @desc ネームポップのフォントサイズ。
  * 初期値: 20
  * @default 20
  *
  * @param outlineWidth
+ * @text 縁取り太さ
  * @desc ネームポップの縁取りの太さ。
  * 初期値: 4
  * @default 4
  *
  * @param outlineColor
+ * @text 縁取り色
  * @desc ネームポップの縁取りの色。
  * 初期値: rgba(0, 0, 0, 0.5)
  * @default rgba(0, 0, 0, 0.5)
  *
  * @param width
+ * @text ネームポップ幅
  * @desc ネームポップの幅
  * 初期値: 160
  * @default 160
  *
  * @param roundRectRadius
+ * @text TMBitmapEx.js導入時の半径
  * @desc TMBitmapEx.js導入時の、角丸矩形の丸部分の半径。
  * 初期値: 6
  * @default 6
@@ -120,7 +126,7 @@ Imported.TMNamePop = true;
 var TMPlugin = TMPlugin || {};
 TMPlugin.NamePop = {};
 TMPlugin.NamePop.Parameters = PluginManager.parameters('TMNamePop');
-TMPlugin.NamePop.BackOpacity =  +(TMPlugin.NamePop.Parameters['backOpacity'] || 96);
+TMPlugin.NamePop.BackOpacity = +(TMPlugin.NamePop.Parameters['backOpacity'] || 96);
 TMPlugin.NamePop.FontSize = +(TMPlugin.NamePop.Parameters['fontSize'] || 20);
 TMPlugin.NamePop.OutlineWidth = +(TMPlugin.NamePop.Parameters['outlineWidth'] || 4);
 TMPlugin.NamePop.OutlineColor = TMPlugin.NamePop.Parameters['outlineColor'] || 'rgba(0, 0, 0, 0.5)';
@@ -130,22 +136,22 @@ TMPlugin.NamePop.RoundRectRadius = +(TMPlugin.NamePop.Parameters['roundRectRadiu
 
 if (!TMPlugin.EventBase) {
   TMPlugin.EventBase = true;
-  (function() {
+  (function () {
 
     var _Game_Event_setupPage = Game_Event.prototype.setupPage;
-    Game_Event.prototype.setupPage = function() {
+    Game_Event.prototype.setupPage = function () {
       _Game_Event_setupPage.call(this);
       if (this._pageIndex >= 0) this.loadCommentParams();
     };
 
-    Game_Event.prototype.loadCommentParams = function() {
+    Game_Event.prototype.loadCommentParams = function () {
       this._commentParams = {};
       var re = /<([^<>:]+)(:?)([^>]*)>/g;
       var list = this.list();
       for (var i = 0; i < list.length; i++) {
         var command = list[i];
         if (command && command.code == 108 || command.code == 408) {
-          for (;;) {
+          for (; ;) {
             var match = re.exec(command.parameters[0]);
             if (match) {
               this._commentParams[match[1]] = match[2] === ':' ? match[3] : true;
@@ -159,7 +165,7 @@ if (!TMPlugin.EventBase) {
       }
     };
 
-    Game_Event.prototype.loadTagParam = function(paramName) {
+    Game_Event.prototype.loadTagParam = function (paramName) {
       return this._commentParams[paramName] || this.event().meta[paramName];
     };
 
@@ -168,33 +174,33 @@ if (!TMPlugin.EventBase) {
 
 if (!TMPlugin.InterpreterBase) {
   TMPlugin.InterpreterBase = true;
-  (function() {
+  (function () {
 
-    Game_Interpreter.prototype.convertEscapeCharactersTM = function(text) {
+    Game_Interpreter.prototype.convertEscapeCharactersTM = function (text) {
       text = text.replace(/\\/g, '\x1b');
       text = text.replace(/\x1b\x1b/g, '\\');
-      text = text.replace(/\x1bV\[(\d+)\]/gi, function() {
+      text = text.replace(/\x1bV\[(\d+)\]/gi, function () {
         return $gameVariables.value(parseInt(arguments[1]));
       }.bind(this));
-      text = text.replace(/\x1bV\[(\d+)\]/gi, function() {
+      text = text.replace(/\x1bV\[(\d+)\]/gi, function () {
         return $gameVariables.value(parseInt(arguments[1]));
       }.bind(this));
-      text = text.replace(/\x1bN\[(\d+)\]/gi, function() {
+      text = text.replace(/\x1bN\[(\d+)\]/gi, function () {
         return this.actorNameTM(parseInt(arguments[1]));
       }.bind(this));
-      text = text.replace(/\x1bP\[(\d+)\]/gi, function() {
+      text = text.replace(/\x1bP\[(\d+)\]/gi, function () {
         return this.partyMemberNameTM(parseInt(arguments[1]));
       }.bind(this));
       text = text.replace(/\x1bG/gi, TextManager.currencyUnit);
       return text;
     };
-  
-    Game_Interpreter.prototype.actorNameTM = function(n) {
+
+    Game_Interpreter.prototype.actorNameTM = function (n) {
       var actor = n >= 1 ? $gameActors.actor(n) : null;
       return actor ? actor.name() : '';
     };
 
-    Game_Interpreter.prototype.partyMemberNameTM = function(n) {
+    Game_Interpreter.prototype.partyMemberNameTM = function (n) {
       var actor = n >= 1 ? $gameParty.members()[n - 1] : null;
       return actor ? actor.name() : '';
     };
@@ -202,37 +208,37 @@ if (!TMPlugin.InterpreterBase) {
   })();
 } // TMPlugin.InterpreterBase
 
-(function() {
+(function () {
 
   //-----------------------------------------------------------------------------
   // Game_CharacterBase
   //
 
-  Game_CharacterBase.prototype.setNamePop = function(namePop, shiftY) {
+  Game_CharacterBase.prototype.setNamePop = function (namePop, shiftY) {
     if (namePop) {
       namePop = $gameMap._interpreter.convertEscapeCharactersTM(namePop);
     }
-    this._namePop  = namePop;
+    this._namePop = namePop;
     this._namePopY = shiftY || 0;
   };
 
-  Game_CharacterBase.prototype.namePopOutlineColor = function() {
+  Game_CharacterBase.prototype.namePopOutlineColor = function () {
     return this._namePopOutlineColor || TMPlugin.NamePop.OutlineColor;
   };
-  
-  Game_CharacterBase.prototype.setNamePopOutlineColor = function(outlineColor) {
+
+  Game_CharacterBase.prototype.setNamePopOutlineColor = function (outlineColor) {
     this._namePopOutlineColor = outlineColor;
   };
-  
-  Game_CharacterBase.prototype.requestNamePop = function() {
+
+  Game_CharacterBase.prototype.requestNamePop = function () {
     this._requestNamePop = true;
   };
 
-  Game_CharacterBase.prototype.onChangeNamePop = function() {
+  Game_CharacterBase.prototype.onChangeNamePop = function () {
     this._requestNamePop = false;
   };
 
-  Game_CharacterBase.prototype.isNamePopRequested = function() {
+  Game_CharacterBase.prototype.isNamePopRequested = function () {
     return this._requestNamePop;
   };
 
@@ -241,7 +247,7 @@ if (!TMPlugin.InterpreterBase) {
   //
 
   var _Game_Event_setupPage = Game_Event.prototype.setupPage;
-  Game_Event.prototype.setupPage = function() {
+  Game_Event.prototype.setupPage = function () {
     _Game_Event_setupPage.call(this);
     if (this._pageIndex >= 0) {
       var namePop = this.loadTagParam('namePop');
@@ -255,13 +261,13 @@ if (!TMPlugin.InterpreterBase) {
     }
     this.requestNamePop();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Game_Interpreter
   //
 
   var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
-  Game_Interpreter.prototype.pluginCommand = function(command, args) {
+  Game_Interpreter.prototype.pluginCommand = function (command, args) {
     _Game_Interpreter_pluginCommand.call(this, command, args);
     if (command === 'namePop') {
       var arr = args.map(this.convertEscapeCharactersTM, this);
@@ -273,20 +279,20 @@ if (!TMPlugin.InterpreterBase) {
       }
     }
   };
-  
+
   //-----------------------------------------------------------------------------
   // Sprite_Character
   //
 
   var _Sprite_Character_update = Sprite_Character.prototype.update;
-  Sprite_Character.prototype.update = function() {
+  Sprite_Character.prototype.update = function () {
     _Sprite_Character_update.call(this);
     this.updateNamePop();
   };
 
-  Sprite_Character.prototype.updateNamePop = function() {
+  Sprite_Character.prototype.updateNamePop = function () {
     if (this._character.isNamePopRequested() ||
-        this._namePop !== this._character._namePop) {
+      this._namePop !== this._character._namePop) {
       this._character.onChangeNamePop();
       this._namePop = this._character._namePop;
       if (this._namePop) {
@@ -296,7 +302,7 @@ if (!TMPlugin.InterpreterBase) {
           this._namePopSprite.y = this.namePopShiftY();
         }
         this._namePopSprite.refresh(this._namePop,
-                                    this._character.namePopOutlineColor());
+          this._character.namePopOutlineColor());
       } else {
         this.removeChild(this._namePopSprite);
         this._namePopSprite = null;
@@ -304,10 +310,10 @@ if (!TMPlugin.InterpreterBase) {
     }
   };
 
-  Sprite_Character.prototype.namePopShiftY = function() {
+  Sprite_Character.prototype.namePopShiftY = function () {
     return this._character._namePopY - this.patternHeight();
   };
-  
+
   //-----------------------------------------------------------------------------
   // Sprite_NamePop
   //
@@ -319,7 +325,7 @@ if (!TMPlugin.InterpreterBase) {
   Sprite_NamePop.prototype = Object.create(Sprite.prototype);
   Sprite_NamePop.prototype.constructor = Sprite_NamePop;
 
-  Sprite_NamePop.prototype.initialize = function() {
+  Sprite_NamePop.prototype.initialize = function () {
     Sprite.prototype.initialize.call(this);
     this.bitmap = new Bitmap(TMPlugin.NamePop.Width, TMPlugin.NamePop.FontSize + 4);
     this.bitmap.fontSize = TMPlugin.NamePop.FontSize;
@@ -328,12 +334,12 @@ if (!TMPlugin.InterpreterBase) {
     this.anchor.y = 1;
   };
 
-  Sprite_NamePop.prototype.update = function() {
+  Sprite_NamePop.prototype.update = function () {
     Sprite.prototype.update.call(this);
     this.y = this.parent.namePopShiftY();
   };
 
-  Sprite_NamePop.prototype.refresh = function(text, outlineColor) {
+  Sprite_NamePop.prototype.refresh = function (text, outlineColor) {
     this.bitmap.clear();
     this.bitmap.textColor = '#ffffff';
     this.bitmap.outlineColor = outlineColor;
@@ -350,16 +356,16 @@ if (!TMPlugin.InterpreterBase) {
     this.bitmap.paintOpacity = 255;
     this.bitmap.drawText(text, 0, 0, this.width, this.height, 'center');
   };
-  
-  Sprite_NamePop.prototype.convertEscapeCharacters = function(text) {
-    text = text.replace(/\x1bC\[(\d+)\]/gi, function() {
+
+  Sprite_NamePop.prototype.convertEscapeCharacters = function (text) {
+    text = text.replace(/\x1bC\[(\d+)\]/gi, function () {
       this.bitmap.textColor = this.textColor(arguments[1]);
       return '';
     }.bind(this));
     return text;
   };
 
-  Sprite_NamePop.prototype.textColor = function(n) {
+  Sprite_NamePop.prototype.textColor = function (n) {
     var px = 96 + (n % 8) * 12 + 6;
     var py = 144 + Math.floor(n / 8) * 12 + 6;
     var windowskin = ImageManager.loadSystem('Window');
