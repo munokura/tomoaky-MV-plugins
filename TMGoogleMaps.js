@@ -4,109 +4,198 @@
 // Version: 2.0
 // 最終更新日: 2016/05/26
 //=============================================================================
-
 /*:
- * @plugindesc Googleマップにアクセスして地図画像を取得、表示します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param earthR
- * @desc 地球の半径（km）
- * 初期値: 6378.137
- * @default 6378.137
- *
- * @help
- *
- * 注意事項:
- *   このプラグインを使用してゲームを作成する際は必ずGoogleマップの利用規約にも
- *   目を通してください。使用により何らかの不利益が発生してもプラグイン作者はその
- *   責任を負いません、すべて自己責任でお願いします。
- *
- * 使い方:
- *   最初にプラグインコマンドの geoCoding を実行して現実世界の座標を取得します。
- *   取得が成功した状態で geoParallax を実行すれば、遠景がその座標の地図に変更さ
- *   れます。
- *
- * プラグインコマンド:
- *   geoCoding address 日本
- *   住所や地名でジオコーディング。この例では日本という地名に該当する場所の
- *   情報をGoogleマップに接続して取得します。通信が完了したかどうかをチェック
- *   するには後述のスクリプトコマンドを利用します。
- *
- *   geoCoding actor 5
- *   アクター５番の名前でジオコーディング。
- *
- *   geoCoding vn 10
- *   変数１０番の値でジオコーディング
- *
- *   geoCoding latlng 35.794 139.790
- *   緯度と経度で逆ジオコーディング
- *
- *   googleParallax 1 2
- *   直前のジオコーディング結果から得られる地図画像を遠景として設定します。
- *   数値は遠景のスクロール量（ X と Y ）です。
- *
- *   googlePicture 1 0 48 96 100 100 255 0
- *   直前のジオコーディング結果から得られる地図画像をピクチャとして表示する。
- *   数値は左から順に ピクチャ番号 原点（ 0 = 左上 / 1 = 中央） Ｘ座標 Ｙ座標
- *   拡大率（横） 拡大率（縦） 不透明度 合成方法 の８つです。
- *   後ろの方にある数値は省略することが可能ですが、たとえば拡大率だけを
- *   省略することはできません。数値を４つ書いた場合は ピクチャ番号 ～ Ｙ座標
- *   までの４つが有効になります。
- *
- *   googleMapType 2
- *   地図画像のタイプを設定します、このコマンドよりも前にダウンロードされた
- *   画像には適用されません。数値は 0 ～ 3 を設定してください。
- *   0 = roadmap / 1 = satellite / 2 = hybrid / 3 = terrain
- *
- *   googleMapZoom 12
- *   地図画像の拡大率を設定します、このコマンドよりも前にダウンロードされた
- *   画像には適用されません。画像の大きさではなく、地図の縮尺です。
- *
- *   googleMapWidth 512
- *   地図画像の解像度（横）を設定します、このコマンドよりも前にダウンロード
- *   された画像には適用されません。
- *
- *   googleMapHeight 512
- *   地図画像の解像度（縦）を設定します、このコマンドよりも前にダウンロード
- *   された画像には適用されません。
- *
- *   googleAddress 4
- *   直前に実行されたジオコーディングによって得られた住所を、指定した番号の
- *   ゲーム変数に代入します。この例ではゲーム変数４番に住所（文字列）を代入。
- *
- * スクリプトコマンド:
- *   geoCoding を実行した後、通信が完了したかどうかをチェックする必要があります。
- *   チェックのためのコマンドはありませんので、イベントコマンド『スクリプト』を
- *   使用します。
- *
- *   $gameTemp.isGeoCodingComplete()
- *   geoCoding の通信が完了していれば true を返す
- *
- *   $gameTemp.isGeoCodingError()
- *   geoCoding の通信中にエラーが起きれば true を返す
- *
- *   $gameSystem.isGeoDataEmpty()
- *   geoCoding の通信の結果、座標が取得できなかった場合に true を返す
- * 
- *   上記３つのスクリプトをイベントコマンド『ループ』と『条件分岐』で使用し、
- *   通信の状態や結果を監視して、最終的に isGeoCodingComplete が true かつ
- *   isGeoDataEmpty が false を返したら geoParallax を実行してください。
- *
- * おまけ機能:
- *   前回の geoCoding との距離を取得することもできます。
- *   $gameSystem.getGeoDataDistance()
- *   イベントコマンド『変数の操作』のスクリプトとして上記コマンドを使用すると
- *   前回実行した geoCoding で取得した座標との差（距離）を変数に代入することが
- *   できます。前回、あるいは直前の geoCoding が失敗している場合には -1 が代入
- *   されます。
- *
- *   イベントコマンド『文章の表示』に距離を表示したい場合は \DIST という制御文字
- *   を使えば小数点以下３桁、単位つきの距離に置き換わります。
- *   getGeoDataDistance を使う必要はありません。
- *
- * 
- */
+@plugindesc Accesses Google Maps to obtain and display map images.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+
+Note:
+When creating a game using this plugin, please be sure to also read the Google Maps Terms of Use. The plugin author assumes no responsibility for any disadvantages arising from use; use is at your own risk.
+
+How to Use:
+First, run the plugin command geoCoding to obtain real-world coordinates.
+Once successfully obtained, run geoParallax to change the distant view to a map with those coordinates.
+
+Plugin Command:
+geoCoding address Japan
+Geocoding by address or place name. In this example, we connect to Google Maps to obtain information for locations corresponding to the place name Japan. To check whether communication is complete, use the script command described below.
+
+geoCoding actor 5
+Geocoding by the name of actor 5.
+
+geoCoding vn 10
+Geocoding using the value of variable 10
+
+geoCoding latlng 35.794 139.790
+Reverse geocoding using latitude and longitude
+
+googleParallax 1 2
+Sets the map image obtained from the previous geocoding result as the background view.
+The values are the scroll distance (X and Y) of the background view.
+
+googlePicture 1 0 48 96 100 100 255 0
+Displays the map image obtained from the previous geocoding result as a picture.
+The values are, from left to right, picture number, origin (0 = top left / 1 = center), X coordinate, Y coordinate,
+magnification (horizontal), magnification (vertical), opacity, and blending method.
+The values at the end can be omitted, but for example, the magnification alone cannot be omitted. If you enter four values, only the picture number through the Y coordinate will be valid.
+
+googleMapType 2
+Sets the map image type. This command does not apply to images downloaded prior to this command. Use a value between 0 and 3.
+0 = roadmap / 1 = satellite / 2 = hybrid / 3 = terrain
+
+googleMapZoom 12
+Sets the zoom factor for the map image. This command does not apply to images downloaded prior to this command. This is the map scale, not the image size.
+
+googleMapWidth 512
+Sets the resolution (width) of the map image. This command does not apply to images downloaded prior to this command.
+
+googleMapHeight 512
+Sets the resolution (height) of the map image. This command does not apply to images downloaded prior to this command.
+
+googleAddress 4
+Assigns the address obtained by the most recent geocoding run to the specified game variable. In this example, the address (string) is assigned to game variable number 4.
+
+Script Command:
+After executing geocoding, you need to check whether communication is complete.
+Since there is no command for this check, we will use the "script" Event's Contents.
+
+$gameTemp.isGeoCodingComplete()
+Returns true if geocoding communication is complete.
+
+$gameTemp.isGeoCodingError()
+Returns true if an error occurs during geocoding communication.
+
+$gameSystem.isGeoDataEmpty()
+Returns true if coordinates could not be obtained as a result of geocoding communication.
+
+Use the above three scripts in the "loop" and "conditional branch" Event's Contents to monitor the communication status and results. Finally, execute geoParallax when isGeoCodingComplete is true and isGeoDataEmpty is false.
+
+Bonus Traits:
+You can also obtain the distance from the previous geocoding.
+$gameSystem.getGeoDataDistance()
+By using the above command as a script for the "Variable Operation" Event's Contents,
+you can assign the difference (distance) from the coordinates obtained by the previous geocoding run to a variable.
+If the previous or previous geocoding failed, -1 will be assigned.
+
+If you want to display distance in the "Show Text" Event's Contents, use the control character \DIST, which will display the distance with three decimal places and units.
+There is no need to use getGeoDataDistance.
+
+@param earthR
+@desc Earth radius (km) Default: 6378.137
+@default 6378.137
+*/
+
+
+/*:ja
+@plugindesc Googleマップにアクセスして地図画像を取得、表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+
+注意事項:
+  このプラグインを使用してゲームを作成する際は必ずGoogleマップの利用規約にも
+  目を通してください。使用により何らかの不利益が発生してもプラグイン作者はその
+  責任を負いません、すべて自己責任でお願いします。
+
+使い方:
+  最初にプラグインコマンドの geoCoding を実行して現実世界の座標を取得します。
+  取得が成功した状態で geoParallax を実行すれば、遠景がその座標の地図に変更さ
+  れます。
+
+プラグインコマンド:
+  geoCoding address 日本
+  住所や地名でジオコーディング。この例では日本という地名に該当する場所の
+  情報をGoogleマップに接続して取得します。通信が完了したかどうかをチェック
+  するには後述のスクリプトコマンドを利用します。
+
+  geoCoding actor 5
+  アクター５番の名前でジオコーディング。
+
+  geoCoding vn 10
+  変数１０番の値でジオコーディング
+
+  geoCoding latlng 35.794 139.790
+  緯度と経度で逆ジオコーディング
+
+  googleParallax 1 2
+  直前のジオコーディング結果から得られる地図画像を遠景として設定します。
+  数値は遠景のスクロール量（ X と Y ）です。
+
+  googlePicture 1 0 48 96 100 100 255 0
+  直前のジオコーディング結果から得られる地図画像をピクチャとして表示する。
+  数値は左から順に ピクチャ番号 原点（ 0 = 左上 / 1 = 中央） Ｘ座標 Ｙ座標
+  拡大率（横） 拡大率（縦） 不透明度 合成方法 の８つです。
+  後ろの方にある数値は省略することが可能ですが、たとえば拡大率だけを
+  省略することはできません。数値を４つ書いた場合は ピクチャ番号 ～ Ｙ座標
+  までの４つが有効になります。
+
+  googleMapType 2
+  地図画像のタイプを設定します、このコマンドよりも前にダウンロードされた
+  画像には適用されません。数値は 0 ～ 3 を設定してください。
+  0 = roadmap / 1 = satellite / 2 = hybrid / 3 = terrain
+
+  googleMapZoom 12
+  地図画像の拡大率を設定します、このコマンドよりも前にダウンロードされた
+  画像には適用されません。画像の大きさではなく、地図の縮尺です。
+
+  googleMapWidth 512
+  地図画像の解像度（横）を設定します、このコマンドよりも前にダウンロード
+  された画像には適用されません。
+
+  googleMapHeight 512
+  地図画像の解像度（縦）を設定します、このコマンドよりも前にダウンロード
+  された画像には適用されません。
+
+  googleAddress 4
+  直前に実行されたジオコーディングによって得られた住所を、指定した番号の
+  ゲーム変数に代入します。この例ではゲーム変数４番に住所（文字列）を代入。
+
+スクリプトコマンド:
+  geoCoding を実行した後、通信が完了したかどうかをチェックする必要があります。
+  チェックのためのコマンドはありませんので、イベントコマンド『スクリプト』を
+  使用します。
+
+  $gameTemp.isGeoCodingComplete()
+  geoCoding の通信が完了していれば true を返す
+
+  $gameTemp.isGeoCodingError()
+  geoCoding の通信中にエラーが起きれば true を返す
+
+  $gameSystem.isGeoDataEmpty()
+  geoCoding の通信の結果、座標が取得できなかった場合に true を返す
+
+  上記３つのスクリプトをイベントコマンド『ループ』と『条件分岐』で使用し、
+  通信の状態や結果を監視して、最終的に isGeoCodingComplete が true かつ
+  isGeoDataEmpty が false を返したら geoParallax を実行してください。
+
+おまけ機能:
+  前回の geoCoding との距離を取得することもできます。
+  $gameSystem.getGeoDataDistance()
+  イベントコマンド『変数の操作』のスクリプトとして上記コマンドを使用すると
+  前回実行した geoCoding で取得した座標との差（距離）を変数に代入することが
+  できます。前回、あるいは直前の geoCoding が失敗している場合には -1 が代入
+  されます。
+
+  イベントコマンド『文章の表示』に距離を表示したい場合は \DIST という制御文字
+  を使えば小数点以下３桁、単位つきの距離に置き換わります。
+  getGeoDataDistance を使う必要はありません。
+
+@param earthR
+@desc 地球の半径（km） 初期値: 6378.137
+@default 6378.137
+*/
 
 var Imported = Imported || {};
 Imported.TMGoogleMaps = true;

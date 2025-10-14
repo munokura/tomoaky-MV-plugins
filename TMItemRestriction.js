@@ -8,40 +8,77 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc アイテムの対象アクターに関する制約を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - アイテム制約拡張 ver1.0.1
- *
- * 使い方:
- * 
- *   アイテムのメモ欄にタグをつけることで対象として選択できるアクターを
- *   制限できるようになります。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- * 
- * 
- * メモ欄タグ (アイテム):
- * 
- *   <justOnce>
- *     メモ欄にこのタグがついているアイテムは、同じアクターに対して 1 回しか
- *     使えなくなります。
- * 
- *   <targetActor:1 2>
- *     メモ欄にこのタグがついているアイテムは、1 番と 2 番のアクターにのみ
- *     使用できるようになります。
- * 
- * 
- * プラグインコマンド:
- * 
- *   clearItemRestriction 1
- *     アクター 1 番のアイテム使用履歴を初期化し、<justOnce> タグのついた
- *     アイテムを再び使用できる状態にします。
- */
+@plugindesc Adds constraints on the target actors for the item.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Item Constraint Extension ver1.0.1
+
+Usage:
+
+By adding tags to an item's Note field, you can restrict the actors that can be selected as targets.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Note field Tag (Item):
+
+<justOnce>
+Items with this tag in the Note field can only be used once by the same actor.
+
+<targetActor:1 2>
+Items with this tag in the Note field can only be used by actors 1 and 2.
+
+Plugin Command:
+
+clearItemRestriction 1
+Resets the item usage history for actor 1, making items with the <justOnce> tag usable again.
+*/
+
+
+/*:ja
+@plugindesc アイテムの対象アクターに関する制約を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - アイテム制約拡張 ver1.0.1
+
+使い方:
+
+  アイテムのメモ欄にタグをつけることで対象として選択できるアクターを
+  制限できるようになります。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+メモ欄タグ (アイテム):
+
+  <justOnce>
+    メモ欄にこのタグがついているアイテムは、同じアクターに対して 1 回しか
+    使えなくなります。
+
+  <targetActor:1 2>
+    メモ欄にこのタグがついているアイテムは、1 番と 2 番のアクターにのみ
+    使用できるようになります。
+
+
+プラグインコマンド:
+
+  clearItemRestriction 1
+    アクター 1 番のアイテム使用履歴を初期化し、<justOnce> タグのついた
+    アイテムを再び使用できる状態にします。
+*/
 
 var Imported = Imported || {};
 Imported.TMItemRestriction = true;

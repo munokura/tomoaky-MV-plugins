@@ -8,187 +8,343 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc お金以外にアイテムも要求されるショップ機能を追加します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param materialWindowPosition
- * @type select
- * @option 商品名の下
- * @value 0
- * @option 商品名の右
- * @value 1
- * @option 購入ウィンドウの下
- * @value 2
- * @desc 素材ウィンドウの表示位置
- * @default 0
- *
- * @param materialWindowWidth
- * @type number
- * @desc 素材ウィンドウの幅
- * 初期値: 408
- * @default 408
- * 
- * @param buyWindowWidth
- * @type number
- * @desc 購入ウィンドウの幅
- * 初期値: 456
- * @default 456
- *
- * @param buyWindowHeight
- * @type number
- * @desc 購入ウィンドウの高さ
- * 0なら自動で決定
- * @default 0
- *
- * @param materialMax
- * @type number
- * @desc 設定できる素材の最大数。
- * 初期値: 5
- * @default 5
- * 
- * @param fontRate
- * @type number
- * @decimals 2
- * @desc 素材情報のフォント倍率
- * @default 0.8
- *
- * @param greedCommand
- * @desc 欲張りショップの購入コマンド名。
- * 初期値: 購入する
- * @default 購入する
- * 
- * @param needText
- * @desc 素材一覧のトップに表示するテキスト
- * ( 何も設定しなければ省略 )
- * @default 必要なもの
- * 
- * @param showSellCommand
- * @type boolean
- * @desc 購入のみの場合にも売却コマンドを表示する。
- * @default true
- * 
- * @param showMaterialWindow
- * @type boolean
- * @desc 素材ウィンドウを表示する。
- * @default true
- * 
- * @param overlaid
- * @type boolean
- * @desc 素材ウィンドウを他のウィンドウと違うレイヤーに表示する。
- * 四隅が欠ける問題は解決しますが、可読性は低下します。
- * @default true
- * 
- * @param backOpacity
- * @type number
- * @desc 素材ウィンドウの背景の不透明度
- * @default 192
- * 
- * @param showMaterialFromNumberWindow
- * @type boolean
- * @desc 個数選択ウィンドウに素材情報を表示する。
- * @default true
- * 
- * @param showPrice
- * @type boolean
- * @desc 商品ウィンドウに価格を表示する。
- * @default true
- * 
- * @param seGreedBuy
- * @type struct<SoundEffect>
- * @desc 欲張りショップで購入時に鳴らす効果音
- * @default {"name":"Shop1","volume":"90","pitch":"100","pan":"0"}
- *
- * @help
- * TMPlugin - 欲張りショップ ver2.2.0
- * 
- * 使い方:
- * 
- *   アイテム、武器、防具にメモ欄タグ（後述）を使って素材を設定します。
- * 
- *   イベントコマンド『プラグインコマンド』で greedShop を実行し、
- *   直後にイベントコマンド『ショップの処理』で、素材を設定したアイテムを
- *   商品として販売してください。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *  
- * プラグインコマンド:
- * 
- *   greedShop
- *     このコマンドが実行された直後にショップの処理を
- *     実行することで欲張りショップになります。
- * 
- *   greedCommand 買っちゃう
- *     欲張りショップの購入コマンド名を『買っちゃう』に変更します。
- *     この変更はセーブデータには保存されません。
- *
- * 
- * メモ欄タグ（アイテム、武器、防具）:
- * 
- *   <mat1:I1*3>
- *     お金以外にアイテム１番が３個必要になります。
- *     mat2, mat3... と素材を追加していくことができます。
- *     I の部分が W なら武器、A なら防具になります。
- * 
- *   <matKey:1>
- *     mat1 タグに設定されている素材をキー素材として扱います。
- *     キー素材を所持していない場合、商品リストから除外されます。
- *     <matKey:1 2> というように半角スペースで区切り、複数のキー素材を
- *     設定することもできます。（この場合、mat1 と mat2 がキー素材になる）
- *     このタグを使うことで、レシピを所持していないと
- *     ショップに並ばない商品などを表現することができます。
- * 
- *   <matG:50>
- *     価格を50に設定します、この設定は欲張りショップが
- *     有効になっている場合にのみ購入価格として反映されます。
- *
- * 
- * メモ欄タグ（武器、防具）:
- * 
- *   <noConsume>
- *     このタグを指定した武器、防具は素材として設定しても
- *     消費されなくなります。
- *
- *     消耗設定が『しない』になっているアイテムを素材にした場合、
- *     消耗しないが必要なものとして機能します。
- */
-/*~struct~SoundEffect:
- *
- * @param name
- * @type file
- * @dir audio/se/
- * @desc 効果音のファイル名
- * @default 
- * @require 1
- *
- * @param volume
- * @type number
- * @max 100
- * @desc 効果音の音量
- * 初期値: 90
- * @default 90
- *
- * @param pitch
- * @type number
- * @min 50
- * @max 150
- * @desc 効果音のピッチ
- * 初期値: 100
- * @default 100
- *
- * @param pan
- * @type number
- * @min -100
- * @max 100
- * @desc 効果音の位相
- * 初期値: 0
- * @default 0
- *
- */
+@plugindesc We will add a shop function that will ask for items in addition to money.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
 
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Greedy Shop ver. 2.2.0
+
+How to Use:
+
+Set materials for items, weapons, and armor using memo tags (described below).
+
+Execute the greedShop Event's Contents "Plugin Command,"
+and then immediately execute the "Shop Process" Event's Contents to sell the items with the assigned materials.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+Plugin Command:
+
+greedShop
+Executing the shop process immediately after executing this command will activate the Greedy Shop.
+
+greedCommand Buy
+Changes the name of the Greedy Shop purchase command to "Buy."
+This change will not be saved in save data.
+
+Memo Tags (Items, Weapons, Armor):
+
+<mat1:I1*3>
+In addition to money, you will need three items #1.
+You can add materials using mat2, mat3, etc.
+If the I part is W, it will be a weapon, and if it's A, it will be armor.
+
+<matKey:1>
+The material set in the mat1 tag will be treated as the key material.
+If you don't have the key material, it will be excluded from the product list.
+You can also set multiple key materials by separating them with a space, such as <matKey:1 2>. (In this case, mat1 and mat2 will be key materials.)
+This tag allows you to specify items that will not be available in the shop unless you have the recipe.
+
+<matG:50>
+Sets the price to 50. This setting will only be Reflectioned as the purchase price if the Greedy Shop is enabled.
+
+Memo Tags (Weapons, Armor):
+
+<noConsume>
+Weapons and armor set with this tag will not be consumed even when set as materials.
+
+If an item with the "No Consume" setting is used as a material, it will be treated as if it requires consumption.
+
+@param materialWindowPosition
+@desc Material window display position
+@default 0
+@type select
+@option Under the product name
+@value 0
+@option To the right of the product name
+@value 1
+@option Under the purchase window
+@value 2
+
+@param materialWindowWidth
+@desc Material window width Default: 408
+@default 408
+@type number
+
+@param buyWindowWidth
+@desc Purchase window width Default: 456
+@default 456
+@type number
+
+@param buyWindowHeight
+@desc Purchase window height: Automatically determined if 0
+@default 0
+@type number
+
+@param materialMax
+@desc Maximum number of materials that can be set. Default: 5
+@default 5
+@type number
+
+@param fontRate
+@desc Font magnification of material information
+@default 0.8
+@type number
+@decimals 2
+
+@param greedCommand
+@desc Greedy Shop purchase command name. Default: Buy
+@default Buy
+
+@param needText
+@desc Text to display at the top of the material list (omitted if nothing is set)
+@default Required materials
+
+@param showSellCommand
+@desc Display sell command even if only buying.
+@default true
+@type boolean
+
+@param showMaterialWindow
+@desc Display the Material window.
+@default true
+@type boolean
+
+@param overlaid
+@desc Display the material window on a different layer from other windows. This solves the problem of missing corners, but reduces readability.
+@default true
+@type boolean
+
+@param backOpacity
+@desc Material window background opacity
+@default 192
+@type number
+
+@param showMaterialFromNumberWindow
+@desc Display material information in the quantity selection window.
+@default true
+@type boolean
+
+@param showPrice
+@desc Display prices in product windows.
+@default true
+@type boolean
+
+@param seGreedBuy
+@desc The sound effect that plays when purchasing at the Greedy Shop
+@default {"name":"Shop1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+*/
+
+
+/*~struct~SoundEffect:
+@param name
+@desc Sound effect file name
+@type file
+@require 1
+@dir audio/se/
+
+@param volume
+@desc Sound effect volume Default: 90
+@default 90
+@type number
+@max 100
+
+@param pitch
+@desc Sound effect pitch Default: 100
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc Sound effect phase Initial value: 0
+@default 0
+@type number
+@min -100
+@max 100
+*/
+
+
+/*:ja
+@plugindesc お金以外にアイテムも要求されるショップ機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 欲張りショップ ver2.2.0
+
+使い方:
+
+  アイテム、武器、防具にメモ欄タグ（後述）を使って素材を設定します。
+
+  イベントコマンド『プラグインコマンド』で greedShop を実行し、
+  直後にイベントコマンド『ショップの処理』で、素材を設定したアイテムを
+  商品として販売してください。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+
+プラグインコマンド:
+
+  greedShop
+    このコマンドが実行された直後にショップの処理を
+    実行することで欲張りショップになります。
+
+  greedCommand 買っちゃう
+    欲張りショップの購入コマンド名を『買っちゃう』に変更します。
+    この変更はセーブデータには保存されません。
+
+
+メモ欄タグ（アイテム、武器、防具）:
+
+  <mat1:I1*3>
+    お金以外にアイテム１番が３個必要になります。
+    mat2, mat3... と素材を追加していくことができます。
+    I の部分が W なら武器、A なら防具になります。
+
+  <matKey:1>
+    mat1 タグに設定されている素材をキー素材として扱います。
+    キー素材を所持していない場合、商品リストから除外されます。
+    <matKey:1 2> というように半角スペースで区切り、複数のキー素材を
+    設定することもできます。（この場合、mat1 と mat2 がキー素材になる）
+    このタグを使うことで、レシピを所持していないと
+    ショップに並ばない商品などを表現することができます。
+
+  <matG:50>
+    価格を50に設定します、この設定は欲張りショップが
+    有効になっている場合にのみ購入価格として反映されます。
+
+
+メモ欄タグ（武器、防具）:
+
+  <noConsume>
+    このタグを指定した武器、防具は素材として設定しても
+    消費されなくなります。
+
+    消耗設定が『しない』になっているアイテムを素材にした場合、
+    消耗しないが必要なものとして機能します。
+
+@param materialWindowPosition
+@desc 素材ウィンドウの表示位置
+@default 0
+@type select
+@option 商品名の下
+@value 0
+@option 商品名の右
+@value 1
+@option 購入ウィンドウの下
+@value 2
+
+@param materialWindowWidth
+@desc 素材ウィンドウの幅 初期値: 408
+@default 408
+@type number
+
+@param buyWindowWidth
+@desc 購入ウィンドウの幅 初期値: 456
+@default 456
+@type number
+
+@param buyWindowHeight
+@desc 購入ウィンドウの高さ 0なら自動で決定
+@default 0
+@type number
+
+@param materialMax
+@desc 設定できる素材の最大数。 初期値: 5
+@default 5
+@type number
+
+@param fontRate
+@desc 素材情報のフォント倍率
+@default 0.8
+@type number
+@decimals 2
+
+@param greedCommand
+@desc 欲張りショップの購入コマンド名。 初期値: 購入する
+@default 購入する
+
+@param needText
+@desc 素材一覧のトップに表示するテキスト ( 何も設定しなければ省略 )
+@default 必要なもの
+
+@param showSellCommand
+@desc 購入のみの場合にも売却コマンドを表示する。
+@default true
+@type boolean
+
+@param showMaterialWindow
+@desc 素材ウィンドウを表示する。
+@default true
+@type boolean
+
+@param overlaid
+@desc 素材ウィンドウを他のウィンドウと違うレイヤーに表示する。 四隅が欠ける問題は解決しますが、可読性は低下します。
+@default true
+@type boolean
+
+@param backOpacity
+@desc 素材ウィンドウの背景の不透明度
+@default 192
+@type number
+
+@param showMaterialFromNumberWindow
+@desc 個数選択ウィンドウに素材情報を表示する。
+@default true
+@type boolean
+
+@param showPrice
+@desc 商品ウィンドウに価格を表示する。
+@default true
+@type boolean
+
+@param seGreedBuy
+@desc 欲張りショップで購入時に鳴らす効果音
+@default {"name":"Shop1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+*/
+
+
+/*~struct~SoundEffect:ja
+@param name
+@desc 効果音のファイル名
+@type file
+@require 1
+@dir audio/se/
+
+@param volume
+@desc 効果音の音量 初期値: 90
+@default 90
+@type number
+@max 100
+
+@param pitch
+@desc 効果音のピッチ 初期値: 100
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc 効果音の位相 初期値: 0
+@default 0
+@type number
+@min -100
+@max 100
+*/
 
 var Imported = Imported || {};
 Imported.TMGreedShop = true;

@@ -8,30 +8,64 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc パーティの先頭にいるアクターの並び替えを禁止します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - 先頭並び替え不可 ver1.0.1
- * 
- * 使い方:
- * 
- *   ゲーム開始時は先頭アクターの並び替えが禁止の状態になります。
- *   必要に応じてプラグインコマンドで解除してください。
- * 
- *   このプラグインは RPGツクールMV Version 1.3.5 で動作確認をしています。
- *
- * プラグインコマンド:
- * 
- *   stopTopFix
- *     先頭並び替え禁止を解除します。
- * 
- *   startTopFix
- *     先頭並び替えを禁止します。
- */
+@plugindesc Prevents rearrangement of the actor at the head of the party.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Top Sort Disabled ver1.0.1
+
+Usage:
+
+At the start of the game, top actor sorting is disabled.
+
+Cancel this setting using the plugin command if necessary.
+
+This plugin has been tested with RPG Maker MV Version 1.3.5.
+
+Plugin Commands:
+
+stopTopFix
+Disables top sorting.
+
+startTopFix
+Disables top sorting.
+*/
+
+
+/*:ja
+@plugindesc パーティの先頭にいるアクターの並び替えを禁止します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 先頭並び替え不可 ver1.0.1
+
+使い方:
+
+  ゲーム開始時は先頭アクターの並び替えが禁止の状態になります。
+  必要に応じてプラグインコマンドで解除してください。
+
+  このプラグインは RPGツクールMV Version 1.3.5 で動作確認をしています。
+
+プラグインコマンド:
+
+  stopTopFix
+    先頭並び替え禁止を解除します。
+
+  startTopFix
+    先頭並び替えを禁止します。
+*/
 
 var Imported = Imported || {};
 Imported.TMTopFix = true;

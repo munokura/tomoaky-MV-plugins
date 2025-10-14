@@ -4,194 +4,319 @@
 // Version: 1.0
 // 最終更新日: 2016/02/26
 //=============================================================================
-
 /*:
- * @plugindesc ステータスシーンに表示するパラメータを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param descriptionKeyCode
- * @desc 表示切替ボタンとして使うキー
- * 初期値: 65（ 65 = A, 66 = B, 67 = C, ... ）
- * @default 65
- *
- * @param useOkKey
- * @desc 表示切替ボタンとして決定キー（Enter, Z など）を使う
- * 初期値: 1（ 0 で使わない）
- * @default 1
- *
- * @param horzLineHeight
- * @desc 横線の余白も含めた高さ
- * 初期値: 28
- * @default 28
- *
- * @param xparamText
- * @desc 追加能力値の項目名（カンマ区切りで１０項目）
- * 初期値: 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,…
- * @default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,ＴＰ再生
- *
- * @param sparamText
- * @desc 特殊能力値の項目名（カンマ区切りで１０項目）
- * 初期値: 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,…
- * @default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,,,床ダメージ,経験値獲得
- *
- * @param paramNameX
- * @desc 通常能力値名の表示Ｘ座標
- * 初期値: 6
- * @default 6
- *
- * @param paramNameWidth
- * @desc 通常能力値名の表示幅
- * 初期値: 96
- * @default 96
- *
- * @param paramX
- * @desc 通常能力値の表示Ｘ座標
- * 初期値: 112
- * @default 112
- *
- * @param paramWidth
- * @desc 通常能力値の表示幅
- * 初期値: 60
- * @default 60
- *
- * @param xparamNameX
- * @desc 追加能力値名の表示Ｘ座標
- * 初期値: 204
- * @default 204
- *
- * @param xparamNameWidth
- * @desc 追加能力値名の表示幅
- * 初期値: 120
- * @default 120
- *
- * @param xparamX
- * @desc 追加能力値の表示Ｘ座標
- * 初期値: 330
- * @default 330
- *
- * @param xparamWidth
- * @desc 追加能力値の表示幅
- * 初期値: 60
- * @default 60
- *
- * @param xparamFixed
- * @desc 追加能力値の小数点以下桁数
- * 初期値: 0
- * @default 0
- *
- * @param sparamNameX
- * @desc 特殊能力値名の表示Ｘ座標
- * 初期値: 432
- * @default 432
- *
- * @param sparamNameWidth
- * @desc 特殊能力値名の表示幅
- * 初期値: 172
- * @default 172
- *
- * @param sparamX
- * @desc 特殊能力値の表示Ｘ座標
- * 初期値: 610
- * @default 610
- *
- * @param sparamWidth
- * @desc 特殊能力値の表示幅
- * 初期値: 80
- * @default 80
- *
- * @param sparamFixed
- * @desc 特殊能力値の小数点以下桁数
- * 初期値: 0
- * @default 0
- *
- * @param elementResistX
- * @desc 属性有効度の表示Ｘ座標
- * 初期値: 6
- * @default 6
- *
- * @param elementResistWidth
- * @desc 属性有効度の表示幅
- * 初期値: 160
- * @default 160
- *
- * @param elementResistIds
- * @desc 表示する属性有効度
- * 初期値: 2,3,4,5,6,7,8,9
- * @default 2,3,4,5,6,7,8,9
- *
- * @param elementResistIconIds
- * @desc 表示する属性有効度のアイコン番号
- * 初期値: 64,65,66,67,68,69,70,71
- * @default 64,65,66,67,68,69,70,71
- *
- * @param pdrIconId
- * @desc 物理ダメージ率のアイコン番号（ 0 で非表示）
- * 初期値: 77
- * @default 77
- *
- * @param mdrIconId
- * @desc 魔法ダメージ率のアイコン番号（ 0 で非表示）
- * 初期値: 79
- * @default 79
- *
- * @param stateResistX
- * @desc ステート有効度の表示Ｘ座標
- * 初期値: 204
- * @default 204
- *
- * @param stateResistWidth
- * @desc ステート有効度の表示幅
- * 初期値: 160
- * @default 160
- *
- * @param stateResistIds
- * @desc 表示するステート有効度
- * 初期値: 4,5,6,7,8,9,10
- * @default 4,5,6,7,8,9,10
- *
- * @param resistFixed
- * @desc 有効度の小数点以下桁数
- * 初期値: 1
- * @default 1
- *
- * @param paramBackGround
- * @desc パラメータの背景を暗くするかどうか
- * 初期値: 1 ( 0 で無効)
- * @default 1
- *
- * @param paramBackGroundOpacity
- * @desc パラメータの背景の暗さ（ 1 ～ 255 ）
- * 初期値: 160
- * @default 160
- *
- * @param useNicknameEx
- * @desc 二つ名と職業をまとめて表示する
- * 初期値: 0（ 1 で有効）
- * @default 0
- *
- * @param useMaxLevel
- * @desc 最大レベルを表示するかどうか
- * 初期値: 1（ 0 で無効）
- * @default 1
- *
- * @param maxLevelColor
- * @desc レベルが最大の場合の文字色番号
- * 初期値: 5
- * @default 5
- *
- * @help
- * 使い方:
- *   ステータスシーンでＡキーを押す、あるいは左クリック（シングルタップ）で
- *   表示するパラメータを切り替えることができます。
- *
- *   useNicknameEx を 1 に設定することで二つ名と職業をセットで表示できます。
- *   二つ名を '髪殺しの' とか '邪竜屠りの' とかにすることで、同じ職業でも
- *   キャラごとの違いを際立たせることができるかもしれません。
- *
- * プラグインコマンドはありません。
- * 
- */
+@plugindesc Add parameters to display in the status scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Usage:
+Press the A key or left-click (single tap) during the status screen to switch the displayed parameters.
+
+Set useNicknameEx to 1 to display the nickname and occupation together.
+By setting the nickname to something like 'Hair Killer' or 'Evil Dragon Slayer', you may be able to distinguish between characters with the same occupation.
+
+There are no plugin commands.
+
+@param descriptionKeyCode
+@desc Key used as display switch button Default: 65 (65 = A, 66 = B, 67 = C, ...)
+@default 65
+
+@param useOkKey
+@desc Use the Enter key (Enter, Z, etc.) as a display switching button. Default: 1 (0: not use)
+@default 1
+
+@param horzLineHeight
+@desc Height including margin for horizontal line Initial value: 28
+@default 28
+
+@param xparamText
+@desc Additional ability value item name (10 items separated by commas) Initial value: Hit, Evasion, Critical Hit, Critical Hit Evasion, Magic Evasion, Magic Reflection, Counter Attack, ...
+@default Hit Rate,Evasion Rate,Critical Rate,Critical Evasion,Magic Evasion,Magic Reflection,Counter Attack,HP Regeneration,MP Regeneration,TP Regeneration
+
+@param sparamText
+@desc Special ability value item name (10 items separated by commas) Initial value: Target probability, defensive effect, recovery effect, medicine knowledge, MP consumption,...
+@default Target Rate,Guard Effect,Recovery Effect,Pharmacology,MP Cost Rate,TP Charge Rate,,,Floor Damage,Experience
+
+@param paramNameX
+@desc Display X coordinate of normal ability name Initial value: 6
+@default 6
+
+@param paramNameWidth
+@desc Normal stat name display width Default: 96
+@default 96
+
+@param paramX
+@desc Normal ability value display X coordinate Initial value: 112
+@default 112
+
+@param paramWidth
+@desc Normal ability value display width Default: 60
+@default 60
+
+@param xparamNameX
+@desc Display X coordinate of additional ability name Initial value: 204
+@default 204
+
+@param xparamNameWidth
+@desc Display width of additional ability name Initial value: 120
+@default 120
+
+@param xparamX
+@desc Display X coordinate of additional ability value Initial value: 330
+@default 330
+
+@param xparamWidth
+@desc Display width of additional ability values Initial value: 60
+@default 60
+
+@param xparamFixed
+@desc Number of decimal places for additional ability scores Initial value: 0
+@default 0
+
+@param sparamNameX
+@desc Display X coordinate of special ability value name Initial value: 432
+@default 432
+
+@param sparamNameWidth
+@desc Display width of special ability value name Default: 172
+@default 172
+
+@param sparamX
+@desc Special ability value display X coordinate Initial value: 610
+@default 610
+
+@param sparamWidth
+@desc Display width of special ability value Initial value: 80
+@default 80
+
+@param sparamFixed
+@desc Number of decimal places for special ability values. Default: 0
+@default 0
+
+@param elementResistX
+@desc Elements effectiveness display X coordinate Initial value: 6
+@default 6
+
+@param elementResistWidth
+@desc Elements effectiveness display width Default: 160
+@default 160
+
+@param elementResistIds
+@desc Display Elements validity Initial value: 2,3,4,5,6,7,8,9
+@default 2,3,4,5,6,7,8,9
+
+@param elementResistIconIds
+@desc Elements validity icon number to display Default: 64,65,66,67,68,69,70,71
+@default 64,65,66,67,68,69,70,71
+
+@param pdrIconId
+@desc Physical damage rate icon number (0 to hide) Initial value: 77
+@default 77
+
+@param mdrIconId
+@desc Magic damage rate icon number (0 to hide) Initial value: 79
+@default 79
+
+@param stateResistX
+@desc State validity display X coordinate Initial value: 204
+@default 204
+
+@param stateResistWidth
+@desc State validity display width Default: 160
+@default 160
+
+@param stateResistIds
+@desc Display state validity Initial value: 4,5,6,7,8,9,10
+@default 4,5,6,7,8,9,10
+
+@param resistFixed
+@desc Number of decimal places for effectiveness Initial value: 1
+@default 1
+
+@param paramBackGround
+@desc Whether to darken the background of the parameter. Default: 1 ( 0 disables)
+@default 1
+
+@param paramBackGroundOpacity
+@desc Parameter background darkness (1 to 255) Initial value: 160
+@default 160
+
+@param useNicknameEx
+@desc Display nickname and occupation together. Default: 0 (enabled with 1)
+@default 0
+
+@param useMaxLevel
+@desc Whether to display the maximum level. Default: 1 (0 disables)
+@default 1
+
+@param maxLevelColor
+@desc Text color number when level is maximum. Default: 5
+@default 5
+*/
+
+
+/*:ja
+@plugindesc ステータスシーンに表示するパラメータを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+使い方:
+  ステータスシーンでＡキーを押す、あるいは左クリック（シングルタップ）で
+  表示するパラメータを切り替えることができます。
+
+  useNicknameEx を 1 に設定することで二つ名と職業をセットで表示できます。
+  二つ名を '髪殺しの' とか '邪竜屠りの' とかにすることで、同じ職業でも
+  キャラごとの違いを際立たせることができるかもしれません。
+
+プラグインコマンドはありません。
+
+@param descriptionKeyCode
+@desc 表示切替ボタンとして使うキー 初期値: 65（ 65 = A, 66 = B, 67 = C, ... ）
+@default 65
+
+@param useOkKey
+@desc 表示切替ボタンとして決定キー（Enter, Z など）を使う 初期値: 1（ 0 で使わない）
+@default 1
+
+@param horzLineHeight
+@desc 横線の余白も含めた高さ 初期値: 28
+@default 28
+
+@param xparamText
+@desc 追加能力値の項目名（カンマ区切りで１０項目） 初期値: 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,…
+@default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,ＴＰ再生
+
+@param sparamText
+@desc 特殊能力値の項目名（カンマ区切りで１０項目） 初期値: 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,…
+@default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,,,床ダメージ,経験値獲得
+
+@param paramNameX
+@desc 通常能力値名の表示Ｘ座標 初期値: 6
+@default 6
+
+@param paramNameWidth
+@desc 通常能力値名の表示幅 初期値: 96
+@default 96
+
+@param paramX
+@desc 通常能力値の表示Ｘ座標 初期値: 112
+@default 112
+
+@param paramWidth
+@desc 通常能力値の表示幅 初期値: 60
+@default 60
+
+@param xparamNameX
+@desc 追加能力値名の表示Ｘ座標 初期値: 204
+@default 204
+
+@param xparamNameWidth
+@desc 追加能力値名の表示幅 初期値: 120
+@default 120
+
+@param xparamX
+@desc 追加能力値の表示Ｘ座標 初期値: 330
+@default 330
+
+@param xparamWidth
+@desc 追加能力値の表示幅 初期値: 60
+@default 60
+
+@param xparamFixed
+@desc 追加能力値の小数点以下桁数 初期値: 0
+@default 0
+
+@param sparamNameX
+@desc 特殊能力値名の表示Ｘ座標 初期値: 432
+@default 432
+
+@param sparamNameWidth
+@desc 特殊能力値名の表示幅 初期値: 172
+@default 172
+
+@param sparamX
+@desc 特殊能力値の表示Ｘ座標 初期値: 610
+@default 610
+
+@param sparamWidth
+@desc 特殊能力値の表示幅 初期値: 80
+@default 80
+
+@param sparamFixed
+@desc 特殊能力値の小数点以下桁数 初期値: 0
+@default 0
+
+@param elementResistX
+@desc 属性有効度の表示Ｘ座標 初期値: 6
+@default 6
+
+@param elementResistWidth
+@desc 属性有効度の表示幅 初期値: 160
+@default 160
+
+@param elementResistIds
+@desc 表示する属性有効度 初期値: 2,3,4,5,6,7,8,9
+@default 2,3,4,5,6,7,8,9
+
+@param elementResistIconIds
+@desc 表示する属性有効度のアイコン番号 初期値: 64,65,66,67,68,69,70,71
+@default 64,65,66,67,68,69,70,71
+
+@param pdrIconId
+@desc 物理ダメージ率のアイコン番号（ 0 で非表示） 初期値: 77
+@default 77
+
+@param mdrIconId
+@desc 魔法ダメージ率のアイコン番号（ 0 で非表示） 初期値: 79
+@default 79
+
+@param stateResistX
+@desc ステート有効度の表示Ｘ座標 初期値: 204
+@default 204
+
+@param stateResistWidth
+@desc ステート有効度の表示幅 初期値: 160
+@default 160
+
+@param stateResistIds
+@desc 表示するステート有効度 初期値: 4,5,6,7,8,9,10
+@default 4,5,6,7,8,9,10
+
+@param resistFixed
+@desc 有効度の小数点以下桁数 初期値: 1
+@default 1
+
+@param paramBackGround
+@desc パラメータの背景を暗くするかどうか 初期値: 1 ( 0 で無効)
+@default 1
+
+@param paramBackGroundOpacity
+@desc パラメータの背景の暗さ（ 1 ～ 255 ） 初期値: 160
+@default 160
+
+@param useNicknameEx
+@desc 二つ名と職業をまとめて表示する 初期値: 0（ 1 で有効）
+@default 0
+
+@param useMaxLevel
+@desc 最大レベルを表示するかどうか 初期値: 1（ 0 で無効）
+@default 1
+
+@param maxLevelColor
+@desc レベルが最大の場合の文字色番号 初期値: 5
+@default 5
+*/
 
 var Imported = Imported || {};
 Imported.TMStatusMenuEx = true;

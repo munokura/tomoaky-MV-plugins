@@ -8,28 +8,55 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @target MZ MV
- * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMOmitSkillCategory.js
- * @plugindesc スキルシーンからカテゴリ選択の処理を除外します。
- *
- * @author tomoaky
- *
- * @help
- * TMPlugin - スキルカテゴリからの解放 ver1.0.1
- *
- * 使い方:
- *
- *   プラグインコマンドはありません。
- *
- * 
- * 利用規約:
- *   MITライセンスです。
- *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
- *   作者に無断で改変、再配布が可能で、
- *   利用形態（商用、18禁利用等）についても制限はありません。
- */
+@target MZ MV
+@plugindesc Exclude category selection processing from skill scenes.
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMOmitSkillCategory.js
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Unlocked from Skill Categories ver. 1.0.1
+
+How to Use:
+
+No plugin commands.
+
+Terms of Use:
+MIT License.
+https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+You may modify and redistribute this without permission from the author, and there are no restrictions on its use (commercial, 18+, etc.).
+*/
+
+
+/*:ja
+@target MZ MV
+@plugindesc スキルシーンからカテゴリ選択の処理を除外します。
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMOmitSkillCategory.js
+@license MIT License
+
+@help
+TMPlugin - スキルカテゴリからの解放 ver1.0.1
+
+使い方:
+
+  プラグインコマンドはありません。
+
+
+利用規約:
+  MITライセンスです。
+  https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+  作者に無断で改変、再配布が可能で、
+  利用形態（商用、18禁利用等）についても制限はありません。
+*/
 
 var Imported = Imported || {};
 Imported.TMOmitSkillCategory = true;

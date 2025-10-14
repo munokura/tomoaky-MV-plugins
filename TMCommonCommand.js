@@ -2,68 +2,130 @@
 // TMPlugin - コモンコマンド
 // バージョン: 1.0.0
 // 最終更新日: 2018/09/21
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2018 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc メインメニューにコモンイベント実行用のコマンドを追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param command1
- * @type struct<CommonCommand>
- * @desc コモンコマンドその１
- * @default {"name":"","commonEventId":"0"}
- * 
- * @param command2
- * @type struct<CommonCommand>
- * @desc コモンコマンドその２
- * @default {"name":"","commonEventId":"0"}
- * 
- * @param command3
- * @type struct<CommonCommand>
- * @desc コモンコマンドその３
- * @default {"name":"","commonEventId":"0"}
- * 
- * @param command4
- * @type struct<CommonCommand>
- * @desc コモンコマンドその４
- * @default {"name":"","commonEventId":"0"}
- * 
- * @param command5
- * @type struct<CommonCommand>
- * @desc コモンコマンドその５
- * @default {"name":"","commonEventId":"0"}
- * 
- * @help
- * TMPlugin - コモンコマンド ver1.0.0
- * 
- * 使い方:
- * 
- *   プラグインパラメータのコマンド名と実行するコモンイベントを設定すれば
- *   メインメニューに新しいコマンドが追加されます。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Adds a command to execute common events to the main menu.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Common Command ver. 1.0.0
+
+How to Use:
+
+By specifying the command name and the common event to execute in the plugin parameters,
+a new command will be added to the main menu.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License. It is free to use, including commercial use, modifications, and redistribution.
+
+@param command1
+@desc Common Command 1
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command2
+@desc Common Command #2
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command3
+@desc Common Command #3
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command4
+@desc Common Command #4
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command5
+@desc Common Command #5
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+*/
+
+
 /*~struct~CommonCommand:
- *
- * @param name
- * @desc コマンド名
- * @default 
- *
- * @param commonEventId
- * @type common_event
- * @desc 実行するコモンイベント
- * @default 0
- *
- */
+@param name
+@desc Command name
+
+@param commonEventId
+@desc Common event to execute
+@default 0
+@type common_event
+*/
+
+
+/*:ja
+@plugindesc メインメニューにコモンイベント実行用のコマンドを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - コモンコマンド ver1.0.0
+
+使い方:
+
+  プラグインパラメータのコマンド名と実行するコモンイベントを設定すれば
+  メインメニューに新しいコマンドが追加されます。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param command1
+@desc コモンコマンドその１
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command2
+@desc コモンコマンドその２
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command3
+@desc コモンコマンドその３
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command4
+@desc コモンコマンドその４
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+
+@param command5
+@desc コモンコマンドその５
+@default {"name":"","commonEventId":"0"}
+@type struct<CommonCommand>
+*/
+
+
+/*~struct~CommonCommand:ja
+@param name
+@desc コマンド名
+
+@param commonEventId
+@desc 実行するコモンイベント
+@default 0
+@type common_event
+*/
 
 var Imported = Imported || {};
 Imported.TMCommonCommand = true;

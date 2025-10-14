@@ -4,36 +4,68 @@
 // Version: 1.1
 // 最終更新日: 2016/04/07
 //=============================================================================
-
 /*:
- * @plugindesc 指定したリージョンにだけ色をつけて表示します。
- * 対象となるリージョンや色はプラグインコマンドで変更できます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param regionAlpha
- * @desc リージョンカラーの不透明度（ 0 ～ 255 ）
- * 初期値: 128
- * @default 128
- *
- * @param useColorReset
- * @desc マップ移動時にリージョンカラーを初期化するかどうか
- * 初期値: 0（ 1 で初期化する）
- * @default 0
- *
- * @help
- * プラグインコマンド:
- *   setRegionColor 1 #ff0000     # リージョン１番を赤色にする
- *   resetRegionColor 1           # リージョン１番の色設定を解除
- *   changeRegion 1 2             # マップ内のリージョン１番を２番に変更
- *   changeRegionXy 5 3 255       # 座標(5, 3)のリージョンを３番に変更
- *   setStepRegion 1              # プレイヤーが移動した座標のリージョンを１番に
- *                                  変更します（ -1 で解除）
- *
- * 注意事項:
- *   このプラグインの機能によるリージョン変更は一時的なものです、
- *   マップ移動によって変更前の状態に戻ります。
- */
+@plugindesc Only the specified region will be displayed in color.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Plugin Commands:
+setRegionColor 1 #ff0000 # Color Region 1 red
+resetRegionColor 1 # Reset Region 1's color
+changeRegion 1 2 # Change Region 1 to Region 2 on the map
+changeRegionXy 5 3 255 # Change Region 3 at coordinates (5, 3)
+setStepRegion 1 # Change Region 1 to Region 1 (-1 resets).
+
+Note:
+Region changes made by this plugin are temporary.
+Navigating the map will return the region to its pre-change state.
+
+@param regionAlpha
+@desc Region color opacity (0 to 255) Default: 128
+@default 128
+
+@param useColorReset
+@desc Whether to initialize region color when moving around the map. Default: 0 (initialize with 1)
+@default 0
+*/
+
+
+/*:ja
+@plugindesc 指定したリージョンにだけ色をつけて表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+プラグインコマンド:
+  setRegionColor 1 #ff0000     # リージョン１番を赤色にする
+  resetRegionColor 1           # リージョン１番の色設定を解除
+  changeRegion 1 2             # マップ内のリージョン１番を２番に変更
+  changeRegionXy 5 3 255       # 座標(5, 3)のリージョンを３番に変更
+  setStepRegion 1              # プレイヤーが移動した座標のリージョンを１番に
+                                 変更します（ -1 で解除）
+
+注意事項:
+  このプラグインの機能によるリージョン変更は一時的なものです、
+  マップ移動によって変更前の状態に戻ります。
+
+@param regionAlpha
+@desc リージョンカラーの不透明度（ 0 ～ 255 ） 初期値: 128
+@default 128
+
+@param useColorReset
+@desc マップ移動時にリージョンカラーを初期化するかどうか 初期値: 0（ 1 で初期化する）
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMRegionColor = true;

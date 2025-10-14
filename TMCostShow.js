@@ -8,104 +8,175 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ＭＰ消費とＴＰ消費が両方設定されたスキルのコストを
- * 無理やり両方表示します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param mpCostHeader
- * @desc 消費MPの頭につける文字列
- * 初期値: MP
- * @default MP
- *
- * @param tpCostHeader
- * @desc 消費TPの頭につける文字列
- * 初期値: TP
- * @default TP
- *
- * @param conjunction
- * @desc コストとコストの間につける文字列
- * 初期値: /
- * @default /
- *
- * @param costWidthText
- * @desc コストの幅として参照する文字列
- * 初期値: 000
- * @default 000
- *
- * @param maxCostNum
- * @desc 同時に表示するコストの上限
- * 初期値: 2
- * @default 2
- *
- * @param ---TMSkillCostEx---
- * @default 以下はTMSkillCostEx併用時に利用
- *
- * @param hpCostHeader
- * @desc 消費HPの頭につける文字列
- * 初期値: HP
- * @default HP
- *
- * @param expCostHeader
- * @desc 消費経験値の頭につける文字列
- * 初期値: EXP
- * @default EXP
- *
- * @param expCostFooter
- * @desc 消費経験値のお尻につける文字列
- * 初期値:
- * @default
- *
- * @param goldCostHeader
- * @desc 消費お金の頭につける文字列
- * 初期値:
- * @default
- *
- * @param goldCostFooter
- * @desc 消費お金のお尻につける文字列
- * 初期値: G
- * @default G
- *
- * @param hpCostColor
- * @desc 消費HPの文字色番号
- * 初期値: 21
- * @default 21
- *
- * @param expCostColor
- * @desc 消費経験値の文字色番号
- * 初期値: 16
- * @default 16
- *
- * @param goldCostColor
- * @desc 消費お金の文字色番号
- * 初期値: 0
- * @default 0
- *
- * @help
- * TMPlugin - コスト表示拡張 ver1.0.0
- * 
- * 使い方:
- * 
- *   スキル名が長い場合や、コストの桁数が多い場合にはスキル名とコストが
- *   重なって表示されてしまいます。
- *
- *   パラメータ costWidthText の文字数を変更することで
- *   スキル名の表示幅に上限を設けることができます。
- *   たとえば costWidthText が 00000 の場合、コストの表示幅として
- *   半角の 0 ５文字分を確保し、スキル名の表示幅をその分だけ狭くします。
- *
- *   TMSkillCostEx を併用している場合、消費ＨＰ、経験値、お金も
- *   コスト表示されるようになります。
- * 
- *   プラグインコマンドはありません。
- * 
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc The cost of skills that consume both MP and TP is
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Cost Display Extension ver1.0.0
+
+How to Use:
+
+If the skill name is long or the cost has many digits, the skill name and cost will overlap.
+
+You can limit the skill name's display width by changing the number of characters in the parameter costWidthText.
+
+For example, if costWidthText is 00000, the cost display width will be set to five half-width characters, narrowing the skill name display width accordingly.
+
+If you are also using TMSkillCostEx, the cost will also be displayed as HP, experience points, and money.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+@param mpCostHeader
+@desc String to prefix MP consumption Initial value: MP
+@default MP
+
+@param tpCostHeader
+@desc String to prefix to consumed TP. Default: TP
+@default TP
+
+@param conjunction
+@desc String to be placed between costs. Default: /
+@default /
+
+@param costWidthText
+@desc String to refer to as cost range Initial value: 000
+@default 000
+
+@param maxCostNum
+@desc Maximum cost to display at the same time Default: 2
+@default 2
+
+@param ---TMSkillCostEx---
+@default The following is used in conjunction with TMSkillCostEx
+
+@param hpCostHeader
+@desc String to prefix HP consumption Initial value: HP
+@default HP
+
+@param expCostHeader
+@desc String to prefix the exp consumed Initial value: EXP
+@default EXP
+
+@param expCostFooter
+@desc String to be added to the end of the exp consumed Initial value:
+
+@param goldCostHeader
+@desc String to prefix the consumption amount. Default:
+
+@param goldCostFooter
+@desc String to be attached to the end of the consumed money Initial value: G
+@default G
+
+@param hpCostColor
+@desc HP Consumption Text Color Number Default: 21
+@default 21
+
+@param expCostColor
+@desc EXP consumption text color number Default: 16
+@default 16
+
+@param goldCostColor
+@desc Consumption money text color number Initial value: 0
+@default 0
+*/
+
+
+/*:ja
+@plugindesc ＭＰ消費とＴＰ消費が両方設定されたスキルのコストを
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - コスト表示拡張 ver1.0.0
+
+使い方:
+
+  スキル名が長い場合や、コストの桁数が多い場合にはスキル名とコストが
+  重なって表示されてしまいます。
+
+  パラメータ costWidthText の文字数を変更することで
+  スキル名の表示幅に上限を設けることができます。
+  たとえば costWidthText が 00000 の場合、コストの表示幅として
+  半角の 0 ５文字分を確保し、スキル名の表示幅をその分だけ狭くします。
+
+  TMSkillCostEx を併用している場合、消費ＨＰ、経験値、お金も
+  コスト表示されるようになります。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param mpCostHeader
+@desc 消費MPの頭につける文字列 初期値: MP
+@default MP
+
+@param tpCostHeader
+@desc 消費TPの頭につける文字列 初期値: TP
+@default TP
+
+@param conjunction
+@desc コストとコストの間につける文字列 初期値: /
+@default /
+
+@param costWidthText
+@desc コストの幅として参照する文字列 初期値: 000
+@default 000
+
+@param maxCostNum
+@desc 同時に表示するコストの上限 初期値: 2
+@default 2
+
+@param ---TMSkillCostEx---
+@default 以下はTMSkillCostEx併用時に利用
+
+@param hpCostHeader
+@desc 消費HPの頭につける文字列 初期値: HP
+@default HP
+
+@param expCostHeader
+@desc 消費経験値の頭につける文字列 初期値: EXP
+@default EXP
+
+@param expCostFooter
+@desc 消費経験値のお尻につける文字列 初期値:
+
+@param goldCostHeader
+@desc 消費お金の頭につける文字列 初期値:
+
+@param goldCostFooter
+@desc 消費お金のお尻につける文字列 初期値: G
+@default G
+
+@param hpCostColor
+@desc 消費HPの文字色番号 初期値: 21
+@default 21
+
+@param expCostColor
+@desc 消費経験値の文字色番号 初期値: 16
+@default 16
+
+@param goldCostColor
+@desc 消費お金の文字色番号 初期値: 0
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMCostShow = true;

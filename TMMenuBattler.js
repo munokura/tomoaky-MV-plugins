@@ -2,58 +2,107 @@
 // TMPlugin - メニューバトラー
 // バージョン: 0.1.1b
 // 最終更新日: 2020/04/06
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2020 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc メニュー画面の顔画像をサイドビューバトラーに変更します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- * 
- * @param faceImageRule
- * @type select
- * @option 表示しない
- * @value 0
- * @option サイドビュー画像がない場合のみ表示
- * @value 1
- * @option 表示する
- * @value 2
- * @desc 顔画像の表示条件
- * @default 0
- * 
- * @param shiftBattlerX
- * @type number
- * @min -9999
- * @desc サイドビュー画像を横方向にずらす量
- * 初期値: 0
- * @default 0
- * 
- * @param shiftBattlerY
- * @type number
- * @min -9999
- * @desc サイドビュー画像を縦方向にずらす量
- * 初期値: -24
- * @default -24
- * 
- * @help
- * TMPlugin - メニューバトラー ver0.1.1b
- * 
- * 使い方:
- * 
- * 　データベースのシステムタブにある『サイドビュー戦闘を使用』に
- * 　チェックを入れた状態でこのプラグインを導入すると
- * 　メニュー画面の顔画像がサイドビューバトラーに変わります。
- * 　プラグインパラメータで顔画像の表示条件を設定できます。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Changes the face image on the menu screen to [SV]Buttler.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Menu Butler ver. 0.1.1b
+
+How to Use:
+
+When you install this plugin with "Use Side-View Battle" checked in the System tab of the database,
+the face images on the menu screen will change to Side-View Battler.
+You can set the face image display conditions in the plugin parameters.
+
+This plugin has been tested with RPG Maker MV Version 1.6.2.
+
+This plugin is distributed under the MIT License and is free to use, including for commercial purposes, modifications, and redistribution.
+
+@param faceImageRule
+@desc Facial image display conditions
+@default 0
+@type select
+@option Do not display
+@value 0
+@option Displayed only when there is no side view image
+@value 1
+@option Show
+@value 2
+
+@param shiftBattlerX
+@desc Amount to shift the side view image horizontally. Default: 0
+@default 0
+@type number
+@min -9999
+
+@param shiftBattlerY
+@desc Amount to shift the side view image vertically. Default: -24
+@default -24
+@type number
+@min -9999
+*/
+
+
+/*:ja
+@plugindesc メニュー画面の顔画像をサイドビューバトラーに変更します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - メニューバトラー ver0.1.1b
+
+使い方:
+
+  データベースのシステムタブにある『サイドビュー戦闘を使用』に
+  チェックを入れた状態でこのプラグインを導入すると
+  メニュー画面の顔画像がサイドビューバトラーに変わります。
+  プラグインパラメータで顔画像の表示条件を設定できます。
+
+  このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param faceImageRule
+@desc 顔画像の表示条件
+@default 0
+@type select
+@option 表示しない
+@value 0
+@option サイドビュー画像がない場合のみ表示
+@value 1
+@option 表示する
+@value 2
+
+@param shiftBattlerX
+@desc サイドビュー画像を横方向にずらす量 初期値: 0
+@default 0
+@type number
+@min -9999
+
+@param shiftBattlerY
+@desc サイドビュー画像を縦方向にずらす量 初期値: -24
+@default -24
+@type number
+@min -9999
+*/
 
 var Imported = Imported || {};
 Imported.TMMenuBattler = true;

@@ -8,89 +8,169 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc イベントに表示位置補正、回転、拡大の機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param landingAnimation
- * @desc ジャンプ後の着地時に拡大補正率を自動的に適用する。
- * 初期値: 1 ( 0 で無効 / 1 で有効 )
- * @default 1
- *
- * @help
- * 使い方:
- *
- *   イベントのメモ欄にタグを書き込むことで、表示位置や拡大率、回転角度の
- *   設定ができます。
- *
- *   グラフィックの中心を軸に回転させたい場合は angle タグと一緒に
- *   <anchorY:0.5> を設定してください。
- *
- *   イベントページが変化した際、次のページでタグ設定がないパラメータは
- *   変化前の状態がそのまま引き継がれます。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- *
- *
- * メモ欄（イベント）タグ:
- *
- *   <chrShift:0 0>         # 表示位置補正値を変更
- *   <chrAngle:0>           # 回転角度を変更 ( 0 ～ 359 )
- *   <chrScale:1.0 1.0>     # 拡大率を変更 ( 1.0 で等倍)
- *   <chrAnchor:0.5 1.0>    # 中心位置を変更
- *
- *   数値が 2 つあるタグはＸ方向とＹ方向の設定をそれぞれ指定してください。
- * 
- *   イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも
- *   同様のタグでパラメータを設定することができます。
- *   メモ欄と注釈の両方にタグがある場合は注釈が優先されます。
- *
- *
- * プラグインコマンド:
- *
- *   chrShift 1 5 -3
- *     イベント 1 番を右に 5、上に 3 ドットずらします。
- *
- *   chrAngle 1 90
- *     イベント 1 番を右に 90 度回転させます。
- *
- *   chrScale 2 1.5 0.5
- *     イベント 2 番の幅を 50% 拡大し、高さを半分に縮小します。
- *
- *   chrScaleRate 3 1.3 0.7
- *     イベント 3 番の拡大補正率を幅 1.3 倍、高さ 0.7 倍に設定します。
- *     拡大補正率は setChrScale による拡大率とは別に乗算され、時間経過で
- *     等倍に戻ります。
- *
- *   chrClear 1
- *     イベント 1 番に適用されている chrShift、chrAngle、chrScale の効果を
- *     すべて解除します。
- *
- *   イベント番号（ひとつ目の数値）は以下の規則にしたがって対象を指定します。
- *     -1     … プレイヤーを対象にする
- *     0      … コマンドを実行しているイベントを対象にする
- *     1 以上 … その番号のイベントを対象にする
- *
- *
- * スクリプトコマンド:
- *
- *   this.setChrShift(-10, 5)
- *     このイベントの表示位置を左に１０、下に５ずらす。
- *
- *   this.setChrAngle(180)
- *     このイベントを１８０度回転させる。
- *
- *   this.setChrScale(2, 1)
- *     このイベントの幅だけを２倍に拡大する。
- *
- *   this.setChrScaleRate(1, 1.5)
- *     このイベントの拡大補正率を幅はそのまま、高さ 1.5 倍に設定します。
- *
- *   イベントコマンド『移動ルートの設定』ではプラグインコマンドが
- *   使用できないので、上記のスクリプトを代用してください。
- */
+@plugindesc Adds the ability to adjust the display position, rotate, and zoom to events.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+How to Use:
+
+You can set the display position, magnification, and rotation angle by writing tags in the event Note field.
+
+To rotate the graphic around its center, set <anchorY:0.5> along with the angle tag.
+
+When the event page changes, parameters without tags on the next page will retain their previous settings.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Note field (Event) Tags:
+
+<chrShift:0 0> # Change the display position offset
+<chrAngle:0> # Change the rotation angle (0 to 359)
+<chrScale:1.0 1.0> # Change the magnification (1.0 is actual magnification)
+<chrAnchor:0.5 1.0> # Change the center position
+
+For tags with two values, specify the X and Y settings separately.
+
+In addition to the event Note field, you can also set parameters using the same tags in the annotation command at the top of the action content.
+If there are tags in both the Note field and the annotation, the annotation takes priority.
+
+Plugin Commands:
+
+chrShift 1 5 -3
+Shifts Event 1 5 dots to the right and 3 dots up.
+
+chrAngle 1 90
+Rotates Event 1 90 degrees to the right.
+
+chrScale 2 1.5 0.5
+Enlarges Event 2's width by 50% and reduces its height by half.
+
+chrScaleRate 3 1.3 0.7
+Sets the scaling correction rate for Event 3 to 1.3 times the width and 0.7 times the height.
+The scaling correction rate is multiplied separately from the scaling rate set by setChrScale and will return to 100% over time.
+
+chrClear 1
+Removes all chrShift, chrAngle, and chrScale effects applied to Event 1.
+
+The event number (the first number) specifies the target according to the following rules:
+-1 ... Targets the player
+0 ... Targets the event executing the command
+1 or greater ... Targets the event with that number
+
+Script Commands:
+
+this.setChrShift(-10, 5)
+Shifts the display position of this event 10 degrees to the left and 5 degrees down.
+
+this.setChrAngle(180)
+Rotates this event 180 degrees.
+
+this.setChrScale(2, 1)
+Scales only the width of this event by 2x.
+
+this.setChrScaleRate(1, 1.5)
+Sets the scale correction rate for this event to 1.5x height, leaving the width unchanged.
+
+Plugin commands cannot be used with the "Set Movement Route" Event's Contents, so use the script above instead.
+
+@param landingAnimation
+@desc Automatically applies the expansion correction rate when landing after a jump. Default: 1 (0 disables / 1 enables)
+@default 1
+*/
+
+
+/*:ja
+@plugindesc イベントに表示位置補正、回転、拡大の機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+使い方:
+
+  イベントのメモ欄にタグを書き込むことで、表示位置や拡大率、回転角度の
+  設定ができます。
+
+  グラフィックの中心を軸に回転させたい場合は angle タグと一緒に
+  <anchorY:0.5> を設定してください。
+
+  イベントページが変化した際、次のページでタグ設定がないパラメータは
+  変化前の状態がそのまま引き継がれます。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+メモ欄（イベント）タグ:
+
+  <chrShift:0 0>         # 表示位置補正値を変更
+  <chrAngle:0>           # 回転角度を変更 ( 0 ～ 359 )
+  <chrScale:1.0 1.0>     # 拡大率を変更 ( 1.0 で等倍)
+  <chrAnchor:0.5 1.0>    # 中心位置を変更
+
+  数値が 2 つあるタグはＸ方向とＹ方向の設定をそれぞれ指定してください。
+
+  イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも
+  同様のタグでパラメータを設定することができます。
+  メモ欄と注釈の両方にタグがある場合は注釈が優先されます。
+
+
+プラグインコマンド:
+
+  chrShift 1 5 -3
+    イベント 1 番を右に 5、上に 3 ドットずらします。
+
+  chrAngle 1 90
+    イベント 1 番を右に 90 度回転させます。
+
+  chrScale 2 1.5 0.5
+    イベント 2 番の幅を 50% 拡大し、高さを半分に縮小します。
+
+  chrScaleRate 3 1.3 0.7
+    イベント 3 番の拡大補正率を幅 1.3 倍、高さ 0.7 倍に設定します。
+    拡大補正率は setChrScale による拡大率とは別に乗算され、時間経過で
+    等倍に戻ります。
+
+  chrClear 1
+    イベント 1 番に適用されている chrShift、chrAngle、chrScale の効果を
+    すべて解除します。
+
+  イベント番号（ひとつ目の数値）は以下の規則にしたがって対象を指定します。
+    -1     … プレイヤーを対象にする
+    0      … コマンドを実行しているイベントを対象にする
+    1 以上 … その番号のイベントを対象にする
+
+
+スクリプトコマンド:
+
+  this.setChrShift(-10, 5)
+    このイベントの表示位置を左に１０、下に５ずらす。
+
+  this.setChrAngle(180)
+    このイベントを１８０度回転させる。
+
+  this.setChrScale(2, 1)
+    このイベントの幅だけを２倍に拡大する。
+
+  this.setChrScaleRate(1, 1.5)
+    このイベントの拡大補正率を幅はそのまま、高さ 1.5 倍に設定します。
+
+  イベントコマンド『移動ルートの設定』ではプラグインコマンドが
+  使用できないので、上記のスクリプトを代用してください。
+
+@param landingAnimation
+@desc ジャンプ後の着地時に拡大補正率を自動的に適用する。 初期値: 1 ( 0 で無効 / 1 で有効 )
+@default 1
+*/
 
 var Imported = Imported || {};
 Imported.TMCharacterEx = true;

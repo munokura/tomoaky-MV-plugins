@@ -8,140 +8,252 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc アイテム選択の処理にヘルプウィンドウを追加し、個数表示の有無と表示行数をアイテムタイプごとに設定できます。
- *
- * @author tomoaky
- *
- * @param helpWindowEnabledItem
- * @text アイテム選択ヘルプ表示
- * @desc アイテム選択でヘルプウィンドウを表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param helpWindowEnabledKey
- * @text 大事なもの選択ヘルプ表示
- * @desc 大事なもの選択でヘルプウィンドウを表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param helpWindowEnabledA
- * @text 隠しアイテムＡ選択ヘルプ表示
- * @desc 隠しアイテムＡ選択でヘルプウィンドウを表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param helpWindowEnabledB
- * @text 隠しアイテムＢ選択ヘルプ表示
- * @desc 隠しアイテムＢ選択でヘルプウィンドウを表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param showItemNumberItem
- * @text アイテム数の表示
- * @desc アイテムの個数を表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param showItemNumberKey
- * @text 大事なもの数の表示
- * @desc 大事なものの個数を表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param showItemNumberA
- * @text 隠しアイテムＡ数の表示
- * @desc 隠しアイテムＡの個数を表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param showItemNumberB
- * @text 隠しアイテムＡ数の表示
- * @desc 隠しアイテムＡの個数を表示するかどうか
- * 初期値: true（ false で表示しない）
- * @type boolean
- * @default true
- * 
- * @param numVisibleRowsItem
- * @text アイテム表示行数
- * @desc アイテム選択の表示行数
- * 初期値: 4
- * @type number
- * @default 4
- * 
- * @param numVisibleRowsKey
- * @text 大事なもの表示行数
- * @desc 大事なもの選択の表示行数
- * 初期値: 4
- * @type number
- * @default 4
- * 
- * @param numVisibleRowsA
- * @text 隠しアイテムＡ表示行数
- * @desc 隠しアイテムＡ選択の表示行数
- * 初期値: 4
- * @type number
- * @default 4
- * 
- * @param numVisibleRowsB
- * @text 隠しアイテムＢ表示行数
- * @desc 隠しアイテムＢ選択の表示行数
- * 初期値: 4
- * @type number
- * @default 4
- * 
- * @param fixPlacement
- * @text ウィンドウ位置
- * @desc メッセージウィンドウがない場合のウィンドウ位置
- * 初期値: top ( top / bottom / 未設定で固定しない )
- * @type select
- * @option 上部
- * @value top
- * @option 下部
- * @value bottom
- * @option 固定しない
- * @value 
- * @default top
- *
- * @help
- * TMPlugin - アイテム選択拡張 ver1.1.0
- *
- * 使い方:
- *
- *   アイテムタイプごとに以下の設定を変更できます。
- *   ・ヘルプウィンドウを表示するかどうか
- *   ・個数を表示するかどうか
- *   ・アイテム選択ウィンドウの表示行数
- * 
- *   メモ欄タグとプラグインコマンドを使い、候補として表示するアイテムを
- *   さらに細かく分類することもできます。
- * 
- * メモ欄タグ（アイテム）:
- * 
- *   <subCategory:card>
- *     このタグがついているアイテムにサブカテゴリーとして card を設定します。 
- * 
- * 
- * プラグインコマンド:
- * 
- *   setEventItemSubCategory card
- *     イベントコマンド『アイテム選択の処理』の直前に実行することで、
- *     指定したサブカテゴリーのアイテムのみを表示することができます。
- *     たとえば、イベントコマンド側で 大事なもの が選択されている場合、
- *     所持している大事なものの中からサブカテゴリーに card が設定されている
- *     アイテムのみを表示します。
- * 
- *     このコマンドの効果はアイテム選択完了（またはキャンセル）時に
- *     リセットされます。
- */
+@plugindesc A help window has been added to the item selection process, and you can configure whether to display the number of items and the number of lines to display for each item type.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Item Selection Extension ver1.1.0
+
+How to Use:
+
+You can change the following settings for each item type:
+- Whether to display the help window
+- Whether to display the quantity
+- The number of lines displayed in the item selection window
+
+You can further refine the items displayed as candidates using memo tags and plugin commands.
+
+Memo Tag (Item):
+
+<subCategory:card>
+Sets the subcategory "card" for items tagged with this tag.
+
+Plugin Command:
+
+setEventItemSubCategory card
+By executing this command immediately before the "Item Selection Process" Event's Contents, you can display only items in the specified subcategory.
+
+For example, if "Key Item" is selected in the Event's Contents,
+
+only the Key Item you own that have the subcategory "card" will be displayed.
+
+The effect of this command is reset when item selection is completed (or canceled).
+
+@param helpWindowEnabledItem
+@text Item selection help display
+@desc Whether to display the help window when selecting an item. Default: true (false to not display)
+@default true
+@type boolean
+
+@param helpWindowEnabledKey
+@text Help display for selecting Key Item
+@desc Whether to display the help window when selecting Key Item. Default: true (false to not display).
+@default true
+@type boolean
+
+@param helpWindowEnabledA
+@text Display hidden item A selection help
+@desc Whether to display the help window when selecting hidden item A. Default: true (false to not display)
+@default true
+@type boolean
+
+@param helpWindowEnabledB
+@text Display hidden item B selection help
+@desc Whether to display the help window when selecting hidden item B. Default: true (false to not display)
+@default true
+@type boolean
+
+@param showItemNumberItem
+@text Displaying the number of items
+@desc Whether to display the number of items. Default: true (false to not display)
+@default true
+@type boolean
+
+@param showItemNumberKey
+@text Displaying the number of important things
+@desc Whether to display the number of Key Item. Default: true ( false to not display)
+@default true
+@type boolean
+
+@param showItemNumberA
+@text Display number of hidden items A
+@desc Whether to display the number of hidden items A. Default: true (false to not display)
+@default true
+@type boolean
+
+@param showItemNumberB
+@text Display number of hidden items A
+@desc Whether to display the number of hidden items A. Default: true (false to not display)
+@default true
+@type boolean
+
+@param numVisibleRowsItem
+@text Number of item display lines
+@desc Number of rows to display for item selection Initial value: 4
+@default 4
+@type number
+
+@param numVisibleRowsKey
+@text Number of lines to display important things
+@desc Number of lines to display for important selection Default: 4
+@default 4
+@type number
+
+@param numVisibleRowsA
+@text Number of lines displayed for hidden item A
+@desc Number of lines to display for hidden item A selection Initial value: 4
+@default 4
+@type number
+
+@param numVisibleRowsB
+@text Number of lines displayed for hidden item B
+@desc Number of lines to display for hidden item B selection Initial value: 4
+@default 4
+@type number
+
+@param fixPlacement
+@text Window Position
+@desc Window position when there is no message window. Default: top (top / bottom / unset for no fixed position).
+@default top
+@type select
+@option Top
+@value top
+@option bottom
+@value bottom
+@option Not fixed
+*/
+
+
+/*:ja
+@plugindesc アイテム選択の処理にヘルプウィンドウを追加し、個数表示の有無と表示行数をアイテムタイプごとに設定できます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - アイテム選択拡張 ver1.1.0
+
+使い方:
+
+  アイテムタイプごとに以下の設定を変更できます。
+  ・ヘルプウィンドウを表示するかどうか
+  ・個数を表示するかどうか
+  ・アイテム選択ウィンドウの表示行数
+
+  メモ欄タグとプラグインコマンドを使い、候補として表示するアイテムを
+  さらに細かく分類することもできます。
+
+メモ欄タグ（アイテム）:
+
+  <subCategory:card>
+    このタグがついているアイテムにサブカテゴリーとして card を設定します。
+
+
+プラグインコマンド:
+
+  setEventItemSubCategory card
+    イベントコマンド『アイテム選択の処理』の直前に実行することで、
+    指定したサブカテゴリーのアイテムのみを表示することができます。
+    たとえば、イベントコマンド側で 大事なもの が選択されている場合、
+    所持している大事なものの中からサブカテゴリーに card が設定されている
+    アイテムのみを表示します。
+
+    このコマンドの効果はアイテム選択完了（またはキャンセル）時に
+    リセットされます。
+
+@param helpWindowEnabledItem
+@text アイテム選択ヘルプ表示
+@desc アイテム選択でヘルプウィンドウを表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param helpWindowEnabledKey
+@text 大事なもの選択ヘルプ表示
+@desc 大事なもの選択でヘルプウィンドウを表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param helpWindowEnabledA
+@text 隠しアイテムＡ選択ヘルプ表示
+@desc 隠しアイテムＡ選択でヘルプウィンドウを表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param helpWindowEnabledB
+@text 隠しアイテムＢ選択ヘルプ表示
+@desc 隠しアイテムＢ選択でヘルプウィンドウを表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param showItemNumberItem
+@text アイテム数の表示
+@desc アイテムの個数を表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param showItemNumberKey
+@text 大事なもの数の表示
+@desc 大事なものの個数を表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param showItemNumberA
+@text 隠しアイテムＡ数の表示
+@desc 隠しアイテムＡの個数を表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param showItemNumberB
+@text 隠しアイテムＡ数の表示
+@desc 隠しアイテムＡの個数を表示するかどうか 初期値: true（ false で表示しない）
+@default true
+@type boolean
+
+@param numVisibleRowsItem
+@text アイテム表示行数
+@desc アイテム選択の表示行数 初期値: 4
+@default 4
+@type number
+
+@param numVisibleRowsKey
+@text 大事なもの表示行数
+@desc 大事なもの選択の表示行数 初期値: 4
+@default 4
+@type number
+
+@param numVisibleRowsA
+@text 隠しアイテムＡ表示行数
+@desc 隠しアイテムＡ選択の表示行数 初期値: 4
+@default 4
+@type number
+
+@param numVisibleRowsB
+@text 隠しアイテムＢ表示行数
+@desc 隠しアイテムＢ選択の表示行数 初期値: 4
+@default 4
+@type number
+
+@param fixPlacement
+@text ウィンドウ位置
+@desc メッセージウィンドウがない場合のウィンドウ位置 初期値: top ( top / bottom / 未設定で固定しない )
+@default top
+@type select
+@option 上部
+@value top
+@option 下部
+@value bottom
+@option 固定しない
+*/
 
 var Imported = Imported || {};
 Imported.TMEventItemEx = true;

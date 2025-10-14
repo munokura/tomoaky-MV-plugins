@@ -8,45 +8,86 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 装備シーンからコマンドウィンドウを削除し、
- * スロットウィンドウに２行分のスペースを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param useOptimize
- * @type boolean
- * @desc Shiftキーによる最強装備を利用する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param useClear
- * @type boolean
- * @desc Ctrl(Alt)キーによる全て外すを利用する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @help
- * TMPlugin - 最強全脱ぎコマンド削除 ver1.1.1
- *
- * 使い方:
- *
- *   スロットウィンドウがアクティブな状態で Shift キーを押せば最強装備、
- *   Ctrl または Alt キーを押せば全て外すが実行されます。
- *
- *   Q または W キーによるアクター変更もスロットウィンドウが
- *   アクティブな状態で実行できます。
- *
- *   現在のバージョンではマウス、タッチ操作には対応していません。
- *
- *   プラグインコマンドはありません。
- * 
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Remove the command window from the equipment scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Remove All Undress Command ver. 1.1.1
+
+How to Use:
+
+With the slot window active, press Shift to equip the strongest gear,
+
+Press Ctrl or Alt to undress all gear.
+
+You can also use the Q or W key to change actors while the slot window is active.
+
+The current version does not support mouse or touch controls.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+@param useOptimize
+@desc Use the Optimize with the Shift key. Default: ON ( false = OFF disabled / true = ON enabled )
+@default true
+@type boolean
+
+@param useClear
+@desc Use Ctrl (Alt) key to clear all. Default: ON (false = OFF disabled / true = ON enabled)
+@default true
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc 装備シーンからコマンドウィンドウを削除し、
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 最強全脱ぎコマンド削除 ver1.1.1
+
+使い方:
+
+  スロットウィンドウがアクティブな状態で Shift キーを押せば最強装備、
+  Ctrl または Alt キーを押せば全て外すが実行されます。
+
+  Q または W キーによるアクター変更もスロットウィンドウが
+  アクティブな状態で実行できます。
+
+  現在のバージョンではマウス、タッチ操作には対応していません。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param useOptimize
+@desc Shiftキーによる最強装備を利用する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param useClear
+@desc Ctrl(Alt)キーによる全て外すを利用する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMOmitEquipCommand = true;

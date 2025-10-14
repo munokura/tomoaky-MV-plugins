@@ -3,36 +3,74 @@
 // バージョン: 0.1.0b
 // 最終更新日: 2019/07/26
 //=============================================================================
-
 /*:
- * @plugindesc 対象を追尾する誘導弾を追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - 誘導弾（シューティング拡張） ver0.1.0b
- *
- * 使い方:
- *
- *   TMShooting.js よりも下にこのプラグインを導入してください。
- *   スキルのメモ欄に <induction:6 0.5 120> のようにタグを追加することで、
- *   弾に誘導機能を付与することができます。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- * 
- * メモ欄タグ（スキル）:
- *
- *   <induction:6 0.5 120>
- *     弾に誘導機能を付与します。
- *     敵弾ならプレイヤーを、プレイヤー弾なら一番近くの敵を追尾します。
- *     （すり抜け にチェックの入ったイベントは追尾の対象外となります）
- *     値は角度補正の更新間隔（フレーム数）と角度補正上限、
- *     最後に追尾時間です。
- *     更新間隔が 6 の場合は 6 フレームごとに角度を補正します、
- *     この数値が小さいほどなめらかな追尾になりますが負荷は増します。
- *     また、角度補正上限の値が小さいほど避けやすい誘導弾になります。
- */
+@plugindesc Adds a guided missile that tracks the target.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Guided Bullets (Shooting Extension) ver0.1.0b
+
+How to Use:
+
+Install this plugin below TMShooting.js.
+By adding a tag like <induction:6 0.5 120> to the skill's Note field,
+you can add guidance to your bullets.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+Note field Tag (Skill):
+
+<induction:6 0.5 120>
+Adds guidance to bullets.
+Enemy bullets will track the player, and player bullets will track the nearest enemy.
+(Events with "Slip-Through" checked will not be tracked.)
+The values are the angle correction update interval (number of frames), the angle correction limit,
+and finally the tracking time.
+If the update interval is 6, the angle will be corrected every 6 frames.
+The smaller this value, the smoother the tracking will be, but the load will increase.
+Also, the smaller the angle correction limit, the easier the guided missile will be to avoid.
+*/
+
+
+/*:ja
+@plugindesc 対象を追尾する誘導弾を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+TMPlugin - 誘導弾（シューティング拡張） ver0.1.0b
+
+使い方:
+
+  TMShooting.js よりも下にこのプラグインを導入してください。
+  スキルのメモ欄に <induction:6 0.5 120> のようにタグを追加することで、
+  弾に誘導機能を付与することができます。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+
+メモ欄タグ（スキル）:
+
+  <induction:6 0.5 120>
+    弾に誘導機能を付与します。
+    敵弾ならプレイヤーを、プレイヤー弾なら一番近くの敵を追尾します。
+    （すり抜け にチェックの入ったイベントは追尾の対象外となります）
+    値は角度補正の更新間隔（フレーム数）と角度補正上限、
+    最後に追尾時間です。
+    更新間隔が 6 の場合は 6 フレームごとに角度を補正します、
+    この数値が小さいほどなめらかな追尾になりますが負荷は増します。
+    また、角度補正上限の値が小さいほど避けやすい誘導弾になります。
+*/
 
 var Imported = Imported || {};
 Imported.TMInductionBullet = true;

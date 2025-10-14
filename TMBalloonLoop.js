@@ -4,39 +4,71 @@
 // Version: 1.11
 // 最終更新日: 2016/06/20
 //=============================================================================
-
 /*:
- * @plugindesc フキダシアイコンをループ表示させます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * 使い方:
- *   プラグインコマンドまたはメモ欄タグを使ってイベントにフキダシループを設
- *   定すると、指定されたフキダシアイコンが繰り返し表示され続けるようになり
- *   ます。
- *
- *   イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも同様の
- *   タグでフキダシループを設定することができます。メモ欄と注釈の両方にタグ
- *   がある場合は注釈が優先されます。
- *
- *   プラグインコマンドによるフキダシループは、イベントページの切り替わりや
- *   イベントコマンド『イベントの一時消去』などによって解除されます。
- * 
- * プラグインコマンド:
- *   setBalloonLoop 2 1
- *   ２番のイベントにフキダシループとしてびっくりアイコンを設定します。イベ
- *   ント番号は -1 ならプレイヤー、0 ならコマンドを実行しているイベントが対
- *   象となります。
- *   表示するアイコンの番号はイベントコマンド『フキダシアイコンの表示』での
- *   並びに対応していて、0 を指定するとフキダシループが解除されます。
- *
- * メモ欄タグ（イベント）:
- *   <balloonLoop:1>
- *   このタグがついているイベントは setBalloonLoop を実行しなくても自動的に
- *   フキダシループが設定されます。数値は表示するアイコン番号です。
- *
- */
+@plugindesc Loops the balloon icon.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Usage:
+When you set a balloon loop for an event using a plugin command or memo tag, the specified balloon icon will be displayed repeatedly.
+
+In addition to the event's memo, you can also set a balloon loop using the same tag in the annotation command at the top of the action. If there are tags in both the memo and the annotation, the annotation takes priority.
+
+A balloon loop set by a plugin command can be canceled by switching event pages or using the "Temporarily Clear Event" Event's Contents.
+
+Plugin Command:
+setBalloonLoop 2 1
+Sets a balloon loop with a surprised icon for the second event. An event number of -1 applies to the player, while an event number of 0 applies to the event executing the command.
+The icon numbers to display correspond to the order in the "Show Balloon Icon" Event's Contents. Specifying 0 will cancel the balloon loop.
+
+Memo Tag (Event):
+<balloonLoop:1>
+Events with this tag will automatically set the balloon loop
+without executing setBalloonLoop. The number is the icon number to display.
+*/
+
+
+/*:ja
+@plugindesc フキダシアイコンをループ表示させます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+使い方:
+  プラグインコマンドまたはメモ欄タグを使ってイベントにフキダシループを設
+  定すると、指定されたフキダシアイコンが繰り返し表示され続けるようになり
+  ます。
+
+  イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも同様の
+  タグでフキダシループを設定することができます。メモ欄と注釈の両方にタグ
+  がある場合は注釈が優先されます。
+
+  プラグインコマンドによるフキダシループは、イベントページの切り替わりや
+  イベントコマンド『イベントの一時消去』などによって解除されます。
+
+プラグインコマンド:
+  setBalloonLoop 2 1
+  ２番のイベントにフキダシループとしてびっくりアイコンを設定します。イベ
+  ント番号は -1 ならプレイヤー、0 ならコマンドを実行しているイベントが対
+  象となります。
+  表示するアイコンの番号はイベントコマンド『フキダシアイコンの表示』での
+  並びに対応していて、0 を指定するとフキダシループが解除されます。
+
+メモ欄タグ（イベント）:
+  <balloonLoop:1>
+  このタグがついているイベントは setBalloonLoop を実行しなくても自動的に
+  フキダシループが設定されます。数値は表示するアイコン番号です。
+*/
 
 var Imported = Imported || {};
 Imported.TMBalloonLoop = true;

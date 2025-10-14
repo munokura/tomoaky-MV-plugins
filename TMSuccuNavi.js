@@ -8,210 +8,345 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ゆれるサキュバスさんが冒険のサポートをしてくれます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param messageX
- * @type string
- * @desc メッセージウィンドウのＸ座標。
- * 初期値: 8
- * @default 8
- *
- * @param messageY
- * @type string
- * @desc メッセージウィンドウのＹ座標。
- * 初期値: 572
- * @default 572
- *
- * @param messageWidth
- * @type number
- * @desc メッセージウィンドウの幅。
- * 初期値: 640
- * @default 640
- *
- * @param succuX
- * @type string
- * @desc サキュバスのＸ座標補正値。
- * 初期値: 80
- * @default 80
- *
- * @param succuY
- * @type string
- * @desc サキュバスのＹ座標補正値。
- * 初期値: 80
- * @default 80
- *
- * @param succuIdleTopY
- * @type string
- * @desc 上側に表示する場合のサキュバスの待機位置Ｙ座標。
- * 初期値: -40
- * @default -40
- *
- * @param succuIdleBottomY
- * @type string
- * @desc 下側に表示する場合のサキュバスの待機位置Ｙ座標。
- * 初期値: 844
- * @default 844
- *
- * @param messageCloseTimer
- * @type number
- * @desc メッセージウィンドウを閉じるまでの時間。
- * 初期値: 180
- * @default 180
- *
- * @param messageFastCloseTimer
- * @type number
- * @desc 早送り状態でメッセージウィンドウを閉じるまでの時間。
- * 初期値: 30
- * @default 30
- *
- * @param messageDuration
- * @type number
- * @desc 待機状態までの時間。
- * 初期値: 180
- * @default 180
- *
- * @param messagePause
- * @type boolean
- * @desc 通常メッセージ表示中に一時停止する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param messageFast
- * @type number
- * @desc 早送り状態に移行する保留メッセージ件数。
- * 初期値: 8
- * @default 8
- *
- * @param messageMax
- * @type number
- * @desc 保留可能なメッセージの上限。
- * 初期値: 16
- * @default 16
- *
- * @param messageGainGold
- * @type string
- * @desc お金獲得時のメッセージ。
- * 初期値: %1\G ゲット！
- * @default %1\G ゲット！
- *
- * @param messageLostGold
- * @type string
- * @desc お金減少時のメッセージ。
- * 初期値: %1\G ロスト…
- * @default %1\G ロスト…
- *
- * @param messageGainItem
- * @type string
- * @desc アイテム獲得時のメッセージ。
- * 初期値: %1 ゲット！
- * @default %1 ゲット！
- *
- * @param messageLostItem
- * @type string
- * @desc アイテム減少時のメッセージ。
- * 初期値: %1 ロスト…
- * @default %1 ロスト…
- *
- * @param messageGainItems
- * @type string
- * @desc 複数アイテム獲得時のメッセージ。
- * 初期値: %1%2個 ゲット！
- * @default %1%2個 ゲット！
- *
- * @param messageLostItems
- * @type string
- * @desc 複数アイテム減少時のメッセージ。
- * 初期値: %1%2個 ロスト…
- * @default %1%2個 ロスト…
- *
- * @requiredAssets img/pictures/SuccubusBody
- * @requiredAssets img/pictures/SuccubusBust
- * @requiredAssets img/pictures/SuccubusHead
- * @requiredAssets img/pictures/SuccubusHeadC
- * @requiredAssets img/pictures/SuccubusLArmT
- * @requiredAssets img/pictures/SuccubusLHairB
- * @requiredAssets img/pictures/SuccubusLHairT
- * @requiredAssets img/pictures/SuccubusLLegB
- * @requiredAssets img/pictures/SuccubusLLegT
- * @requiredAssets img/pictures/SuccubusLWing
- * @requiredAssets img/pictures/SuccubusRArmB
- * @requiredAssets img/pictures/SuccubusRArmT
- * @requiredAssets img/pictures/SuccubusRHairB
- * @requiredAssets img/pictures/SuccubusRHairT
- * @requiredAssets img/pictures/SuccubusRLegB
- * @requiredAssets img/pictures/SuccubusRLegT
- * @requiredAssets img/pictures/SuccubusRWing
- * @requiredAssets img/pictures/SuccubusShadow
- * @requiredAssets img/pictures/SuccubusTail
- * @requiredAssets img/system/TMSuccuNaviArrow
- *
- * @help
- * TMPlugin - ゆれるサキュバスさん ver1.0.3
- * 
- * 使い方:
- *
- *   プラグインと一緒に配布している以下の画像を img/pictures フォルダに
- *   保存してください。ファイル名を変更することはできません。
- *   SuccubusBody.png
- *   SuccubusBust.png
- *   SuccubusHead.png
- *   SuccubusHeadC.png
- *   SuccubusLArmT.png
- *   SuccubusLHairB.png
- *   SuccubusLHairT.png
- *   SuccubusLLegB.png
- *   SuccubusLLegT.png
- *   SuccubusLWing.png
- *   SuccubusRArmB.png
- *   SuccubusRArmT.png
- *   SuccubusRHairB.png
- *   SuccubusRHairT.png
- *   SuccubusRLegB.png
- *   SuccubusRLegT.png
- *   SuccubusRWing.png
- *   SuccubusShadow.png
- *   SuccubusTail.png
- *
- *   また、以下の画像を img/System フォルダに保存してください。
- *   TMSuccuNaviArrow.png
- *
- *   以下のイベントコマンド実行時、自動的にサキュバスさんがあらわれて
- *   メッセージが表示されます。
- *   ・所持金の増減
- *   ・アイテムの増減
- *   ・武器の増減
- *   ・防具の増減
- * 
- *   このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインコマンド:
- *
- *   succuStop
- *     自動メッセージ機能を停止します。
- *
- *   succuStart
- *     停止した自動メッセージを再開します。
- *
- *   succuClear
- *     保留しているメッセージを全て削除します。
- *
- *   succuMes テキスト
- *     テキストを保留メッセージの末尾に追加します。
- *
- *   succuForce テキスト
- *     テキストを保留メッセージの先頭に追加します。
- * 
- *   保留メッセージの数が上限に達している状態で force コマンドを実行すると
- *   最後に追加されたメッセージが押し出され、削除されます。
- */
+@plugindesc The swinging succubus will support you on your adventure.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Swaying Succubus ver. 1.0.3
+
+How to Use:
+
+Save the following images distributed with the plugin into the img/pictures folder. The file names cannot be changed.
+SuccubusBody.png
+SuccubusBust.png
+SuccubusHead.png
+SuccubusHeadC.png
+SuccubusLArmT.png
+SuccubusLHairB.png
+SuccubusLHairT.png
+SuccubusLLegB.png
+SuccubusLLegT.png
+SuccubusLWing.png
+SuccubusRArmB.png
+SuccubusRArmT.png
+SuccubusRHairB.png
+SuccubusRHairT.png
+SuccubusRLegB.png
+SuccubusRLegT.png
+SuccubusRWing.png
+SuccubusShadow.png
+SuccubusTail.png
+
+Also, please save the following images to the img/System folder:
+TMSuccuNaviArrow.png
+
+https://github.com/munokura/tomoaky-MV-plugins/blob/master/img/TMSuccuNavi_img.zip
+
+When the following Event's Contents is executed, a succubus will automatically appear and
+a message will be displayed.
+- Increase/decrease money
+- Increase/decrease items
+- Increase/decrease weapons
+- Increase/decrease armor
+
+This plugin has been tested with RPG Maker MV Version 1.5.0.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, redistribution, and other uses.
+
+Plugin Commands:
+
+sucuStop
+Stops the automatic message function.
+
+sucuStart
+Restarts stopped automatic messages.
+
+sucuClear
+Deletes all pending messages.
+
+sucuMes Text
+Adds text to the end of pending messages.
+
+sucuForce Text
+Adds text to the beginning of pending messages.
+
+If the number of pending messages has reached its limit, executing the force command
+will push out and delete the most recently added message.
+
+@param messageX
+@desc X coordinate of the message window. Default: 8
+@default 8
+@type string
+
+@param messageY
+@desc Y coordinate of the message window. Default: 572
+@default 572
+@type string
+
+@param messageWidth
+@desc Message window width. Default: 640
+@default 640
+@type number
+
+@param succuX
+@desc Succubus X coordinate offset. Default: 80
+@default 80
+@type string
+
+@param succuY
+@desc Y coordinate offset for succubus. Default: 80
+@default 80
+@type string
+
+@param succuIdleTopY
+@desc The Y coordinate of the succubus' standby position when displayed on the top. Default: -40
+@default -40
+@type string
+
+@param succuIdleBottomY
+@desc Y coordinate of the succubus' standby position when displayed on the bottom. Default: 844
+@default 844
+@type string
+
+@param messageCloseTimer
+@desc Time until message window closes. Default: 180
+@default 180
+@type number
+
+@param messageFastCloseTimer
+@desc Time until message window closes in fast forward mode. Default: 30
+@default 30
+@type number
+
+@param messageDuration
+@desc Time until standby. Default: 180
+@default 180
+@type number
+
+@param messagePause
+@desc Pauses during normal message display. Default: ON (false = OFF disabled / true = ON enabled)
+@default true
+@type boolean
+
+@param messageFast
+@desc Number of pending messages before moving to fast forward state. Default: 8
+@default 8
+@type number
+
+@param messageMax
+@desc Maximum number of messages that can be held. Default: 16
+@default 16
+@type number
+
+@param messageGainGold
+@desc Message displayed when money is acquired. Default: %1\G Got it!
+@default %1\G Got it!
+@type string
+
+@param messageLostGold
+@desc Message when money is lost. Default: %1\G Lost...
+@default %1\G Lost…
+@type string
+
+@param messageGainItem
+@desc Message displayed when obtaining an item. Default: %1 Got it!
+@default %1 Got it!
+@type string
+
+@param messageLostItem
+@desc Message displayed when items are lost. Default: %1 Lost...
+@default %1 Lost…
+@type string
+
+@param messageGainItems
+@desc Message displayed when multiple items are acquired. Default: %1% Got 2 items!
+@default %1% Got 2 items!
+@type string
+
+@param messageLostItems
+@desc Message displayed when multiple items are lost. Default: %1% 2 items lost...
+@default %1% 2 items lost...
+@type string
+*/
+
+
+/*:ja
+@plugindesc ゆれるサキュバスさんが冒険のサポートをしてくれます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ゆれるサキュバスさん ver1.0.3
+
+使い方:
+
+  プラグインと一緒に配布している以下の画像を img/pictures フォルダに
+  保存してください。ファイル名を変更することはできません。
+  SuccubusBody.png
+  SuccubusBust.png
+  SuccubusHead.png
+  SuccubusHeadC.png
+  SuccubusLArmT.png
+  SuccubusLHairB.png
+  SuccubusLHairT.png
+  SuccubusLLegB.png
+  SuccubusLLegT.png
+  SuccubusLWing.png
+  SuccubusRArmB.png
+  SuccubusRArmT.png
+  SuccubusRHairB.png
+  SuccubusRHairT.png
+  SuccubusRLegB.png
+  SuccubusRLegT.png
+  SuccubusRWing.png
+  SuccubusShadow.png
+  SuccubusTail.png
+
+  また、以下の画像を img/System フォルダに保存してください。
+  TMSuccuNaviArrow.png
+
+https://github.com/munokura/tomoaky-MV-plugins/blob/master/img/TMSuccuNavi_img.zip
+
+
+  以下のイベントコマンド実行時、自動的にサキュバスさんがあらわれて
+  メッセージが表示されます。
+  ・所持金の増減
+  ・アイテムの増減
+  ・武器の増減
+  ・防具の増減
+
+  このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  succuStop
+    自動メッセージ機能を停止します。
+
+  succuStart
+    停止した自動メッセージを再開します。
+
+  succuClear
+    保留しているメッセージを全て削除します。
+
+  succuMes テキスト
+    テキストを保留メッセージの末尾に追加します。
+
+  succuForce テキスト
+    テキストを保留メッセージの先頭に追加します。
+
+  保留メッセージの数が上限に達している状態で force コマンドを実行すると
+  最後に追加されたメッセージが押し出され、削除されます。
+
+@param messageX
+@desc メッセージウィンドウのＸ座標。 初期値: 8
+@default 8
+@type string
+
+@param messageY
+@desc メッセージウィンドウのＹ座標。 初期値: 572
+@default 572
+@type string
+
+@param messageWidth
+@desc メッセージウィンドウの幅。 初期値: 640
+@default 640
+@type number
+
+@param succuX
+@desc サキュバスのＸ座標補正値。 初期値: 80
+@default 80
+@type string
+
+@param succuY
+@desc サキュバスのＹ座標補正値。 初期値: 80
+@default 80
+@type string
+
+@param succuIdleTopY
+@desc 上側に表示する場合のサキュバスの待機位置Ｙ座標。 初期値: -40
+@default -40
+@type string
+
+@param succuIdleBottomY
+@desc 下側に表示する場合のサキュバスの待機位置Ｙ座標。 初期値: 844
+@default 844
+@type string
+
+@param messageCloseTimer
+@desc メッセージウィンドウを閉じるまでの時間。 初期値: 180
+@default 180
+@type number
+
+@param messageFastCloseTimer
+@desc 早送り状態でメッセージウィンドウを閉じるまでの時間。 初期値: 30
+@default 30
+@type number
+
+@param messageDuration
+@desc 待機状態までの時間。 初期値: 180
+@default 180
+@type number
+
+@param messagePause
+@desc 通常メッセージ表示中に一時停止する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param messageFast
+@desc 早送り状態に移行する保留メッセージ件数。 初期値: 8
+@default 8
+@type number
+
+@param messageMax
+@desc 保留可能なメッセージの上限。 初期値: 16
+@default 16
+@type number
+
+@param messageGainGold
+@desc お金獲得時のメッセージ。 初期値: %1\G ゲット！
+@default %1\G ゲット！
+@type string
+
+@param messageLostGold
+@desc お金減少時のメッセージ。 初期値: %1\G ロスト…
+@default %1\G ロスト…
+@type string
+
+@param messageGainItem
+@desc アイテム獲得時のメッセージ。 初期値: %1 ゲット！
+@default %1 ゲット！
+@type string
+
+@param messageLostItem
+@desc アイテム減少時のメッセージ。 初期値: %1 ロスト…
+@default %1 ロスト…
+@type string
+
+@param messageGainItems
+@desc 複数アイテム獲得時のメッセージ。 初期値: %1%2個 ゲット！
+@default %1%2個 ゲット！
+@type string
+
+@param messageLostItems
+@desc 複数アイテム減少時のメッセージ。 初期値: %1%2個 ロスト…
+@default %1%2個 ロスト…
+@type string
+*/
 
 var Imported = Imported || {};
 Imported.TMSuccuNavi = true;

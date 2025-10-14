@@ -2,32 +2,60 @@
 // TMPlugin - アクターバトル
 // バージョン: 0.1.0a
 // 最終更新日: 2019/02/08
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2019 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc アクター同士のバトル（サイドビュー限定）を追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - アクターバトル ver0.1.0a
- *
- * 使い方:
- *
- *   トループ名に <actorBattle:2,3> というタグがあれば、アクターバトルが
- *   有効になり、２番と３番のアクターがエネミーの代わりに出現します。
- *   パーティ内にいるアクターをエネミーにすることはできません。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Added actor-versus-actor battles (side view only).
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Actor Battle ver. 0.1.0a
+
+How to Use:
+
+If your troop name includes the tag <actorBattle:2,3>, Actor Battle will be enabled, and the second and third actors will appear instead of enemies.
+
+You cannot use actors currently in a party as enemies.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License. You are free to use it commercially, modify it, and redistribute it.
+*/
+
+
+/*:ja
+@plugindesc アクター同士のバトル（サイドビュー限定）を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - アクターバトル ver0.1.0a
+
+使い方:
+
+  トループ名に <actorBattle:2,3> というタグがあれば、アクターバトルが
+  有効になり、２番と３番のアクターがエネミーの代わりに出現します。
+  パーティ内にいるアクターをエネミーにすることはできません。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+*/
 
 var Imported = Imported || {};
 Imported.TMActorBattle = true;

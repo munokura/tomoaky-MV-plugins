@@ -4,65 +4,119 @@
 // Version: 1.1
 // 最終更新日: 2016/02/02
 //=============================================================================
-
 /*:
- * @plugindesc 隊列人数を増やしたり、パーティ外のアクターを隊列に
- * 加えたりすることができます。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param additionalFollower
- * @desc 戦闘メンバー人数にこの値を加算したものが隊列人数になります。
- * 初期値: 4
- * @default 4
- *
- * @param headerFollower
- * @desc 隊列の先頭にパーティ外のアクターを挿入します。
- * 初期値: 0 (アクター番号を入れると有効になります)
- * @default 0
- 
- * @param footerFollower
- * @desc 隊列の最後尾にパーティ外のアクターを挿入します。
- * 初期値: 0 (アクター番号を入れると有効になります)
- * @default 0
- *
- * @help
- * additionalFollower で指定した人数まで、戦闘に参加しない
- * パーティメンバーを隊列に追加します。
- *
- * headerFollower に 1 以上の値を設定すると、隊列の先頭に
- * 対応する番号のアクターが挿入されます。
- * 隊列人数をオーバーする場合、最後尾のアクターが押し出されます。
- *
- * footerFollower に 1 以上の値を設定すると、隊列の最後尾に
- * 対応する番号のアクターが挿入されます。
- * 隊列人数をオーバーする場合、元々最後尾にいたアクターと入れ替わります。
- *
- * headerFollower と footerFollower のパラメータは初期値として扱われます、
- * ゲーム中にプラグインコマンドを使って別のアクターに入れ替えたり、
- * 挿入を解除することができます。
- *
- * プラグインコマンド:
- *   headerFollower 9     # アクター９番を隊列の先頭に挿入します、
- *                          パーティに加入している必要はありません。
- *                          0 を指定することで挿入を解除できます。
- *
- *   footerFollower 10    # アクター１０番を隊列の最後尾に挿入します、
- *                          パーティに加入している必要はありません。
- *                          0 を指定することで挿入を解除できます。
- *
- *   collideFollower 1    # プレイヤーと隊列メンバーの衝突判定をオンにします。
- *                          0 を指定することで解除できます。
- *
- *   touchFollower 1      # イベントのトリガーが『イベントから接触』の場合に
- *                          隊列メンバーとの接触でも起動するようにします。
- *                          0 を指定することで解除できます。
- *
- * 注意事項:
- *   collideFollower コマンドで隊列メンバーとの衝突をオンにすると
- *   袋小路などでゲーム進行が不可能になる場合があります。
- *
- */
+@plugindesc Increase the number of people in the formation or add actors outside the party to the formation.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Adds party members not participating in battle to the formation, up to the number specified by additionalFollower.
+
+Setting headerFollower to a value greater than 1 will insert the actor with the corresponding number at the beginning of the formation.
+If the formation exceeds the limit, the actor at the end will be pushed out.
+
+Setting footerFollower to a value greater than 1 will insert the actor with the corresponding number at the end of the formation.
+If the formation exceeds the limit, the actor will replace the actor originally at the end.
+
+The headerFollower and footerFollower parameters are treated as initial values.
+You can use plugin commands during the game to replace the actor with another actor or cancel the insertion.
+
+Plugin Command:
+headerFollower 9 # Inserts actor number 9 at the beginning of the formation.
+The actor does not need to be in a party.
+You can cancel the insertion by specifying 0.
+
+footerFollower 10 # Inserts actor 10 at the end of the formation.
+They do not need to be in a party.
+You can disable this by specifying 0.
+
+collideFollower 1 # Turns on collision detection between the player and formation members.
+You can disable this by specifying 0.
+
+touchFollower 1 # If the event trigger is "Contact from Event,"
+this will also trigger the event upon contact with a formation member.
+You can disable this by specifying 0.
+
+Note:
+Enabling collision with formation members with the collideFollower command
+may result in dead ends and other issues that make it impossible to progress through the game.
+
+@param additionalFollower
+@desc The number of battle members plus this value will be the number of people in the formation. Initial value: 4
+@default 4
+
+@param headerFollower
+@desc Inserts an actor outside the party at the beginning of the formation. Default: 0 (Entering an actor number will enable this.)
+@default 0
+
+@param footerFollower
+@desc Inserts an actor outside the party at the end of the formation. Default: 0 (Entering an actor number will enable this)
+@default 0
+*/
+
+
+/*:ja
+@plugindesc 隊列人数を増やしたり、パーティ外のアクターを隊列に
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+additionalFollower で指定した人数まで、戦闘に参加しない
+パーティメンバーを隊列に追加します。
+
+headerFollower に 1 以上の値を設定すると、隊列の先頭に
+対応する番号のアクターが挿入されます。
+隊列人数をオーバーする場合、最後尾のアクターが押し出されます。
+
+footerFollower に 1 以上の値を設定すると、隊列の最後尾に
+対応する番号のアクターが挿入されます。
+隊列人数をオーバーする場合、元々最後尾にいたアクターと入れ替わります。
+
+headerFollower と footerFollower のパラメータは初期値として扱われます、
+ゲーム中にプラグインコマンドを使って別のアクターに入れ替えたり、
+挿入を解除することができます。
+
+プラグインコマンド:
+  headerFollower 9     # アクター９番を隊列の先頭に挿入します、
+                         パーティに加入している必要はありません。
+                         0 を指定することで挿入を解除できます。
+
+  footerFollower 10    # アクター１０番を隊列の最後尾に挿入します、
+                         パーティに加入している必要はありません。
+                         0 を指定することで挿入を解除できます。
+
+  collideFollower 1    # プレイヤーと隊列メンバーの衝突判定をオンにします。
+                         0 を指定することで解除できます。
+
+  touchFollower 1      # イベントのトリガーが『イベントから接触』の場合に
+                         隊列メンバーとの接触でも起動するようにします。
+                         0 を指定することで解除できます。
+
+注意事項:
+  collideFollower コマンドで隊列メンバーとの衝突をオンにすると
+  袋小路などでゲーム進行が不可能になる場合があります。
+
+@param additionalFollower
+@desc 戦闘メンバー人数にこの値を加算したものが隊列人数になります。 初期値: 4
+@default 4
+
+@param headerFollower
+@desc 隊列の先頭にパーティ外のアクターを挿入します。 初期値: 0 (アクター番号を入れると有効になります)
+@default 0
+
+@param footerFollower
+@desc 隊列の最後尾にパーティ外のアクターを挿入します。 初期値: 0 (アクター番号を入れると有効になります)
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMTopFix = true;

@@ -8,61 +8,115 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ウィンドウをピクチャ機能に近い感覚で使えるようにします。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param maxSimpleWindows
- * @type number
- * @desc ウィンドウの最大数。
- * 初期値: 8
- * @default 8
- *
- * @param autoRefresh
- * @type boolean
- * @desc 変数の値が変化したらウィンドウを再描画する。
- * 初期値: OFF ( false = OFF 無効 / true = ON 再描画する )
- * @default false
- * 
- * @param hideSceneChange
- * @type boolean
- * @desc シーン切り替え時（バトル以外）にウィンドウを隠す。
- * 初期値: OFF ( false = OFF 隠さない / true = ON 隠す )
- * @default false
- *
- * @help
- * TMPlugin - シンプルウィンドウ ver1.2.0
- *
- * 使い方:
- *
- *   プラグインコマンドを使い、任意の文章が描画されたウィンドウを画面に
- *   表示することができます。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインコマンド:
- * 
- *   showWindow 1 0 24 160 72 テスト
- *     大きさが 160 * 72 のウィンドウ 1 番に テスト という文字列を描画して
- *     座標(0, 24) に表示します。
- *     ウィンドウ番号は 1 ～ 8 (初期設定) が使用できます。
- *     文字列には \C[2] などの制御文字の他に \n (改行)が使用できます。
- * 
- *   showNoFrameWindow 1 0 24 160 72 テスト
- *     使い方は showWindow と同じですが、背景が暗いウィンドウを表示します。
- * 
- *   showNoBackWindow 1 0 24 160 72 テスト
- *     使い方は showWindow と同じですが、背景が透明なウィンドウを表示します。
- * 
- *   eraseWindow 1
- *     ウィンドウ 1 番を非表示にします。
- */
+@plugindesc This allows you to use windows in a similar way to the picture function.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Simple Window ver. 1.2.0
+
+Usage:
+
+Use the plugin command to display a window with any text you like on the screen.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+Plugin Command:
+
+showWindow 1 0 24 160 72 TEST
+Draws the string "test" in window number 1, measuring 160 * 72, and displays it at coordinates (0, 24).
+Window numbers can range from 1 to 8 (default).
+In addition to control characters such as \C[2], \n (line break) can be used in the string.
+
+showNoFrameWindow 1 0 24 160 72 TEST
+This command is used in the same way as showWindow, but displays a window with a dark background.
+
+showNoBackWindow 1 0 24 160 72 Test
+Same usage as showWindow, but displays a window with a transparent background.
+
+eraseWindow 1
+Hides window 1.
+
+@param maxSimpleWindows
+@desc Maximum number of windows. Default: 8
+@default 8
+@type number
+
+@param autoRefresh
+@desc Redraws the window when the variable value changes. Default: OFF ( false = OFF, disabled / true = ON, redraws).
+@default false
+@type boolean
+
+@param hideSceneChange
+@desc Hides the window when switching scenes (except battles). Default: OFF ( false = OFF, not hidden / true = ON, hidden )
+@default false
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc ウィンドウをピクチャ機能に近い感覚で使えるようにします。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - シンプルウィンドウ ver1.2.0
+
+使い方:
+
+  プラグインコマンドを使い、任意の文章が描画されたウィンドウを画面に
+  表示することができます。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  showWindow 1 0 24 160 72 テスト
+    大きさが 160 * 72 のウィンドウ 1 番に テスト という文字列を描画して
+    座標(0, 24) に表示します。
+    ウィンドウ番号は 1 ～ 8 (初期設定) が使用できます。
+    文字列には \C[2] などの制御文字の他に \n (改行)が使用できます。
+
+  showNoFrameWindow 1 0 24 160 72 テスト
+    使い方は showWindow と同じですが、背景が暗いウィンドウを表示します。
+
+  showNoBackWindow 1 0 24 160 72 テスト
+    使い方は showWindow と同じですが、背景が透明なウィンドウを表示します。
+
+  eraseWindow 1
+    ウィンドウ 1 番を非表示にします。
+
+@param maxSimpleWindows
+@desc ウィンドウの最大数。 初期値: 8
+@default 8
+@type number
+
+@param autoRefresh
+@desc 変数の値が変化したらウィンドウを再描画する。 初期値: OFF ( false = OFF 無効 / true = ON 再描画する )
+@default false
+@type boolean
+
+@param hideSceneChange
+@desc シーン切り替え時（バトル以外）にウィンドウを隠す。 初期値: OFF ( false = OFF 隠さない / true = ON 隠す )
+@default false
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMSimpleWindow = true;

@@ -8,83 +8,149 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc クリック（タップ）操作に合わせて星がはじけます、
- * プラグインコマンドで好きな場所に星を表示することもできます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param maxStars
- * @type number
- * @desc 同時に表示する星の最大数
- * 初期値: 32
- * @default 32
- *
- * @param leftClickStars
- * @type number
- * @desc 左クリック（シングルタップ）で表示する星の数
- * 初期値: 8
- * @default 8
- *
- * @param rightClickStars
- * @type number
- * @desc 右クリック（マルチタップ）で表示する星の数
- * 初期値: 2
- * @default 2
- * 
- * @param blendMode
- * @type number
- * @desc 星の合成方法
- * 初期値: 1 ( 0 = 通常 / 1 = 加算 )
- * @default 1
- *
- * @param imageFile
- * @desc 星の代わりとして使用する画像ファイル名
- * 48 * 48 の画像を横に 6 つ並べた画像を設定してください。
- * @default 
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @help
- * TMPlugin - くるくるスタースプライツ ver1.2.0
- * 
- * 使い方:
- * 
- *   このプラグインの動作にはプラグイン素材『ビットマップ拡張(TMBitmapEx.js)』
- *   が必要です、プラグイン管理画面でビットマップ拡張よりもこちらが下に
- *   なるように導入してください。
- *   ビットマップ拡張(TMBitmapEx.js)は最新のものを導入してください。
- *
- *   このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインコマンド:
- * 
- *   addStar 300 200 4
- *     座標(300,200)に 4 個のスターを表示します。
- *
- *   addStarEvent 1 8
- *     イベント 1 番に 8 個のスターを表示します、イベント番号が -1 なら
- *     プレイヤー、0 ならコマンドを実行したイベント自体が対象になります。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   blendMode
- *     この値が 1 (加算合成) の場合、黒に近い色ほど透明に近くなります。
- * 
- *   imageFile
- *     img/system フォルダ内に 288 * 48 ドットの画像ファイルを用意して、
- *     そのファイル名を拡張子抜きで設定してください。
- *     48 * 48 ドットをひとつの星として、それを 6 パターン横に並べます。
- *     このパラメータが未設定の場合、自動生成された星の画像を利用します。
- *     画像を設定した場合は TMBitmapEx.js は不要となります。
- */
+@plugindesc Stars will pop in response to clicks (tap)
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Kuru Kuru Star Sprites ver. 1.2.0
+
+How to Use:
+
+This plugin requires the plugin material "Bitmap Extension (TMBitmapEx.js)." Please install it so that it is below the Bitmap Extension in the Plugin Manager.
+Please install the latest version of Bitmap Extension (TMBitmapEx.js).
+
+This plugin has been tested with RPG Maker MV Version 1.5.0.
+
+This plugin is distributed under the MIT License and is free to use, commercially, modify, and redistribute.
+
+Plugin Commands:
+
+addStar 300 200 4
+Displays 4 stars at coordinates (300,200).
+
+addStarEvent 1 8
+Displays 8 stars in event 1. An event number of -1 targets the player, while an event number of 0 targets the event itself.
+
+Plugin Parameter Notes:
+
+blendMode
+When this value is 1 (additive blending), colors closer to black become more transparent.
+
+imageFile
+Prepare a 288 x 48 pixel image file in the img/system folder,
+and set the file name without the extension.
+Each 48 x 48 pixel star will be arranged horizontally in six patterns.
+If this parameter is not set, an automatically generated star image will be used.
+If an image is set, TMBitmapEx.js is not required.
+
+@param maxStars
+@desc Maximum number of stars to display simultaneously Default: 32
+@default 32
+@type number
+
+@param leftClickStars
+@desc Number of stars displayed by left click (single tap) Default: 8
+@default 8
+@type number
+
+@param rightClickStars
+@desc Number of stars displayed by right-click (multi-tap) Default: 2
+@default 2
+@type number
+
+@param blendMode
+@desc Star synthesis method Default: 1 (0 = normal / 1 = additive)
+@default 1
+@type number
+
+@param imageFile
+@desc Please set the image file name to be used in place of stars to an image consisting of six 48 * 48 images lined up horizontally.
+@type file
+@require 1
+@dir img/system/
+*/
+
+
+/*:ja
+@plugindesc クリック（タップ）操作に合わせて星がはじけます、
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - くるくるスタースプライツ ver1.2.0
+
+使い方:
+
+  このプラグインの動作にはプラグイン素材『ビットマップ拡張(TMBitmapEx.js)』
+  が必要です、プラグイン管理画面でビットマップ拡張よりもこちらが下に
+  なるように導入してください。
+  ビットマップ拡張(TMBitmapEx.js)は最新のものを導入してください。
+
+  このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  addStar 300 200 4
+    座標(300,200)に 4 個のスターを表示します。
+
+  addStarEvent 1 8
+    イベント 1 番に 8 個のスターを表示します、イベント番号が -1 なら
+    プレイヤー、0 ならコマンドを実行したイベント自体が対象になります。
+
+
+プラグインパラメータ補足:
+
+  blendMode
+    この値が 1 (加算合成) の場合、黒に近い色ほど透明に近くなります。
+
+  imageFile
+    img/system フォルダ内に 288 * 48 ドットの画像ファイルを用意して、
+    そのファイル名を拡張子抜きで設定してください。
+    48 * 48 ドットをひとつの星として、それを 6 パターン横に並べます。
+    このパラメータが未設定の場合、自動生成された星の画像を利用します。
+    画像を設定した場合は TMBitmapEx.js は不要となります。
+
+@param maxStars
+@desc 同時に表示する星の最大数 初期値: 32
+@default 32
+@type number
+
+@param leftClickStars
+@desc 左クリック（シングルタップ）で表示する星の数 初期値: 8
+@default 8
+@type number
+
+@param rightClickStars
+@desc 右クリック（マルチタップ）で表示する星の数 初期値: 2
+@default 2
+@type number
+
+@param blendMode
+@desc 星の合成方法 初期値: 1 ( 0 = 通常 / 1 = 加算 )
+@default 1
+@type number
+
+@param imageFile
+@desc 星の代わりとして使用する画像ファイル名 48 * 48 の画像を横に 6 つ並べた画像を設定してください。
+@type file
+@require 1
+@dir img/system/
+*/
 
 var Imported = Imported || {};
 Imported.TMStarSprites = true;

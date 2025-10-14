@@ -8,443 +8,763 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc いわゆるシミュレーションRPGぽい機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param vnSrpgTurnCount
- * @desc 現在のターン数を代入するゲーム変数番号
- * 初期値: 1
- * @default 1
- *
- * @param vnActorUnitNums
- * @desc 残りアクターユニット数を代入するゲーム変数番号
- * 初期値: 2
- * @default 2
- *
- * @param vnEnemyUnitNums
- * @desc 残りエネミーユニット数を代入するゲーム変数番号
- * 初期値: 3
- * @default 3
- *
- * @param srpgBasicWait
- * @desc 敵ターン進行の基本ウェイト時間（フレーム）
- * 初期値: 30
- * @default 30
- *
- * @param damagePopupInterval
- * @desc 連続ダメージポップアップの間隔（フレーム）
- * 初期値: 30
- * @default 30
- *
- * @param checkSkillId
- * @desc 調べる/話すスキルの番号
- * 初期値: 0
- * @default 0
- *
- * @param regionEffects
- * @desc リージョンごとの地形効果の設定
- * 初期値: 1,11 2,12
- * @default 1,11 2,12
- *
- * @param useRegionEffectWindow
- * @desc 地形効果ウィンドウを利用するかどうか
- * 初期値: 1 ( 0 = 無効 / 1 = 有効)
- * @default 1
- *
- * @param useUnitHpGauge
- * @desc ユニットHPゲージを利用するかどうか
- * 初期値: 1 ( 0 = 無効 / 1 = 有効)
- * @default 1
- *
- * @param useUnitStateIcon
- * @desc ユニットステートアイコンを利用するかどうか
- * 初期値: 1 ( 0 = 無効 / 1 = 有効)
- * @default 1
- *
- * @param simpleMoveInput
- * @desc 移動可能範囲が表示中ならそのまま移動できるようにする
- * 初期値: 0 ( 0 = 無効 / 1 = 有効 )
- * @default 0
- *
- * @param moveCommand
- * @desc 移動コマンド名
- * 初期値: 移動
- * @default 移動
- *
- * @param moveCancelCommand
- * @desc 移動キャンセルコマンド名
- * 初期値: 移動取り消し
- * @default 移動取り消し
- *
- * @param actionCommand
- * @desc 行動コマンド名
- * 初期値: 行動
- * @default 行動
- *
- * @param itemCommand
- * @desc アイテムコマンド名（未入力でコマンド削除）
- * 初期値: アイテム
- * @default アイテム
- *
- * @param equipCommand
- * @desc 装備変更コマンド名（未入力でコマンド削除）
- * 初期値: 装備変更
- * @default 装備変更
- *
- * @param waitingCommand
- * @desc 待機コマンド名（未入力でコマンド削除）
- * 初期値: 待機
- * @default 待機
- *
- * @param statusCommand
- * @desc ステータスコマンド名（未入力でコマンド削除）
- * 初期値: ステータス
- * @default ステータス
- *
- * @param turnEndCommand
- * @desc ターン終了コマンド名
- * 初期値: ターン終了
- * @default ターン終了
- *
- * @param unitListCommand
- * @desc ユニットリストコマンド名（未入力でコマンド削除）
- * 初期値: ユニットリスト
- * @default ユニットリスト
- *
- * @param infoCommand
- * @desc マップ情報コマンド名（未入力でコマンド削除）
- * 初期値: マップ情報
- * @default マップ情報
- *
- * @param optionsCommand
- * @desc オプションコマンド名（未入力でコマンド削除）
- * 初期値: オプション
- * @default オプション
- *
- * @param saveCommand
- * @desc セーブコマンド名（未入力でコマンド削除）
- * 初期値: セーブ
- * @default セーブ
- *
- * @param loadCommand
- * @desc ロードコマンド名（未入力でコマンド削除）
- * 初期値: ロード
- * @default ロード
- *
- * @param gameEndCommand
- * @desc ゲーム終了コマンド名（未入力でコマンド削除）
- * 初期値: ゲーム終了
- * @default ゲーム終了
- *
- * @param yesCommand
- * @desc 肯定コマンド名
- * 初期値: はい
- * @default はい
- *
- * @param noCommand
- * @desc 否定コマンド名
- * 初期値: いいえ
- * @default いいえ
- *
- * @param moveParam
- * @desc 移動力パラメータの名前
- * 初期値: 移動力
- * @default 移動力
- *
- * @param moveHelp
- * @desc 移動場所選択ヘルプ
- * 初期値: 移動する場所を決定してください
- * @default 移動する場所を決定してください
- *
- * @param waitingHelp
- * @desc 待機方向選択ヘルプ
- * 初期値: 待機中の向きを決定してください
- * @default 待機中の向きを決定してください
- *
- * @param turnEndHelp
- * @desc ターン終了確認ヘルプ
- * 初期値: 味方のターンを終了してよろしいですか？
- * @default 味方のターンを終了してよろしいですか？
- *
- * @param actionRangeHelp
- * @desc 行動実行場所選択ヘルプ
- * 初期値: 行動を実行する場所を決定してください
- * @default 行動を実行する場所を決定してください
- *
- * @param actionEffectHelp
- * @desc 行動最終確認ヘルプ
- * 初期値: この行動でよろしいですか？
- * @default この行動でよろしいですか？
- *
- * @param colorAreaMove
- * @desc 移動可能範囲のタイルトナー設定
- * 初期値: 0 64 255 128
- * @default 0 64 255 128
- *
- * @param colorAreaWaiting
- * @desc 待機範囲のタイルトナー設定
- * 初期値: 255 32 255 128
- * @default 255 32 255 128
- *
- * @param colorAreaRange
- * @desc 射程範囲のタイルトナー設定
- * 初期値: 255 32 32 128
- * @default 255 32 32 128
- *
- * @param colorAreaEffect
- * @desc 効果範囲のタイルトナー設定
- * 初期値: 255 255 32 128
- * @default 255 255 32 128
- *
- * @param backAttackPhysical
- * @desc 物理による背後攻撃倍率
- * 初期値: 1.5
- * @default 1.5
- *
- * @param backAttackMagical
- * @desc 魔法による背後攻撃倍率
- * 初期値: 1.5
- * @default 1.5
- *
- * @param reflectAnimationId
- * @desc 魔法反射時に再生するアニメーションの番号
- * 初期値: 0
- * @default 0
- * @require 1
- * @type animation
- * 
- * @param srpgCommandX
- * @desc コマンドウィンドウの表示位置（Ｘ座標）
- * 初期値: 0
- * @default 0
- *
- * @param srpgCommandY
- * @desc コマンドウィンドウの表示位置（Ｙ座標）
- * 初期値: 0
- * @default 0
- *
- * @param srpgCommandLineHeight
- * @desc コマンドウィンドウの１行の高さ
- * 初期値: 36
- * @default 36
- *
- * @param srpgStatusBackground
- * @desc ステータスウィンドウの背景タイプ
- * 初期値: 1（ 0 = ウィンドウ / 1 = 暗くする / 2 = 透明）
- * @default 1
- *
- * @param srpgStatusNameWidth
- * @desc ステータスウィンドウのユニット名の幅
- * 初期値: 144
- * @default 144
- *
- * @param srpgStatusHpWidth
- * @desc ステータスウィンドウのＨＰゲージの幅（ＭＰでも利用）
- * 初期値: 186
- * @default 186
- *
- * @param srpgStatusFaceMirror
- * @desc ステータスウィンドウの顔グラフィック左右反転設定
- * 初期値: left（ left = 左側を反転 / right = 右側を反転）
- * @default left
- *
- * @param srpgUnitListWidth
- * @desc ユニットリストウィンドウの幅
- * 初期値: 240
- * @default 240
- *
- * @param srpgUnitListRows
- * @desc ユニットリストウィンドウの表示行数
- * 初期値: 7
- * @default 7
- *
- * @param srpgInfoSize
- * @desc マップ情報ウィンドウの大きさ
- * 初期値: 480*480
- * @default 480*480
- *
- * @param srpgStatusArrowImage
- * @desc ステータスウィンドウの矢印画像のファイル名
- * 初期値: SrpgStatusArrow
- * @default SrpgStatusArrow
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param srpgCursorImage
- * @desc SRPGカーソルのファイル名
- * 初期値: !$SrpgCursor
- * @default !$SrpgCursor
- * @require 1
- * @dir img/characters/
- * @type file
- *
- * @noteParam faceName
- * @noteRequire 1
- * @noteDir img/faces/
- * @noteType file
- * @noteData enemies
- *
- * @help
- * TMPlugin - シミュレーションRPG ver0.1.3a
- * 
- * 使用方法:
- * 
- *   下記URLを参照してください。
- *   http://hikimoki.sakura.ne.jp/plugin/plugin_srpg.html
- *   このヘルプにはメモ欄タグやプラグインコマンドの簡単な説明のみを
- *   記載しています。
- * 
- *   このプラグインは RPGツクールMV Version 1.3.5 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- * 
- * メモ欄タグ（イベント）:
- * 
- *   <srpgManager>
- *   このタグのついたイベントをSRPG管理イベントとして利用します。
- *
- *   <srpgActor:0>
- *   このタグのついたイベントを味方ユニットとして利用します。
- *   数値はパーティ内の並び順（ 0 が先頭）です。
- *
- *   <srpgEnemy:3>
- *   このタグのついたイベントを敵ユニットとして利用します。
- *   数値は敵キャラのデータベース上の番号です。
- *
- *   <neutral>
- *   このタグのついたイベントは残りユニット数のカウントから除外します。
- * 
- *   <traitor>
- *   このタグのついたイベントに行動制約『味方を攻撃』が常時付加されます。
- * 
- *   <autoState:5 9>
- *   SRPG開始時、またはsrpgAddUnitコマンド実行時に 5 番と 9 番のステートを
- *   自動的に付加します。
- *
- * 
- * メモ欄タグ（アクター、職業、武器、防具、敵キャラ、ステート）:
- * 
- *   <mov:4>
- *   移動力を設定します。アクターの場合は現在の職業、装備品、ステートの値も
- *   含めた合計値が採用されます。
- * 
- *   <shipMove>
- *   通常は進入不可能な水の上も移動することができるようになります。
- *
- *   <floatMove>
- *   地形を無視して移動することができるようになります。
- * 
- *   <search:5>
- *   索敵距離を設定します。一番近くにいる敵対ユニットとの距離が
- *   この値よりも大きい場合、移動も行動もしなくなります。
- *   タグを省略、または 0 を指定するとこの機能はオフになります。
- * 
- * 
- * メモ欄タグ（アイテム、スキル）:
- * 
- *   <range:diamond 2>
- *   スキルの射程距離を設定します。射程タイプと射程距離を半角スペースで
- *   区切って指定してください。射程タイプは下記の中から選んでください。
- *     diamond = ひし形
- *     rect    = 四角形
- *     line    = 直線（上下左右）
- *   また、<range:diamond 2 rect 0> のように続けてもうひとつタイプと距離を
- *   指定すると、範囲の中心に穴をあけることができます。
- *
- *   <effect:rect 3>
- *   スキルの効果範囲を設定します。範囲タイプと大きさを半角スペースで
- *   区切って指定してください。指定する値は射程距離と同じです。
- * 
- * 
- * メモ欄タグ（敵キャラ）:
- * 
- *   <faceName:Monster>
- *   敵キャラの顔グラフィックとして利用する画像ファイル名を設定します。
- * 
- *   <faceIndex:0>
- *   敵キャラの顔グラフィックのインデックスを設定します。
- *   インデックスとは画像のどの部分を使用するかを決める番号です。
- *   0 1 2 3
- *   4 5 6 7
- *
- *   <level:10>
- *   敵キャラのレベルを設定します、この値はステータス表示のためのダミーです、
- *   数値によって能力値が変化するようなことはありません。
- *
- *   <class:3>
- *   敵キャラの職業を設定します、この値はステータス表示のためのダミーです、
- *   数値によって能力値が変化するようなことはありません。
- *
- *   <nickname:乱暴者>
- *   敵キャラの二つ名を設定します。
- *
- *   <profile:人間が大嫌いなオーク族の戦士>
- *   敵キャラのプロフィールを設定します。
- *
- *   <equips:2 0 0 3 0>
- *   敵キャラの装備品を設定します、この値はステータス表示のためのダミーです、
- *   数値によって能力値が変化するようなことはありません。
- *   装備スロットの上から順に装備品の番号を半角スペースで区切って
- *   指定してください。
- *
- *   <attackAnimation:6>
- *   敵キャラの通常攻撃のアニメーション番号を設定します。
- * 
- * 
- * プラグインコマンド:
- * 
- *   reserveSrpg
- *   SRPG機能を有効化する予約をします、このコマンドを実行したあとにイベント
- *   コマンド『場所移動』でマップが切り替わるとSRPG機能が有効になります。
- *
- *   srpgCursorMove 10 5
- *   SRPGカーソルを座標 (10, 5) へ移動させます。
- * 
- *   srpgCursorMoveToEvent 2
- *   SRPGカーソルをイベント 2 番へ移動させます。
- * 
- *   setSrpgDestination 4 10 15
- *   4 番のイベントの目的地を座標 (10, 15) に設定します。
- * 
- *   clearSrpgDestination 4
- *   4 番のイベントの目的地設定を解除します。
- * 
- * 
- * スクリプトコマンド:
- * 
- *   this.isSrpgTurnStart()
- *   ターン開始フラグが立っているかどうかを返します。
- *
- *   this.isSrpgActorTurn()
- *   味方ターンかどうかを返します。
- *
- *   this.srpgNextUnit()
- *   次に行動するイベント番号を返します。
- * 
- *   this.srpgLastUnit()
- *   直前に行動したイベント番号を返します。
- * 
- *   this.srpgBattler(0)
- *   ユニットイベントのバトラーオブジェクトを返します。
- *   括弧内に取得したいユニットイベントのイベント番号を指定してください。
- *   0 を指定した場合はこのコマンドを実行しているイベントが対象となります。
- *   何も指定しなかった場合は次に行動するイベント、または直前に行動した
- *   イベントが対象となります。
- * 
- *   this.srpgRemoveUnit(0)
- *   ユニットイベントを強制的に排除します。
- *   戦闘不能になった場合と同じ扱いとなり、セルフスイッチＡが自動的に
- *   オンになり、イベント内容も実行されます。
- *   対象の指定方法は this.srpgBattler と同じです。
- * 
- *   this.srpgAddUnit(10, 1)
- *   イベント番号 10 番を敵キャラ 1 番のエネミーユニットとして設定します。
+@plugindesc We will add Traits similar to those found in simulation RPGs.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Simulation RPG ver0.1.3a
+
+How to Use:
+
+Please refer to the following URL:
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/html
+This help contains only a brief explanation of memo tags and plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.3.5.
+
+This plugin is distributed under the MIT License. You are free to use it commercially, modify it, and redistribute it.
+Sample Project
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+Note Tag (Event):
+
+<srpgManager>
+Uses events with this tag as SRPG management events.
+
+<srpgActor:0>
+Uses events with this tag as ally units.
+The number indicates their order in the party (0 is the first).
+
+<srpgEnemy:3>
+Uses events with this tag as enemy units.
+The number indicates the Enemies's database number.
+
+<neutral>
+Events with this tag are excluded from the remaining unit count.
+
+<traitor>
+Events with this tag will always have the "Attack Allies" action constraint.
+
+<autoState:5 9>
+States 5 and 9 are automatically added when the SRPG starts or the srpgAddUnit command is executed.
+
+Memo Tags (Actor, Occupation, Weapon, Armor, Enemy, State):
+
+<mov:4>
+Sets the movement speed. For actors, the total value including the current occupation, equipment, and state is used.
+
+<shipMove>
+Allows movement across normally inaccessible water.
+
+<floatMove>
+Allows movement ignoring terrain.
+
+<search:5>
+Sets the search distance. If the distance to the nearest enemy unit is greater than this value, the unit will neither move nor take any action.
+Omitting the tag or specifying 0 will turn this Traits off.
+
+Memo Tags (Items, Skills):
+
+<range:diamond 2>
+Sets the skill's range. Specify the range type and distance, separated by a space. Choose from the following range types:
+
+diamond = Diamond
+
+rect = Rectangle
+
+line = Straight line (up, down, left, right)
+
+You can also create a hole in the center of the range by specifying another type and distance, such as <range:diamond 2 rect 0>.
+
+<effect:rect 3>
+Sets the skill's effect range. Specify the range type and size, separated by a space. The specified value is the same as the range.
+
+Memo Tags (Enemies):
+
+<faceName:Monster>
+Sets the image file name used as the Enemies's face graphic.
+
+<faceIndex:0>
+Sets the index of the Enemies's face graphic.
+The index is a number that determines which part of the image to use.
+0 1 2 3
+4 5 6 7
+
+<level:10>
+Sets the Enemies's level. This value is a dummy for displaying status.
+The value does not affect ability scores.
+
+<class:3>
+Sets the Enemies's occupation. This value is a dummy for displaying status.
+The value does not affect ability scores.
+
+<nickname:Brute>
+Sets the Enemies's nickname.
+
+<profile:An Orc warrior who hates humans>
+Sets the Enemies's profile.
+
+<equips:2 0 0 3 0>
+Sets the Enemies's equipment. This value is a dummy for displaying status.
+The value does not affect ability scores.
+Specify the equipment numbers in order from top to bottom, separated by spaces.
+
+<attackAnimation:6>
+Sets the animation number for the Enemies's normal attack.
+
+Plugin Commands:
+
+reserveSrpg
+Makes a reservation to enable the SRPG function. After executing this command, an event will occur.
+The SRPG function will be enabled when the map is switched with the "Move Location" command.
+
+srpgCursorMove 10 5
+Moves the SRPG cursor to coordinates (10, 5).
+
+srpgCursorMoveToEvent 2
+Moves the SRPG cursor to event 2.
+
+setSrpgDestination 4 10 15
+Sets the destination for event 4 to coordinates (10, 15).
+
+clearSrpgDestination 4
+Clears the destination setting for event 4.
+
+Script Commands:
+
+this.isSrpgTurnStart()
+Returns whether the turn start flag is set.
+
+this.isSrpgActorTurn()
+Returns whether it is an ally's turn.
+
+this.srpgNextUnit()
+Returns the event number for the next action.
+
+this.srpgLastUnit()
+Returns the most recently acted event number.
+
+this.srpgBattler(0)
+Returns the battler object for the unit event.
+Specify the event number of the unit event you want to retrieve in parentheses.
+If 0 is specified, the event executing this command will be targeted.
+If nothing is specified, the next or most recently acted event will be targeted.
+
+this.srpgRemoveUnit(0)
+Forcefully removes a unit event.
+Treated as if the unit were Collapse, Self Switch A will automatically be turned on, and the event content will be executed.
+The target specification method is the same as this.srpgBattler.
+
+this.srpgAddUnit(10, 1)
+Sets event number 10 as enemy unit number 1.
+
+@param vnSrpgTurnCount
+@desc Game variable number to assign the current turn number to. Initial value: 1
+@default 1
+
+@param vnActorUnitNums
+@desc Game variable number to assign the remaining number of actor units to. Initial value: 2
+@default 2
+
+@param vnEnemyUnitNums
+@desc Game variable number to assign the number of remaining enemy units to. Initial value: 3
+@default 3
+
+@param srpgBasicWait
+@desc Enemy turn progression basic wait time (frames) Default: 30
+@default 30
+
+@param damagePopupInterval
+@desc Interval between consecutive damage popups (frames) Default: 30
+@default 30
+
+@param checkSkillId
+@desc Examine/Speak skill number Default: 0
+@default 0
+
+@param regionEffects
+@desc Terrain effect settings for each region Default: 1,11 2,12
+@default 1,11 2,12
+
+@param useRegionEffectWindow
+@desc Whether to use the terrain effect window. Default: 1 (0 = Disabled / 1 = Enabled)
+@default 1
+
+@param useUnitHpGauge
+@desc Whether to use the unit HP gauge. Default: 1 (0 = Disabled / 1 = Enabled)
+@default 1
+
+@param useUnitStateIcon
+@desc Whether to use unit state icons. Default: 1 (0 = Disabled / 1 = Enabled)
+@default 1
+
+@param simpleMoveInput
+@desc If the movable range is displayed, you can move it as it is. Default: 0 (0 = Disabled / 1 = Enabled)
+@default 0
+
+@param moveCommand
+@desc Movement command name Default: Move
+@default Move
+
+@param moveCancelCommand
+@desc Cancel Move command name Default: Cancel Move
+@default Cancel Move
+
+@param actionCommand
+@desc Action Command Name Default: Action
+@default Action
+
+@param itemCommand
+@desc Item command name (leave blank to delete command) Default: Item
+@default Item
+
+@param equipCommand
+@desc Equipment change command name (leave empty to delete command) Default: Equipment change
+@default Equipment change
+
+@param waitingCommand
+@desc Wait command name (leave blank to delete command) Default: Wait
+@default Wait
+
+@param statusCommand
+@desc Status command name (leave blank to delete command) Default: Status
+@default Status
+
+@param turnEndCommand
+@desc End Turn Command Name Default: End Turn
+@default End Turn
+
+@param unitListCommand
+@desc Unit List command name (leave blank to delete command) Default: Unit List
+@default Unit List
+
+@param infoCommand
+@desc Map information command name (leave blank to delete command) Default: Map information
+@default Map information
+
+@param optionsCommand
+@desc Optional command name (leave blank to delete command) Default: Option
+@default Option
+
+@param saveCommand
+@desc Save command name (if empty, command will be deleted) Default: Save
+@default Save
+
+@param loadCommand
+@desc Load command name (leave blank to delete command) Default: Load
+@default Load
+
+@param gameEndCommand
+@desc End game command name (command deleted if empty) Default: End game
+@default End game
+
+@param yesCommand
+@desc Positive Command Name Default: Yes
+@default Yes
+
+@param noCommand
+@desc Negative Command Name Default: No
+@default No
+
+@param moveParam
+@desc Movement parameter name Default: Movement
+@default Movement
+
+@param moveHelp
+@desc Location selection help Default: Please decide where to move
+@default Please decide where to move
+
+@param waitingHelp
+@desc Waiting direction selection help Default: Please decide the waiting direction
+@default Please decide the waiting direction
+
+@param turnEndHelp
+@desc Turn End Confirmation Help Default: Are you sure you want to end your ally's turn?
+@default Are you sure you want to end your ally's turn?
+
+@param actionRangeHelp
+@desc Action execution location selection help Default: Please decide where to execute the action
+@default Please decide where to execute the action
+
+@param actionEffectHelp
+@desc Action final confirmation help Default: Is this action OK?
+@default Is this action OK?
+
+@param colorAreaMove
+@desc Movable range tile toner setting Initial value: 0 64 255 128
+@default 0 64 255 128
+
+@param colorAreaWaiting
+@desc Tile toner setting for standby range Default: 255 32 255 128
+@default 255 32 255 128
+
+@param colorAreaRange
+@desc Range tile toner setting Default: 255 32 32 128
+@default 255 32 32 128
+
+@param colorAreaEffect
+@desc Tile Toner setting for effective range Default: 255 255 32 128
+@default 255 255 32 128
+
+@param backAttackPhysical
+@desc Physical back attack multiplier Default: 1.5
+@default 1.5
+
+@param backAttackMagical
+@desc Magic back attack multiplier Initial value: 1.5
+@default 1.5
+
+@param reflectAnimationId
+@desc The animation number to play when Reflectioning magic. Default: 0
+@default 0
+@type animation
+@require 1
+
+@param srpgCommandX
+@desc Command window display position (X coordinate) Initial value: 0
+@default 0
+
+@param srpgCommandY
+@desc Command window display position (Y coordinate) Initial value: 0
+@default 0
+
+@param srpgCommandLineHeight
+@desc Command window line height Default: 36
+@default 36
+
+@param srpgStatusBackground
+@desc Status window background type. Default: 1 (0 = window / 1 = darkened / 2 = transparent)
+@default 1
+
+@param srpgStatusNameWidth
+@desc Width of unit name in status window Default: 144
+@default 144
+
+@param srpgStatusHpWidth
+@desc Width of the HP gauge in the status window (also used for MP) Default: 186
+@default 186
+
+@param srpgStatusFaceMirror
+@desc Status window face graphic horizontal flip setting Default: left (left = flip left side / right = flip right side)
+@default left
+
+@param srpgUnitListWidth
+@desc Unit list window width Default: 240
+@default 240
+
+@param srpgUnitListRows
+@desc Number of lines displayed in the unit list window Initial value: 7
+@default 7
+
+@param srpgInfoSize
+@desc Map info window size Default: 480*480
+@default 480*480
+
+@param srpgStatusArrowImage
+@desc File name of the status window arrow image Default: SrpgStatusArrow
+@default SrpgStatusArrow
+@type file
+@require 1
+@dir img/system/
+
+@param srpgCursorImage
+@desc SRPG cursor file name Initial value: !$SrpgCursor
+@default !$SrpgCursor
+@type file
+@require 1
+@dir img/characters/
+*/
+
+
+/*:ja
+@plugindesc いわゆるシミュレーションRPGぽい機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - シミュレーションRPG ver0.1.3a
+
+使用方法:
+
+  下記URLを参照してください。
+  https://github.com/munokura/tomoaky-MV-plugins/tree/master/html
+  このヘルプにはメモ欄タグやプラグインコマンドの簡単な説明のみを
+  記載しています。
+
+  このプラグインは RPGツクールMV Version 1.3.5 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+メモ欄タグ（イベント）:
+
+  <srpgManager>
+  このタグのついたイベントをSRPG管理イベントとして利用します。
+
+  <srpgActor:0>
+  このタグのついたイベントを味方ユニットとして利用します。
+  数値はパーティ内の並び順（ 0 が先頭）です。
+
+  <srpgEnemy:3>
+  このタグのついたイベントを敵ユニットとして利用します。
+  数値は敵キャラのデータベース上の番号です。
+
+  <neutral>
+  このタグのついたイベントは残りユニット数のカウントから除外します。
+
+  <traitor>
+  このタグのついたイベントに行動制約『味方を攻撃』が常時付加されます。
+
+  <autoState:5 9>
+  SRPG開始時、またはsrpgAddUnitコマンド実行時に 5 番と 9 番のステートを
+  自動的に付加します。
+
+
+メモ欄タグ（アクター、職業、武器、防具、敵キャラ、ステート）:
+
+  <mov:4>
+  移動力を設定します。アクターの場合は現在の職業、装備品、ステートの値も
+  含めた合計値が採用されます。
+
+  <shipMove>
+  通常は進入不可能な水の上も移動することができるようになります。
+
+  <floatMove>
+  地形を無視して移動することができるようになります。
+
+  <search:5>
+  索敵距離を設定します。一番近くにいる敵対ユニットとの距離が
+  この値よりも大きい場合、移動も行動もしなくなります。
+  タグを省略、または 0 を指定するとこの機能はオフになります。
+
+
+メモ欄タグ（アイテム、スキル）:
+
+  <range:diamond 2>
+  スキルの射程距離を設定します。射程タイプと射程距離を半角スペースで
+  区切って指定してください。射程タイプは下記の中から選んでください。
+    diamond = ひし形
+    rect    = 四角形
+    line    = 直線（上下左右）
+  また、<range:diamond 2 rect 0> のように続けてもうひとつタイプと距離を
+  指定すると、範囲の中心に穴をあけることができます。
+
+  <effect:rect 3>
+  スキルの効果範囲を設定します。範囲タイプと大きさを半角スペースで
+  区切って指定してください。指定する値は射程距離と同じです。
+
+
+メモ欄タグ（敵キャラ）:
+
+  <faceName:Monster>
+  敵キャラの顔グラフィックとして利用する画像ファイル名を設定します。
+
+  <faceIndex:0>
+  敵キャラの顔グラフィックのインデックスを設定します。
+  インデックスとは画像のどの部分を使用するかを決める番号です。
+  0 1 2 3
+  4 5 6 7
+
+  <level:10>
+  敵キャラのレベルを設定します、この値はステータス表示のためのダミーです、
+  数値によって能力値が変化するようなことはありません。
+
+  <class:3>
+  敵キャラの職業を設定します、この値はステータス表示のためのダミーです、
+  数値によって能力値が変化するようなことはありません。
+
+  <nickname:乱暴者>
+  敵キャラの二つ名を設定します。
+
+  <profile:人間が大嫌いなオーク族の戦士>
+  敵キャラのプロフィールを設定します。
+
+  <equips:2 0 0 3 0>
+  敵キャラの装備品を設定します、この値はステータス表示のためのダミーです、
+  数値によって能力値が変化するようなことはありません。
+  装備スロットの上から順に装備品の番号を半角スペースで区切って
+  指定してください。
+
+  <attackAnimation:6>
+  敵キャラの通常攻撃のアニメーション番号を設定します。
+
+
+プラグインコマンド:
+
+  reserveSrpg
+  SRPG機能を有効化する予約をします、このコマンドを実行したあとにイベント
+  コマンド『場所移動』でマップが切り替わるとSRPG機能が有効になります。
+
+  srpgCursorMove 10 5
+  SRPGカーソルを座標 (10, 5) へ移動させます。
+
+  srpgCursorMoveToEvent 2
+  SRPGカーソルをイベント 2 番へ移動させます。
+
+  setSrpgDestination 4 10 15
+  4 番のイベントの目的地を座標 (10, 15) に設定します。
+
+  clearSrpgDestination 4
+  4 番のイベントの目的地設定を解除します。
+
+
+スクリプトコマンド:
+
+  this.isSrpgTurnStart()
+  ターン開始フラグが立っているかどうかを返します。
+
+  this.isSrpgActorTurn()
+  味方ターンかどうかを返します。
+
+  this.srpgNextUnit()
+  次に行動するイベント番号を返します。
+
+  this.srpgLastUnit()
+  直前に行動したイベント番号を返します。
+
+  this.srpgBattler(0)
+  ユニットイベントのバトラーオブジェクトを返します。
+  括弧内に取得したいユニットイベントのイベント番号を指定してください。
+  0 を指定した場合はこのコマンドを実行しているイベントが対象となります。
+  何も指定しなかった場合は次に行動するイベント、または直前に行動した
+  イベントが対象となります。
+
+  this.srpgRemoveUnit(0)
+  ユニットイベントを強制的に排除します。
+  戦闘不能になった場合と同じ扱いとなり、セルフスイッチＡが自動的に
+  オンになり、イベント内容も実行されます。
+  対象の指定方法は this.srpgBattler と同じです。
+
+  this.srpgAddUnit(10, 1)
+  イベント番号 10 番を敵キャラ 1 番のエネミーユニットとして設定します。
+
+@param vnSrpgTurnCount
+@desc 現在のターン数を代入するゲーム変数番号 初期値: 1
+@default 1
+
+@param vnActorUnitNums
+@desc 残りアクターユニット数を代入するゲーム変数番号 初期値: 2
+@default 2
+
+@param vnEnemyUnitNums
+@desc 残りエネミーユニット数を代入するゲーム変数番号 初期値: 3
+@default 3
+
+@param srpgBasicWait
+@desc 敵ターン進行の基本ウェイト時間（フレーム） 初期値: 30
+@default 30
+
+@param damagePopupInterval
+@desc 連続ダメージポップアップの間隔（フレーム） 初期値: 30
+@default 30
+
+@param checkSkillId
+@desc 調べる/話すスキルの番号 初期値: 0
+@default 0
+
+@param regionEffects
+@desc リージョンごとの地形効果の設定 初期値: 1,11 2,12
+@default 1,11 2,12
+
+@param useRegionEffectWindow
+@desc 地形効果ウィンドウを利用するかどうか 初期値: 1 ( 0 = 無効 / 1 = 有効)
+@default 1
+
+@param useUnitHpGauge
+@desc ユニットHPゲージを利用するかどうか 初期値: 1 ( 0 = 無効 / 1 = 有効)
+@default 1
+
+@param useUnitStateIcon
+@desc ユニットステートアイコンを利用するかどうか 初期値: 1 ( 0 = 無効 / 1 = 有効)
+@default 1
+
+@param simpleMoveInput
+@desc 移動可能範囲が表示中ならそのまま移動できるようにする 初期値: 0 ( 0 = 無効 / 1 = 有効 )
+@default 0
+
+@param moveCommand
+@desc 移動コマンド名 初期値: 移動
+@default 移動
+
+@param moveCancelCommand
+@desc 移動キャンセルコマンド名 初期値: 移動取り消し
+@default 移動取り消し
+
+@param actionCommand
+@desc 行動コマンド名 初期値: 行動
+@default 行動
+
+@param itemCommand
+@desc アイテムコマンド名（未入力でコマンド削除） 初期値: アイテム
+@default アイテム
+
+@param equipCommand
+@desc 装備変更コマンド名（未入力でコマンド削除） 初期値: 装備変更
+@default 装備変更
+
+@param waitingCommand
+@desc 待機コマンド名（未入力でコマンド削除） 初期値: 待機
+@default 待機
+
+@param statusCommand
+@desc ステータスコマンド名（未入力でコマンド削除） 初期値: ステータス
+@default ステータス
+
+@param turnEndCommand
+@desc ターン終了コマンド名 初期値: ターン終了
+@default ターン終了
+
+@param unitListCommand
+@desc ユニットリストコマンド名（未入力でコマンド削除） 初期値: ユニットリスト
+@default ユニットリスト
+
+@param infoCommand
+@desc マップ情報コマンド名（未入力でコマンド削除） 初期値: マップ情報
+@default マップ情報
+
+@param optionsCommand
+@desc オプションコマンド名（未入力でコマンド削除） 初期値: オプション
+@default オプション
+
+@param saveCommand
+@desc セーブコマンド名（未入力でコマンド削除） 初期値: セーブ
+@default セーブ
+
+@param loadCommand
+@desc ロードコマンド名（未入力でコマンド削除） 初期値: ロード
+@default ロード
+
+@param gameEndCommand
+@desc ゲーム終了コマンド名（未入力でコマンド削除） 初期値: ゲーム終了
+@default ゲーム終了
+
+@param yesCommand
+@desc 肯定コマンド名 初期値: はい
+@default はい
+
+@param noCommand
+@desc 否定コマンド名 初期値: いいえ
+@default いいえ
+
+@param moveParam
+@desc 移動力パラメータの名前 初期値: 移動力
+@default 移動力
+
+@param moveHelp
+@desc 移動場所選択ヘルプ 初期値: 移動する場所を決定してください
+@default 移動する場所を決定してください
+
+@param waitingHelp
+@desc 待機方向選択ヘルプ 初期値: 待機中の向きを決定してください
+@default 待機中の向きを決定してください
+
+@param turnEndHelp
+@desc ターン終了確認ヘルプ 初期値: 味方のターンを終了してよろしいですか？
+@default 味方のターンを終了してよろしいですか？
+
+@param actionRangeHelp
+@desc 行動実行場所選択ヘルプ 初期値: 行動を実行する場所を決定してください
+@default 行動を実行する場所を決定してください
+
+@param actionEffectHelp
+@desc 行動最終確認ヘルプ 初期値: この行動でよろしいですか？
+@default この行動でよろしいですか？
+
+@param colorAreaMove
+@desc 移動可能範囲のタイルトナー設定 初期値: 0 64 255 128
+@default 0 64 255 128
+
+@param colorAreaWaiting
+@desc 待機範囲のタイルトナー設定 初期値: 255 32 255 128
+@default 255 32 255 128
+
+@param colorAreaRange
+@desc 射程範囲のタイルトナー設定 初期値: 255 32 32 128
+@default 255 32 32 128
+
+@param colorAreaEffect
+@desc 効果範囲のタイルトナー設定 初期値: 255 255 32 128
+@default 255 255 32 128
+
+@param backAttackPhysical
+@desc 物理による背後攻撃倍率 初期値: 1.5
+@default 1.5
+
+@param backAttackMagical
+@desc 魔法による背後攻撃倍率 初期値: 1.5
+@default 1.5
+
+@param reflectAnimationId
+@desc 魔法反射時に再生するアニメーションの番号 初期値: 0
+@default 0
+@type animation
+@require 1
+
+@param srpgCommandX
+@desc コマンドウィンドウの表示位置（Ｘ座標） 初期値: 0
+@default 0
+
+@param srpgCommandY
+@desc コマンドウィンドウの表示位置（Ｙ座標） 初期値: 0
+@default 0
+
+@param srpgCommandLineHeight
+@desc コマンドウィンドウの１行の高さ 初期値: 36
+@default 36
+
+@param srpgStatusBackground
+@desc ステータスウィンドウの背景タイプ 初期値: 1（ 0 = ウィンドウ / 1 = 暗くする / 2 = 透明）
+@default 1
+
+@param srpgStatusNameWidth
+@desc ステータスウィンドウのユニット名の幅 初期値: 144
+@default 144
+
+@param srpgStatusHpWidth
+@desc ステータスウィンドウのＨＰゲージの幅（ＭＰでも利用） 初期値: 186
+@default 186
+
+@param srpgStatusFaceMirror
+@desc ステータスウィンドウの顔グラフィック左右反転設定 初期値: left（ left = 左側を反転 / right = 右側を反転）
+@default left
+
+@param srpgUnitListWidth
+@desc ユニットリストウィンドウの幅 初期値: 240
+@default 240
+
+@param srpgUnitListRows
+@desc ユニットリストウィンドウの表示行数 初期値: 7
+@default 7
+
+@param srpgInfoSize
+@desc マップ情報ウィンドウの大きさ 初期値: 480*480
+@default 480*480
+
+@param srpgStatusArrowImage
+@desc ステータスウィンドウの矢印画像のファイル名 初期値: SrpgStatusArrow
+@default SrpgStatusArrow
+@type file
+@require 1
+@dir img/system/
+
+@param srpgCursorImage
+@desc SRPGカーソルのファイル名 初期値: !$SrpgCursor
+@default !$SrpgCursor
+@type file
+@require 1
+@dir img/characters/
 */
 
 var Imported = Imported || {};

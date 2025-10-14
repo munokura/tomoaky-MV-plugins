@@ -8,173 +8,311 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 敵キャラの次の行動のヒントなどをテキストで表示します。
- * より戦略的なターンバトルが実現できるかもしれません。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param width
- * @type number
- * @desc 行動予測表示の横幅
- * 初期値: 240
- * @default 240
- *
- * @param maxLines
- * @type number
- * @desc 行動予測表示の最大行数
- * 初期値: 3
- * @default 3
- *
- * @param lineHeight
- * @type number
- * @desc 行動予測表示の 1 行の高さ
- * 初期値: 36
- * @default 36
- *
- * @param fontSize
- * @type number
- * @desc 行動予測表示のフォントサイズ
- * 初期値: 28
- * @default 28
- *
- * @param color
- * @desc 行動予測表示の文字色
- * 初期値: white
- * @default white
- *
- * @param backColor
- * @desc 行動予測表示の背景の色
- * 初期値: black
- * @default black
- *
- * @param backOpacity
- * @type number
- * @max 255
- * @desc 行動予測表示の背景の不透明度
- * 初期値: 128 ( 0 ～ 255 )
- * @default 128
- *
- * @param textAlign
- * @type select
- * @option left
- * @option center
- * @option right
- * @desc 行動予測表示の行揃え
- * @default center
- * 
- * @param showIcon
- * @type boolean
- * @desc スキル名の頭にアイコンも表示する
- * 初期値: ON（ ON = 表示 / OFF = 非表示 )
- * @default true
- * 
- * @param headerText
- * @desc 行動予測表示のヘッダーテキスト
- * 初期値: Next
- * @default Next
- *
- * @param headerHeight
- * @type number
- * @desc 行動予測表示のヘッダーの高さ
- * 初期値: 20
- * @default 20
- *
- * @param headerFontSize
- * @type number
- * @desc 行動予測表示のヘッダーのフォントサイズ
- * 初期値: 16
- * @default 16
- *
- * @param headerColor
- * @desc 行動予測表示のヘッダーの文字色
- * 初期値: red
- * @default red
- *
- * @param cornerRadius
- * @type number
- * @desc TMBitmapEx.js導入時の、角丸矩形の丸部分の半径
- * 初期値: 6
- * @default 6
- *
- * @help
- * TMPlugin - エネミー行動予測 ver1.1.0
- * 
- * 使い方:
- *
- *   スキルのメモ欄に <fsText:予測テキスト> のようなタグで行動予測の設定を
- *   してください。
- *   戦闘シーンでパーティのコマンドを入力している間、敵グラフィックに
- *   重なるように予測テキストが表示されるようになります。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- * 
- * メモ欄タグ（スキル）:
- *
- *   <fsText:予測テキスト>
- *     敵がこのスキルを使用するターンのコマンド入力中に、予測テキストが
- *     敵グラフィックに重なるように表示されます。
- *     このタグがない場合はスキル名を代わりに表示します。
- *
- *     予測テキストを途中で改行することで、行動予測の表示も複数行になります。
- *     ただしプラグインパラメータ maxLines で設定した行数を超えることは
- *     できません。
- * 
- *   <fsIcon:5>
- *     予測テキストの頭に 5 番のアイコンを表示します。
- *     このタグがない場合はスキルアイコンを代わりに表示します。
- * 
- *     プラグインパラメータ showIcon がOFF(false)の場合は表示しません。
- *
- *
- * メモ欄タグ（敵キャラ）:
- *
- *   <fsOffsetX:50>
- *     この敵の行動予測の表示位置を右に 50 ドットずらします。左にずらす場合は
- *     負の値を設定してください。
- *
- *   <fsOffsetY:80>
- *     この敵の行動予測の表示位置を下に 80 ドットずらします。上にずらす場合は
- *     負の値を設定してください。
- *
- *
- * プラグインコマンド:
- *
- *   fsStop
- *     行動予測機能を無効にします。ゲーム開始時は行動予測機能が有効に
- *     なっています。行動予測機能の状態はセーブデータに保存されます。
- *
- *   fsStart
- *     無効にした行動予測機能を有効にします。
- *
- *
- * プラグインパラメータ補足:
- *
- *   maxLines
- *     行動予測表示の最大行数を設定します。行数が多いほど大きなビットマップが
- *     生成されるため、必要以上に大きな値は設定しないでください。
- * 
- *     1ターンに複数回の行動がある場合、行動回数分の行数が必要になります。
- *     行動予測表示に改行を利用する場合はさらに必要な行数が増えます。
- *
- *   color / backColor / headerColor
- *     このパラメータには、black や blue といったカラーネームと、
- *     #000000 や #0000ff のようなカラーコードを設定することができます。
- *
- *   headerText
- *     行動予測の左上に表示するヘッダーテキストです。何も入力しなければ
- *     ヘッダーテキストは非表示になります。
- *
- *   cornerRadius
- *     TMBitmapEx.js をこのプラグインよりも上の位置に導入しつつ、
- *     このパラメータの値を 1 以上にすることで、行動予測の背景を
- *     角丸の矩形にすることができます。
- */
+@plugindesc Displays text hints about the Enemies's next action.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Enemy Action Prediction ver. 1.1.0
+
+How to Use:
+
+Set action prediction using tags like <fsText:Predicted Text> in the skill's Note field.
+
+Predictive text will be displayed over the enemy graphics while you're entering party commands during battle scenes.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+Note field Tag (Skill):
+
+<fsText:Predicted Text>
+Predictive text will be displayed over the enemy graphics while you're entering commands on the turn the enemy will use this skill.
+If this tag is not present, the skill name will be displayed instead.
+
+You can add line breaks to the predictive text to display multiple lines of action predictions.
+However, the number of lines cannot exceed the number set by the plugin parameter maxLines.
+
+<fsIcon:5>
+Displays icon number 5 at the beginning of the predictive text.
+If this tag is not present, a skill icon will be displayed instead.
+
+If the plugin parameter showIcon is set to OFF (false), the icon will not be displayed.
+
+Memo Tag (Enemies):
+
+<fsOffsetX:50>
+Shifts the display position of this enemy's predicted behavior 50 dots to the right. To shift it to the left,
+set a negative value.
+
+<fsOffsetY:80>
+Shifts the display position of this enemy's predicted behavior 80 dots down. To shift it up,
+set a negative value.
+
+Plugin Command:
+
+fsStop
+Disables the behavior prediction function. The behavior prediction function is enabled at the start of the game.
+The behavior prediction function status is saved in save data.
+
+fsStart
+Enables the behavior prediction function if it was previously disabled.
+
+Plugin Parameter Notes:
+
+maxLines
+Sets the maximum number of lines for the behavior prediction display. The more lines you add, the larger the bitmap generated will be, so do not set a value larger than necessary.
+
+If multiple actions occur per turn, you will need as many lines as there are actions.
+
+If line breaks are used in the action prediction display, the required number of lines will increase.
+
+color / backColor / headerColor
+This parameter accepts color names such as black or blue,
+and color codes such as #000000 or #0000ff.
+
+headerText
+This is the header text to display in the upper left of the action prediction. If nothing is entered,
+the header text will be hidden.
+
+cornerRadius
+By installing TMBitmapEx.js above this plugin and setting this parameter to a value of 1 or greater, you can make the background of the action prediction a rounded rectangle.
+
+@param width
+@desc Width of action prediction display Default: 240
+@default 240
+@type number
+
+@param maxLines
+@desc Maximum number of lines for action prediction display Default: 3
+@default 3
+@type number
+
+@param lineHeight
+@desc Height of one line of the action prediction display Initial value: 36
+@default 36
+@type number
+
+@param fontSize
+@desc Font size for predictive behavior display Default: 28
+@default 28
+@type number
+
+@param color
+@desc Prediction Show Text color Default: white
+@default white
+
+@param backColor
+@desc Background color of the action prediction display Default: black
+@default black
+
+@param backOpacity
+@desc Background opacity of the action prediction display. Default: 128 (0 to 255)
+@default 128
+@type number
+@max 255
+
+@param textAlign
+@desc Alignment of action prediction display
+@default center
+@type select
+@option left
+@option center
+@option right
+
+@param showIcon
+@desc Display an icon at the beginning of the skill name. Default: ON (ON = Display / OFF = Hide)
+@default true
+@type boolean
+
+@param headerText
+@desc Header text for action prediction display Default: Next
+@default Next
+
+@param headerHeight
+@desc Header height for action prediction display Default: 20
+@default 20
+@type number
+
+@param headerFontSize
+@desc Font size of header for action prediction display Default: 16
+@default 16
+@type number
+
+@param headerColor
+@desc Prediction header text color Default: red
+@default red
+
+@param cornerRadius
+@desc Radius of the rounded part of the rounded rectangle when TMBitmapEx.js is installed. Default value: 6
+@default 6
+@type number
+*/
+
+
+/*:ja
+@plugindesc 敵キャラの次の行動のヒントなどをテキストで表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - エネミー行動予測 ver1.1.0
+
+使い方:
+
+  スキルのメモ欄に <fsText:予測テキスト> のようなタグで行動予測の設定を
+  してください。
+  戦闘シーンでパーティのコマンドを入力している間、敵グラフィックに
+  重なるように予測テキストが表示されるようになります。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+メモ欄タグ（スキル）:
+
+  <fsText:予測テキスト>
+    敵がこのスキルを使用するターンのコマンド入力中に、予測テキストが
+    敵グラフィックに重なるように表示されます。
+    このタグがない場合はスキル名を代わりに表示します。
+
+    予測テキストを途中で改行することで、行動予測の表示も複数行になります。
+    ただしプラグインパラメータ maxLines で設定した行数を超えることは
+    できません。
+
+  <fsIcon:5>
+    予測テキストの頭に 5 番のアイコンを表示します。
+    このタグがない場合はスキルアイコンを代わりに表示します。
+
+    プラグインパラメータ showIcon がOFF(false)の場合は表示しません。
+
+
+メモ欄タグ（敵キャラ）:
+
+  <fsOffsetX:50>
+    この敵の行動予測の表示位置を右に 50 ドットずらします。左にずらす場合は
+    負の値を設定してください。
+
+  <fsOffsetY:80>
+    この敵の行動予測の表示位置を下に 80 ドットずらします。上にずらす場合は
+    負の値を設定してください。
+
+
+プラグインコマンド:
+
+  fsStop
+    行動予測機能を無効にします。ゲーム開始時は行動予測機能が有効に
+    なっています。行動予測機能の状態はセーブデータに保存されます。
+
+  fsStart
+    無効にした行動予測機能を有効にします。
+
+
+プラグインパラメータ補足:
+
+  maxLines
+    行動予測表示の最大行数を設定します。行数が多いほど大きなビットマップが
+    生成されるため、必要以上に大きな値は設定しないでください。
+
+    1ターンに複数回の行動がある場合、行動回数分の行数が必要になります。
+    行動予測表示に改行を利用する場合はさらに必要な行数が増えます。
+
+  color / backColor / headerColor
+    このパラメータには、black や blue といったカラーネームと、
+    #000000 や #0000ff のようなカラーコードを設定することができます。
+
+  headerText
+    行動予測の左上に表示するヘッダーテキストです。何も入力しなければ
+    ヘッダーテキストは非表示になります。
+
+  cornerRadius
+    TMBitmapEx.js をこのプラグインよりも上の位置に導入しつつ、
+    このパラメータの値を 1 以上にすることで、行動予測の背景を
+    角丸の矩形にすることができます。
+
+@param width
+@desc 行動予測表示の横幅 初期値: 240
+@default 240
+@type number
+
+@param maxLines
+@desc 行動予測表示の最大行数 初期値: 3
+@default 3
+@type number
+
+@param lineHeight
+@desc 行動予測表示の 1 行の高さ 初期値: 36
+@default 36
+@type number
+
+@param fontSize
+@desc 行動予測表示のフォントサイズ 初期値: 28
+@default 28
+@type number
+
+@param color
+@desc 行動予測表示の文字色 初期値: white
+@default white
+
+@param backColor
+@desc 行動予測表示の背景の色 初期値: black
+@default black
+
+@param backOpacity
+@desc 行動予測表示の背景の不透明度 初期値: 128 ( 0 ～ 255 )
+@default 128
+@type number
+@max 255
+
+@param textAlign
+@desc 行動予測表示の行揃え
+@default center
+@type select
+@option left
+@option center
+@option right
+
+@param showIcon
+@desc スキル名の頭にアイコンも表示する 初期値: ON（ ON = 表示 / OFF = 非表示 )
+@default true
+@type boolean
+
+@param headerText
+@desc 行動予測表示のヘッダーテキスト 初期値: Next
+@default Next
+
+@param headerHeight
+@desc 行動予測表示のヘッダーの高さ 初期値: 20
+@default 20
+@type number
+
+@param headerFontSize
+@desc 行動予測表示のヘッダーのフォントサイズ 初期値: 16
+@default 16
+@type number
+
+@param headerColor
+@desc 行動予測表示のヘッダーの文字色 初期値: red
+@default red
+
+@param cornerRadius
+@desc TMBitmapEx.js導入時の、角丸矩形の丸部分の半径 初期値: 6
+@default 6
+@type number
+*/
 
 var Imported = Imported || {};
 Imported.TMFutureSight = true;

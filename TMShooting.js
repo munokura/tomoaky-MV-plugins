@@ -2,528 +2,949 @@
 // TMPlugin - シューティング
 // バージョン: 1.3.9
 // 最終更新日: 2019/07/26
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc プレイヤーとイベントに弾を発射する機能を追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param shot
- * @type struct<InputSetting>
- * @default {"text":"ショット","mandatory":"true","keys":"AGHJ","padButton":"6"}
- * 
- * @param hold
- * @type struct<InputSetting>
- * @default {"text":"ホールド","mandatory":"false","keys":"D","padButton":"-1"}
- * 
- * @param holdType
- * @type select
- * @option SWITCH
- * @option HOLD
- * @desc 向き固定方式。SWITCH なら向き固定キーを押すたびに切り替え、
- * HOLD なら押している間だけ切り替え。
- * @default SWITCH
- *
- * @param deadSwitch
- * @type string
- * @desc イベントが戦闘不能になったときにオンになるセルフスイッチ
- * 初期値: A
- * @default A
- *
- * @param resetDeadSwitch
- * @type boolean
- * @desc マップ移動時に deadSwitch をオフにする
- * 初期値: ON ( true = ON 有効 / false = OFF 無効 )
- * @default true
- * 
- * @param bulletBlockTag
- * @type number
- * @min -1
- * @desc 弾が通行できない地形タグ番号
- * 初期値: -1 ( 0 ～ 7 = 該当タグ通行不可 / -1 = 無効 )
- * @default -1
- *
- * @param bulletBlockRegion
- * @type number
- * @min -1
- * @desc 弾が通行できないリージョン番号
- * 初期値: -1 ( 0 ～ 255 = 該当リージョン通行不可 / -1 = 無効 )
- * @default -1
- *
- * @param leaderShotSe
- * @desc プレイヤー弾発射効果音のファイル名。
- * 初期値: Shot1
- * @default Shot1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param leaderShotSeParam
- * @type struct<SeParam>
- * @desc プレイヤー弾発射効果音のパラメータ。
- * @default {"volume":"70", "pitch":"150", "pan":"0"}
- * 
- * @param defaultDeadAnimeId
- * @desc 戦闘不能時に表示するアニメーション番号の初期値
- * 初期値: 67
- * @default 67
- * @require 1
- * @type animation
- *
- * @param levelUpAnimeId
- * @desc レベルアップ時に表示するアニメーション番号
- * 初期値: 52
- * @default 52
- * @require 1
- * @type animation
- *
- * @param playerDeadEventId
- * @type common_event
- * @desc 先頭のアクターが戦闘不能時に実行するコモンイベント番号
- * 初期値: 0 ( 0 = 無効 / 1以上 = 該当するコモンイベント起動 )
- * @default 0
- *
- * @param invincibleFollower
- * @type boolean
- * @desc フォロワーを無敵にする。
- * 初期値: OFF ( true = ON 無敵 / false = OFF 通常 )
- * @default false
- *
- * @param useGameover
- * @type boolean
- * @desc 全滅時にゲームオーバーシーンへ移行するかどうか
- * 初期値: ON ( true = ON 移行する / false = OFF 移行しない )
- * @default true
- *
- * @param maxPlayerBullet
- * @type number
- * @desc 同時に存在できるプレイヤー弾の最大数
- * 初期値: 128
- * @default 128
- *
- * @param maxEnemyBullet
- * @type number
- * @desc 同時に存在できるエネミー弾の最大数
- * 初期値: 128
- * @default 128
- *
- * @param bulletSizeTable
- * @type string
- * @desc 弾の当たり判定の大きさ（ドット数）
- * 初期値: 6,6,6,6,6,6,6,6
- * @default 6,6,6,6,6,6,6,6
- *
- * @param bulletBlendTable
- * @type string
- * @desc 弾のブレンドモード
- * 初期値: 0,0,0,0,0,0,0,0
- * @default 0,0,0,0,0,0,0,0
- *
- * @param equipDummyX
- * @type number
- * @min -9999
- * @desc 装備シーンに表示するダミーのＸ座標
- * 初期値: 408
- * @default 408
- *
- * @param equipDummyY
- * @type number
- * @min -9999
- * @desc 装備シーンに表示するダミーのＹ座標
- * 初期値: 312
- * @default 312
- *
- * @param useLevelUpMessage
- * @type boolean
- * @desc レベルアップメッセージを表示するか
- * 初期値: true ( false = OFF 表示しない / true = ON 表示する )
- * @default true
- *
- * @noteParam shotSeName
- * @noteRequire 1
- * @noteDir audio/se/
- * @noteType file
- * @noteData weapons
- *
- * @requiredAssets img/system/shootingBullet1
- * @requiredAssets img/system/shootingBullet2
- * @requiredAssets img/system/shootingBullet3
- * @requiredAssets img/system/shootingBullet4
- * @requiredAssets img/system/shootingBullet5
- * @requiredAssets img/system/shootingBullet6
- * @requiredAssets img/system/shootingBullet7
- * @requiredAssets img/system/shootingBullet8
- * 
- * @help
- * TMPlugin - シューティング ver1.3.9
- *
- * 使い方:
- *
- *   このプラグインを動作させるには、プレイヤーやイベントが発射する弾の画像
- *   が必要になります。
- *
- *   弾画像は shootingBullet1.png というファイル名で img/system フォルダに
- *   入れてください。ひとつのファイルには、横に８つ、縦に任意の数の弾画像を
- *   入れることができます。
- *   ファイル名の数字部分を変えて複数のファイルを使用することもできます、
- *   サイズが違う弾、当たり判定が違う弾を作る場合など、必要に応じてファイル
- *   を増やしてください。
- *   shootingBullet8.png まで、最大 8 つのファイルを利用できます。
- *
- *   準備ができたらデータベースで武器のメモ欄に以下のタグを挿入します。
- *   <shotWay:1>
- *   <shotCount:45>
- *   <shotSpeed:0.1>
- *   <shotInterval:15>
- *   <shotType:1>
- *   <shotIndex:8>
- *
- *   この武器をアクターに装備させて、Aキーを押せば弾が発射されます。
- *   弾が当たる敵イベントのメモ欄には <enemy:3> のようなタグを挿入します。
- *   これでこのイベントに 3 番の敵キャラのパラメータが適用され、弾を当てて
- *   HPが 0 になるとセルフスイッチ A がオンになります。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインパラメータ補足:
- *
- *   bulletSizeTable
- *     弾画像ファイルごとに当たり判定を設定します、初期設定の 6,6,6,6,6,6,6,6
- *     は shootingBullet1.png ～ shootingBullet8.png までのすべての弾が、弾の
- *     中心から半径６ドットの当たり判定をもつという設定になります。
- *
- *   bulletBlendTable
- *     弾画像の合成方法を設定します、値と合成方法の対応は下記のとおりです。
- *     （ 0 = 通常 / 1 = 加算 / 2 = 乗算 / 3 = スクリーン ）
- *     bulletSizeTable と同様に弾画像ファイルの数だけ設定する必要があります。
- *
- *   useLevelUpMessage
- *     弾による敵イベントの撃破で経験値を獲得した際に、アクターのレベルアップ
- *     をメッセージウィンドウで表示するかどうかを設定します。
- *     アクション要素が強いゲームでは非表示にすることをおすすめします。
- *
- *
- * プラグインコマンド:
- *
- *   startAutoShot
- *     このコマンドが実行されるとプレイヤーキャラクターが自動的に弾を撃つよう
- *     になります。この変更はパーティメンバーにも適用されます。
- * 
- *   stopAutoShot
- *     このコマンドが実行されるとプレイヤーキャラクターの自動射撃が止まります、
- *     この変更はパーティメンバーにも適用されます。
- *
- *   nwayShot 3 0.4 0 0.1 60 1 3 1
- *     このコマンドを実行したイベントが弾を発射します、コマンド名に続く数値は
- *     左から 弾数、間隔、角度、速度、寿命、タイプ、インデックス、スキル番号
- *     となります。
- *     タイプが 1 で、インデックスが 3 なら、弾画像として shootingBullet1.png
- *     の最上段、左から４つ目を使用します。（インデックスは 0 が先頭です）
- *
- *   nwayAim 3 0.4 0 0.1 60 1 3 1
- *     このコマンドを実行したイベントが自機狙いの弾を発射します。
- *     角度が 0 以外の場合は、自機がいる方向にその値を加算した角度で発射され
- *     ます。
- *
- *   nallShot 8 0 0.1 60 1 3 1
- *     このコマンドを実行したイベントが全方位に弾を発射します、コマンド名に
- *     続く数値は左から 弾数、角度、速度、寿命、タイプ、インデックス、
- *     スキル番号 となります。
- *     弾の間隔は全方位に発射されるように自動で調整されます。
- *
- *   nallAim 8 0 0.1 60 1 3 1
- *     nallShotの自機狙い版です。
- *
- *   stopPlayerShot
- *     プレイヤー（パーティメンバー含む）の弾発射を手動、自動問わず禁止します。
- *
- *   startPlayerShot
- *     プレイヤー（パーティメンバー含む）の弾発射禁止状態を解除します。
- * 
- *   stopPlayerShot message
- *     イベントコマンド『文章の表示』実行中のみプレイヤー（パーティメンバー含む）
- *     の発射弾を手動、自動問わず禁止します。
- * 
- *   startPlayerShot message
- *     stopPlayerShot message の効果を解除します。
- *
- *   stopEnemyShot
- *     イベントの弾発射を禁止します、並列イベントで弾を発射している場合は
- *     弾発射のコマンドのみが無効化され、そのほかのコマンドは実行されます。
- *
- *   startEnemyShot
- *     イベントの弾発射禁止状態を解除します。
- *
- *   stopEnemyShot message
- *     イベントコマンド『文章の表示』実行中のみイベントの弾発射を禁止します。
- * 
- *   startEnemyShot message
- *     stopEnemyShot message の効果を解除します。
- *
- *   deletePlayerBullets
- *     プレイヤー（パーティメンバー含む）が発射したすべての弾を消去します。
- *
- *   deleteEnemyBullets
- *     イベントが発射したすべての弾を消去します。
- *
- *   forceShot 0
- *     プレイヤーのショット操作を強制実行します。このコマンドはディレイを
- *     無視して弾を発射します。数値はパーティの先頭を 0 とした並び順です、
- *     0 が指定されていれば先頭のキャラクターのみが弾を発射します。
- *     数値を省略した場合はパーティ全員が弾を発射します。
- * 
- *   bulletPause
- *     すべての弾を一時的に停止させます。
- *     bulletPause off
- *     で一時停止が解除されます。
- * 
- *   setCollision 1 0.375 0.75
- *     イベント 1 番の当たり判定の横幅を 0.375、高さを 0.75 に設定します。
- *     このコマンドの効果はイベントページが切り替わるタイミングで消失します。
- * 
- *   setShiftFiringY 1 -24
- *     イベント 1 番の弾発射位置を上に 24 ドットずらします。
- *     このコマンドの効果はイベントページが切り替わるタイミングで消失します。
- *
- *
- * メモ欄タグ（アクター、装備、ステート）:
- *
- *   <shotWay:3>
- *     一度に発射される弾の数を設定します。
- *
- *   <shotSpace:0.4>
- *     一度に発射される弾同士の間隔（角度）を設定します。
- *
- *   <shotSpeed:0.1>
- *     弾の移動速度を設定します。
- *
- *   <shotCount:60>
- *     弾が消えるまでの時間をフレーム数で設定します。
- *
- *   <shotInterval:20>
- *     再発射までの発射不可時間をフレーム数で設定します。
- * 
- *   <shotInvincible:60>
- *     被弾により発生する無敵時間をフレーム数で設定します。
- *
- *
- * メモ欄タグ（装備、ステート）:
- *
- *   <shotIntervalRate:1.4>
- *     再発射までの発射不可時間を倍率で設定します。
- *     shotInterval による加算補正よりも後に計算されます。
- *
- * メモ欄タグ（武器、ステート）:
- *
- *   <shotType:1>
- *     弾のグラフィックとして使う画像ファイルを設定します。値が 1 なら
- *     shootingBullet1.png を使用します。
- *     武器とステートの両方にこのタグがある場合、ステートのものを優先します。
- *
- *   <shotIndex:3>
- *     shotTypeタグで選択した画像ファイルの何番目の弾を使用するか設定します。
- *     武器とステートの両方にこのタグがある場合、ステートのものを優先します。
- *
- *   <shotSkill:1>
- *     弾が相手に当たったときのダメージ計算に使うスキルを設定します。
- *     武器とステートの両方にこのタグがある場合、ステートのものを優先します。
- *
- *
- * メモ欄タグ（武器）:
- * 
- *   <shotSeName:Shot1>
- *   <shotSeVolume:70>
- *   <shotSePitch:150>
- *     このタグがついている武器を装備している間だけ、弾の発射音を変更します。
- *     それぞれ、ファイル名、音量、ピッチを設定することができます。
- *
- *
- * メモ欄タグ（スキル）:
- *
- *   <mapThrough>
- *     マップの通行不可タイルと接触しても弾が消えなくなります。
- *
- *   <penetrate>
- *     キャラクターと接触しても弾は消えずに貫通します。キャラクターが同じ弾に
- *     複数回ダメージを受けることはありません。
- *
- *   <bulletAnime:1>
- *     弾がキャラクターにヒットした際に、指定した番号のアニメーションを
- *     被弾したキャラクターに表示します。
- *
- *   <timeBomb:6 0 0.2 45 1 0 1>
- *     弾が時間切れで削除される際、その場所から新しい弾を発射します。
- *     パラメータはプラグインコマンド nallShot と同じです。
- *
- * 
- * メモ欄タグ（イベント）:
- *
- *   <enemy:1>
- *     イベントのパラメータとして利用する敵キャラ番号を設定します。
- *
- *   <cw:0.375>
- *     イベントと弾の当たり判定サイズ（横幅）をイベントの中心から左（右）端
- *     までの長さで設定します。値は 1.0 でマップのタイル１マス分になります。
- *     このタグがない場合は初期値として 0.375 を使用します。
- *
- *   <ch:0.75>
- *     イベントと弾の当たり判定サイズ（高さ）をイベントの足元から上端までの
- *     長さで設定します。値は 1.0 でマップのタイル１マス分になります。
- *     このタグがない場合は初期値として 0.75 を使用します。
- *
- *   <shiftFiringY:0>
- *     イベントの弾発射位置（Ｙ座標）を指定したドット数だけずらします。
- *     値が正なら下、負なら上方向へずらします。
- *     通常は当たり判定の矩形の中心から弾が発射されますが、不都合がある場合は
- *     このタグで調整してください。
- *
- *
- * メモ欄タグ（アクター）:
- *
- *   <cw:0.375>
- *     イベント用のものと同じです。
- *
- *   <ch:0.75>
- *     イベント用のものと同じです。
- *
- *   <shiftFiringY:0>
- *     イベント用のものと同じです。
- *
- *   <deadCharacter:!Flame,5>
- *     このアクターが戦闘不能になったとき、歩行グラフィックを変更します。
- *     この例では !Flame.png の下段、左から２番目のグラフィックが採用されます。
- *
- *
- * メモ欄タグ（アクター、敵キャラ）:
- *
- *   <deadAnime:67>
- *     戦闘不能ステートが付加されたときに表示するアニメーションを設定します。
- *
- *
- * 併用可能（動作確認済み）プラグイン:
- *
- *   SAN_AnalogMove.js ver1.4.3
- *   SAN_AnalogMove.js ver3.0.3
- *   SAN_AnalogStick.js ver1.0.0
- *   SAN_MapGenerator.js ver1.1.8
- *   作者: サンシロさん（http://rev2nym.blog.fc2.com/）
- * 
- *   CharacterPopupDamage.js Version 1.5.0
- *   作者: トリアコンタンさん（http://triacontane.blogspot.jp/）
- *
- *   CommonPopupCore.js ver1.05
- *   GetInformation.js ver1.15
- *   作者: Yanaさん（https://twitter.com/yanatsuki_）
- * 
- *   Mano_InputConfig.js ver0.9.0
- *   作者: しぐれんさん (https://twitter.com/Sigureya/)
- *
- *   導入する際は TMShooting.js よりも上（プラグイン管理の表示順）へ
- *   挿入してください。順番が違うと正常に動作しない場合があります。
- *   上記プラグインを併用したことによる不具合の報告は、併用プラグインの
- *   作者様ではなく、必ずtomoakyへお願いします。
- *
- *
- * その他注意点など:
- *
- *   shotWay や shotSpace などのメモ欄タグは、アクター、装備、ステートの
- *   合計値が採用されます。shotWay が 0 の場合、または shotCount が 0 の
- *   場合は弾が発射されないか、発射後すぐに消滅してしまいます、素手の状態
- *   でも弾を撃ちたい場合はアクターにも shotWay と shotCount タグを設定する
- *   必要があります。
- *
- *   nwayShot などのコマンドに味方対象のスキルを設定した場合、イベント同士
- *   での攻撃が表現できますが、スキルの設定によっては命中判定が正しく機能
- *   しません。
- *   弾が当たらない場合はスキルの使用効果にステート付加 0 %などの無意味な
- *   効果を設定することでこの問題を回避することができます。
- *
- *   パッドボタン配置は save フォルダ内の config.rpgsave に保存されます、
- *   このファイルが削除されるまでは初期配置の設定を変更しても適用されません。
- */
-/*~struct~SeParam:
- *
- * @param volume
- * @type number
- * @max 100
- * @desc 音量
- * 初期値: 70 ( 0 ～ 100 )
- * @default 70
- * 
- * @param pitch
- * @type number
- * @min 50
- * @max 150
- * @desc ピッチ
- * 初期値: 100 ( 50 ～ 150 )
- * @default 100
- * 
- * @param pan
- * @type number
- * @min -100
- * @max 100
- * @desc 位相
- * 初期値: 0 ( -100 ～ 100 )
- * @default 0
+@plugindesc Adds the ability to fire bullets at players and events.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Shooting ver. 1.3.9
+
+How to Use:
+
+To use this plugin, you will need images of bullets fired by players and events.
+
+Put the bullet images in the img/system folder with the file name shootingBullet1.png. One file can contain up to eight bullet images horizontally and any number of bullet images vertically.
+You can also use multiple files by changing the numbers in the file name.
+Add more files as needed, for example, to create bullets with different sizes or collision detection.
+You can use up to eight files, up to shootingBullet8.png.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+Sample Project
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+Once ready, insert the following tags into the weapon's Note field in the database:
+<shotWay:1>
+<shotCount:45>
+<shotSpeed:0.1>
+<shotInterval:15>
+<shotType:1>
+<shotIndex:8>
+
+Equip this weapon to an actor and press A to fire the bullet.
+Insert a tag like <enemy:3> in the Note field of the bullet hit enemy event.
+This will apply the parameters of Enemies number 3 to this event, and when a bullet hits them and their HP drops to 0, Self Switch A will turn on.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free to use commercially, modify, and redistribute.
+
+Plugin Parameter Notes:
+
+bulletSizeTable
+Sets the hit detection for each bullet image file. The default setting of 6,6,6,6,6,6,6,6,6
+means that all bullets from shootingBullet1.png to shootingBullet8.png will have a hit detection radius of 6 pixels from the bullet's center.
+
+bulletBlendTable
+Sets the bullet image blending method. The corresponding values and blending methods are as follows:
+(0 = Normal / 1 = Add / 2 = Multiply / 3 = Screen)
+As with bulletSizeTable, this must be set to the number of bullet image files.
+
+useLevelUpMessage
+Sets whether to display a message window informing the actor that they have leveled up when they gain experience points by defeating an enemy with a bullet.
+Hide this message for games with a strong action element.
+
+Plugin Commands:
+
+startAutoShot
+When this command is executed, the player character will automatically fire bullets.
+This change also applies to party members.
+
+stopAutoShot
+When this command is executed, the player character's automatic firing will stop.
+This change also applies to party members.
+
+nwayShot 3 0.4 0 0.1 60 1 3 1
+The event that executes this command fires bullets. The numbers following the command name are, from left to right, the number of bullets, interval, angle, speed, lifespan, type, index, and skill number.
+
+If the type is 1 and the index is 3, the bullet image will be the fourth image from the left in the top row of shootingBullet1.png. (Indexes start with 0.)
+
+nwayAim 3 0.4 0 0.1 60 1 3 1
+The event that executes this command will fire bullets aimed at the player's ship.
+If the angle is non-zero, the bullets will be fired at an angle equal to the player's ship's current direction.
+
+nallShot 8 0 0.1 60 1 3 1
+The event that executes this command will fire bullets in all directions. The numbers following the command name are, from left to right, the number of bullets, angle, speed, lifespan, type, index, and skill number.
+The bullet spacing is automatically adjusted to fire in all directions.
+
+nallAim 8 0 0.1 60 1 3 1
+This is a player-aiming version of nallShot.
+
+stopPlayerShot
+Prevents the player (including party members) from firing bullets, both manually and automatically.
+
+startPlayerShot
+Removes the prohibition on firing bullets for the player (including party members).
+
+stopPlayerShot message
+Prevents the player (including party members) from firing bullets, both manually and automatically, only while the Event's Contents "Show Text" is being executed.
+
+startPlayerShot message
+Removes the effect of stopPlayerShot message.
+
+stopEnemyShot
+Prevents event bullets from firing. If bullets are being fired in a parallel event, only the bullet firing command is disabled, and other commands are still executed.
+
+startEnemyShot
+Removes the prohibition on firing bullets for the event.
+
+stopEnemyShot message
+Prevents event bullets from firing only while the Event's Contents "Show Text" is being executed.
+
+startEnemyShot message
+Cancels the effect of the stopEnemyShot message.
+
+deletePlayerBullets
+Deletes all bullets fired by the player (including party members).
+
+deleteEnemyBullets
+Deletes all bullets fired by the event.
+
+forceShot 0
+Forces the player to perform a shot. This command fires bullets regardless of the delay.
+The number represents the party order, with the first character at 0.
+If 0 is specified, only the first character will fire bullets.
+If the number is omitted, all party members will fire bullets.
+
+bulletPause
+Temporarily pauses all bullets.
+bulletPause off
+Returns the pause.
+
+setCollision 1 0.375 0.75
+Sets the width and height of the collision detection for Event 1 to 0.375 and 0.75, respectively.
+The effect of this command disappears when the event page changes.
+
+setShiftFiringY 1 -24
+Shifts the firing position of Event 1's bullets 24 dots upward.
+The effect of this command will disappear when the event page changes.
+
+Memo Tags (Actor, Equipment, State):
+
+<shotWay:3>
+Sets the number of bullets fired at once.
+
+<shotSpace:0.4>
+Sets the distance (angle) between bullets fired at once.
+
+<shotSpeed:0.1>
+Sets the bullet movement speed.
+
+<shotCount:60>
+Sets the number of frames until the bullet disappears.
+
+<shotInterval:20>
+Sets the number of frames for the invincible period before re-firing.
+
+<shotInvincible:60>
+Sets the number of frames for the invincible period after being hit.
+
+Memo Tags (Equipment, State):
+
+<shotIntervalRate:1.4>
+Sets the multiplier for the invincible period before re-firing.
+This is calculated after the shotInterval adjustment.
+
+Memo Tags (Weapon, State):
+
+<shotType:1>
+Sets the image file to use as the bullet graphic. A value of 1 will use
+shootingBullet1.png.
+If this tag exists for both the weapon and state, the state's tag takes priority.
+
+<shotIndex:3>
+Sets the bullet number in the image file selected in the shotType tag to use.
+If this tag exists for both the weapon and state, the state's tag takes priority.
+
+<shotSkill:1>
+Sets the skill used to calculate damage when a bullet hits an opponent.
+If this tag exists for both the weapon and state, the state's tag takes priority.
+
+Memo Tags (Weapon):
+
+<shotSeName:Shot1>
+<shotSeVolume:70>
+<shotSePitch:150>
+Changes the bullet firing sound only while the weapon with this tag is equipped.
+You can set the file name, volume, and pitch for each.
+
+Memo Tag (Skill):
+
+<mapThrough>
+Bullets will not disappear even if they come into contact with an impassable tile on the map.
+
+<penetrate>
+Bullets will penetrate through characters without disappearing. A character will not be damaged multiple times by the same bullet.
+
+<bulletAnime:1>
+When a bullet hits a character, the specified animation number will be displayed on the hit character.
+
+<timeBomb:6 0 0.2 45 1 0 1>
+When a bullet is deleted due to timeout, a new bullet will be fired from its location.
+The parameters are the same as the nallShot plugin command.
+
+Memo Tag (Event):
+
+<enemy:1>
+Sets the Enemies number to use as an event parameter.
+
+<cw:0.375>
+Sets the size (width) of the collision detection between the event and the bullet, measured from the center of the event to the left (right) edge. A value of 1.0 corresponds to one map tile.
+If this tag is not present, a default value of 0.375 is used.
+
+<ch:0.75>
+Sets the size (height) of the event and bullet hitbox as the length from the base of the event to its top.
+
+A value of 1.0 corresponds to one map tile.
+If this tag is not present, a default value of 0.75 is used.
+
+<shiftFiringY:0>
+Shifts the event's bullet firing position (Y coordinate) by the specified number of dots.
+A positive value shifts it downward, a negative value shifts it upward.
+Normally, bullets are fired from the center of the hitbox rectangle, but if this is inconvenient,
+adjust it with this tag.
+
+Memo Tag (Actor):
+
+<cw:0.375>
+Same as for events.
+
+<ch:0.75>
+Same as for events.
+
+<shiftFiringY:0>
+Same as for events.
+
+<deadCharacter:!Flame,5>
+Changes the walking graphic when this actor is Collapse.
+In this example, the graphic second from the left in the bottom row of !Flame.png is used.
+
+Memo tag (Actor, Enemies):
+
+<deadAnime:67>
+Sets the animation to be displayed when the Collapse state is entered.
+
+Compatible (tested) plugins:
+
+SAN_AnalogMove.js ver. 1.4.3
+SAN_AnalogMove.js ver. 3.0.3
+SAN_AnalogStick.js ver. 1.0.0
+SAN_MapGenerator.js ver. 1.1.8
+Author: Sanshiro (http://rev2nym.blog.fc2.com/)
+
+CharacterPopupDamage.js Version 1.5.0
+Author: Triacontane (http://triacontane.blogspot.jp/)
+
+CommonPopupCore.js ver. 1.05
+GetInformation.js ver. 1.15
+Author: Yana (https://twitter.com/yanatsuki_)
+
+Mano_InputConfig.js ver. 0.9.0
+Author: Shiguren (https://twitter.com/Sigureya/)
+
+When installing: Please insert it above TMShooting.js (in the plugin management order). If the order is incorrect, it may not function properly.
+
+If you experience any issues using the above plugins in combination, please contact tomoaky, not the plugin's author.
+
+Other points to note:
+
+Note field tags such as shotWay and shotSpace use the total value of the actor, equipment, and state. If shotWay is 0 or shotCount is 0, the bullet will not be fired or will disappear immediately after firing. If you want to fire bullets even when unarmed, you must also set the shotWay and shotCount tags for the actor.
+
+If you assign a skill targeting an ally to a command such as nwayShot, you can create an attack between events, but depending on the skill settings, hit detection may not function correctly.
+
+If the bullets do not hit, you can work around this issue by setting a meaningless effect, such as adding 0% state, to the skill's effect.
+
+The pad button layout is saved in config.rpgsave in the save folder.
+Changes to the initial layout settings will not be applied until this file is deleted.
+
+@param shot
+@default {"text":"shot","mandatory":"true","keys":"AGHJ","padButton":"6"}
+@type struct<InputSetting>
+
+@param hold
+@default {"text":"hold","mandatory":"false","keys":"D","padButton":"-1"}
+@type struct<InputSetting>
+
+@param holdType
+@desc Orientation locking method. SWITCH switches every time you press the orientation lock key, and HOLD switches only while you are pressing it.
+@default SWITCH
+@type select
+@option SWITCH
+@option HOLD
+
+@param deadSwitch
+@desc Self-switch that turns on when the event becomes incapable of fighting. Default: A
+@default A
+@type string
+
+@param resetDeadSwitch
+@desc Turn off deadSwitch when moving around the map. Default: ON ( true = ON enabled / false = OFF disabled )
+@default true
+@type boolean
+
+@param bulletBlockTag
+@desc Terrain tag number that bullets cannot pass through. Default: -1 (0 to 7 = tag is not passable / -1 = invalid)
+@default -1
+@type number
+@min -1
+
+@param bulletBlockRegion
+@desc Region number where bullets cannot pass. Default: -1 (0 to 255 = region cannot be passed / -1 = disabled)
+@default -1
+@type number
+@min -1
+
+@param leaderShotSe
+@desc File name of the player's shot sound effect. Default: Shot1
+@default Shot1
+@type file
+@require 1
+@dir audio/se/
+
+@param leaderShotSeParam
+@desc Parameters for the player bullet firing sound effect.
+@default {"volume":"70", "pitch":"150", "pan":"0"}
+@type struct<SeParam>
+
+@param defaultDeadAnimeId
+@desc The initial value of the animation number displayed when Collapse. Initial value: 67
+@default 67
+@type animation
+@require 1
+
+@param levelUpAnimeId
+@desc Animation number displayed when leveling up. Default: 52
+@default 52
+@type animation
+@require 1
+
+@param playerDeadEventId
+@desc Common event number to execute when the first actor is Collapse. Default: 0 (0 = Disabled / 1 or more = Activate the corresponding common event)
+@default 0
+@type common_event
+
+@param invincibleFollower
+@desc Makes followers invincible. Default: OFF ( true = ON invincible / false = OFF normal )
+@default false
+@type boolean
+
+@param useGameover
+@desc Whether to transition to a game over scene when all players are wiped out. Default: ON ( true = ON transition / false = OFF transition)
+@default true
+@type boolean
+
+@param maxPlayerBullet
+@desc Maximum number of player bullets that can exist simultaneously Default: 128
+@default 128
+@type number
+
+@param maxEnemyBullet
+@desc Maximum number of enemy bullets that can exist simultaneously Initial value: 128
+@default 128
+@type number
+
+@param bulletSizeTable
+@desc Size of bullet hit detection (number of dots) Default: 6,6,6,6,6,6,6,6,6
+@default 6,6,6,6,6,6,6,6
+@type string
+
+@param bulletBlendTable
+@desc Bullet Blend Mode Default: 0,0,0,0,0,0,0,0,0
+@default 0,0,0,0,0,0,0,0
+@type string
+
+@param equipDummyX
+@desc X coordinate of the dummy displayed in the equipment scene. Default: 408
+@default 408
+@type number
+@min -9999
+
+@param equipDummyY
+@desc Y coordinate of the dummy displayed in the equipment scene. Default: 312
+@default 312
+@type number
+@min -9999
+
+@param useLevelUpMessage
+@desc Display level-up message Default: true ( false = OFF, not display / true = ON, display)
+@default true
+@type boolean
 */
+
+
+/*~struct~SeParam:
+@param volume
+@desc Volume Default: 70 (0 to 100)
+@default 70
+@type number
+@max 100
+
+@param pitch
+@desc Pitch Initial value: 100 (50 to 150)
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc Phase Initial value: 0 (-100 to 100)
+@default 0
+@type number
+@min -100
+@max 100
+*/
+
 /*~struct~InputSetting:
- * 
- * @param text
- * @desc コマンド名称です
- * Mano_InputConfigで参照するために使います
- * 
- * @param mandatory
- * @desc Mano_InputConfigの方で必須指定されたものとして扱います。
- * @type boolean
- * @default false
- * 
- * @param keys
- * @desc キーボードの割り当てです
- * @type string
- * 
- * @param padButton
- * @desc ゲームパッドの割り当てです
- * カッコ内はツクールのデフォルトでの割り当てです
- * @type select
- * @default -1
- * @option non(割り当てなし)
- * @value -1
- * @type select
- * @option button6
- * @value 6
- * @option button7
- * @value 7
- * @option button8
- * @value 8
- * @option button9
- * @value 9
- * @option button10
- * @value 10
- * @option button11
- * @value 11
- * @option button0(ok/決定)
- * @value 0
- * @option button1(cancel/キャンセル)
- * @value 1
- * @option button2(shift/ダッシュ)
- * @value 2
- * @option button3(menu/メニュー)
- * @value 3
- * @option button4(pageup)
- * @value 4
- * @option button5(pagedown)
- * @value 5
- */
+@param text
+@desc This is the command name used to reference it in Mano_InputConfig.
+
+@param mandatory
+@desc It will be treated as required by Mano_InputConfig.
+@default false
+@type boolean
+
+@param keys
+@desc The keyboard assignment
+@type string
+
+@param padButton
+@desc Gamepad assignments. The brackets are the default assignments for Maker.
+@default -1
+@type select
+@option non (no allocation)
+@value -1
+@option button6
+@value 6
+@option button7
+@value 7
+@option button8
+@value 8
+@option button9
+@value 9
+@option button10
+@value 10
+@option button11
+@value 11
+@option button0(ok/decision)
+@value 0
+@option button1 (cancel)
+@value 1
+@option button2 (shift/dash)
+@value 2
+@option button3(menu)
+@value 3
+@option button4(page up)
+@value 4
+@option button5(pagedown)
+@value 5
+*/
+
+
+/*:ja
+@plugindesc プレイヤーとイベントに弾を発射する機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - シューティング ver1.3.9
+
+使い方:
+
+  このプラグインを動作させるには、プレイヤーやイベントが発射する弾の画像
+  が必要になります。
+
+  弾画像は shootingBullet1.png というファイル名で img/system フォルダに
+  入れてください。ひとつのファイルには、横に８つ、縦に任意の数の弾画像を
+  入れることができます。
+  ファイル名の数字部分を変えて複数のファイルを使用することもできます、
+  サイズが違う弾、当たり判定が違う弾を作る場合など、必要に応じてファイル
+  を増やしてください。
+  shootingBullet8.png まで、最大 8 つのファイルを利用できます。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+サンプルプロジェクト
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+
+  準備ができたらデータベースで武器のメモ欄に以下のタグを挿入します。
+  <shotWay:1>
+  <shotCount:45>
+  <shotSpeed:0.1>
+  <shotInterval:15>
+  <shotType:1>
+  <shotIndex:8>
+
+  この武器をアクターに装備させて、Aキーを押せば弾が発射されます。
+  弾が当たる敵イベントのメモ欄には <enemy:3> のようなタグを挿入します。
+  これでこのイベントに 3 番の敵キャラのパラメータが適用され、弾を当てて
+  HPが 0 になるとセルフスイッチ A がオンになります。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインパラメータ補足:
+
+  bulletSizeTable
+    弾画像ファイルごとに当たり判定を設定します、初期設定の 6,6,6,6,6,6,6,6
+    は shootingBullet1.png ～ shootingBullet8.png までのすべての弾が、弾の
+    中心から半径６ドットの当たり判定をもつという設定になります。
+
+  bulletBlendTable
+    弾画像の合成方法を設定します、値と合成方法の対応は下記のとおりです。
+    （ 0 = 通常 / 1 = 加算 / 2 = 乗算 / 3 = スクリーン ）
+    bulletSizeTable と同様に弾画像ファイルの数だけ設定する必要があります。
+
+  useLevelUpMessage
+    弾による敵イベントの撃破で経験値を獲得した際に、アクターのレベルアップ
+    をメッセージウィンドウで表示するかどうかを設定します。
+    アクション要素が強いゲームでは非表示にすることをおすすめします。
+
+
+プラグインコマンド:
+
+  startAutoShot
+    このコマンドが実行されるとプレイヤーキャラクターが自動的に弾を撃つよう
+    になります。この変更はパーティメンバーにも適用されます。
+
+  stopAutoShot
+    このコマンドが実行されるとプレイヤーキャラクターの自動射撃が止まります、
+    この変更はパーティメンバーにも適用されます。
+
+  nwayShot 3 0.4 0 0.1 60 1 3 1
+    このコマンドを実行したイベントが弾を発射します、コマンド名に続く数値は
+    左から 弾数、間隔、角度、速度、寿命、タイプ、インデックス、スキル番号
+    となります。
+    タイプが 1 で、インデックスが 3 なら、弾画像として shootingBullet1.png
+    の最上段、左から４つ目を使用します。（インデックスは 0 が先頭です）
+
+  nwayAim 3 0.4 0 0.1 60 1 3 1
+    このコマンドを実行したイベントが自機狙いの弾を発射します。
+    角度が 0 以外の場合は、自機がいる方向にその値を加算した角度で発射され
+    ます。
+
+  nallShot 8 0 0.1 60 1 3 1
+    このコマンドを実行したイベントが全方位に弾を発射します、コマンド名に
+    続く数値は左から 弾数、角度、速度、寿命、タイプ、インデックス、
+    スキル番号 となります。
+    弾の間隔は全方位に発射されるように自動で調整されます。
+
+  nallAim 8 0 0.1 60 1 3 1
+    nallShotの自機狙い版です。
+
+  stopPlayerShot
+    プレイヤー（パーティメンバー含む）の弾発射を手動、自動問わず禁止します。
+
+  startPlayerShot
+    プレイヤー（パーティメンバー含む）の弾発射禁止状態を解除します。
+
+  stopPlayerShot message
+    イベントコマンド『文章の表示』実行中のみプレイヤー（パーティメンバー含む）
+    の発射弾を手動、自動問わず禁止します。
+
+  startPlayerShot message
+    stopPlayerShot message の効果を解除します。
+
+  stopEnemyShot
+    イベントの弾発射を禁止します、並列イベントで弾を発射している場合は
+    弾発射のコマンドのみが無効化され、そのほかのコマンドは実行されます。
+
+  startEnemyShot
+    イベントの弾発射禁止状態を解除します。
+
+  stopEnemyShot message
+    イベントコマンド『文章の表示』実行中のみイベントの弾発射を禁止します。
+
+  startEnemyShot message
+    stopEnemyShot message の効果を解除します。
+
+  deletePlayerBullets
+    プレイヤー（パーティメンバー含む）が発射したすべての弾を消去します。
+
+  deleteEnemyBullets
+    イベントが発射したすべての弾を消去します。
+
+  forceShot 0
+    プレイヤーのショット操作を強制実行します。このコマンドはディレイを
+    無視して弾を発射します。数値はパーティの先頭を 0 とした並び順です、
+    0 が指定されていれば先頭のキャラクターのみが弾を発射します。
+    数値を省略した場合はパーティ全員が弾を発射します。
+
+  bulletPause
+    すべての弾を一時的に停止させます。
+    bulletPause off
+    で一時停止が解除されます。
+
+  setCollision 1 0.375 0.75
+    イベント 1 番の当たり判定の横幅を 0.375、高さを 0.75 に設定します。
+    このコマンドの効果はイベントページが切り替わるタイミングで消失します。
+
+  setShiftFiringY 1 -24
+    イベント 1 番の弾発射位置を上に 24 ドットずらします。
+    このコマンドの効果はイベントページが切り替わるタイミングで消失します。
+
+
+メモ欄タグ（アクター、装備、ステート）:
+
+  <shotWay:3>
+    一度に発射される弾の数を設定します。
+
+  <shotSpace:0.4>
+    一度に発射される弾同士の間隔（角度）を設定します。
+
+  <shotSpeed:0.1>
+    弾の移動速度を設定します。
+
+  <shotCount:60>
+    弾が消えるまでの時間をフレーム数で設定します。
+
+  <shotInterval:20>
+    再発射までの発射不可時間をフレーム数で設定します。
+
+  <shotInvincible:60>
+    被弾により発生する無敵時間をフレーム数で設定します。
+
+
+メモ欄タグ（装備、ステート）:
+
+  <shotIntervalRate:1.4>
+    再発射までの発射不可時間を倍率で設定します。
+    shotInterval による加算補正よりも後に計算されます。
+
+メモ欄タグ（武器、ステート）:
+
+  <shotType:1>
+    弾のグラフィックとして使う画像ファイルを設定します。値が 1 なら
+    shootingBullet1.png を使用します。
+    武器とステートの両方にこのタグがある場合、ステートのものを優先します。
+
+  <shotIndex:3>
+    shotTypeタグで選択した画像ファイルの何番目の弾を使用するか設定します。
+    武器とステートの両方にこのタグがある場合、ステートのものを優先します。
+
+  <shotSkill:1>
+    弾が相手に当たったときのダメージ計算に使うスキルを設定します。
+    武器とステートの両方にこのタグがある場合、ステートのものを優先します。
+
+
+メモ欄タグ（武器）:
+
+  <shotSeName:Shot1>
+  <shotSeVolume:70>
+  <shotSePitch:150>
+    このタグがついている武器を装備している間だけ、弾の発射音を変更します。
+    それぞれ、ファイル名、音量、ピッチを設定することができます。
+
+
+メモ欄タグ（スキル）:
+
+  <mapThrough>
+    マップの通行不可タイルと接触しても弾が消えなくなります。
+
+  <penetrate>
+    キャラクターと接触しても弾は消えずに貫通します。キャラクターが同じ弾に
+    複数回ダメージを受けることはありません。
+
+  <bulletAnime:1>
+    弾がキャラクターにヒットした際に、指定した番号のアニメーションを
+    被弾したキャラクターに表示します。
+
+  <timeBomb:6 0 0.2 45 1 0 1>
+    弾が時間切れで削除される際、その場所から新しい弾を発射します。
+    パラメータはプラグインコマンド nallShot と同じです。
+
+
+メモ欄タグ（イベント）:
+
+  <enemy:1>
+    イベントのパラメータとして利用する敵キャラ番号を設定します。
+
+  <cw:0.375>
+    イベントと弾の当たり判定サイズ（横幅）をイベントの中心から左（右）端
+    までの長さで設定します。値は 1.0 でマップのタイル１マス分になります。
+    このタグがない場合は初期値として 0.375 を使用します。
+
+  <ch:0.75>
+    イベントと弾の当たり判定サイズ（高さ）をイベントの足元から上端までの
+    長さで設定します。値は 1.0 でマップのタイル１マス分になります。
+    このタグがない場合は初期値として 0.75 を使用します。
+
+  <shiftFiringY:0>
+    イベントの弾発射位置（Ｙ座標）を指定したドット数だけずらします。
+    値が正なら下、負なら上方向へずらします。
+    通常は当たり判定の矩形の中心から弾が発射されますが、不都合がある場合は
+    このタグで調整してください。
+
+
+メモ欄タグ（アクター）:
+
+  <cw:0.375>
+    イベント用のものと同じです。
+
+  <ch:0.75>
+    イベント用のものと同じです。
+
+  <shiftFiringY:0>
+    イベント用のものと同じです。
+
+  <deadCharacter:!Flame,5>
+    このアクターが戦闘不能になったとき、歩行グラフィックを変更します。
+    この例では !Flame.png の下段、左から２番目のグラフィックが採用されます。
+
+
+メモ欄タグ（アクター、敵キャラ）:
+
+  <deadAnime:67>
+    戦闘不能ステートが付加されたときに表示するアニメーションを設定します。
+
+
+併用可能（動作確認済み）プラグイン:
+
+  SAN_AnalogMove.js ver1.4.3
+  SAN_AnalogMove.js ver3.0.3
+  SAN_AnalogStick.js ver1.0.0
+  SAN_MapGenerator.js ver1.1.8
+  作者: サンシロさん（http://rev2nym.blog.fc2.com/）
+
+  CharacterPopupDamage.js Version 1.5.0
+  作者: トリアコンタンさん（http://triacontane.blogspot.jp/）
+
+  CommonPopupCore.js ver1.05
+  GetInformation.js ver1.15
+  作者: Yanaさん（https://twitter.com/yanatsuki_）
+
+  Mano_InputConfig.js ver0.9.0
+  作者: しぐれんさん (https://twitter.com/Sigureya/)
+
+  導入する際は TMShooting.js よりも上（プラグイン管理の表示順）へ
+  挿入してください。順番が違うと正常に動作しない場合があります。
+  上記プラグインを併用したことによる不具合の報告は、併用プラグインの
+  作者様ではなく、必ずtomoakyへお願いします。
+
+
+その他注意点など:
+
+  shotWay や shotSpace などのメモ欄タグは、アクター、装備、ステートの
+  合計値が採用されます。shotWay が 0 の場合、または shotCount が 0 の
+  場合は弾が発射されないか、発射後すぐに消滅してしまいます、素手の状態
+  でも弾を撃ちたい場合はアクターにも shotWay と shotCount タグを設定する
+  必要があります。
+
+  nwayShot などのコマンドに味方対象のスキルを設定した場合、イベント同士
+  での攻撃が表現できますが、スキルの設定によっては命中判定が正しく機能
+  しません。
+  弾が当たらない場合はスキルの使用効果にステート付加 0 %などの無意味な
+  効果を設定することでこの問題を回避することができます。
+
+  パッドボタン配置は save フォルダ内の config.rpgsave に保存されます、
+  このファイルが削除されるまでは初期配置の設定を変更しても適用されません。
+
+@param shot
+@default {"text":"ショット","mandatory":"true","keys":"AGHJ","padButton":"6"}
+@type struct<InputSetting>
+
+@param hold
+@default {"text":"ホールド","mandatory":"false","keys":"D","padButton":"-1"}
+@type struct<InputSetting>
+
+@param holdType
+@desc 向き固定方式。SWITCH なら向き固定キーを押すたびに切り替え、 HOLD なら押している間だけ切り替え。
+@default SWITCH
+@type select
+@option SWITCH
+@option HOLD
+
+@param deadSwitch
+@desc イベントが戦闘不能になったときにオンになるセルフスイッチ 初期値: A
+@default A
+@type string
+
+@param resetDeadSwitch
+@desc マップ移動時に deadSwitch をオフにする 初期値: ON ( true = ON 有効 / false = OFF 無効 )
+@default true
+@type boolean
+
+@param bulletBlockTag
+@desc 弾が通行できない地形タグ番号 初期値: -1 ( 0 ～ 7 = 該当タグ通行不可 / -1 = 無効 )
+@default -1
+@type number
+@min -1
+
+@param bulletBlockRegion
+@desc 弾が通行できないリージョン番号 初期値: -1 ( 0 ～ 255 = 該当リージョン通行不可 / -1 = 無効 )
+@default -1
+@type number
+@min -1
+
+@param leaderShotSe
+@desc プレイヤー弾発射効果音のファイル名。 初期値: Shot1
+@default Shot1
+@type file
+@require 1
+@dir audio/se/
+
+@param leaderShotSeParam
+@desc プレイヤー弾発射効果音のパラメータ。
+@default {"volume":"70", "pitch":"150", "pan":"0"}
+@type struct<SeParam>
+
+@param defaultDeadAnimeId
+@desc 戦闘不能時に表示するアニメーション番号の初期値 初期値: 67
+@default 67
+@type animation
+@require 1
+
+@param levelUpAnimeId
+@desc レベルアップ時に表示するアニメーション番号 初期値: 52
+@default 52
+@type animation
+@require 1
+
+@param playerDeadEventId
+@desc 先頭のアクターが戦闘不能時に実行するコモンイベント番号 初期値: 0 ( 0 = 無効 / 1以上 = 該当するコモンイベント起動 )
+@default 0
+@type common_event
+
+@param invincibleFollower
+@desc フォロワーを無敵にする。 初期値: OFF ( true = ON 無敵 / false = OFF 通常 )
+@default false
+@type boolean
+
+@param useGameover
+@desc 全滅時にゲームオーバーシーンへ移行するかどうか 初期値: ON ( true = ON 移行する / false = OFF 移行しない )
+@default true
+@type boolean
+
+@param maxPlayerBullet
+@desc 同時に存在できるプレイヤー弾の最大数 初期値: 128
+@default 128
+@type number
+
+@param maxEnemyBullet
+@desc 同時に存在できるエネミー弾の最大数 初期値: 128
+@default 128
+@type number
+
+@param bulletSizeTable
+@desc 弾の当たり判定の大きさ（ドット数） 初期値: 6,6,6,6,6,6,6,6
+@default 6,6,6,6,6,6,6,6
+@type string
+
+@param bulletBlendTable
+@desc 弾のブレンドモード 初期値: 0,0,0,0,0,0,0,0
+@default 0,0,0,0,0,0,0,0
+@type string
+
+@param equipDummyX
+@desc 装備シーンに表示するダミーのＸ座標 初期値: 408
+@default 408
+@type number
+@min -9999
+
+@param equipDummyY
+@desc 装備シーンに表示するダミーのＹ座標 初期値: 312
+@default 312
+@type number
+@min -9999
+
+@param useLevelUpMessage
+@desc レベルアップメッセージを表示するか 初期値: true ( false = OFF 表示しない / true = ON 表示する )
+@default true
+@type boolean
+*/
+
+
+/*~struct~SeParam:ja
+@param volume
+@desc 音量 初期値: 70 ( 0 ～ 100 )
+@default 70
+@type number
+@max 100
+
+@param pitch
+@desc ピッチ 初期値: 100 ( 50 ～ 150 )
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc 位相 初期値: 0 ( -100 ～ 100 )
+@default 0
+@type number
+@min -100
+@max 100
+*/
+
+/*~struct~InputSetting:ja
+@param text
+@desc コマンド名称です Mano_InputConfigで参照するために使います
+
+@param mandatory
+@desc Mano_InputConfigの方で必須指定されたものとして扱います。
+@default false
+@type boolean
+
+@param keys
+@desc キーボードの割り当てです
+@type string
+
+@param padButton
+@desc ゲームパッドの割り当てです カッコ内はツクールのデフォルトでの割り当てです
+@default -1
+@type select
+@option non(割り当てなし)
+@value -1
+@option button6
+@value 6
+@option button7
+@value 7
+@option button8
+@value 8
+@option button9
+@value 9
+@option button10
+@value 10
+@option button11
+@value 11
+@option button0(ok/決定)
+@value 0
+@option button1(cancel/キャンセル)
+@value 1
+@option button2(shift/ダッシュ)
+@value 2
+@option button3(menu/メニュー)
+@value 3
+@option button4(pageup)
+@value 4
+@option button5(pagedown)
+@value 5
+*/
 
 var Imported = Imported || {};
 Imported.TMShooting = true;

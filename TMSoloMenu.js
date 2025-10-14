@@ -8,471 +8,915 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 一人旅に特化したメインメニューを導入します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param commandWindow
- * @type struct<Parameter>
- * @desc コマンドウィンドウのパラメータ
- * @default {"x":"0","y":"0","width":"240"}
- * 
- * @param statusWindow
- * @type struct<Parameter>
- * @desc ステータスウィンドウのパラメータ
- * @default {"x":"240","y":"0","width":"576","height":"624"}
- * 
- * @param goldWindow
- * @type struct<Parameter>
- * @desc 所持金ウィンドウのパラメータ
- * @default {"x":"0","y":"552","width":"240"}
- * 
- * @param menuFace
- * @type struct<Parameter>
- * @desc 顔グラフィックのパラメータ
- * @default {"x":"0","y":"0","width":"144","height":"144"}
- *
- * @param menuName
- * @type struct<Parameter>
- * @desc アクター名のパラメータ
- * @default {"x":"152","y":"0","width":"168"}
- *
- * @param menuNickname
- * @type struct<Parameter>
- * @desc 二つ名のパラメータ
- * @default {"x":"328","y":"0","width":"168","fontSize":"20"}
- *
- * @param menuClass
- * @type struct<Parameter>
- * @desc 職業名のパラメータ
- * @default {"x":"152","y":"36","width":"96"}
- *
- * @param menuLevel
- * @type struct<Parameter>
- * @desc レベルのパラメータ
- * @default {"x":"260","y":"36","width":"280"}
- *
- * @param menuHp
- * @type struct<Parameter>
- * @desc HPのパラメータ
- * @default {"x":"152","y":"72","width":"186"}
- *
- * @param menuMp
- * @type struct<Parameter>
- * @desc MPのパラメータ
- * @default {"x":"152","y":"108","width":"186"}
- *
- * @param menuTp
- * @type struct<Parameter>
- * @desc TPのパラメータ
- * @default {"x":"350","y":"108","width":"120"}
- *
- * @param menuIcons
- * @type struct<Parameter>
- * @desc 状態異常アイコンのパラメータ
- * @default {"x":"0","y":"108","width":"144"}
- *
- * @param menuEquips
- * @type struct<Parameter>
- * @desc 装備のパラメータ
- * @default {"x":"300","y":"172","width":"240","fontSize":"20","cols":"1","space":"8"}
- * 
- * @param menuStateRate
- * @type struct<Parameter>
- * @desc ステート有効度のパラメータ
- * @default {"x":"0","y":"380","width":"97","fontSize":"20","name":"4 5 6 8 9 10","cols":"2","space":"8"}
- * 
- * @param menuElementRate
- * @type struct<Parameter>
- * @desc 属性有効度のパラメータ
- * @default {"x":"233","y":"380","width":"97","fontSize":"20","name":"2 3 4 5 6 7 8 9","cols":"3","space":"8"}
- * 
- * @param menuProfile
- * @type struct<Parameter>
- * @desc プロフィールのパラメータ
- * @default {"x":"0","y":"516","width":"186"}
- * 
- * @param menuMhp
- * @type struct<Parameter>
- * @desc 最大HPのパラメータ
- * @default {"name":"最大HP"}
- *
- * @param menuMmp
- * @type struct<Parameter>
- * @desc 最大MPのパラメータ
- * @default {"name":"最大MP"}
- *
- * @param menuAtk
- * @type struct<Parameter>
- * @desc 攻撃力のパラメータ
- * @default {"x":"0","y":"172","width":"130","fontSize":"20","name":"攻撃"}
- *
- * @param menuDef
- * @type struct<Parameter>
- * @desc 防御力のパラメータ
- * @default {"x":"138","y":"172","width":"130","fontSize":"20","name":"防御"}
- *
- * @param menuMat
- * @type struct<Parameter>
- * @desc 魔法力のパラメータ
- * @default {"x":"0","y":"208","width":"130","fontSize":"20","name":"魔攻"}
- *
- * @param menuMdf
- * @type struct<Parameter>
- * @desc 魔法防御のパラメータ
- * @default {"x":"138","y":"208","width":"130","fontSize":"20","name":"魔防"}
- *
- * @param menuAgi
- * @type struct<Parameter>
- * @desc 敏捷性のパラメータ
- * @default {"x":"0","y":"244","width":"130","fontSize":"20","name":"敏捷"}
- *
- * @param menuLuc
- * @type struct<Parameter>
- * @desc 運のパラメータ
- * @default {"x":"138","y":"244","width":"130","fontSize":"20","name":"幸運"}
- *
- * @param menuHit
- * @type struct<Parameter>
- * @desc 命中率のパラメータ
- * @default {"x":"0","y":"280","width":"130","fontSize":"20","name":"命中"}
- *
- * @param menuEva
- * @type struct<Parameter>
- * @desc 回避率のパラメータ
- * @default {"x":"138","y":"280","width":"130","fontSize":"20","name":"回避"}
- *
- * @param menuCri
- * @type struct<Parameter>
- * @desc 会心率のパラメータ
- * @default {"x":"0","y":"316","width":"130","fontSize":"20","name":"会心"}
- *
- * @param menuCev
- * @type struct<Parameter>
- * @desc 会心回避率のパラメータ
- * @default {"name":"会心回避率"}
- *
- * @param menuMev
- * @type struct<Parameter>
- * @desc 魔法回避率のパラメータ
- * @default {"name":"魔法回避率"}
- *
- * @param menuMrf
- * @type struct<Parameter>
- * @desc 魔法反射率のパラメータ
- * @default {"name":"魔法反射率"}
- *
- * @param menuCnt
- * @type struct<Parameter>
- * @desc 反撃率のパラメータ
- * @default {"x":"138","y":"316","width":"130","fontSize":"20","name":"反撃"}
- *
- * @param menuHrg
- * @type struct<Parameter>
- * @desc HP再生率のパラメータ
- * @default {"name":"HP再生率"}
- *
- * @param menuMrg
- * @type struct<Parameter>
- * @desc MP再生率のパラメータ
- * @default {"name":"MP再生率"}
- *
- * @param menuTrg
- * @type struct<Parameter>
- * @desc TP再生率のパラメータ
- * @default {"name":"TP再生率"}
- * 
- * @param menuTgr
- * @type struct<Parameter>
- * @desc 狙われ率のパラメータ
- * @default {"name":"狙われ率"}
- * 
- * @param menuGrd
- * @type struct<Parameter>
- * @desc 防御効果率のパラメータ
- * @default {"name":"防御効果率"}
- * 
- * @param menuRec
- * @type struct<Parameter>
- * @desc 回復効果率のパラメータ
- * @default {"name":"回復効果率"}
- * 
- * @param menuPha
- * @type struct<Parameter>
- * @desc 薬の知識のパラメータ
- * @default {"name":"薬の知識"}
- * 
- * @param menuMcr
- * @type struct<Parameter>
- * @desc MP消費率のパラメータ
- * @default {"name":"MP消費率"}
- * 
- * @param menuTcr
- * @type struct<Parameter>
- * @desc TPチャージ率のパラメータ
- * @default {"name":"TPチャージ率"}
- * 
- * @param menuPdr
- * @type struct<Parameter>
- * @desc 物理ダメージ率のパラメータ
- * @default {"name":"物理ダメージ率"}
- * 
- * @param menuMdr
- * @type struct<Parameter>
- * @desc 魔法ダメージ率のパラメータ
- * @default {"name":"魔法ダメージ率"}
- * 
- * @param menuFdr
- * @type struct<Parameter>
- * @desc 床ダメージ率のパラメータ
- * @default {"name":"床ダメージ率"}
- * 
- * @param menuExr
- * @type struct<Parameter>
- * @desc 経験獲得率のパラメータ
- * @default {"name":"経験獲得率"}
- * 
- * @param horzLine1
- * @type struct<Parameter>
- * @desc 罫線1のパラメータ
- * @default {"x":"0","y":"162","width":"540","height":"2"}
- *
- * @param horzLine2
- * @type struct<Parameter>
- * @desc 罫線2のパラメータ
- * @default {"x":"0","y":"370","width":"540","height":"2"}
- *
- * @param horzLine3
- * @type struct<Parameter>
- * @desc 罫線3のパラメータ
- * @default {"x":"0","y":"506","width":"540","height":"2"}
- *
- * @param horzLine4
- * @type struct<Parameter>
- * @desc 罫線4のパラメータ
- * @default {"height":"2"}
- *
- * @param horzLine5
- * @type struct<Parameter>
- * @desc 罫線5のパラメータ
- * @default {"height":"2"}
- *
- * @param freeText1
- * @type struct<Parameter>
- * @desc フリーテキスト1のパラメータ
- * @default {"x":"100","y":"144","width":"186","name":"\\C[16]\\}Parameter"}
- *
- * @param freeText2
- * @type struct<Parameter>
- * @desc フリーテキスト2のパラメータ
- * @default {"x":"396","y":"144","width":"186","name":"\\C[16]\\}Equips"}
- *
- * @param freeText3
- * @type struct<Parameter>
- * @desc フリーテキスト3のパラメータ
- * @default {"x":"70","y":"352","width":"186","name":"\\C[16]\\}StateRate"}
- *
- * @param freeText4
- * @type struct<Parameter>
- * @desc フリーテキスト4のパラメータ
- * @default {"x":"344","y":"352","width":"186","name":"\\C[16]\\}ElementRate"}
- *
- * @param freeText5
- * @type struct<Parameter>
- * @desc フリーテキスト5のパラメータ
- * @default {"x":"240","y":"488","width":"186","name":"\\C[16]\\}Profile"}
- *
- * @param freeText6
- * @type struct<Parameter>
- * @desc フリーテキスト6のパラメータ
- * @default {}
- *
- * @param freeText7
- * @type struct<Parameter>
- * @desc フリーテキスト7のパラメータ
- * @default {}
- *
- * @param freeText8
- * @type struct<Parameter>
- * @desc フリーテキスト8のパラメータ
- * @default {}
- *
- * @param freeText9
- * @type struct<Parameter>
- * @desc フリーテキスト9のパラメータ
- * @default {}
- *
- * @param freeText10
- * @type struct<Parameter>
- * @desc フリーテキスト10のパラメータ
- * @default {}
- *
- * @param expGaugeColor1
- * @type number
- * @max 31
- * @desc 経験値ゲージの色1
- * 初期値: 30
- * @default 30
- * 
- * @param expGaugeColor2
- * @type number
- * @max 31
- * @desc 経験値ゲージの色2
- * 初期値: 31
- * @default 31
- * 
- * @param expNextText
- * @type string
- * @desc 経験値の書式
- * 初期値: あと %1exp
- * @default あと %1exp
- * 
- * @param expMaxText
- * @type string
- * @desc 最大レベルのときの経験値の書式
- * 初期値: %1exp
- * @default %1exp
- * 
- * @param expFontSize
- * @type number
- * @desc 経験値の文字の大きさ
- * 初期値: 20
- * @default 20
- * 
- * @param equipMax
- * @type number
- * @desc 装備を表示する最大数
- * 初期値: 5
- * @default 5
- * 
- * @param elementIcons
- * @type string
- * @desc 属性アイコン
- * 初期値: 77 64 65 66 67 68 69 70 71
- * @default 77 64 65 66 67 68 69 70 71
- * 
- * @param textBackColor
- * @type string
- * @desc 文字の背景の色
- * 初期値: #000000
- * @default #000000
- * 
- * @param textBackOpacity
- * @type number
- * @max 255
- * @desc 文字の背景の不透明度
- * 初期値: 128
- * @default 128
- * 
- * @param horzLineColor
- * @type string
- * @desc 罫線の色
- * 初期値: #ffffff
- * @default #ffffff
- * 
- * @param horzLineOpacity
- * @type number
- * @max 255
- * @desc 罫線の不透明度
- * 初期値: 48
- * @default 48
- * 
- * @param forceChangeSoloMenu
- * @type select
- * @option ひとりの時だけ一人旅メニューを使う
- * @value false
- * @option 常に一人旅メニューを使う
- * @value true
- * @desc パーティの人数によるメニュー切り替え方式。
- * 初期値: 常に一人旅メニューを使う (true)
- * @default true
- * 
- * @param soloItemStatus
- * @desc アイテムシーンに表示するパラメータの表示幅
- * ( 名前 / ステート / HP / MP / TP の順で半角スペース区切り)
- * @default 144 160 144 144 96
- *
- * @help
- * TMPlugin - 一人旅メニュー ver0.1.3b
- *
- * 使い方:
- *
- *   プラグインパラメータの値を変更することで、ほぼすべての表示物の
- *   表示位置、文字サイズなどを自由にカスタマイズすることができます。
- *   また、メニュー系シーンにおけるアクター選択の処理も省略されます。
- *
- *   プラグインコマンドはありません。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   width の値に 0 を設定することで、その項目を非表示にすることができます。
- *   プロフィールとフリーテキストには width の値が反映されませんが、
- *   0 を設定すれば非表示にすることはできます。
- * 
- *   height の値が反映されるのは以下の項目のみとなります。
- *     statusWindow / menuFace / horzLine1 ～ horzLine5
- * 
- *   プロフィールとフリーテキストには \C[16] や \} などの制御文字を
- *   使用することができます。
- */
+@plugindesc We will introduce a main menu specifically for solo travelers.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Solo Travel Menu ver0.1.3b
+
+How to Use:
+
+By changing the plugin parameter values, you can freely customize the display position, text size, and other aspects of almost all displayed items.
+
+Actor selection in menu scenes is also skipped.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free to use, including commercial use, modifications, and redistribution.
+
+Plugin Parameter Notes:
+
+You can hide an item by setting its width to 0.
+
+The width value does not affect the profile and free text, but you can hide them by setting it to 0.
+
+The height value only affects the following items:
+
+statusWindow / menuFace / horzLine1 through horzLine5
+
+You can use control characters such as \C[16] and \} in the profile and free text.
+
+@param commandWindow
+@desc Command Window Parameters
+@default {"x":"0","y":"0","width":"240"}
+@type struct<Parameter>
+
+@param statusWindow
+@desc Status Window Parameters
+@default {"x":"240","y":"0","width":"576","height":"624"}
+@type struct<Parameter>
+
+@param goldWindow
+@desc Money window parameters
+@default {"x":"0","y":"552","width":"240"}
+@type struct<Parameter>
+
+@param menuFace
+@desc Face graphic parameters
+@default {"x":"0","y":"0","width":"144","height":"144"}
+@type struct<Parameter>
+
+@param menuName
+@desc Actor Name Parameter
+@default {"x":"152","y":"0","width":"168"}
+@type struct<Parameter>
+
+@param menuNickname
+@desc Two-name parameters
+@default {"x":"328","y":"0","width":"168","fontSize":"20"}
+@type struct<Parameter>
+
+@param menuClass
+@desc Occupation name parameters
+@default {"x":"152","y":"36","width":"96"}
+@type struct<Parameter>
+
+@param menuLevel
+@desc Level parameters
+@default {"x":"260","y":"36","width":"280"}
+@type struct<Parameter>
+
+@param menuHp
+@desc HP parameters
+@default {"x":"152","y":"72","width":"186"}
+@type struct<Parameter>
+
+@param menuMp
+@desc MP parameters
+@default {"x":"152","y":"108","width":"186"}
+@type struct<Parameter>
+
+@param menuTp
+@desc Take Profit parameters
+@default {"x":"350","y":"108","width":"120"}
+@type struct<Parameter>
+
+@param menuIcons
+@desc Status Abnormality Icon Parameters
+@default {"x":"0","y":"108","width":"144"}
+@type struct<Parameter>
+
+@param menuEquips
+@desc Equipment parameters
+@default {"x":"300","y":"172","width":"240","fontSize":"20","cols":"1","space":"8"}
+@type struct<Parameter>
+
+@param menuStateRate
+@desc State validity parameters
+@default {"x":"0","y":"380","width":"97","fontSize":"20","name":"4 5 6 8 9 10","cols":"2","space":"8"}
+@type struct<Parameter>
+
+@param menuElementRate
+@desc Elements Efficiency Parameters
+@default {"x":"233","y":"380","width":"97","fontSize":"20","name":"2 3 4 5 6 7 8 9","cols":"3","space":"8"}
+@type struct<Parameter>
+
+@param menuProfile
+@desc Profile parameters
+@default {"x":"0","y":"516","width":"186"}
+@type struct<Parameter>
+
+@param menuMhp
+@desc Max HP parameters
+@default {"name":"最大HP"}
+@type struct<Parameter>
+
+@param menuMmp
+@desc Maximum MP parameters
+@default {"name":"最大MP"}
+@type struct<Parameter>
+
+@param menuAtk
+@desc Attack power parameters
+@default {"x":"0","y":"172","width":"130","fontSize":"20","name":"Attack"}
+@type struct<Parameter>
+
+@param menuDef
+@desc Defense parameters
+@default {"x":"138","y":"172","width":"130","fontSize":"20","name":"Defense"}
+@type struct<Parameter>
+
+@param menuMat
+@desc Magical Power Parameters
+@default {"x":"0","y":"208","width":"130","fontSize":"20","name":"MAT"}
+@type struct<Parameter>
+
+@param menuMdf
+@desc Magic defense parameters
+@default {"x":"138","y":"208","width":"130","fontSize":"20","name":"MDF"}
+@type struct<Parameter>
+
+@param menuAgi
+@desc Agility Parameter
+@default {"x":"0","y":"244","width":"130","fontSize":"20","name":"AGI"}
+@type struct<Parameter>
+
+@param menuLuc
+@desc Luck Parameter
+@default {"x":"138","y":"244","width":"130","fontSize":"20","name":"LUC"}
+@type struct<Parameter>
+
+@param menuHit
+@desc Hit Rate Parameter
+@default {"x":"0","y":"280","width":"130","fontSize":"20","name":"Hit Rate"}
+@type struct<Parameter>
+
+@param menuEva
+@desc Evasion rate parameter
+@default {"x":"138","y":"280","width":"130","fontSize":"20","name":"Evasion Rate"}
+@type struct<Parameter>
+
+@param menuCri
+@desc Criticality Rate Parameters
+@default {"x":"0","y":"316","width":"130","fontSize":"20","name":"Critical Rate"}
+@type struct<Parameter>
+
+@param menuCev
+@desc Critical hit avoidance rate parameter
+@default {"name":"Critical Evasion"}
+@type struct<Parameter>
+
+@param menuMev
+@desc Magic evasion rate parameter
+@default {"name":"Magic Evasion"}
+@type struct<Parameter>
+
+@param menuMrf
+@desc Magic Reflectionion Parameter
+@default {"name":"Magic Reflection"}
+@type struct<Parameter>
+
+@param menuCnt
+@desc Counter Attack rate parameter
+@default {"x":"138","y":"316","width":"130","fontSize":"20","name":"Counter Attack"}
+@type struct<Parameter>
+
+@param menuHrg
+@desc HP regeneration rate parameter
+@default {"name":"HP Regeneration"}
+@type struct<Parameter>
+
+@param menuMrg
+@desc MP regeneration rate parameter
+@default {"name":"MP Regeneration"}
+@type struct<Parameter>
+
+@param menuTrg
+@desc TP regeneration rate parameters
+@default {"name":"TP Regeneration"}
+@type struct<Parameter>
+
+@param menuTgr
+@desc Target Rate Parameter
+@default {"name":"Target Rate"}
+@type struct<Parameter>
+
+@param menuGrd
+@desc Defense effectiveness parameter
+@default {"name":"Guard Effect"}
+@type struct<Parameter>
+
+@param menuRec
+@desc Recovery effect rate parameter
+@default {"name":"Recovery Effect"}
+@type struct<Parameter>
+
+@param menuPha
+@desc Drug Knowledge Parameters
+@default {"name":"Pharmacology"}
+@type struct<Parameter>
+
+@param menuMcr
+@desc MP consumption rate parameters
+@default {"name":"MP Cost Rate"}
+@type struct<Parameter>
+
+@param menuTcr
+@desc TP charge rate parameters
+@default {"name":"TP Charge Rate"}
+@type struct<Parameter>
+
+@param menuPdr
+@desc Physical damage rate parameters
+@default {"name":"Physical Damage"}
+@type struct<Parameter>
+
+@param menuMdr
+@desc Magic damage rate parameters
+@default {"name":"Magic Damage"}
+@type struct<Parameter>
+
+@param menuFdr
+@desc Floor damage rate parameter
+@default {"name":"Floor Damage"}
+@type struct<Parameter>
+
+@param menuExr
+@desc Experience Gain Rate Parameter
+@default {"name":"Experience"}
+@type struct<Parameter>
+
+@param horzLine1
+@desc Rule 1 parameters
+@default {"x":"0","y":"162","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine2
+@desc Rule 2 parameters
+@default {"x":"0","y":"370","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine3
+@desc Rule 3 parameters
+@default {"x":"0","y":"506","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine4
+@desc Rule 4 parameters
+@default {"height":"2"}
+@type struct<Parameter>
+
+@param horzLine5
+@desc Rule 5 parameters
+@default {"height":"2"}
+@type struct<Parameter>
+
+@param freeText1
+@desc Free Text 1 Parameters
+@default {"x":"100","y":"144","width":"186","name":"\\C[16]\\}Parameter"}
+@type struct<Parameter>
+
+@param freeText2
+@desc Free Text 2 Parameters
+@default {"x":"396","y":"144","width":"186","name":"\\C[16]\\}Equips"}
+@type struct<Parameter>
+
+@param freeText3
+@desc Free Text 3 Parameters
+@default {"x":"70","y":"352","width":"186","name":"\\C[16]\\}StateRate"}
+@type struct<Parameter>
+
+@param freeText4
+@desc Free Text 4 Parameters
+@default {"x":"344","y":"352","width":"186","name":"\\C[16]\\}ElementRate"}
+@type struct<Parameter>
+
+@param freeText5
+@desc Free Text 5 Parameters
+@default {"x":"240","y":"488","width":"186","name":"\\C[16]\\}Profile"}
+@type struct<Parameter>
+
+@param freeText6
+@desc Free Text 6 Parameters
+@default {}
+@type struct<Parameter>
+
+@param freeText7
+@desc Free Text 7 Parameters
+@default {}
+@type struct<Parameter>
+
+@param freeText8
+@desc Free Text 8 Parameters
+@default {}
+@type struct<Parameter>
+
+@param freeText9
+@desc Free Text 9 Parameters
+@default {}
+@type struct<Parameter>
+
+@param freeText10
+@desc Free text 10 parameters
+@default {}
+@type struct<Parameter>
+
+@param expGaugeColor1
+@desc Experience Gauge Color 1 Initial Value: 30
+@default 30
+@type number
+@max 31
+
+@param expGaugeColor2
+@desc Experience Gauge Color 2 Initial Value: 31
+@default 31
+@type number
+@max 31
+
+@param expNextText
+@desc Experience format Default: Next %1 EXP
+@default Next %1 EXP
+@type string
+
+@param expMaxText
+@desc EXP format at maximum level Default: %1 EXP
+@default %1 EXP
+@type string
+
+@param expFontSize
+@desc Experience value font size Default: 20
+@default 20
+@type number
+
+@param equipMax
+@desc Maximum number of equipment to display Default: 5
+@default 5
+@type number
+
+@param elementIcons
+@desc Elements Icon Default: 77 64 65 66 67 68 69 70 71
+@default 77 64 65 66 67 68 69 70 71
+@type string
+
+@param textBackColor
+@desc Text background color Default: #000000
+@default #000000
+@type string
+
+@param textBackOpacity
+@desc Text background opacity Default: 128
+@default 128
+@type number
+@max 255
+
+@param horzLineColor
+@desc Border color Default: #ffffff
+@default #ffffff
+@type string
+
+@param horzLineOpacity
+@desc Border Opacity Default: 48
+@default 48
+@type number
+@max 255
+
+@param forceChangeSoloMenu
+@desc Menu switching method according to the number of people in the party. Default: Always use the solo travel menu (true)
+@default true
+@type select
+@option Use the solo travel menu only when traveling alone
+@value false
+@option Always use the solo travel menu
+@value true
+
+@param soloItemStatus
+@desc Display width of parameters to be displayed in the item scene (Name / State / HP / MP / TP in this order, separated by a space)
+@default 144 160 144 144 96
+*/
+
+
 /*~struct~Parameter:
- *
- * @param x
- * @type number
- * @min -1000
- * @desc X座標
- * @default 0
- *
- * @param y
- * @type number
- * @min -1000
- * @desc Y座標
- * @default 0
- *
- * @param width
- * @type number
- * @desc 横方向の大きさ
- * @default 0
- * 
- * @param height
- * @type number
- * @desc 縦方向の大きさ
- * @default 36
- * 
- * @param fontSize
- * @type number
- * @desc 文字の大きさ
- * @default 28
- * 
- * @param name
- * @type string
- * @desc パラメータ名
- * @default 
- * 
- * @param cols
- * @type number
- * @desc 列の数
- * @default 1
- * 
- * @param space
- * @type number
- * @desc 列ごとの空白
- * @default 8
- * 
- * @param fixed
- * @type number
- * @desc 小数点以下の桁数
- * @default 0
- * 
- */
+@param x
+@desc X coordinate
+@default 0
+@type number
+@min -1000
+
+@param y
+@desc Y coordinate
+@default 0
+@type number
+@min -1000
+
+@param width
+@desc Horizontal size
+@default 0
+@type number
+
+@param height
+@desc Vertical size
+@default 36
+@type number
+
+@param fontSize
+@desc Font size
+@default 28
+@type number
+
+@param name
+@desc Parameter Name
+@type string
+
+@param cols
+@desc Number of columns
+@default 1
+@type number
+
+@param space
+@desc Column spacing
+@default 8
+@type number
+
+@param fixed
+@desc Decimal places
+@default 0
+@type number
+*/
+
+
+/*:ja
+@plugindesc 一人旅に特化したメインメニューを導入します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 一人旅メニュー ver0.1.3b
+
+使い方:
+
+  プラグインパラメータの値を変更することで、ほぼすべての表示物の
+  表示位置、文字サイズなどを自由にカスタマイズすることができます。
+  また、メニュー系シーンにおけるアクター選択の処理も省略されます。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインパラメータ補足:
+
+  width の値に 0 を設定することで、その項目を非表示にすることができます。
+  プロフィールとフリーテキストには width の値が反映されませんが、
+  0 を設定すれば非表示にすることはできます。
+
+  height の値が反映されるのは以下の項目のみとなります。
+    statusWindow / menuFace / horzLine1 ～ horzLine5
+
+  プロフィールとフリーテキストには \C[16] や \} などの制御文字を
+  使用することができます。
+
+@param commandWindow
+@desc コマンドウィンドウのパラメータ
+@default {"x":"0","y":"0","width":"240"}
+@type struct<Parameter>
+
+@param statusWindow
+@desc ステータスウィンドウのパラメータ
+@default {"x":"240","y":"0","width":"576","height":"624"}
+@type struct<Parameter>
+
+@param goldWindow
+@desc 所持金ウィンドウのパラメータ
+@default {"x":"0","y":"552","width":"240"}
+@type struct<Parameter>
+
+@param menuFace
+@desc 顔グラフィックのパラメータ
+@default {"x":"0","y":"0","width":"144","height":"144"}
+@type struct<Parameter>
+
+@param menuName
+@desc アクター名のパラメータ
+@default {"x":"152","y":"0","width":"168"}
+@type struct<Parameter>
+
+@param menuNickname
+@desc 二つ名のパラメータ
+@default {"x":"328","y":"0","width":"168","fontSize":"20"}
+@type struct<Parameter>
+
+@param menuClass
+@desc 職業名のパラメータ
+@default {"x":"152","y":"36","width":"96"}
+@type struct<Parameter>
+
+@param menuLevel
+@desc レベルのパラメータ
+@default {"x":"260","y":"36","width":"280"}
+@type struct<Parameter>
+
+@param menuHp
+@desc HPのパラメータ
+@default {"x":"152","y":"72","width":"186"}
+@type struct<Parameter>
+
+@param menuMp
+@desc MPのパラメータ
+@default {"x":"152","y":"108","width":"186"}
+@type struct<Parameter>
+
+@param menuTp
+@desc TPのパラメータ
+@default {"x":"350","y":"108","width":"120"}
+@type struct<Parameter>
+
+@param menuIcons
+@desc 状態異常アイコンのパラメータ
+@default {"x":"0","y":"108","width":"144"}
+@type struct<Parameter>
+
+@param menuEquips
+@desc 装備のパラメータ
+@default {"x":"300","y":"172","width":"240","fontSize":"20","cols":"1","space":"8"}
+@type struct<Parameter>
+
+@param menuStateRate
+@desc ステート有効度のパラメータ
+@default {"x":"0","y":"380","width":"97","fontSize":"20","name":"4 5 6 8 9 10","cols":"2","space":"8"}
+@type struct<Parameter>
+
+@param menuElementRate
+@desc 属性有効度のパラメータ
+@default {"x":"233","y":"380","width":"97","fontSize":"20","name":"2 3 4 5 6 7 8 9","cols":"3","space":"8"}
+@type struct<Parameter>
+
+@param menuProfile
+@desc プロフィールのパラメータ
+@default {"x":"0","y":"516","width":"186"}
+@type struct<Parameter>
+
+@param menuMhp
+@desc 最大HPのパラメータ
+@default {"name":"最大HP"}
+@type struct<Parameter>
+
+@param menuMmp
+@desc 最大MPのパラメータ
+@default {"name":"最大MP"}
+@type struct<Parameter>
+
+@param menuAtk
+@desc 攻撃力のパラメータ
+@default {"x":"0","y":"172","width":"130","fontSize":"20","name":"攻撃"}
+@type struct<Parameter>
+
+@param menuDef
+@desc 防御力のパラメータ
+@default {"x":"138","y":"172","width":"130","fontSize":"20","name":"防御"}
+@type struct<Parameter>
+
+@param menuMat
+@desc 魔法力のパラメータ
+@default {"x":"0","y":"208","width":"130","fontSize":"20","name":"魔攻"}
+@type struct<Parameter>
+
+@param menuMdf
+@desc 魔法防御のパラメータ
+@default {"x":"138","y":"208","width":"130","fontSize":"20","name":"魔防"}
+@type struct<Parameter>
+
+@param menuAgi
+@desc 敏捷性のパラメータ
+@default {"x":"0","y":"244","width":"130","fontSize":"20","name":"敏捷"}
+@type struct<Parameter>
+
+@param menuLuc
+@desc 運のパラメータ
+@default {"x":"138","y":"244","width":"130","fontSize":"20","name":"幸運"}
+@type struct<Parameter>
+
+@param menuHit
+@desc 命中率のパラメータ
+@default {"x":"0","y":"280","width":"130","fontSize":"20","name":"命中"}
+@type struct<Parameter>
+
+@param menuEva
+@desc 回避率のパラメータ
+@default {"x":"138","y":"280","width":"130","fontSize":"20","name":"回避"}
+@type struct<Parameter>
+
+@param menuCri
+@desc 会心率のパラメータ
+@default {"x":"0","y":"316","width":"130","fontSize":"20","name":"会心"}
+@type struct<Parameter>
+
+@param menuCev
+@desc 会心回避率のパラメータ
+@default {"name":"会心回避率"}
+@type struct<Parameter>
+
+@param menuMev
+@desc 魔法回避率のパラメータ
+@default {"name":"魔法回避率"}
+@type struct<Parameter>
+
+@param menuMrf
+@desc 魔法反射率のパラメータ
+@default {"name":"魔法反射率"}
+@type struct<Parameter>
+
+@param menuCnt
+@desc 反撃率のパラメータ
+@default {"x":"138","y":"316","width":"130","fontSize":"20","name":"反撃"}
+@type struct<Parameter>
+
+@param menuHrg
+@desc HP再生率のパラメータ
+@default {"name":"HP再生率"}
+@type struct<Parameter>
+
+@param menuMrg
+@desc MP再生率のパラメータ
+@default {"name":"MP再生率"}
+@type struct<Parameter>
+
+@param menuTrg
+@desc TP再生率のパラメータ
+@default {"name":"TP再生率"}
+@type struct<Parameter>
+
+@param menuTgr
+@desc 狙われ率のパラメータ
+@default {"name":"狙われ率"}
+@type struct<Parameter>
+
+@param menuGrd
+@desc 防御効果率のパラメータ
+@default {"name":"防御効果率"}
+@type struct<Parameter>
+
+@param menuRec
+@desc 回復効果率のパラメータ
+@default {"name":"回復効果率"}
+@type struct<Parameter>
+
+@param menuPha
+@desc 薬の知識のパラメータ
+@default {"name":"薬の知識"}
+@type struct<Parameter>
+
+@param menuMcr
+@desc MP消費率のパラメータ
+@default {"name":"MP消費率"}
+@type struct<Parameter>
+
+@param menuTcr
+@desc TPチャージ率のパラメータ
+@default {"name":"TPチャージ率"}
+@type struct<Parameter>
+
+@param menuPdr
+@desc 物理ダメージ率のパラメータ
+@default {"name":"物理ダメージ率"}
+@type struct<Parameter>
+
+@param menuMdr
+@desc 魔法ダメージ率のパラメータ
+@default {"name":"魔法ダメージ率"}
+@type struct<Parameter>
+
+@param menuFdr
+@desc 床ダメージ率のパラメータ
+@default {"name":"床ダメージ率"}
+@type struct<Parameter>
+
+@param menuExr
+@desc 経験獲得率のパラメータ
+@default {"name":"経験獲得率"}
+@type struct<Parameter>
+
+@param horzLine1
+@desc 罫線1のパラメータ
+@default {"x":"0","y":"162","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine2
+@desc 罫線2のパラメータ
+@default {"x":"0","y":"370","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine3
+@desc 罫線3のパラメータ
+@default {"x":"0","y":"506","width":"540","height":"2"}
+@type struct<Parameter>
+
+@param horzLine4
+@desc 罫線4のパラメータ
+@default {"height":"2"}
+@type struct<Parameter>
+
+@param horzLine5
+@desc 罫線5のパラメータ
+@default {"height":"2"}
+@type struct<Parameter>
+
+@param freeText1
+@desc フリーテキスト1のパラメータ
+@default {"x":"100","y":"144","width":"186","name":"\\C[16]\\}Parameter"}
+@type struct<Parameter>
+
+@param freeText2
+@desc フリーテキスト2のパラメータ
+@default {"x":"396","y":"144","width":"186","name":"\\C[16]\\}Equips"}
+@type struct<Parameter>
+
+@param freeText3
+@desc フリーテキスト3のパラメータ
+@default {"x":"70","y":"352","width":"186","name":"\\C[16]\\}StateRate"}
+@type struct<Parameter>
+
+@param freeText4
+@desc フリーテキスト4のパラメータ
+@default {"x":"344","y":"352","width":"186","name":"\\C[16]\\}ElementRate"}
+@type struct<Parameter>
+
+@param freeText5
+@desc フリーテキスト5のパラメータ
+@default {"x":"240","y":"488","width":"186","name":"\\C[16]\\}Profile"}
+@type struct<Parameter>
+
+@param freeText6
+@desc フリーテキスト6のパラメータ
+@default {}
+@type struct<Parameter>
+
+@param freeText7
+@desc フリーテキスト7のパラメータ
+@default {}
+@type struct<Parameter>
+
+@param freeText8
+@desc フリーテキスト8のパラメータ
+@default {}
+@type struct<Parameter>
+
+@param freeText9
+@desc フリーテキスト9のパラメータ
+@default {}
+@type struct<Parameter>
+
+@param freeText10
+@desc フリーテキスト10のパラメータ
+@default {}
+@type struct<Parameter>
+
+@param expGaugeColor1
+@desc 経験値ゲージの色1 初期値: 30
+@default 30
+@type number
+@max 31
+
+@param expGaugeColor2
+@desc 経験値ゲージの色2 初期値: 31
+@default 31
+@type number
+@max 31
+
+@param expNextText
+@desc 経験値の書式 初期値: あと %1exp
+@default あと %1exp
+@type string
+
+@param expMaxText
+@desc 最大レベルのときの経験値の書式 初期値: %1exp
+@default %1exp
+@type string
+
+@param expFontSize
+@desc 経験値の文字の大きさ 初期値: 20
+@default 20
+@type number
+
+@param equipMax
+@desc 装備を表示する最大数 初期値: 5
+@default 5
+@type number
+
+@param elementIcons
+@desc 属性アイコン 初期値: 77 64 65 66 67 68 69 70 71
+@default 77 64 65 66 67 68 69 70 71
+@type string
+
+@param textBackColor
+@desc 文字の背景の色 初期値: #000000
+@default #000000
+@type string
+
+@param textBackOpacity
+@desc 文字の背景の不透明度 初期値: 128
+@default 128
+@type number
+@max 255
+
+@param horzLineColor
+@desc 罫線の色 初期値: #ffffff
+@default #ffffff
+@type string
+
+@param horzLineOpacity
+@desc 罫線の不透明度 初期値: 48
+@default 48
+@type number
+@max 255
+
+@param forceChangeSoloMenu
+@desc パーティの人数によるメニュー切り替え方式。 初期値: 常に一人旅メニューを使う (true)
+@default true
+@type select
+@option ひとりの時だけ一人旅メニューを使う
+@value false
+@option 常に一人旅メニューを使う
+@value true
+
+@param soloItemStatus
+@desc アイテムシーンに表示するパラメータの表示幅 ( 名前 / ステート / HP / MP / TP の順で半角スペース区切り)
+@default 144 160 144 144 96
+*/
+
+
+/*~struct~Parameter:ja
+@param x
+@desc X座標
+@default 0
+@type number
+@min -1000
+
+@param y
+@desc Y座標
+@default 0
+@type number
+@min -1000
+
+@param width
+@desc 横方向の大きさ
+@default 0
+@type number
+
+@param height
+@desc 縦方向の大きさ
+@default 36
+@type number
+
+@param fontSize
+@desc 文字の大きさ
+@default 28
+@type number
+
+@param name
+@desc パラメータ名
+@type string
+
+@param cols
+@desc 列の数
+@default 1
+@type number
+
+@param space
+@desc 列ごとの空白
+@default 8
+@type number
+
+@param fixed
+@desc 小数点以下の桁数
+@default 0
+@type number
+*/
 
 var Imported = Imported || {};
 Imported.TMSoloMenu = true;

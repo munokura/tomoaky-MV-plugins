@@ -2,334 +2,580 @@
 // TMPlugin - マップＨＰゲージ
 // バージョン: 1.4.4
 // 最終更新日: 2019/11/04
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンに顔グラフィックとＨＰゲージを表示します。
- * 必要に応じてＭＰや変数などをゲージで表示することもできます。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param gaugeWindowX
- * @type number
- * @min -1000
- * @desc ＨＰゲージウィンドウのＸ座標
- * 初期値: 0
- * @default 0
- *
- * @param gaugeWindowY
- * @type number
- * @min -1000
- * @desc ＨＰゲージウィンドウのＹ座標
- * 初期値: 0
- * @default 0
- *
- * @param gaugeWindowWidth
- * @type number
- * @desc ＨＰゲージウィンドウの幅
- * 初期値: 288
- * @default 288
- *
- * @param gaugeWindowHeight
- * @type number
- * @desc ＨＰゲージウィンドウの高さ
- * 初期値: 64
- * @default 64
- * 
- * @param gaugeA
- * @type struct<Gauge>
- * @desc ゲージＡのパラメータ
- * @default {"type":"HP","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
- *
- * @param gaugeB
- * @type struct<Gauge>
- * @desc ゲージＢのパラメータ
- * @default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
- *
- * @param gaugeC
- * @type struct<Gauge>
- * @desc ゲージＣのパラメータ
- * @default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
- *
- * @param gaugeD
- * @type struct<Gauge>
- * @desc ゲージＤのパラメータ
- * @default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
- *
- * @param faceOffsetX
- * @type number
- * @min -1000
- * @desc 顔グラフィックのＸ座標補正値
- * 初期値: -4 ( -1000 で顔グラフィックを使用しない)
- * @default -4
- *
- * @param faceOffsetY
- * @type number
- * @min -1000
- * @desc 顔グラフィックのＹ座標補正値
- * 初期値: -4
- * @default -4
- *
- * @param stateIconMax
- * @type number
- * @desc ステートアイコンを表示する個数
- * 初期値: 4
- * @default 4
- *
- * @param stateIconX
- * @type number
- * @min -1000
- * @desc ステートアイコンのＸ座標
- * 初期値: 156
- * @default 156
- *
- * @param stateIconY
- * @type number
- * @min -1000
- * @desc ステートアイコンのＹ座標
- * 初期値: 24
- * @default 24
- * 
- * @param stateIconScale
- * @type number
- * @desc ステートアイコンの拡大率（ % ）
- * 初期値: 100
- * @default 100
- * 
- * @param stateIconOpacity
- * @type number
- * @desc ステートアイコンの不透明度（ 0 ~ 255 ）
- * 初期値: 255
- * @default 255
- *
- * @param goldWidth
- * @type number
- * @desc 所持金表示の幅
- * 初期値: 0 ( 0 で非表示 )
- * @default 0
- *
- * @param goldX
- * @type number
- * @min -9999
- * @desc 所持金表示のＸ座標
- * 初期値: 12
- * @default 12
- *
- * @param goldY
- * @type number
- * @min -1000
- * @desc 所持金表示のＹ座標
- * 初期値: 12
- * @default 12
- * 
- * @param vnMax
- * @type boolean
- * @desc ゲージタイプ VN の最大値を表示するかどうか
- * 初期値: OFF ( true = ON 表示 / false = OFF 非表示 )
- * @default false
- *
- * @param shakeTime
- * @type number
- * @desc ダメージを受けたときにウィンドウを揺らす時間（フレーム）
- * 初期値: 20 ( 0 で揺らさない )
- * @default 20
- *
- * @param startVisible
- * @type boolean
- * @desc ゲーム開始時の表示状態
- * 初期値: ON（ true = ON 表示 / false = OFF 非表示 ）
- * @default true
- *
- * @param windowOpacity
- * @type number
- * @desc ＨＰゲージウィンドウの不透明度
- * 初期値: 255
- * @default 255
- *
- * @param collideOpacity
- * @type number
- * @max 255
- * @desc プレイヤーと重なったときの不透明度
- * 初期値: 128（ 0 ～ 255 ）
- * @default 128
- *
- * @param messageBusyHide
- * @type boolean
- * @desc メッセージウィンドウ表示中はＨＰゲージウィンドウを隠す
- * 初期値: ON ( true = ON 隠す / false = OFF 隠さない )
- * @default true
- *
- * @param eventBusyHide
- * @type boolean
- * @desc イベント起動中はＨＰゲージウィンドウを隠す
- * 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
- * @default true
- *
- * @param useBattleScene
- * @type boolean
- * @desc 戦闘シーンでもＨＰゲージウィンドウを表示する。
- * 初期値: OFF（ true = ON 表示 / false = OFF 非表示 )
- * @default false
- *
- * @param gaugeWindowBattleX
- * @type number
- * @min -1000
- * @desc 戦闘シーンのＨＰゲージウィンドウのＸ座標
- * 初期値: 0
- * @default 0
- *
- * @param gaugeWindowBattleY
- * @type number
- * @min -1000
- * @desc 戦闘シーンのＨＰゲージウィンドウのＹ座標
- * 初期値: 0
- * @default 0
- *
- * @help
- * TMPlugin - マップＨＰゲージ ver1.4.4
- * 
- * 使い方:
- *
- *   プラグインパラメータをいじってお好みのＨＰゲージを表示してください。
- *
- *   このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- * 
- * プラグインコマンド:
- *
- *   showHpGauge
- *     ＨＰゲージウィンドウを表示します。
- *     プラグインパラメータ startVisible が 0 の場合、
- *     このコマンドが実行されるまでＨＰゲージは表示されません。
- *
- *   showHpGauge A
- *     ゲージＡを表示します。プラグインパラメータでタイプが設定されている場合、
- *     ゲーム開始時に自動的に表示状態になります。
- * 
- *   hideHpGauge
- *     ＨＰゲージウィンドウを隠します。showHpGauge コマンドが実行されるまで
- *     表示されないままです。
- * 
- *   hideHpGauge B
- *     ゲージＢを隠します。showHpGauge B コマンドが実行されるまで
- *     表示されないままです。
- * 
- *   moveHpGaugeWindow 100 200
- *     ＨＰゲージウィンドウの位置を X座標 = 100 / Y座標 = 200 の位置へ
- *     移動します。
- *
- *
- * プラグインパラメータ補足:
- *
- *   gaugeA ～ gaugeD
- * 
- *     param
- *       ゲージのタイプが VN の場合に、ゲージの現在値として扱う
- *       ゲーム変数番号を設定してください。
- *
- *     max
- *       ゲージのタイプが VN の場合に、ゲージの最大値として扱う
- *       ゲーム変数番号を指定してください。
- *       このパラメータに設定した番号のゲーム変数に値を代入することで、
- *       初めて最大値として機能します。
- *       この設定はゲージの長さにのみ影響します、変数の値が最大値を
- *       超えなくなるような機能はありません。
- * 
- *   windowOpacity / collideOpacity
- *     windowOpacity はウィンドウフレーム及び背景に影響し、collideOpacity
- *     はゲージや顔グラフィックにも影響します。
- *     windowOpacity の値が collideOpacity よりも低い場合、プレイヤーと
- *     重なった際の不透明度として windowOpacity の値が適用されます。
- *     ただし、ゲージと顔グラフィックに関しては通常どおり collideOpacity の
- *     値が適用されます。
- * 
- *   faceOffsetX
- *     この値を -1000 に設定すると顔グラフィックが非表示となります。
- * 
- *   vnMax
- *     値が true なら最大値も表示しますが、現在値と最大値を表示するための
- *     スペースが足りない（ゲージの長さが短い）場合は vnMax の設定に関わらず
- *     強制的に現在値のみの表示になります。
- */
+@plugindesc Displays face graphics and HP gauges on the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Map HP Gauge ver1.4.4
+
+How to Use:
+
+Adjust the plugin parameters to display your preferred HP gauge.
+
+This plugin has been tested with RPG Maker MV Version 1.6.2.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+Plugin Commands:
+
+showHpGauge
+Displays the HP gauge window.
+If the plugin parameter startVisible is 0,
+the HP gauge will not be displayed until this command is executed.
+
+showHpGauge A
+Displays Gauge A. If the type is set in the plugin parameter,
+it will automatically be displayed when the game starts.
+
+hideHpGauge
+Hides the HP gauge window. It will remain hidden until the showHpGauge command is executed.
+
+hideHpGauge B
+Hides Gauge B. It will remain hidden until the showHpGauge B command is executed.
+
+moveHpGaugeWindow 100 200
+Moves the HP gauge window to the X coordinate = 100 / Y coordinate = 200 position.
+
+Plugin Parameter Notes:
+
+gaugeA - gaugeD
+
+param
+If the gauge type is VN, set the game variable number to be treated as the current value of the gauge.
+
+max
+If the gauge type is VN, specify the game variable number to be treated as the maximum value of the gauge.
+The maximum value will only be achieved by assigning a value to the game variable with the number set in this parameter.
+This setting only affects the length of the gauge; it does not prevent the variable value from exceeding the maximum value.
+
+windowOpacity / collideOpacity
+windowOpacity affects the window frame and background, while collideOpacity affects the gauge and face graphics.
+If the windowOpacity value is lower than collideOpacity, the windowOpacity value will be used as the opacity when overlapping with the player.
+However, the collideOpacity value applies as usual to the gauge and face graphic.
+
+faceOffsetX
+Setting this value to -1000 will hide the face graphic.
+
+vnMax
+If the value is true, the maximum value will also be displayed. However, if there is not enough space to display both the current and maximum values (i.e., the gauge is too short), only the current value will be displayed, regardless of the vnMax setting.
+
+@param gaugeWindowX
+@desc HP gauge window X coordinate Initial value: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowY
+@desc Y coordinate of HP gauge window Initial value: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowWidth
+@desc HP Gauge Window Width Default: 288
+@default 288
+@type number
+
+@param gaugeWindowHeight
+@desc HP Gauge Window Height Default: 64
+@default 64
+@type number
+
+@param gaugeA
+@desc Gauge A parameters
+@default {"type":"HP","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeB
+@desc Gauge B parameters
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeC
+@desc Gauge C parameters
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeD
+@desc Gauge D parameters
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param faceOffsetX
+@desc X coordinate offset value for face graphics. Default: -4 (-1000 means no face graphics are used).
+@default -4
+@type number
+@min -1000
+
+@param faceOffsetY
+@desc Y coordinate correction value for face graphics Initial value: -4
+@default -4
+@type number
+@min -1000
+
+@param stateIconMax
+@desc Number of state icons to display Default: 4
+@default 4
+@type number
+
+@param stateIconX
+@desc State icon X coordinate Default: 156
+@default 156
+@type number
+@min -1000
+
+@param stateIconY
+@desc State icon Y coordinate Default: 24
+@default 24
+@type number
+@min -1000
+
+@param stateIconScale
+@desc State icon magnification (%) Default: 100
+@default 100
+@type number
+
+@param stateIconOpacity
+@desc State icon opacity (0 to 255) Default: 255
+@default 255
+@type number
+
+@param goldWidth
+@desc Width of money display Default: 0 (0 = no display)
+@default 0
+@type number
+
+@param goldX
+@desc X coordinate of money display Default: 12
+@default 12
+@type number
+@min -9999
+
+@param goldY
+@desc Y coordinate of money display Default: 12
+@default 12
+@type number
+@min -1000
+
+@param vnMax
+@desc Whether to display the maximum value of the gauge type VN. Default: OFF (true = ON - displayed / false = OFF - hidden)
+@default false
+@type boolean
+
+@param shakeTime
+@desc Time (frames) to shake the window when taking damage. Default: 20 (0 means no shaking).
+@default 20
+@type number
+
+@param startVisible
+@desc Display state at the start of the game Default: ON (true = ON Display / false = OFF Hidden)
+@default true
+@type boolean
+
+@param windowOpacity
+@desc HP Gauge Window Opacity Default: 255
+@default 255
+@type number
+
+@param collideOpacity
+@desc Opacity when overlapping with the player Initial value: 128 (0 to 255)
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc Hide the HP gauge window while the message window is displayed. Default: ON ( true = ON hide / false = OFF do not hide )
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc Hide the HP gauge window while an event is running. Default: ON (true = ON hide / false = OFF do not hide)
+@default true
+@type boolean
+
+@param useBattleScene
+@desc Displays the HP gauge window even during battles. Default: OFF (true = ON - Show / false = OFF - Hide)
+@default false
+@type boolean
+
+@param gaugeWindowBattleX
+@desc X coordinate of the HP gauge window in the battle scene. Initial value: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowBattleY
+@desc Y coordinate of the HP gauge window in the battle scene. Initial value: 0
+@default 0
+@type number
+@min -1000
+*/
+
+
 /*~struct~Gauge:
- *
- * @param type
- * @type select
- * @option なし
- * @value 
- * @option HP
- * @option MP
- * @option TP
- * @option LV
- * @option VN
- * @desc ゲージのタイプ（HP / MP / TP / LV / VN）
- * 初期値: HP
- * @default HP
- *
- * @param x
- * @type number
- * @min -1000
- * @desc ゲージのＸ座標（ウィンドウ内の左端が 0 ）
- * 初期値: 12
- * @default 12
- *
- * @param y
- * @type number
- * @min -1000
- * @desc ゲージのＹ座標（ウィンドウ内の上端が 0 ）
- * 初期値: 12
- * @default 12
- *
- * @param width
- * @type number
- * @desc ゲージの長さ
- * 初期値: 144
- * @default 144
- *
- * @param height
- * @type number
- * @desc ゲージの表示領域（数値とゲージ合わせて）の高さ
- * 初期値: 36
- * @default 36
- *
- * @param fontSize
- * @type number
- * @desc フォントサイズ
- * 初期値: 28
- * @default 28
- *
- * @param param
- * @type variable
- * @desc ゲージのタイプが VN のときに現在値とするゲーム変数番号
- * 初期値: 0
- * @default 0
- *
- * @param max
- * @type variable
- * @desc ゲージのタイプが VN のときに最大値とするゲーム変数番号
- * 初期値: 0
- * @default 0
- *
- * @param name
- * @type string
- * @desc ゲージのタイプが VN のときに表示するパラメータ名
- * 初期値: AP
- * @default AP
- *
- * @param color
- * @type string
- * @desc ゲージのタイプが LV / VN のときのゲージカラー
- * 初期値: #ff60c0 #ffa0e0
- * @default #ff60c0 #ffa0e0
- */
+@param type
+@desc Gauge type (HP / MP / TP / LV / VN) Initial value: HP
+@default HP
+@type select
+@option none
+@option HP
+@option MP
+@option TP
+@option LV
+@option VN
+
+@param x
+@desc X coordinate of the gauge (left edge of the window is 0) Initial value: 12
+@default 12
+@type number
+@min -1000
+
+@param y
+@desc Y coordinate of the gauge (top edge of the window is 0) Initial value: 12
+@default 12
+@type number
+@min -1000
+
+@param width
+@desc Gauge length default: 144
+@default 144
+@type number
+
+@param height
+@desc Height of the gauge display area (including the value and the gauge) Initial value: 36
+@default 36
+@type number
+
+@param fontSize
+@desc Font size default: 28
+@default 28
+@type number
+
+@param param
+@desc Game variable number to be used as the current value when the gauge type is VN. Initial value: 0
+@default 0
+@type variable
+
+@param max
+@desc Game variable number to be the maximum value when the gauge type is VN. Initial value: 0
+@default 0
+@type variable
+
+@param name
+@desc Parameter name to display when the gauge type is VN. Default: AP
+@default AP
+@type string
+
+@param color
+@desc Gauge color when the gauge type is LV/VN Default: #ff60c0 #ffa0e0
+@default #ff60c0 #ffa0e0
+@type string
+*/
+
+
+/*:ja
+@plugindesc マップシーンに顔グラフィックとＨＰゲージを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - マップＨＰゲージ ver1.4.4
+
+使い方:
+
+  プラグインパラメータをいじってお好みのＨＰゲージを表示してください。
+
+  このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  showHpGauge
+    ＨＰゲージウィンドウを表示します。
+    プラグインパラメータ startVisible が 0 の場合、
+    このコマンドが実行されるまでＨＰゲージは表示されません。
+
+  showHpGauge A
+    ゲージＡを表示します。プラグインパラメータでタイプが設定されている場合、
+    ゲーム開始時に自動的に表示状態になります。
+
+  hideHpGauge
+    ＨＰゲージウィンドウを隠します。showHpGauge コマンドが実行されるまで
+    表示されないままです。
+
+  hideHpGauge B
+    ゲージＢを隠します。showHpGauge B コマンドが実行されるまで
+    表示されないままです。
+
+  moveHpGaugeWindow 100 200
+    ＨＰゲージウィンドウの位置を X座標 = 100 / Y座標 = 200 の位置へ
+    移動します。
+
+
+プラグインパラメータ補足:
+
+  gaugeA ～ gaugeD
+
+    param
+      ゲージのタイプが VN の場合に、ゲージの現在値として扱う
+      ゲーム変数番号を設定してください。
+
+    max
+      ゲージのタイプが VN の場合に、ゲージの最大値として扱う
+      ゲーム変数番号を指定してください。
+      このパラメータに設定した番号のゲーム変数に値を代入することで、
+      初めて最大値として機能します。
+      この設定はゲージの長さにのみ影響します、変数の値が最大値を
+      超えなくなるような機能はありません。
+
+  windowOpacity / collideOpacity
+    windowOpacity はウィンドウフレーム及び背景に影響し、collideOpacity
+    はゲージや顔グラフィックにも影響します。
+    windowOpacity の値が collideOpacity よりも低い場合、プレイヤーと
+    重なった際の不透明度として windowOpacity の値が適用されます。
+    ただし、ゲージと顔グラフィックに関しては通常どおり collideOpacity の
+    値が適用されます。
+
+  faceOffsetX
+    この値を -1000 に設定すると顔グラフィックが非表示となります。
+
+  vnMax
+    値が true なら最大値も表示しますが、現在値と最大値を表示するための
+    スペースが足りない（ゲージの長さが短い）場合は vnMax の設定に関わらず
+    強制的に現在値のみの表示になります。
+
+@param gaugeWindowX
+@desc ＨＰゲージウィンドウのＸ座標 初期値: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowY
+@desc ＨＰゲージウィンドウのＹ座標 初期値: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowWidth
+@desc ＨＰゲージウィンドウの幅 初期値: 288
+@default 288
+@type number
+
+@param gaugeWindowHeight
+@desc ＨＰゲージウィンドウの高さ 初期値: 64
+@default 64
+@type number
+
+@param gaugeA
+@desc ゲージＡのパラメータ
+@default {"type":"HP","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeB
+@desc ゲージＢのパラメータ
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeC
+@desc ゲージＣのパラメータ
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param gaugeD
+@desc ゲージＤのパラメータ
+@default {"type":"","x":"12","y":"12","width":"144","height":"36","fontSize":"28","param":"0","max":"0","name":"AP","color":"#ff60c0 #ffa0e0"}
+@type struct<Gauge>
+
+@param faceOffsetX
+@desc 顔グラフィックのＸ座標補正値 初期値: -4 ( -1000 で顔グラフィックを使用しない)
+@default -4
+@type number
+@min -1000
+
+@param faceOffsetY
+@desc 顔グラフィックのＹ座標補正値 初期値: -4
+@default -4
+@type number
+@min -1000
+
+@param stateIconMax
+@desc ステートアイコンを表示する個数 初期値: 4
+@default 4
+@type number
+
+@param stateIconX
+@desc ステートアイコンのＸ座標 初期値: 156
+@default 156
+@type number
+@min -1000
+
+@param stateIconY
+@desc ステートアイコンのＹ座標 初期値: 24
+@default 24
+@type number
+@min -1000
+
+@param stateIconScale
+@desc ステートアイコンの拡大率（ % ） 初期値: 100
+@default 100
+@type number
+
+@param stateIconOpacity
+@desc ステートアイコンの不透明度（ 0 ~ 255 ） 初期値: 255
+@default 255
+@type number
+
+@param goldWidth
+@desc 所持金表示の幅 初期値: 0 ( 0 で非表示 )
+@default 0
+@type number
+
+@param goldX
+@desc 所持金表示のＸ座標 初期値: 12
+@default 12
+@type number
+@min -9999
+
+@param goldY
+@desc 所持金表示のＹ座標 初期値: 12
+@default 12
+@type number
+@min -1000
+
+@param vnMax
+@desc ゲージタイプ VN の最大値を表示するかどうか 初期値: OFF ( true = ON 表示 / false = OFF 非表示 )
+@default false
+@type boolean
+
+@param shakeTime
+@desc ダメージを受けたときにウィンドウを揺らす時間（フレーム） 初期値: 20 ( 0 で揺らさない )
+@default 20
+@type number
+
+@param startVisible
+@desc ゲーム開始時の表示状態 初期値: ON（ true = ON 表示 / false = OFF 非表示 ）
+@default true
+@type boolean
+
+@param windowOpacity
+@desc ＨＰゲージウィンドウの不透明度 初期値: 255
+@default 255
+@type number
+
+@param collideOpacity
+@desc プレイヤーと重なったときの不透明度 初期値: 128（ 0 ～ 255 ）
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc メッセージウィンドウ表示中はＨＰゲージウィンドウを隠す 初期値: ON ( true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc イベント起動中はＨＰゲージウィンドウを隠す 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+
+@param useBattleScene
+@desc 戦闘シーンでもＨＰゲージウィンドウを表示する。 初期値: OFF（ true = ON 表示 / false = OFF 非表示 )
+@default false
+@type boolean
+
+@param gaugeWindowBattleX
+@desc 戦闘シーンのＨＰゲージウィンドウのＸ座標 初期値: 0
+@default 0
+@type number
+@min -1000
+
+@param gaugeWindowBattleY
+@desc 戦闘シーンのＨＰゲージウィンドウのＹ座標 初期値: 0
+@default 0
+@type number
+@min -1000
+*/
+
+
+/*~struct~Gauge:ja
+@param type
+@desc ゲージのタイプ（HP / MP / TP / LV / VN） 初期値: HP
+@default HP
+@type select
+@option なし
+@option HP
+@option MP
+@option TP
+@option LV
+@option VN
+
+@param x
+@desc ゲージのＸ座標（ウィンドウ内の左端が 0 ） 初期値: 12
+@default 12
+@type number
+@min -1000
+
+@param y
+@desc ゲージのＹ座標（ウィンドウ内の上端が 0 ） 初期値: 12
+@default 12
+@type number
+@min -1000
+
+@param width
+@desc ゲージの長さ 初期値: 144
+@default 144
+@type number
+
+@param height
+@desc ゲージの表示領域（数値とゲージ合わせて）の高さ 初期値: 36
+@default 36
+@type number
+
+@param fontSize
+@desc フォントサイズ 初期値: 28
+@default 28
+@type number
+
+@param param
+@desc ゲージのタイプが VN のときに現在値とするゲーム変数番号 初期値: 0
+@default 0
+@type variable
+
+@param max
+@desc ゲージのタイプが VN のときに最大値とするゲーム変数番号 初期値: 0
+@default 0
+@type variable
+
+@param name
+@desc ゲージのタイプが VN のときに表示するパラメータ名 初期値: AP
+@default AP
+@type string
+
+@param color
+@desc ゲージのタイプが LV / VN のときのゲージカラー 初期値: #ff60c0 #ffa0e0
+@default #ff60c0 #ffa0e0
+@type string
+*/
 
 var Imported = Imported || {};
 Imported.TMMapHpGauge = true;

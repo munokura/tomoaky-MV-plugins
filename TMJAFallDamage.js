@@ -4,35 +4,65 @@
 // Version: 0.11b
 // 最終更新日: 2015/11/02
 //=============================================================================
-
 /*:
- * @plugindesc 高所から落下したときのダメージ機能を追加します。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param Damage Fall Rate
- * @desc 落下ダメージの倍率。
- * 初期値: 10
- * @default 10
- *
- * @param Damage Fall Height
- * @desc 落下ダメージを受ける高さです。
- * 初期値: 5
- * @default 5
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.12b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * ジャンプ中の最高到達点と着地地点の高低差が
- * Damage Fall Height の値より大きければダメージが発生します。
- *
- * アクター、装備、ステートのメモに
- * <fall_guard:3> と書くことで落下ダメージへの耐性（この場合は 3）を得ます。
- *
- * 最終的なダメージは
- * (高低差 - Damage Fall Height) * (Damage Fall Rate - 耐性)
- *
- */
+@plugindesc Adds damage when falling from a high place.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Be sure to install this plugin below.
+
+Damage will occur if the difference in height between the highest point reached during a jump and the landing point is greater than the Damage Fall Height value.
+
+By adding <fall_guard:3> to the actor, equipment, or state notes, you can gain fall damage resistance (3 in this case).
+
+The final damage is calculated as
+(height difference - Damage Fall Height) * (Damage Fall Rate - Resistance)
+
+@param Damage Fall Rate
+@desc Fall damage multiplier. Default: 10
+@default 10
+
+@param Damage Fall Height
+@desc Height at which you take fall damage. Default: 5
+@default 5
+*/
+
+
+/*:ja
+@plugindesc 高所から落下したときのダメージ機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+ジャンプ中の最高到達点と着地地点の高低差が
+Damage Fall Height の値より大きければダメージが発生します。
+
+アクター、装備、ステートのメモに
+<fall_guard:3> と書くことで落下ダメージへの耐性（この場合は 3）を得ます。
+
+最終的なダメージは
+(高低差 - Damage Fall Height) * (Damage Fall Rate - 耐性)
+
+@param Damage Fall Rate
+@desc 落下ダメージの倍率。 初期値: 10
+@default 10
+
+@param Damage Fall Height
+@desc 落下ダメージを受ける高さです。 初期値: 5
+@default 5
+*/
 
 var Imported = Imported || {};
 Imported.TMJAFallDamage = true;
@@ -141,5 +171,3 @@ Game_Player.prototype.refresh = function() {
     this._fallGuard = this.actor().loadTagParam('fall_guard', 0);
   }
 };
-
-

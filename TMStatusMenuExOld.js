@@ -4,172 +4,284 @@
 // Version: 0.11b
 // 最終更新日: 2016/02/26
 //=============================================================================
-
 /*:
- * @plugindesc ステータスシーンに表示するパラメータを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param paramNameX
- * @desc 通常能力値名の表示Ｘ座標
- * 初期値: 6
- * @default 6
- *
- * @param paramX
- * @desc 通常能力値の表示Ｘ座標
- * 初期値: 112
- * @default 112
- *
- * @param paramNameWidth
- * @desc 通常能力値名の表示幅
- * 初期値: 96
- * @default 96
- *
- * @param paramWidth
- * @desc 通常能力値の表示幅
- * 初期値: 60
- * @default 60
- *
- * @param xparamNameX
- * @desc 追加能力値名の表示Ｘ座標
- * 初期値: 204
- * @default 204
- *
- * @param xparamX
- * @desc 追加能力値の表示Ｘ座標
- * 初期値: 330
- * @default 330
- *
- * @param xparamNameWidth
- * @desc 追加能力値名の表示幅
- * 初期値: 120
- * @default 120
- *
- * @param xparamWidth
- * @desc 追加能力値の表示幅
- * 初期値: 60
- * @default 60
- *
- * @param xparamNameCritical
- * @desc 会心率の表示名
- * 初期値: 会心
- * @default 会心
- *
- * @param xparamNameCriticalEva
- * @desc 会心回避率の表示名
- * 初期値: 会心回避
- * @default 会心回避
- *
- * @param xparamNameMagicEva
- * @desc 魔法回避率の表示名
- * 初期値: 魔法回避
- * @default 魔法回避
- *
- * @param xparamNameMagicRef
- * @desc 魔法反射率の表示名
- * 初期値: 魔法反射
- * @default 魔法反射
- *
- * @param xparamNameCounter
- * @desc 反撃率の表示名
- * 初期値: 反撃
- * @default 反撃
- *
- * @param xparamFixed
- * @desc 追加能力値の小数点以下桁数
- * 初期値: 0
- * @default 0
- *
- * @param elementRegistIconX
- * @desc 属性有効度のアイコン表示Ｘ座標
- * 初期値: 6
- * @default 6
- *
- * @param elementRegistX
- * @desc 属性有効度の表示Ｘ座標
- * 初期値: 76
- * @default 76
- *
- * @param elementRegistWidth
- * @desc 属性有効度の表示幅
- * 初期値: 96
- * @default 96
- *
- * @param elementRegistIds
- * @desc 表示する属性有効度
- * 初期値: 2 3 4 5 6 7 8 9
- * @default 2 3 4 5 6 7 8 9
- *
- * @param elementRegistIconIds
- * @desc 表示する属性有効度のアイコン番号
- * 初期値: 64 65 66 67 68 69 70 71
- * @default 64 65 66 67 68 69 70 71
- *
- * @param stateRegistIconX
- * @desc ステート有効度のアイコン表示Ｘ座標
- * 初期値: 204
- * @default 204
- *
- * @param stateRegistX
- * @desc ステート有効度の表示Ｘ座標
- * 初期値: 264
- * @default 264
- *
- * @param stateRegistWidth
- * @desc ステート有効度の表示幅
- * 初期値: 96
- * @default 96
- *
- * @param stateRegistIds
- * @desc 表示するステート有効度
- * 初期値: 4 5 6 7 8 9 10
- * @default 4 5 6 7 8 9 10
- *
- * @param registFixed
- * @desc 有効度の小数点以下桁数
- * 初期値: 1
- * @default 1
- *
- * @param paramBackGround
- * @desc パラメータの背景を暗くするかどうか
- * 初期値: 1 ( 0 で無効)
- * @default 1
- *
- * @param paramBackGroundOpacity
- * @desc パラメータの背景の暗さ（ 1 ～ 255 ）
- * 初期値: 160
- * @default 160
- *
- * @param paramNameFontFace
- * @desc 項目名に使用するフォント
- * 初期値: GameFont
- * @default GameFont
- *
- * @param paramValueFontFace
- * @desc パラメータに使用するフォント
- * 初期値: GameFont
- * @default GameFont
- *
- * @help
- * ステータスシーンで決定キーを押す、あるいは左クリック（シングルタップ）で
- * 表示するパラメータを切り替えることができます。
- *
- * paramNameFontFace / paramValueFontFace に設定するフォント名は、
- * 事前に fonts/gamefont.css を編集して追加する必要があります。
- * 元から設定されている GameFont をまるごと（４行）コピペして、
- * font-family: フォント名;
- * src: url("フォントのファイル名");
- * 上記２行を書き換えてください。（最終的には８行になります）
- * gamefont.css が編集できたら、設定した『フォントのファイル名』と同名の
- * フォントファイルを fonts フォルダに置き、プラグインパラメータに
- * 『フォント名』を設定してください。
- *
- * フォントのファイル名に日本語などの2byte文字が含まれていると
- * エラーが発生する場合があります。
- *
- * プラグインコマンドはありません。
- * 
- */
+@plugindesc Add parameters to display in the status scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+You can switch the displayed parameters by pressing the Confirm key or left-clicking (single tapping) during the status scene.
+
+The font name to set for paramNameFontFace / paramValueFontFace must first be added by editing fonts/gamefont.css.
+Copy and paste the original GameFont setting (four lines) into the following:
+font-family: font name;
+src: url("font filename");
+Rewrite the above two lines (you'll end up with eight lines).
+Once you've edited gamefont.css, place a font file with the same name as the "font filename" you set in the fonts folder and set the "font name" as a plugin parameter.
+
+If the font filename contains double-byte characters, such as Japanese, an error may occur.
+
+There is no plugin command.
+
+@param paramNameX
+@desc Display X coordinate of normal ability name Initial value: 6
+@default 6
+
+@param paramX
+@desc Normal ability value display X coordinate Initial value: 112
+@default 112
+
+@param paramNameWidth
+@desc Normal stat name display width Default: 96
+@default 96
+
+@param paramWidth
+@desc Normal ability value display width Default: 60
+@default 60
+
+@param xparamNameX
+@desc Display X coordinate of additional ability name Initial value: 204
+@default 204
+
+@param xparamX
+@desc Display X coordinate of additional ability value Initial value: 330
+@default 330
+
+@param xparamNameWidth
+@desc Display width of additional ability name Initial value: 120
+@default 120
+
+@param xparamWidth
+@desc Display width of additional ability values Initial value: 60
+@default 60
+
+@param xparamNameCritical
+@desc Display name of critical hit rate Default: Critical
+@default Critical
+
+@param xparamNameCriticalEva
+@desc Display name of critical hit avoidance rate Default: Critical Evasion
+@default Critical Evasion
+
+@param xparamNameMagicEva
+@desc Display name of magic evasion rate Default: Magic Evasion
+@default Magic Evasion
+
+@param xparamNameMagicRef
+@desc Display name of magic Reflectionion rate Default: Magic Reflection
+@default Magic Reflection
+
+@param xparamNameCounter
+@desc Counter Attack Rate Display Name Default: Counter Attack
+@default Counter Attack
+
+@param xparamFixed
+@desc Number of decimal places for additional ability scores Initial value: 0
+@default 0
+
+@param elementRegistIconX
+@desc Elements effectiveness icon display X coordinate Default: 6
+@default 6
+
+@param elementRegistX
+@desc Elements effectiveness display X coordinate Initial value: 76
+@default 76
+
+@param elementRegistWidth
+@desc Elements effectiveness display width Default: 96
+@default 96
+
+@param elementRegistIds
+@desc Elements validity to display Default: 2 3 4 5 6 7 8 9
+@default 2 3 4 5 6 7 8 9
+
+@param elementRegistIconIds
+@desc Elements validity icon number to display Default: 64 65 66 67 68 69 70 71
+@default 64 65 66 67 68 69 70 71
+
+@param stateRegistIconX
+@desc State validity icon display X coordinate Default: 204
+@default 204
+
+@param stateRegistX
+@desc State validity display X coordinate Initial value: 264
+@default 264
+
+@param stateRegistWidth
+@desc State validity display width Default: 96
+@default 96
+
+@param stateRegistIds
+@desc Display state validity Initial value: 4 5 6 7 8 9 10
+@default 4 5 6 7 8 9 10
+
+@param registFixed
+@desc Number of decimal places for effectiveness Initial value: 1
+@default 1
+
+@param paramBackGround
+@desc Whether to darken the background of the parameter. Default: 1 ( 0 disables)
+@default 1
+
+@param paramBackGroundOpacity
+@desc Parameter background darkness (1 to 255) Initial value: 160
+@default 160
+
+@param paramNameFontFace
+@desc Font used for item names Default: GameFont
+@default GameFont
+
+@param paramValueFontFace
+@desc Font to use for parameters Default: GameFont
+@default GameFont
+*/
+
+
+/*:ja
+@plugindesc ステータスシーンに表示するパラメータを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+ステータスシーンで決定キーを押す、あるいは左クリック（シングルタップ）で
+表示するパラメータを切り替えることができます。
+
+paramNameFontFace / paramValueFontFace に設定するフォント名は、
+事前に fonts/gamefont.css を編集して追加する必要があります。
+元から設定されている GameFont をまるごと（４行）コピペして、
+font-family: フォント名;
+src: url("フォントのファイル名");
+上記２行を書き換えてください。（最終的には８行になります）
+gamefont.css が編集できたら、設定した『フォントのファイル名』と同名の
+フォントファイルを fonts フォルダに置き、プラグインパラメータに
+『フォント名』を設定してください。
+
+フォントのファイル名に日本語などの2byte文字が含まれていると
+エラーが発生する場合があります。
+
+プラグインコマンドはありません。
+
+@param paramNameX
+@desc 通常能力値名の表示Ｘ座標 初期値: 6
+@default 6
+
+@param paramX
+@desc 通常能力値の表示Ｘ座標 初期値: 112
+@default 112
+
+@param paramNameWidth
+@desc 通常能力値名の表示幅 初期値: 96
+@default 96
+
+@param paramWidth
+@desc 通常能力値の表示幅 初期値: 60
+@default 60
+
+@param xparamNameX
+@desc 追加能力値名の表示Ｘ座標 初期値: 204
+@default 204
+
+@param xparamX
+@desc 追加能力値の表示Ｘ座標 初期値: 330
+@default 330
+
+@param xparamNameWidth
+@desc 追加能力値名の表示幅 初期値: 120
+@default 120
+
+@param xparamWidth
+@desc 追加能力値の表示幅 初期値: 60
+@default 60
+
+@param xparamNameCritical
+@desc 会心率の表示名 初期値: 会心
+@default 会心
+
+@param xparamNameCriticalEva
+@desc 会心回避率の表示名 初期値: 会心回避
+@default 会心回避
+
+@param xparamNameMagicEva
+@desc 魔法回避率の表示名 初期値: 魔法回避
+@default 魔法回避
+
+@param xparamNameMagicRef
+@desc 魔法反射率の表示名 初期値: 魔法反射
+@default 魔法反射
+
+@param xparamNameCounter
+@desc 反撃率の表示名 初期値: 反撃
+@default 反撃
+
+@param xparamFixed
+@desc 追加能力値の小数点以下桁数 初期値: 0
+@default 0
+
+@param elementRegistIconX
+@desc 属性有効度のアイコン表示Ｘ座標 初期値: 6
+@default 6
+
+@param elementRegistX
+@desc 属性有効度の表示Ｘ座標 初期値: 76
+@default 76
+
+@param elementRegistWidth
+@desc 属性有効度の表示幅 初期値: 96
+@default 96
+
+@param elementRegistIds
+@desc 表示する属性有効度 初期値: 2 3 4 5 6 7 8 9
+@default 2 3 4 5 6 7 8 9
+
+@param elementRegistIconIds
+@desc 表示する属性有効度のアイコン番号 初期値: 64 65 66 67 68 69 70 71
+@default 64 65 66 67 68 69 70 71
+
+@param stateRegistIconX
+@desc ステート有効度のアイコン表示Ｘ座標 初期値: 204
+@default 204
+
+@param stateRegistX
+@desc ステート有効度の表示Ｘ座標 初期値: 264
+@default 264
+
+@param stateRegistWidth
+@desc ステート有効度の表示幅 初期値: 96
+@default 96
+
+@param stateRegistIds
+@desc 表示するステート有効度 初期値: 4 5 6 7 8 9 10
+@default 4 5 6 7 8 9 10
+
+@param registFixed
+@desc 有効度の小数点以下桁数 初期値: 1
+@default 1
+
+@param paramBackGround
+@desc パラメータの背景を暗くするかどうか 初期値: 1 ( 0 で無効)
+@default 1
+
+@param paramBackGroundOpacity
+@desc パラメータの背景の暗さ（ 1 ～ 255 ） 初期値: 160
+@default 160
+
+@param paramNameFontFace
+@desc 項目名に使用するフォント 初期値: GameFont
+@default GameFont
+
+@param paramValueFontFace
+@desc パラメータに使用するフォント 初期値: GameFont
+@default GameFont
+*/
 
 var Imported = Imported || {};
 Imported.TMStatusMenuEx = true;

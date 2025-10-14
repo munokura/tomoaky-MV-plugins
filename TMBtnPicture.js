@@ -4,29 +4,60 @@
 // Version: 1.02
 // 最終更新日: 2015/11/05
 //=============================================================================
-
 /*:
- * @plugindesc ピクチャをタップ（クリック）でコモンイベントを起動します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help ファイル名の末尾に _CE1 という文字列が含まれているピクチャが
- * 表示されている状態で、そのピクチャの不透明部分をクリック（タップ）すると
- * コモンイベント１番が起動します。
- * （数字の部分が起動するコモンイベントの番号になっています）
- * 
- * 例: Actor1_CE4.png というファイル名のピクチャをクリックすると
- * 　　コモンイベント４番が起動する。
- * 
- * 注意:
- *   回転または拡大しているピクチャには対応していません。
- *
- *   起動するコモンイベントを変更するためにファイル名を変更した場合、
- *   イベントコマンドの方でも画像ファイルを指定しなおす必要があります。
- * 
- * プラグインコマンドはありません。
- *
- */
+@plugindesc Tap (click) the picture to launch a common event.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+While the picture is displayed, clicking (tapping) on the opaque part
+will activate Common Event 1.
+(The number indicates the Common Event number that will be activated.)
+
+Example: Clicking on a picture with the file name Actor1_CE4.png
+will activate Common Event 4.
+
+Note:
+Rotated or enlarged pictures are not supported.
+
+If you change the file name to change the Common Event that will be activated,
+you will also need to re-specify the image file in the Event's Contents.
+
+There is no plugin command.
+*/
+
+
+/*:ja
+@plugindesc ピクチャをタップ（クリック）でコモンイベントを起動します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+表示されている状態で、そのピクチャの不透明部分をクリック（タップ）すると
+コモンイベント１番が起動します。
+（数字の部分が起動するコモンイベントの番号になっています）
+
+例: Actor1_CE4.png というファイル名のピクチャをクリックすると
+    コモンイベント４番が起動する。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/pictures
+
+注意:
+  回転または拡大しているピクチャには対応していません。
+
+  起動するコモンイベントを変更するためにファイル名を変更した場合、
+  イベントコマンドの方でも画像ファイルを指定しなおす必要があります。
+
+プラグインコマンドはありません。
+*/
 
 var Imported = Imported || {};
 Imported.TMBtnPicture = true;
@@ -100,4 +131,3 @@ Scene_Map.prototype.checkBtnPicture = function() {
   }
   return false;
 };
-

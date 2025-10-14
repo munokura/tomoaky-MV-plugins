@@ -2,38 +2,70 @@
 // TMPlugin - グラデーション文字
 // バージョン: 0.1.0b
 // 最終更新日: 2020/03/09
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2020 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 文字の描画色として縦方向のグラデーションを適用します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - グラデーション文字 ver0.1.0b
- * 
- * 使い方:
- * 
- * 　導入するとイベントコマンド『文章の入力』等で制御文字 \CG[n,m,...] が
- * 　使用できるようになります。
- * 
- * 　使用例: これは\CG[2,3]テスト\C[0]です
- * 　設定する数値は \C[n] と同様の色番号です、カンマで区切って好きなだけ
- * 　指定することができます。
- * 　この色番号を上から下に並べたグラデーションが文字色となります。
- * 　\C[n] で文字色を変更するとグラデーションも解除されます。
- * 　（上記の使用例では テスト の文字列にだけグラデーションが適用）
- * 
- *   このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Apply a vertical gradient to the text color.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Gradient Text ver0.1.0b
+
+How to Use:
+
+Once installed, you can use the control characters \CG[n,m,...] in events such as the "Enter Text" command.
+
+Example: This is \CG[2,3]Test\C[0].
+The values you specify are color numbers, just like \C[n]. You can specify as many as you like, separated by commas.
+The text color will be a gradient created by arranging these color numbers from top to bottom.
+Changing the text color with \C[n] will also remove the gradient.
+(In the example above, the gradient is applied only to the "test" string.)
+
+This plugin has been tested with RPG Maker MV Version 1.6.2.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+*/
+
+
+/*:ja
+@plugindesc 文字の描画色として縦方向のグラデーションを適用します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - グラデーション文字 ver0.1.0b
+
+使い方:
+
+  導入するとイベントコマンド『文章の入力』等で制御文字 \CG[n,m,...] が
+  使用できるようになります。
+
+  使用例: これは\CG[2,3]テスト\C[0]です
+  設定する数値は \C[n] と同様の色番号です、カンマで区切って好きなだけ
+  指定することができます。
+  この色番号を上から下に並べたグラデーションが文字色となります。
+  \C[n] で文字色を変更するとグラデーションも解除されます。
+  （上記の使用例では テスト の文字列にだけグラデーションが適用）
+
+  このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+*/
 
 var Imported = Imported || {};
 Imported.TMGradientText = true;

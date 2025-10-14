@@ -8,63 +8,125 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc アイテムによるグラフィック変更機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - 衣装アイテム ver1.0.1
- * 
- * 使い方:
- * 
- *   アイテムのメモ欄に characterCostume / faceCostume / battlerCostume
- *   タグでグラフィックを設定します。
- *   このアイテムを使用すればアクターのグラフィックを変更することができます。
- * 
- *   すでにその衣装に着替えている場合は、アクターの初期衣装に戻ります。
- * 
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- *
- * 
- * メモ欄タグ（アイテム）:
- * 
- *   <characterCostume:People1 0>   # 歩行グラフィックの衣装効果を設定
- *   <faceCostume:People1 0>        # 顔グラフィックの衣装効果を設定
- *   <battlerCostume:Actor3_6>      # サイドビューバトラーの衣装効果を設定
- * 
- * 
- * プラグインコマンド:
- * 
- *   useCostume 51 1
- *     アイテム番号 51 番の衣装を 1 番のアクターに適用します。
- *     アクター番号を省略した場合はパーティの先頭にいるアクターが
- *     対象になります。
- * 
- *     数値の代わりに /V[n] などの制御文字も使えます。
- *     useCostume /V[1] 1
- *     このコマンドを実行した場合、ゲーム変数 1 番の値を衣装の
- *     アイテム番号として、その衣装を 1 番のアクターに適用します。
- * 
- *   resetCostume 1
- *     1 番のアクターのすべてのグラフィックを初期状態に戻します。
- * 
- *   saveCostume 1
- *     1 番のアクターの現在のグラフィックを初期状態として記憶します。
- * 
- *   isCostume 1 51 3
- *     1 番のアクターが 51 番の衣装アイテムを使用した状態ならば
- *     ゲームスイッチ 3 番をオンに、そうでなければオフにします。
- * 
- * 
- * スクリプトコマンド:
- * 
- *   this.isCostume(1, 51)
- *     1 番のアクターが 51 番の衣装アイテムを使用した状態ならば
- *     true、そうでなければ false を返します。
- *     イベントコマンド『条件分岐』『スクリプト』などで使用できます。
- */
+@plugindesc Added the ability to change graphics using items.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Costume Items ver. 1.0.1
+
+How to Use:
+
+Set the graphics using the characterCostume, faceCostume, or battlerCostume tags in the item's Note field.
+
+This item allows you to change the actor's graphics.
+
+If the actor is already wearing that costume, it will revert to their default costume.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Note field Tags (Item):
+
+<characterCostume:People1 0> # Sets the costume effect for walking graphics
+<faceCostume:People1 0> # Sets the costume effect for face graphics
+<battlerCostume:Actor3_6> # Sets the costume effect for side-view battlers
+
+Plugin Command:
+
+useCostume 51 1
+Applies item number 51 to actor number 1.
+
+If the actor number is omitted, the actor at the front of the party will be targeted.
+
+You can also use control characters such as /V[n] instead of numbers.
+useCostume /V[1] 1
+When this command is executed, it sets the value of game variable 1 as the costume item number and applies that costume to actor 1.
+
+resetCostume 1
+Resets all graphics for actor 1 to their initial state.
+
+saveCostume 1
+Saves actor 1's current graphics as their initial state.
+
+isCostume 1 51 3
+If actor 1 is using costume item 51,
+it turns game switch 3 on; otherwise, it turns it off.
+
+Script Command:
+
+this.isCostume(1, 51)
+Returns true if actor 1 is using costume item 51; otherwise, it returns false.
+
+Can be used in Event's Contents such as "conditional branching" and "scripts."
+*/
+
+
+/*:ja
+@plugindesc アイテムによるグラフィック変更機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 衣装アイテム ver1.0.1
+
+使い方:
+
+  アイテムのメモ欄に characterCostume / faceCostume / battlerCostume
+  タグでグラフィックを設定します。
+  このアイテムを使用すればアクターのグラフィックを変更することができます。
+
+  すでにその衣装に着替えている場合は、アクターの初期衣装に戻ります。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+メモ欄タグ（アイテム）:
+
+  <characterCostume:People1 0>   # 歩行グラフィックの衣装効果を設定
+  <faceCostume:People1 0>        # 顔グラフィックの衣装効果を設定
+  <battlerCostume:Actor3_6>      # サイドビューバトラーの衣装効果を設定
+
+
+プラグインコマンド:
+
+  useCostume 51 1
+    アイテム番号 51 番の衣装を 1 番のアクターに適用します。
+    アクター番号を省略した場合はパーティの先頭にいるアクターが
+    対象になります。
+
+    数値の代わりに /V[n] などの制御文字も使えます。
+    useCostume /V[1] 1
+    このコマンドを実行した場合、ゲーム変数 1 番の値を衣装の
+    アイテム番号として、その衣装を 1 番のアクターに適用します。
+
+  resetCostume 1
+    1 番のアクターのすべてのグラフィックを初期状態に戻します。
+
+  saveCostume 1
+    1 番のアクターの現在のグラフィックを初期状態として記憶します。
+
+  isCostume 1 51 3
+    1 番のアクターが 51 番の衣装アイテムを使用した状態ならば
+    ゲームスイッチ 3 番をオンに、そうでなければオフにします。
+
+
+スクリプトコマンド:
+
+  this.isCostume(1, 51)
+    1 番のアクターが 51 番の衣装アイテムを使用した状態ならば
+    true、そうでなければ false を返します。
+    イベントコマンド『条件分岐』『スクリプト』などで使用できます。
+*/
 
 var Imported = Imported || {};
 Imported.TMCostume = true;

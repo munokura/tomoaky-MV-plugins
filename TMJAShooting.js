@@ -4,119 +4,218 @@
 // Version: 0.2b
 // 最終更新日: 2015/11/13
 //=============================================================================
-
 /*:
- * @plugindesc プレイヤーとイベントに弾を発射する機能を追加します。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param Player Bullets Max
- * @desc プレイヤーの弾の最大数。
- * 初期値: 32
- * @default 32
- *
- * @param Enemy Bullets Max
- * @desc イベントの弾の最大数。
- * 初期値: 256
- * @default 256
- *
- * @param Weapon Sprite
- * @desc 弾発射時に武器画像を表示する。
- * 初期値: true（ false で武器画像なし）
- * @default true
- *
- * @param Bullet Type1 Name
- * @desc 弾タイプ１の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- *
- * @param Bullet Type1 Size
- * @desc 弾タイプ１の当たり判定のサイズ。
- * 初期値: 6（半径をドット数で指定）
- * @default 6
- *
- * @param Bullet Type2 Name
- * @desc 弾タイプ２の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- *
- * @param Bullet Type2 Size
- * @desc 弾タイプ２の当たり判定のサイズ。
- * 初期値: 6（半径をドット数で指定）
- * @default 6
- *
- * @param Bullet Type3 Name
- * @desc 弾タイプ３の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- *
- * @param Bullet Type3 Size
- * @desc 弾タイプ３の当たり判定のサイズ。
- * 初期値: 6（半径をドット数で指定）
- * @default 6
- *
- * @param Bullet Type4 Name
- * @desc 弾タイプ４の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- *
- * @param Bullet Type4 Size
- * @desc 弾タイプ４の当たり判定のサイズ。
- * 初期値: 6（半径をドット数で指定）
- * @default 6
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * A キーで弾を発射します。
- *
- * 弾を横に８個ならべたものを弾画像として扱います。
- * 画像ファイル名の頭文字が ! の場合、ブレンドモードが加算になります。
- *
- * 弾に設定したスキルのメモ欄に <map_through> タグがある場合、
- * 弾が地形を貫通するようになります。
- *
- * アクター、装備、ステートのいずれにも弾発射効果音のタグがない場合は
- * 無音になります。
- * 逆に複数のタグが見つかった場合は、ステート、装備、アクターの順に
- * タグを探し、最初に発見したものが採用されます。
- *
- * メモ欄（アクター、装備、ステート）タグ:
- *   <invincible_time:30>     # 被ダメージ後の無敵時間
- *   <shot_way:1>             # 同時に発射する弾の数
- *   <shot_space:0.2>         # 弾同士の間隔（ラジアン）
- *   <shot_speed:0.07>        # 弾の移動速度
- *   <shot_count:30>          # 弾の寿命
- *   <shot_type:1>            # 弾のタイプ
- *   <shot_index:0>           # 弾画像のインデックス
- *   <shot_skill:1>           # 弾のスキル番号
- *   <shot_delay:10>          # 発射後の硬直時間
- *   <shot_se_name:Attack2>   # 弾発射効果音のファイル名
- *   <shot_se_volume:90>      # 弾発射効果音のボリューム
- *   <shot_se_pitch:150>      # 弾発射効果音のピッチ
- *
- * プラグインコマンド:
- *   JumpAction nway_shot eventId n space angle speed count type index skillId
- *     eventId: 弾を発射するイベントの番号（ -1 でプレイヤー）
- *     n:       同時に発射する弾の数
- *     space:   弾同士の間隔（ラジアン）
- *     angle:   発射する方向（ラジアン）
- *     speed:   弾の移動速度
- *     count:   弾の寿命
- *     type:    弾のタイプ
- *     index:   弾画像のインデックス
- *     skillId: 弾のスキル（ダメージ計算用、省略可）
- *
- *   JumpAction nway_aim eventId n space angle speed count type index skillId
- *     nway_shot と同様ですが、angleにプレイヤーがいる方向（ラジアン）を
- *     自動的に加算します。angleが 0 なら自機狙いになります。
- *
- *   JumpAction nall_shot eventId n angle speed count type index skillId
- *     全方位に向けて弾を発射します、弾同士の間隔は自動で設定されます。
- *
- *   JumpAction nall_aim eventId n space angle speed count type index skillId
- *     nall_shot の自機狙い版です。
- */
+@plugindesc Adds the ability to fire bullets at players and events.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Be sure to install this plugin below.
+
+Press the A key to fire a bullet.
+
+A bullet image is a row of eight bullets.
+If the image filename starts with an ! character, the blend mode will be additive.
+
+If the skill assigned to the bullet has a <map_through> tag in the Note field,
+the bullet will penetrate the terrain.
+
+If the actor, equipment, or state does not have a bullet firing sound effect tag,
+it will be silent.
+Conversely, if multiple tags are found, the tags are searched for in the order of state, equipment, and actor,
+and the first one found will be used.
+
+Memo (Actor, Equipment, State) Tags:
+<invincible_time:30> # Invincible time after taking damage
+<shot_way:1> # Number of simultaneous shots
+<shot_space:0.2> # Distance between shots (radians)
+<shot_speed:0.07> # Shot speed
+<shot_count:30> # Shot lifespan
+<shot_type:1> # Shot type
+<shot_index:0> # Shot image index
+<shot_skill:1> # Shot skill number
+<shot_delay:10> # Post-fire freeze time
+<shot_se_name:Attack2> # Shot firing sound effect filename
+<shot_se_volume:90> # Shot firing sound effect volume
+<shot_se_pitch:150> # Shot firing sound effect pitch
+
+Plugin Commands:
+JumpAction nway_shot eventId n space angle speed count type index skillId
+eventId: Bullet firing event number (-1 for player)
+n: Number of bullets fired simultaneously
+space: Distance between bullets (radians)
+angle: Firing direction (radians)
+speed: Bullet speed
+count: Bullet lifespan
+type: Bullet type
+index: Bullet image index
+skillId: Bullet skill (for damage calculation, optional)
+
+JumpAction nway_aim eventId n space angle speed count type index skillId
+Similar to nway_shot, but the player's direction (radians) is automatically added to the angle. An angle of 0 will aim at the player's ship.
+
+JumpAction nall_shot eventId n angle speed count type index skillId
+Fires bullets in all directions. The distance between bullets is automatically set.
+
+JumpAction nall_aim eventId n space angle speed count type index skillId
+This is the player-aiming version of nall_shot.
+
+@param Player Bullets Max
+@desc Maximum number of bullets for the player. Default: 32
+@default 32
+
+@param Enemy Bullets Max
+@desc Maximum number of bullets for the event. Default: 256
+@default 256
+
+@param Weapon Sprite
+@desc Show weapon image when firing. Default: true (false for no weapon image).
+@default true
+
+@param Bullet Type1 Name
+@desc Image file name for bullet type 1. Default: Bullet1
+@default Bullet1
+
+@param Bullet Type1 Size
+@desc Hit detection size for bullet type 1. Default: 6 (radius specified in dots)
+@default 6
+
+@param Bullet Type2 Name
+@desc Image file name for bullet type 2. Default: Bullet1
+@default Bullet1
+
+@param Bullet Type2 Size
+@desc Hit detection size for bullet type 2. Default: 6 (radius specified in dots)
+@default 6
+
+@param Bullet Type3 Name
+@desc Image file name for bullet type 3. Default: Bullet1
+@default Bullet1
+
+@param Bullet Type3 Size
+@desc Hit detection size for bullet type 3. Default: 6 (radius specified in dots)
+@default 6
+
+@param Bullet Type4 Name
+@desc Image file name for bullet type 4. Default: Bullet1
+@default Bullet1
+
+@param Bullet Type4 Size
+@desc Hit detection size for bullet type 4. Default: 6 (radius specified in dots)
+@default 6
+*/
+
+
+/*:ja
+@plugindesc プレイヤーとイベントに弾を発射する機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+A キーで弾を発射します。
+
+弾を横に８個ならべたものを弾画像として扱います。
+画像ファイル名の頭文字が ! の場合、ブレンドモードが加算になります。
+
+弾に設定したスキルのメモ欄に <map_through> タグがある場合、
+弾が地形を貫通するようになります。
+
+アクター、装備、ステートのいずれにも弾発射効果音のタグがない場合は
+無音になります。
+逆に複数のタグが見つかった場合は、ステート、装備、アクターの順に
+タグを探し、最初に発見したものが採用されます。
+
+メモ欄（アクター、装備、ステート）タグ:
+  <invincible_time:30>     # 被ダメージ後の無敵時間
+  <shot_way:1>             # 同時に発射する弾の数
+  <shot_space:0.2>         # 弾同士の間隔（ラジアン）
+  <shot_speed:0.07>        # 弾の移動速度
+  <shot_count:30>          # 弾の寿命
+  <shot_type:1>            # 弾のタイプ
+  <shot_index:0>           # 弾画像のインデックス
+  <shot_skill:1>           # 弾のスキル番号
+  <shot_delay:10>          # 発射後の硬直時間
+  <shot_se_name:Attack2>   # 弾発射効果音のファイル名
+  <shot_se_volume:90>      # 弾発射効果音のボリューム
+  <shot_se_pitch:150>      # 弾発射効果音のピッチ
+
+プラグインコマンド:
+  JumpAction nway_shot eventId n space angle speed count type index skillId
+    eventId: 弾を発射するイベントの番号（ -1 でプレイヤー）
+    n:       同時に発射する弾の数
+    space:   弾同士の間隔（ラジアン）
+    angle:   発射する方向（ラジアン）
+    speed:   弾の移動速度
+    count:   弾の寿命
+    type:    弾のタイプ
+    index:   弾画像のインデックス
+    skillId: 弾のスキル（ダメージ計算用、省略可）
+
+  JumpAction nway_aim eventId n space angle speed count type index skillId
+    nway_shot と同様ですが、angleにプレイヤーがいる方向（ラジアン）を
+    自動的に加算します。angleが 0 なら自機狙いになります。
+
+  JumpAction nall_shot eventId n angle speed count type index skillId
+    全方位に向けて弾を発射します、弾同士の間隔は自動で設定されます。
+
+  JumpAction nall_aim eventId n space angle speed count type index skillId
+    nall_shot の自機狙い版です。
+
+@param Player Bullets Max
+@desc プレイヤーの弾の最大数。 初期値: 32
+@default 32
+
+@param Enemy Bullets Max
+@desc イベントの弾の最大数。 初期値: 256
+@default 256
+
+@param Weapon Sprite
+@desc 弾発射時に武器画像を表示する。 初期値: true（ false で武器画像なし）
+@default true
+
+@param Bullet Type1 Name
+@desc 弾タイプ１の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+
+@param Bullet Type1 Size
+@desc 弾タイプ１の当たり判定のサイズ。 初期値: 6（半径をドット数で指定）
+@default 6
+
+@param Bullet Type2 Name
+@desc 弾タイプ２の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+
+@param Bullet Type2 Size
+@desc 弾タイプ２の当たり判定のサイズ。 初期値: 6（半径をドット数で指定）
+@default 6
+
+@param Bullet Type3 Name
+@desc 弾タイプ３の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+
+@param Bullet Type3 Size
+@desc 弾タイプ３の当たり判定のサイズ。 初期値: 6（半径をドット数で指定）
+@default 6
+
+@param Bullet Type4 Name
+@desc 弾タイプ４の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+
+@param Bullet Type4 Size
+@desc 弾タイプ４の当たり判定のサイズ。 初期値: 6（半径をドット数で指定）
+@default 6
+*/
 
 var Imported = Imported || {};
 Imported.TMJAShooting = true;
@@ -813,4 +912,3 @@ Spriteset_Map.prototype.createBullets = function() {
     this._baseSprite.addChild(this._bulletSprites[this._bulletSprites.length - 1]);
   }, this);
 };
-

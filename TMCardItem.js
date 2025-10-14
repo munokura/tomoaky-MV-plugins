@@ -2,162 +2,260 @@
 // TMPlugin - カードアイテム
 // バージョン: 0.2b
 // 最終更新日: 2020/02/24
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 指定したアイテムをカードのように扇状に広げて表示します。
- * カードの画像が別途必要になります。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param maxCardCols
- * @desc 一度に広げられるカードの枚数
- * 初期値: 8
- * @default 8
- *
- * @param cardSpacing
- * @desc カードとカードの間隔（3.141592 で約90度）
- * 初期値: 0.2
- * @default 0.2
- *
- * @param arrowSpacing
- * @desc 矢印とカードの間隔（3.141592 で約90度）
- * 初期値: 0.2
- * @default 0.2
- *
- * @param baseX
- * @desc カードの位置（扇の中心のＸ座標）
- * 初期値: 408
- * @default 408
- * 
- * @param baseY
- * @desc カードの位置（扇の中心のＹ座標）
- * 初期値: 880
- * @default 880
- * 
- * @param baseDistance
- * @desc カードの位置（扇の中心からの距離）
- * 初期値: 408
- * @default 408
- * 
- * @param shiftRadian
- * @desc 扇の回転補正値（3.141592 で約90度）
- * 初期値: 0
- * @default 0
- * 
- * @param selectedDistance
- * @desc 選択中カードの位置（扇の中心からの距離）
- * 初期値: 472
- * @default 472
- * 
- * @param cardSpeed
- * @desc カードの移動速度（扇の中心から外への移動）
- * 初期値: 24
- * @default 24
- * 
- * @param cardSpeedR
- * @desc カードの移動速度（扇を中心に回る移動）
- * 初期値: 0.05
- * @default 0.05
- * 
- * @param useHelpWindow
- * @desc ヘルプウィンドウを利用する（ 0 で無効 / 1 で有効）
- * 初期値: 1
- * @default 1
- * 
- * @param helpWindowY
- * @desc ヘルプウィンドウのＹ座標
- * 初期値: 0
- * @default 0
- * 
- * @param showItemName
- * @desc ヘルプウィンドウにアイテム名を表示（ 0 で無効 / 1 で有効）
- * 初期値: 1
- * @default 1
- * 
- * @param numsFormat
- * @desc 個数表示の書式
- * 初期値: ×%1
- * @default ×%1
- * 
- * @param blankMessage
- * @desc カードがないときに表示するメッセージ（ \n で改行）
- * 初期値: アイテムがありません。
- * @default アイテムがありません。
- * 
- * @param useGoldWindow
- * @desc 所持金ウィンドウを利用する（ 0 で無効 / 1 で有効）
- * 初期値: 0
- * @default 0
- * 
- * @param goldWindowX
- * @desc 所持金ウィンドウのＸ座標
- * 初期値: 0
- * @default 0
- * 
- * @param goldWindowY
- * @desc 所持金ウィンドウのＹ座標
- * 初期値: 144
- * @default 144
- * 
- * @param useWrap
- * @desc 先頭と末尾をカーソル移動できる（ 0 で無効 / 1 で有効）
- * 初期値: 1
- * @default 1
- * 
- * @param takeoverMainMenu
- * @desc メインメニューを乗っ取る（ 0 で無効 / 1 で有効）
- * 初期値: 0
- * @default 0
- * 
- * @param backButtonX
- * @desc 戻るボタンの表示X座標（TMBackButton.js が必要）
- * 初期値: 0
- * @default 0
- * 
- * @param backButtonY
- * @desc 戻るボタンの表示Y座標（TMBackButton.js が必要）
- * 初期値: 0
- * @default 0
- * 
- * @noteParam picture
- * @noteRequire 1
- * @noteDir img/pictures/
- * @noteType file
- * @noteData items
- * 
- * @help
- * TMPlugin - カードアイテム ver0.2b
- * 
- * 使い方:
- * 
- *   アイテムのメモに <picture:ファイル名> と書き込んでください。
- *   次に img/pictures フォルダに書き込んだファイル名と同名の画像を
- *   置いてください。
- *   <picture:card0> と書き込んだ場合は card0.png という画像が必要になります。
- * 
- *   プラグインコマンドで cardItemScene を実行すると、所持アイテムの中で
- *   picture タグを書き込んだアイテムがカードアイテムとして一覧表示されます。
- *   表示のされかた以外は普通のアイテムシーンとほぼ同じです。
- *
- *   プラグインパラメータの初期設定は幅128ドット、高さ176ドットのカード画像を
- *   使用する想定で設定されています。お好みで調整してください。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインコマンド:
- *   cardItemScene        # カードアイテムメニューをひらく
- * 
- */
+@plugindesc The specified items are displayed fanned out like cards.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Card Items ver0.2b
+
+How to Use:
+
+Write <picture:filename> in the item's memo.
+
+Next, place an image with the same name as the file you wrote in the img/pictures folder.
+
+If you write <picture:card0>, you will need an image called card0.png.
+
+Execute the cardItemScene plugin command to list all items with the picture tag in your inventory as card items.
+
+Other than the display, it is almost the same as a standard item scene.
+
+The default plugin parameters are set assuming a card image with a width of 128 pixels and a height of 176 pixels. Adjust to your liking.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License. It is free to use, including for commercial purposes, modifications, and redistribution.
+
+Plugin Command:
+
+cardItemScene # Opens the card item menu
+
+@param maxCardCols
+@desc Number of cards spread out at once Initial value: 8
+@default 8
+
+@param cardSpacing
+@desc Distance between cards (3.141592, approximately 90 degrees) Initial value: 0.2
+@default 0.2
+
+@param arrowSpacing
+@desc Distance between arrow and card (3.141592, approximately 90 degrees) Initial value: 0.2
+@default 0.2
+
+@param baseX
+@desc Card position (X coordinate of the center of the fan) Initial value: 408
+@default 408
+
+@param baseY
+@desc Card position (Y coordinate of the center of the fan) Initial value: 880
+@default 880
+
+@param baseDistance
+@desc Card position (distance from the center of the fan) Initial value: 408
+@default 408
+
+@param shiftRadian
+@desc Fan rotation correction value (3.141592 is approximately 90 degrees) Initial value: 0
+@default 0
+
+@param selectedDistance
+@desc Position of selected card (distance from center of fan) Initial value: 472
+@default 472
+
+@param cardSpeed
+@desc Card movement speed (movement from the center of the fan to the outside) Default: 24
+@default 24
+
+@param cardSpeedR
+@desc Card movement speed (movement around the center of the fan) Initial value: 0.05
+@default 0.05
+
+@param useHelpWindow
+@desc Use the help window (0 disable / 1 enable) Default: 1
+@default 1
+
+@param helpWindowY
+@desc Y coordinate of the help window Initial value: 0
+@default 0
+
+@param showItemName
+@desc Show item name in help window (0 disable / 1 enable) Default: 1
+@default 1
+
+@param numsFormat
+@desc Quantity display format Default: ×%1
+@default ×%1
+
+@param blankMessage
+@desc Message to display when there are no cards ( \n is used to break lines) Default: No items.
+@default No items.
+
+@param useGoldWindow
+@desc Use money window (0 disable / 1 enable) Default: 0
+@default 0
+
+@param goldWindowX
+@desc X coordinate of the money window Default: 0
+@default 0
+
+@param goldWindowY
+@desc Y coordinate of the money window Default: 144
+@default 144
+
+@param useWrap
+@desc You can move the cursor to the beginning and end (0 disable / 1 enable) Initial value: 1
+@default 1
+
+@param takeoverMainMenu
+@desc Take over the main menu (0 disable / 1 enable) Default: 0
+@default 0
+
+@param backButtonX
+@desc Back button display X coordinate (TMBackButton.js required) Default: 0
+@default 0
+
+@param backButtonY
+@desc Back button display Y coordinate (TMBackButton.js required) Default: 0
+@default 0
+*/
+
+
+/*:ja
+@plugindesc 指定したアイテムをカードのように扇状に広げて表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - カードアイテム ver0.2b
+
+使い方:
+
+  アイテムのメモに <picture:ファイル名> と書き込んでください。
+  次に img/pictures フォルダに書き込んだファイル名と同名の画像を
+  置いてください。
+  <picture:card0> と書き込んだ場合は card0.png という画像が必要になります。
+
+  プラグインコマンドで cardItemScene を実行すると、所持アイテムの中で
+  picture タグを書き込んだアイテムがカードアイテムとして一覧表示されます。
+  表示のされかた以外は普通のアイテムシーンとほぼ同じです。
+
+  プラグインパラメータの初期設定は幅128ドット、高さ176ドットのカード画像を
+  使用する想定で設定されています。お好みで調整してください。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+  cardItemScene        # カードアイテムメニューをひらく
+
+@param maxCardCols
+@desc 一度に広げられるカードの枚数 初期値: 8
+@default 8
+
+@param cardSpacing
+@desc カードとカードの間隔（3.141592 で約90度） 初期値: 0.2
+@default 0.2
+
+@param arrowSpacing
+@desc 矢印とカードの間隔（3.141592 で約90度） 初期値: 0.2
+@default 0.2
+
+@param baseX
+@desc カードの位置（扇の中心のＸ座標） 初期値: 408
+@default 408
+
+@param baseY
+@desc カードの位置（扇の中心のＹ座標） 初期値: 880
+@default 880
+
+@param baseDistance
+@desc カードの位置（扇の中心からの距離） 初期値: 408
+@default 408
+
+@param shiftRadian
+@desc 扇の回転補正値（3.141592 で約90度） 初期値: 0
+@default 0
+
+@param selectedDistance
+@desc 選択中カードの位置（扇の中心からの距離） 初期値: 472
+@default 472
+
+@param cardSpeed
+@desc カードの移動速度（扇の中心から外への移動） 初期値: 24
+@default 24
+
+@param cardSpeedR
+@desc カードの移動速度（扇を中心に回る移動） 初期値: 0.05
+@default 0.05
+
+@param useHelpWindow
+@desc ヘルプウィンドウを利用する（ 0 で無効 / 1 で有効） 初期値: 1
+@default 1
+
+@param helpWindowY
+@desc ヘルプウィンドウのＹ座標 初期値: 0
+@default 0
+
+@param showItemName
+@desc ヘルプウィンドウにアイテム名を表示（ 0 で無効 / 1 で有効） 初期値: 1
+@default 1
+
+@param numsFormat
+@desc 個数表示の書式 初期値: ×%1
+@default ×%1
+
+@param blankMessage
+@desc カードがないときに表示するメッセージ（ \n で改行） 初期値: アイテムがありません。
+@default アイテムがありません。
+
+@param useGoldWindow
+@desc 所持金ウィンドウを利用する（ 0 で無効 / 1 で有効） 初期値: 0
+@default 0
+
+@param goldWindowX
+@desc 所持金ウィンドウのＸ座標 初期値: 0
+@default 0
+
+@param goldWindowY
+@desc 所持金ウィンドウのＹ座標 初期値: 144
+@default 144
+
+@param useWrap
+@desc 先頭と末尾をカーソル移動できる（ 0 で無効 / 1 で有効） 初期値: 1
+@default 1
+
+@param takeoverMainMenu
+@desc メインメニューを乗っ取る（ 0 で無効 / 1 で有効） 初期値: 0
+@default 0
+
+@param backButtonX
+@desc 戻るボタンの表示X座標（TMBackButton.js が必要） 初期値: 0
+@default 0
+
+@param backButtonY
+@desc 戻るボタンの表示Y座標（TMBackButton.js が必要） 初期値: 0
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMCardItem = true;

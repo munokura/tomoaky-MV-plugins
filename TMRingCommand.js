@@ -4,162 +4,271 @@
 // Version: 0.4b
 // 最終更新日: 2016/04/13
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンで使えるリングコマンドを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param useEscape
- * @desc Escキーなどによるメニュー処理を乗っ取る
- * 初期値: 0 ( 1 にするとデフォルトのメニューは使えません)
- * @default 0
- *
- * @param useCaption
- * @desc リングコマンドにコマンド名を字幕で表示する
- * 初期値: 1 ( 0 で非表示)
- * @default 1
- *
- * @param saveLastIndex
- * @desc 最後に選択したコマンドを記憶する
- * 初期値: 0 ( 1 で前回決定したコマンドが初期位置になります)
- * @default 0
- *
- * @param openResetIndex
- * @desc リングコマンド開閉のたびにカーソル位置を初期化する
- * 初期値: 0 ( 1 で開閉のたびに初期化)
- * @default 0
- *
- * @param openGoldWindow
- * @desc リングコマンドと一緒に所持金ウィンドウも開閉する
- * 初期値: 1 ( 0 で開閉しない)
- * @default 1
- *
- * @param goldWindowX
- * @desc 所持金ウィンドウのＸ座標
- * 初期値: 576
- * @default 576
- *
- * @param goldWindowY
- * @desc 所持金ウィンドウのＹ座標
- * 初期値: 0
- * @default 0
- *
- * @param seOpenCommand
- * @desc リングコマンドを開くときに鳴らす効果音
- * 初期値: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
- * @default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
- *
- * @param seCloseCommand
- * @desc リングコマンドを閉じるときに鳴らす効果音
- * 初期値: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
- * @default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
- *
- * @param commandIconItem
- * @desc アイテムコマンドのアイコン番号
- * 初期値: 176
- * @default 176
- *
- * @param commandIconSkill
- * @desc スキルコマンドのアイコン番号
- * 初期値: 76
- * @default 76
- *
- * @param commandIconEquip
- * @desc 装備コマンドのアイコン番号
- * 初期値: 135
- * @default 135
- *
- * @param commandIconStatus
- * @desc ステータスコマンドのアイコン番号
- * 初期値: 84
- * @default 84
- *
- * @param commandIconFormation
- * @desc 並び替えコマンドのアイコン番号
- * 初期値: 75
- * @default 75
- *
- * @param commandIconOptions
- * @desc オプションコマンドのアイコン番号
- * 初期値: 83
- * @default 83
- *
- * @param commandIconSave
- * @desc セーブコマンドのアイコン番号
- * 初期値: 225
- * @default 225
- *
- * @param commandIconGameEnd
- * @desc ゲーム終了コマンドのアイコン番号
- * 初期値: 82
- * @default 82
- *
- * @param commandIconGoldLevelUp
- * @desc お金でレベルアップコマンドのアイコン番号
- * 初期値: 236 ( TMGoldLevelUp.js 導入時のみ有効)
- * @default 236
- *
- * @param rotateDuration
- * @desc アイコンの移動にかける時間
- * 初期値: 4（フレーム数）
- * @default 4
- *
- * @param iconDistX
- * @desc アイコンの広がり（横方向）
- * 初期値: 16
- * @default 16
- *
- * @param iconDistY
- * @desc アイコンの広がり（縦方向）
- * 初期値: 12
- * @default 12
- *
- * @param iconSelectScale
- * @desc 選択中アイコンの拡大率補正
- * 初期値: 1.5
- * @default 1.5
- *
- * @param captionWidth
- * @desc キャプションの幅
- * 初期値: 200
- * @default 200
- *
- * @param captionHeight
- * @desc キャプションの高さ
- * 初期値: 48
- * @default 48
- *
- * @param captionShiftX
- * @desc キャプションのＸ座標補正値
- * 初期値: 0
- * @default 0
- *
- * @param captionShiftY
- * @desc キャプションのＹ座標補正値
- * 初期値: -96
- * @default -96
- *
- * @help
- * マップシーンで Ctrl または Alt を押している間、リングコマンドが表示され
- * ←, → でリングの回転、Z, Enter, Space で各シーンへ移行できます。
- *
- * useEscape に 1 を設定すると Ctrl(Alt) での操作は無効化され、
- * デフォルトメニューと同様に Esc / X / Insert / Num 0 / 右クリック などで
- * リングコマンドを開閉することができるようになります。
- * この場合、キーを押しっぱなしにする必要はありません。
- *
- * マウスで操作する場合は、プレイヤーよりも左あるいは右をクリックすると
- * それぞれの方向へリングを回転させることができ、プレイヤーの近くを
- * クリックすれば正面にあるコマンドアイコンに対応するシーンへ移行します。
- * クリックの座標判定は横方向のみです、画面のどこをクリックしても反応します。
- *
- * プラグインコマンドはありません。
- *
- * TMGoldLevelUp.js（お金でレベルアップ）と併用する場合、TMGoldLevelUp.jsの
- * バージョンが Ver1.11 以上である必要があります。
- * 
- */
+@plugindesc Adds ring commands that can be used in map scenes.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+While holding Ctrl or Alt in the map scene, the ring command will appear.
+You can rotate the ring with ← and →, and switch between scenes with Z, Enter, and Space.
+
+Setting useEscape to 1 will disable Ctrl (Alt) operations,
+and you can open and close the ring command with Esc, X, Insert, Num 0, and right-click, just like the default menu.
+In this case, you do not need to hold down the keys.
+
+When using the mouse, clicking to the left or right of the player
+will rotate the ring in the respective direction, and clicking near the player
+will switch to the scene corresponding to the command icon in front.
+Click coordinates are only detected horizontally; clicking anywhere on the screen will respond.
+
+There are no plugin commands.
+
+When using this in conjunction with TMGoldLevelUp.js (level up with money), the TMGoldLevelUp.js version must be 1.11 or later.
+
+@param useEscape
+@desc Takes over menu processing via Esc key etc. Default: 0 (Setting it to 1 disables the default menu)
+@default 0
+
+@param useCaption
+@desc Display command name in subtitles for ring commands. Default: 1 ( 0 = no display).
+@default 1
+
+@param saveLastIndex
+@desc Remember last selected command Default: 0 (Setting 1 will default to the last command selected)
+@default 0
+
+@param openResetIndex
+@desc Initialize cursor position every time ring command is opened or closed. Initial value: 0 ( 1 to initialize every time)
+@default 0
+
+@param openGoldWindow
+@desc Opens and closes the money window with the ring command. Default: 1 (0: not open or close)
+@default 1
+
+@param goldWindowX
+@desc X coordinate of the money window Default: 576
+@default 576
+
+@param goldWindowY
+@desc Y coordinate of the money window Initial value: 0
+@default 0
+
+@param seOpenCommand
+@desc Sound effect played when opening the ring command. Default: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+@default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+
+@param seCloseCommand
+@desc Sound effect played when closing the ring command. Default: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+@default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+
+@param commandIconItem
+@desc Item command icon number Default: 176
+@default 176
+
+@param commandIconSkill
+@desc Skill command icon number Default: 76
+@default 76
+
+@param commandIconEquip
+@desc Equip command icon number Default: 135
+@default 135
+
+@param commandIconStatus
+@desc Status command icon number Default: 84
+@default 84
+
+@param commandIconFormation
+@desc Icon number for sort command Default: 75
+@default 75
+
+@param commandIconOptions
+@desc Optional command icon number Default: 83
+@default 83
+
+@param commandIconSave
+@desc Save command icon number Default: 225
+@default 225
+
+@param commandIconGameEnd
+@desc Exit game command icon number Default: 82
+@default 82
+
+@param commandIconGoldLevelUp
+@desc Icon number for level up command with money Default: 236 (only available when TMGoldLevelUp.js is installed)
+@default 236
+
+@param rotateDuration
+@desc Time spent moving the icon Default: 4 (frames)
+@default 4
+
+@param iconDistX
+@desc Icon width (horizontal) Default: 16
+@default 16
+
+@param iconDistY
+@desc Icon width (vertical) Default: 12
+@default 12
+
+@param iconSelectScale
+@desc Magnification of selected icon Default: 1.5
+@default 1.5
+
+@param captionWidth
+@desc Caption width Default: 200
+@default 200
+
+@param captionHeight
+@desc Caption height default: 48
+@default 48
+
+@param captionShiftX
+@desc X offset of caption Default: 0
+@default 0
+
+@param captionShiftY
+@desc Y-coordinate offset for captions. Default: -96
+@default -96
+*/
+
+
+/*:ja
+@plugindesc マップシーンで使えるリングコマンドを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+マップシーンで Ctrl または Alt を押している間、リングコマンドが表示され
+←, → でリングの回転、Z, Enter, Space で各シーンへ移行できます。
+
+useEscape に 1 を設定すると Ctrl(Alt) での操作は無効化され、
+デフォルトメニューと同様に Esc / X / Insert / Num 0 / 右クリック などで
+リングコマンドを開閉することができるようになります。
+この場合、キーを押しっぱなしにする必要はありません。
+
+マウスで操作する場合は、プレイヤーよりも左あるいは右をクリックすると
+それぞれの方向へリングを回転させることができ、プレイヤーの近くを
+クリックすれば正面にあるコマンドアイコンに対応するシーンへ移行します。
+クリックの座標判定は横方向のみです、画面のどこをクリックしても反応します。
+
+プラグインコマンドはありません。
+
+TMGoldLevelUp.js（お金でレベルアップ）と併用する場合、TMGoldLevelUp.jsの
+バージョンが Ver1.11 以上である必要があります。
+
+@param useEscape
+@desc Escキーなどによるメニュー処理を乗っ取る 初期値: 0 ( 1 にするとデフォルトのメニューは使えません)
+@default 0
+
+@param useCaption
+@desc リングコマンドにコマンド名を字幕で表示する 初期値: 1 ( 0 で非表示)
+@default 1
+
+@param saveLastIndex
+@desc 最後に選択したコマンドを記憶する 初期値: 0 ( 1 で前回決定したコマンドが初期位置になります)
+@default 0
+
+@param openResetIndex
+@desc リングコマンド開閉のたびにカーソル位置を初期化する 初期値: 0 ( 1 で開閉のたびに初期化)
+@default 0
+
+@param openGoldWindow
+@desc リングコマンドと一緒に所持金ウィンドウも開閉する 初期値: 1 ( 0 で開閉しない)
+@default 1
+
+@param goldWindowX
+@desc 所持金ウィンドウのＸ座標 初期値: 576
+@default 576
+
+@param goldWindowY
+@desc 所持金ウィンドウのＹ座標 初期値: 0
+@default 0
+
+@param seOpenCommand
+@desc リングコマンドを開くときに鳴らす効果音 初期値: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+@default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+
+@param seCloseCommand
+@desc リングコマンドを閉じるときに鳴らす効果音 初期値: {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+@default {name: "Cancel2", volume: 90, pitch: 100, pan: 0}
+
+@param commandIconItem
+@desc アイテムコマンドのアイコン番号 初期値: 176
+@default 176
+
+@param commandIconSkill
+@desc スキルコマンドのアイコン番号 初期値: 76
+@default 76
+
+@param commandIconEquip
+@desc 装備コマンドのアイコン番号 初期値: 135
+@default 135
+
+@param commandIconStatus
+@desc ステータスコマンドのアイコン番号 初期値: 84
+@default 84
+
+@param commandIconFormation
+@desc 並び替えコマンドのアイコン番号 初期値: 75
+@default 75
+
+@param commandIconOptions
+@desc オプションコマンドのアイコン番号 初期値: 83
+@default 83
+
+@param commandIconSave
+@desc セーブコマンドのアイコン番号 初期値: 225
+@default 225
+
+@param commandIconGameEnd
+@desc ゲーム終了コマンドのアイコン番号 初期値: 82
+@default 82
+
+@param commandIconGoldLevelUp
+@desc お金でレベルアップコマンドのアイコン番号 初期値: 236 ( TMGoldLevelUp.js 導入時のみ有効)
+@default 236
+
+@param rotateDuration
+@desc アイコンの移動にかける時間 初期値: 4（フレーム数）
+@default 4
+
+@param iconDistX
+@desc アイコンの広がり（横方向） 初期値: 16
+@default 16
+
+@param iconDistY
+@desc アイコンの広がり（縦方向） 初期値: 12
+@default 12
+
+@param iconSelectScale
+@desc 選択中アイコンの拡大率補正 初期値: 1.5
+@default 1.5
+
+@param captionWidth
+@desc キャプションの幅 初期値: 200
+@default 200
+
+@param captionHeight
+@desc キャプションの高さ 初期値: 48
+@default 48
+
+@param captionShiftX
+@desc キャプションのＸ座標補正値 初期値: 0
+@default 0
+
+@param captionShiftY
+@desc キャプションのＹ座標補正値 初期値: -96
+@default -96
+*/
 
 var Imported = Imported || {};
 Imported.TMRingCommand = true;

@@ -8,128 +8,236 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc MPやTPの代わりにHPやアイテムを消費するスキルを
- * 設定できるようになります。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param hpVNumberId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者の残りHP』を代入する
- * @default 0
- *
- * @param mpVNumberId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者の残りMP』を代入する
- * @default 0
- *
- * @param tpVNumberId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者の残りTP』を代入する
- * @default 0
- *
- * @param hpCostVNId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者が消費するhP』を代入する
- * @default 0
- *
- * @param mpCostVNId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者が消費するMP』を代入する
- * @default 0
- *
- * @param tpCostVNId
- * @type variable
- * @desc ダメージ計算とコスト消費の直前のタイミングで、
- * この変数に『行動者が消費するTP』を代入する
- * @default 0
- *
- * @param ignoreEnemyItemCost
- * @type select
- * @option パーティのアイテムを消費する
- * @value 0
- * @option 消費しない
- * @value 1
- * @desc 敵がアイテム消費スキルを使用する際の処理方法
- * @default 1
- *
- * @help
- * TMPlugin - スキルコスト拡張 ver1.2.0
- * 
- * 使い方:
- * 
- *   スキルのメモ欄にタグを書き込むことでコストを追加できます。
- *
- *   データベースで 消耗しない に設定したアイテムをコストとした場合、
- *   スキル使用時に必要だが消費はしないという扱いになります。
- *
- *   ＨＰをコストとして設定した場合、残りＨＰがコストと同値では
- *   使用できません。ただし、スキルに hpCostNoSafety タグがある場合は
- *   残りＨＰがコスト以下でもスキルが使用できます。
- *   当然使用したアクターは戦闘不能になります。
- *
- *   経験値をコストとして設定し、一緒に expCostNoLevelDown タグを
- *   設定している場合、コストの支払いによってレベルが下がる状況では
- *   スキルの使用ができなくなります。
- *
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインパラメータの補足:
- * 
- *   hpVNumberId ( mpVNumberId / tpVNumberId )
- *     コスト消費の直前、使用者の残りHPの値を、設定した変数に代入します。
- *     ダメージ計算式に $gameVariables.value(1) と書けば、
- *     変数 1 番の値を参照することができます。
- *     ダメージ計算式に a.hp と書いた場合も残りHPを参照できますが、
- *     こちらはコストを消費した後の値となります。
- * 
- *   hpCostVNId ( mpCostVNId / tpCostVNId )
- *     コスト消費の直前、使用者が消費するHPの値を、設定した変数に代入します。
- *     hpVNumberId と同様の方法でダメージ計算式に反映させることができます。
- * 
- * 
- * メモ欄タグ（スキル）:
- * 
- *   <hpCost:10>          # スキルのコストとしてＨＰ１０を設定
- *   <hpRateCost:50>      # スキルのコストとして最大ＨＰの５０％を設定
- *   <hpCRateCost:25>     # スキルのコストとして残りＨＰの２５％を設定
- *   <hpCostNoSafety>     # ＨＰコスト支払いによる戦闘不能を許可する
- *   <mpRateCost:100>     # スキルのコストとして最大ＭＰの１００％を設定
- *   <mpCRateCost:50>     # スキルのコストとして残りＭＰの５０％を設定
- *   <mpCostNoMcr>        # ＭＰコストから特徴『ＭＰ消費率』の効果を除外
- *   <tpCRateCost:50>     # スキルのコストとして残りＴＰの５０％を設定
- *   <ignoreTpCost>       # スキルのＴＰコスト不足時、ＴＰ全消費で発動可能
- *   <itemCost:I1*2>      # スキルのコストとしてアイテム１番２個を設定
- *   <itemCost:W2*1>      # スキルのコストとして武器２番１個を設定
- *   <itemCost:A5*1>      # スキルのコストとして防具５番１個を設定
- *   <expCost:50>         # スキルのコストとして経験値５０を設定
- *   <expCostNoLevelDown> # 経験値コストによるレベルダウンを禁止
- *   <goldCost:100>       # スキルのコストとしてお金１００Ｇを設定
- *   <vnCost:3*1>         # スキルのコストとしてゲーム変数３番の値１を設定
- *
- * 
- * vnCostタグの特殊な使い方:
- * 
- *   メモ欄タグ vnCost のみ制御文字を利用して変数の中身をパラメータとして
- *   設定することができます。
- *   <vnCost:\V[14]*\V[15]>
- *   たとえば上記のようなタグがついたスキルを使用する際に、変数１４番の
- *   値が 16 、変数１５番の値が 3 だった場合は、変数１６番の値を３消費
- *   することになります。
- */
+@plugindesc Skills that consume HP or items instead of MP or TP
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Skill Cost Extension ver1.2.0
+
+How to Use:
+
+You can add a cost by adding a tag to the skill's Note field.
+
+If the cost is an item set as "non-consumable" in the database,
+it will be treated as necessary but not consumed when using the skill.
+
+If HP is set as the cost, the skill cannot be used if the remaining HP is equal to the cost.
+However, if the skill has the hpCostNoSafety tag,
+the skill can be used even if the remaining HP is less than the cost.
+Naturally, the actor who used it will be Collapse.
+
+If experience points are set as the cost and the expCostNoLevelDown tag is also set, the skill cannot be used if paying the cost would result in a level loss.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, redistribution, and other uses.
+
+Additional information on plugin parameters:
+
+hpVNumberId (mpVNumberId / tpVNumberId)
+The user's remaining HP immediately before the cost is consumed is assigned to the specified variable.
+You can reference the value of variable 1 by writing $gameVariables.value(1) in the damage calculation formula.
+You can also reference remaining HP by writing a.hp in the damage calculation formula,
+but this will be the value after the cost is consumed.
+
+hpCostVNId (mpCostVNId / tpCostVNId)
+The user's HP consumed immediately before the cost is consumed is assigned to the specified variable.
+You can Reflection this in the damage calculation formula in the same way as hpVNumberId.
+
+Memo Tag (Skill):
+
+<hpCost:10> # Sets the skill cost to 10 HP
+<hpRateCost:50> # Sets the skill cost to 50% of maximum HP
+<hpCRateCost:25> # Sets the skill cost to 25% of remaining HP
+<hpCostNoSafety> # Allows incapacitation by paying the HP cost
+<mpRateCost:100> # Sets the skill cost to 100% of maximum MP
+<mpCRateCost:50> # Sets the skill cost to 50% of remaining MP
+<mpCostNoMcr> # Excludes the effect of the "MP Cost Rate" trait from the MP cost
+<tpCRateCost:50> # Sets the skill cost to 50% of remaining TP
+<ignoreTpCost> # When the skill's TP cost is insufficient, it can be activated by consuming all TP
+<itemCost:I1*2> # Sets two items #1 as the skill cost.
+<itemCost:W2*1> # Sets one weapon #2 as the skill cost.
+<itemCost:A5*1> # Sets one armor #5 as the skill cost.
+<expCost:50> # Sets 50 experience points as the skill cost.
+<expCostNoLevelDown> # Disables level down due to experience points.
+<goldCost:100> # Sets 100 gold as the skill cost.
+<vnCost:3*1> # Sets the value of game variable #3, 1, as the skill cost.
+
+Special usage of the vnCost tag:
+
+Only the vnCost memo tag allows you to use control characters to set the contents of the variable as a parameter.
+
+<vnCost:\V[14]*\V[15]>
+For example, when using a skill with the above tag, if the value of variable 14 is 16 and the value of variable 15 is 3, then 3 points will be consumed from the value of variable 16.
+
+@param hpVNumberId
+@desc Just before damage calculation and cost consumption, assign the "remaining HP of the actor" to this variable.
+@default 0
+@type variable
+
+@param mpVNumberId
+@desc Just before damage calculation and cost consumption, assign the "remaining MP of the actor" to this variable.
+@default 0
+@type variable
+
+@param tpVNumberId
+@desc Just before damage calculation and cost consumption, assign the "remaining TP of the actor" to this variable.
+@default 0
+@type variable
+
+@param hpCostVNId
+@desc Just before damage calculation and cost consumption, assign "HP consumed by the actor" to this variable.
+@default 0
+@type variable
+
+@param mpCostVNId
+@desc Just before damage calculation and cost consumption, assign the "MP consumed by the actor" to this variable.
+@default 0
+@type variable
+
+@param tpCostVNId
+@desc Just before damage calculation and cost consumption, assign the "TP consumed by the actor" to this variable.
+@default 0
+@type variable
+
+@param ignoreEnemyItemCost
+@desc How to handle when an enemy uses an item-consuming skill
+@default 1
+@type select
+@option Consume a party item
+@value 0
+@option Do not consume
+@value 1
+*/
+
+
+/*:ja
+@plugindesc MPやTPの代わりにHPやアイテムを消費するスキルを
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - スキルコスト拡張 ver1.2.0
+
+使い方:
+
+  スキルのメモ欄にタグを書き込むことでコストを追加できます。
+
+  データベースで 消耗しない に設定したアイテムをコストとした場合、
+  スキル使用時に必要だが消費はしないという扱いになります。
+
+  ＨＰをコストとして設定した場合、残りＨＰがコストと同値では
+  使用できません。ただし、スキルに hpCostNoSafety タグがある場合は
+  残りＨＰがコスト以下でもスキルが使用できます。
+  当然使用したアクターは戦闘不能になります。
+
+  経験値をコストとして設定し、一緒に expCostNoLevelDown タグを
+  設定している場合、コストの支払いによってレベルが下がる状況では
+  スキルの使用ができなくなります。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインパラメータの補足:
+
+  hpVNumberId ( mpVNumberId / tpVNumberId )
+    コスト消費の直前、使用者の残りHPの値を、設定した変数に代入します。
+    ダメージ計算式に $gameVariables.value(1) と書けば、
+    変数 1 番の値を参照することができます。
+    ダメージ計算式に a.hp と書いた場合も残りHPを参照できますが、
+    こちらはコストを消費した後の値となります。
+
+  hpCostVNId ( mpCostVNId / tpCostVNId )
+    コスト消費の直前、使用者が消費するHPの値を、設定した変数に代入します。
+    hpVNumberId と同様の方法でダメージ計算式に反映させることができます。
+
+
+メモ欄タグ（スキル）:
+
+  <hpCost:10>          # スキルのコストとしてＨＰ１０を設定
+  <hpRateCost:50>      # スキルのコストとして最大ＨＰの５０％を設定
+  <hpCRateCost:25>     # スキルのコストとして残りＨＰの２５％を設定
+  <hpCostNoSafety>     # ＨＰコスト支払いによる戦闘不能を許可する
+  <mpRateCost:100>     # スキルのコストとして最大ＭＰの１００％を設定
+  <mpCRateCost:50>     # スキルのコストとして残りＭＰの５０％を設定
+  <mpCostNoMcr>        # ＭＰコストから特徴『ＭＰ消費率』の効果を除外
+  <tpCRateCost:50>     # スキルのコストとして残りＴＰの５０％を設定
+  <ignoreTpCost>       # スキルのＴＰコスト不足時、ＴＰ全消費で発動可能
+  <itemCost:I1*2>      # スキルのコストとしてアイテム１番２個を設定
+  <itemCost:W2*1>      # スキルのコストとして武器２番１個を設定
+  <itemCost:A5*1>      # スキルのコストとして防具５番１個を設定
+  <expCost:50>         # スキルのコストとして経験値５０を設定
+  <expCostNoLevelDown> # 経験値コストによるレベルダウンを禁止
+  <goldCost:100>       # スキルのコストとしてお金１００Ｇを設定
+  <vnCost:3*1>         # スキルのコストとしてゲーム変数３番の値１を設定
+
+
+vnCostタグの特殊な使い方:
+
+  メモ欄タグ vnCost のみ制御文字を利用して変数の中身をパラメータとして
+  設定することができます。
+  <vnCost:\V[14]*\V[15]>
+  たとえば上記のようなタグがついたスキルを使用する際に、変数１４番の
+  値が 16 、変数１５番の値が 3 だった場合は、変数１６番の値を３消費
+  することになります。
+
+@param hpVNumberId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者の残りHP』を代入する
+@default 0
+@type variable
+
+@param mpVNumberId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者の残りMP』を代入する
+@default 0
+@type variable
+
+@param tpVNumberId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者の残りTP』を代入する
+@default 0
+@type variable
+
+@param hpCostVNId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者が消費するhP』を代入する
+@default 0
+@type variable
+
+@param mpCostVNId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者が消費するMP』を代入する
+@default 0
+@type variable
+
+@param tpCostVNId
+@desc ダメージ計算とコスト消費の直前のタイミングで、 この変数に『行動者が消費するTP』を代入する
+@default 0
+@type variable
+
+@param ignoreEnemyItemCost
+@desc 敵がアイテム消費スキルを使用する際の処理方法
+@default 1
+@type select
+@option パーティのアイテムを消費する
+@value 0
+@option 消費しない
+@value 1
+*/
 
 var Imported = Imported || {};
 Imported.TMSkillCostEx = true;

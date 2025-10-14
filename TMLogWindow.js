@@ -8,167 +8,300 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンにログウィンドウを表示します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param logWindowX
- * @type number
- * @min -1000
- * @desc ログウィンドウの X 座標。
- * 初期値: 0
- * @default 0
- *
- * @param logWindowY
- * @type number
- * @min -1000
- * @desc ログウィンドウの Y 座標。
- * 初期値: 460
- * @default 460
- *
- * @param logWindowWidth
- * @type number
- * @desc ログウィンドウの幅。
- * 初期値: 480
- * @default 480
- *
- * @param lines
- * @type number
- * @desc ログウィンドウの行数。
- * 初期値: 6
- * @default 6
- *
- * @param lineHeight
- * @type number
- * @desc ログウィンドウの１行の高さ。
- * 初期値: 24
- * @default 24
- * 
- * @param padding
- * @type number
- * @desc ログウィンドウの余白の大きさ。
- * 初期値: 10
- * @default 10
- *
- * @param fontSize
- * @type number
- * @desc ログウィンドウのフォントサイズ。
- * 初期値: 20
- * @default 20
- *
- * @param startVisible
- * @type boolean
- * @desc ゲーム開始時の表示状態。
- * 初期値: ON（ true = ON 表示 / false = OFF 非表示 )
- * @default true
- *
- * @param opacity
- * @type number
- * @max 255
- * @desc ウィンドウフレームと背景の不透明度。
- * 初期値: 255 ( 0 ～ 255 )
- * @default 255
- * 
- * @param collideOpacity
- * @type number
- * @max 255
- * @desc プレイヤーと重なったときの不透明度。
- * 初期値: 128（ 0 ～ 255 ）
- * @default 128
- *
- * @param messageBusyHide
- * @type boolean
- * @desc メッセージウィンドウ表示中はログウィンドウを隠す。
- * 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
- * @default true
- *
- * @param eventBusyHide
- * @type boolean
- * @desc イベント起動中はログウィンドウを隠す。
- * 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
- * @default true
- * 
- * @param maxLogs
- * @type number
- * @desc 保存するログの最大行数。
- * 初期値: 30
- * @default 30
- * 
- * @param autoDelete
- * @type variable
- * @desc 指定したゲーム変数に代入された値の間隔で、自動的にテキストを
- * 削除する。単位はフレーム数（ 60フレーム = 1秒 ）
- * @default 0
- *
- * @help
- * TMPlugin - ログウィンドウ ver1.1.1
- * 
- * 使い方:
- * 
- *   プラグインを導入するとマップシーンにログウィンドウが追加されます。
- *   プラグインコマンドを使って手動で書き込むか、転記モードで
- *   自動的に書き込むことでログウィンドウにテキストを表示できます。
- *   
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインコマンド:
- * 
- *   showLogWindow
- *     ログウィンドウを表示する。
- * 
- *   hideLogWindow
- *     ログウィンドウを隠す。
- * 
- *   addLog テキスト
- *     テキストをログウィンドウに追加する。
- *     一部の制御文字も使えます（\V[n], \N[n], \P[n], \G, \C[n]）
- * 
- *   deleteLog
- *     一番古いテキストをひとつ削除する。
- * 
- *   startMirrorLogWindow
- *     イベントコマンド『文章の表示』をトレースする転記モードを有効化。
- * 
- *   stopMirrorLogWindow
- *     startMirrorLogWindow で有効化した機能を無効化します。
- * 
- *   startAutoLogWindow
- *     『TMJumpAction.js』などの対応プラグインと併用した場合に
- *     敵撃破時の報酬情報を自動でログに追記する機能を有効化します。
- *     この機能はゲーム開始時には自動的にオンになっています。
- * 
- *   stopAutoLogWindow
- *     startAutoLogWindow で有効化した機能を無効化します。
- * 
- *   openLogScene
- *     ログ確認シーンへ移行します。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   padding
- *     テキストの表示領域とウィンドウフレーム外側までのドット数です。
- *     ウィンドウの高さ（縦方向の大きさ）は以下の式で算出されます。
- *     １行の高さ(lineHeight) * 行数(lines) + 余白(padding) * 2
- *     画面の下部ぴったりにウィンドウを表示したい場合は縦方向の
- *     画面サイズから上記の式の結果を引いた値を logWindowY に
- *     設定してください。
- * 
- *   collideOpacity
- *     opacity よりも大きい値を設定した場合、ログの内容には
- *     collideOpacity を適用し、ウィンドウフレームと背景には
- *     opacity を適用します。
- * 
- *   autoDelete
- *     指定したゲーム変数の値が 0 の場合は、自動削除の機能が
- *     停止します。
- */
+@plugindesc Displays the log window in the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Log Window ver1.1.1
+
+How to Use:
+
+Installing this plugin will add a log window to the map scene.
+You can Show Text in the log window by manually writing using plugin commands or automatically using transcription mode.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+Plugin Commands:
+
+showLogWindow
+Shows the log window.
+
+hideLogWindow
+Hides the log window.
+
+addLogText
+Adds text to the log window.
+Some control characters are allowed (\V[n], \N[n], \P[n], \G, \C[n]).
+
+deleteLog
+Deletes the oldest text.
+
+startMirrorLogWindow
+Enables transcription mode, which traces the "Show Text" Event's Contents.
+
+stopMirrorLogWindow
+Disables the Traits enabled by startMirrorLogWindow.
+
+startAutoLogWindow
+When used in conjunction with compatible plugins such as "TMJumpAction.js,"
+This enables the automatic addition of reward information to the log when enemies are defeated.
+This Traits is automatically enabled when the game starts.
+
+stopAutoLogWindow
+Disables the Traits enabled by startAutoLogWindow.
+
+openLogScene
+Proceeds to the log confirmation scene.
+
+Additional plugin parameters:
+
+padding
+This is the number of dots between the text display area and the outside of the window frame.
+The window height (vertical size) is calculated using the following formula:
+Line height (lineHeight) * Number of lines (lines) + Margin (padding) * 2
+If you want the window to fit exactly at the bottom of the screen, subtract the result of the above formula from the vertical screen size and set logWindowY to that value.
+
+collideOpacity
+If set to a value greater than opacity, collideOpacity will be applied to the log content, and opacity will be applied to the window frame and background.
+
+autoDelete
+If the value of the specified game variable is 0, the auto-delete function will be disabled.
+
+@param logWindowX
+@desc X coordinate of the log window. Default: 0
+@default 0
+@type number
+@min -1000
+
+@param logWindowY
+@desc Y coordinate of the log window. Default: 460
+@default 460
+@type number
+@min -1000
+
+@param logWindowWidth
+@desc Width of the log window. Default: 480
+@default 480
+@type number
+
+@param lines
+@desc Number of lines in the log window. Default: 6
+@default 6
+@type number
+
+@param lineHeight
+@desc The height of one line in the log window. Default: 24
+@default 24
+@type number
+
+@param padding
+@desc Log window margin size. Default: 10
+@default 10
+@type number
+
+@param fontSize
+@desc Log window font size. Default: 20
+@default 20
+@type number
+
+@param startVisible
+@desc Display status at the start of the game. Default: ON (true = ON display / false = OFF hidden)
+@default true
+@type boolean
+
+@param opacity
+@desc Opacity of the window frame and background. Default: 255 (0 - 255)
+@default 255
+@type number
+@max 255
+
+@param collideOpacity
+@desc Opacity when overlapping with the player. Default: 128 (0 to 255)
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc Hide the log window while the message window is displayed. Default: ON (true = ON hide / false = OFF do not hide)
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc Hide the log window while an event is running. Default: ON (true = ON hide / false = OFF do not hide)
+@default true
+@type boolean
+
+@param maxLogs
+@desc Maximum number of log lines to save. Default: 30
+@default 30
+@type number
+
+@param autoDelete
+@desc The text will be automatically deleted at the interval of the value assigned to the specified game variable. The unit is the number of frames (60 frames = 1 second).
+@default 0
+@type variable
+*/
+
+
+/*:ja
+@plugindesc マップシーンにログウィンドウを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ログウィンドウ ver1.1.1
+
+使い方:
+
+  プラグインを導入するとマップシーンにログウィンドウが追加されます。
+  プラグインコマンドを使って手動で書き込むか、転記モードで
+  自動的に書き込むことでログウィンドウにテキストを表示できます。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  showLogWindow
+    ログウィンドウを表示する。
+
+  hideLogWindow
+    ログウィンドウを隠す。
+
+  addLog テキスト
+    テキストをログウィンドウに追加する。
+    一部の制御文字も使えます（\V[n], \N[n], \P[n], \G, \C[n]）
+
+  deleteLog
+    一番古いテキストをひとつ削除する。
+
+  startMirrorLogWindow
+    イベントコマンド『文章の表示』をトレースする転記モードを有効化。
+
+  stopMirrorLogWindow
+    startMirrorLogWindow で有効化した機能を無効化します。
+
+  startAutoLogWindow
+    『TMJumpAction.js』などの対応プラグインと併用した場合に
+    敵撃破時の報酬情報を自動でログに追記する機能を有効化します。
+    この機能はゲーム開始時には自動的にオンになっています。
+
+  stopAutoLogWindow
+    startAutoLogWindow で有効化した機能を無効化します。
+
+  openLogScene
+    ログ確認シーンへ移行します。
+
+
+プラグインパラメータ補足:
+
+  padding
+    テキストの表示領域とウィンドウフレーム外側までのドット数です。
+    ウィンドウの高さ（縦方向の大きさ）は以下の式で算出されます。
+    １行の高さ(lineHeight) * 行数(lines) + 余白(padding) * 2
+    画面の下部ぴったりにウィンドウを表示したい場合は縦方向の
+    画面サイズから上記の式の結果を引いた値を logWindowY に
+    設定してください。
+
+  collideOpacity
+    opacity よりも大きい値を設定した場合、ログの内容には
+    collideOpacity を適用し、ウィンドウフレームと背景には
+    opacity を適用します。
+
+  autoDelete
+    指定したゲーム変数の値が 0 の場合は、自動削除の機能が
+    停止します。
+
+@param logWindowX
+@desc ログウィンドウの X 座標。 初期値: 0
+@default 0
+@type number
+@min -1000
+
+@param logWindowY
+@desc ログウィンドウの Y 座標。 初期値: 460
+@default 460
+@type number
+@min -1000
+
+@param logWindowWidth
+@desc ログウィンドウの幅。 初期値: 480
+@default 480
+@type number
+
+@param lines
+@desc ログウィンドウの行数。 初期値: 6
+@default 6
+@type number
+
+@param lineHeight
+@desc ログウィンドウの１行の高さ。 初期値: 24
+@default 24
+@type number
+
+@param padding
+@desc ログウィンドウの余白の大きさ。 初期値: 10
+@default 10
+@type number
+
+@param fontSize
+@desc ログウィンドウのフォントサイズ。 初期値: 20
+@default 20
+@type number
+
+@param startVisible
+@desc ゲーム開始時の表示状態。 初期値: ON（ true = ON 表示 / false = OFF 非表示 )
+@default true
+@type boolean
+
+@param opacity
+@desc ウィンドウフレームと背景の不透明度。 初期値: 255 ( 0 ～ 255 )
+@default 255
+@type number
+@max 255
+
+@param collideOpacity
+@desc プレイヤーと重なったときの不透明度。 初期値: 128（ 0 ～ 255 ）
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc メッセージウィンドウ表示中はログウィンドウを隠す。 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc イベント起動中はログウィンドウを隠す。 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+
+@param maxLogs
+@desc 保存するログの最大行数。 初期値: 30
+@default 30
+@type number
+
+@param autoDelete
+@desc 指定したゲーム変数に代入された値の間隔で、自動的にテキストを 削除する。単位はフレーム数（ 60フレーム = 1秒 ）
+@default 0
+@type variable
+*/
 
 var Imported = Imported || {};
 Imported.TMLogWindow = true;

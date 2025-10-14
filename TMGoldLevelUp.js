@@ -8,73 +8,128 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 経験値ではなくお金を消費して任意のタイミングで
- * アクターをレベルアップさせることができます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param levelUpCommand
- * @desc メニューに表示するレベルアップコマンド（空にすれば無効）
- * 初期値: レベルアップ
- * @default レベルアップ
- *
- * @param currentGold
- * @desc ステータスに表示するお金の項目名
- * 初期値: 所持金
- * @default 所持金
- *
- * @param learnSkill
- * @desc ステータスに表示する覚えるスキルの項目名
- * 初期値: 覚えるスキル
- * @default 覚えるスキル
- *
- * @param levelUpSe
- * @desc レベルアップ時に鳴らす効果音のファイル名
- * 初期値: Up4
- * @default Up4
- * @require 1
- * @dir audio/se/
- * @type file
- * 
- * @param levelUpSeParam
- * @desc レベルアップ時に鳴らす効果音のパラメータ
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @param useButton
- * @desc アクター変更のボタンを表示するかどうか
- * 初期値: 1（ 0 で表示しない）
- * @default 1
- *
- * @help
- * TMPlugin - お金でレベルアップ ver1.2.1
- *
- * 使い方:
- * 
- *   このプラグインを導入すればメニューコマンドにレベルアップコマンドが
- *   追加され、お金を消費することでアクターのレベルを上げることができる
- *   ようになります。
- *
- *   lavelUpCommand のコマンド名を削除して空にすれば
- *   メニューからレベルアップコマンドを削除することができます。
- *   この場合はプラグインコマンドを使ってイベントからレベルアップシーンを
- *   呼び出してください。
- *
- * 
- * プラグインコマンド:
- * 
- *   callLevelUp
- *   レベルアップシーンを呼び出す。
- * 
- * 
- * メモ欄タグ（アクター）:
- * 
- *   <goldLevelUpRate:1.5>
- *     メモ欄にこのタグがついているアクターはレベルアップに必要な金額が
- *     1.5 倍になります。
- */
+@plugindesc You can spend Gold instead of experience points at any time.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Level Up with Gold ver1.2.1
+
+How to Use:
+
+This plugin adds a Level Up command to the menu commands, allowing actors to level up by spending Gold.
+
+You can remove the Level Up command from the menu by deleting the "labelUpCommand" command name and leaving it empty.
+In this case, use the plugin command to call the level up scene from an event.
+
+Plugin Command:
+
+callLevelUp
+Calls the level up scene.
+
+Note field Tag (Actor):
+
+<goldLevelUpRate:1.5>
+Actors with this tag in their Note field require 1.5 times the amount of Gold to level up.
+
+@param levelUpCommand
+@desc Level up command to display in the menu (disable if empty) Default: Level up
+@default Level up
+
+@param currentGold
+@desc Name of Gold item to display in status Initial value: Gold
+@default Gold
+
+@param learnSkill
+@desc Skill name to display in status Default: Learn Skill
+@default Learn Skill
+
+@param levelUpSe
+@desc The file name of the sound effect that plays when you level up. Default: Up4
+@default Up4
+@type file
+@require 1
+@dir audio/se/
+
+@param levelUpSeParam
+@desc Parameters for the sound effect that plays when leveling up. Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+
+@param useButton
+@desc Whether to display the actor change button. Default: 1 (0: not display)
+@default 1
+*/
+
+
+/*:ja
+@plugindesc 経験値ではなくお金を消費して任意のタイミングで
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - お金でレベルアップ ver1.2.1
+
+使い方:
+
+  このプラグインを導入すればメニューコマンドにレベルアップコマンドが
+  追加され、お金を消費することでアクターのレベルを上げることができる
+  ようになります。
+
+  lavelUpCommand のコマンド名を削除して空にすれば
+  メニューからレベルアップコマンドを削除することができます。
+  この場合はプラグインコマンドを使ってイベントからレベルアップシーンを
+  呼び出してください。
+
+
+プラグインコマンド:
+
+  callLevelUp
+  レベルアップシーンを呼び出す。
+
+
+メモ欄タグ（アクター）:
+
+  <goldLevelUpRate:1.5>
+    メモ欄にこのタグがついているアクターはレベルアップに必要な金額が
+    1.5 倍になります。
+
+@param levelUpCommand
+@desc メニューに表示するレベルアップコマンド（空にすれば無効） 初期値: レベルアップ
+@default レベルアップ
+
+@param currentGold
+@desc ステータスに表示するお金の項目名 初期値: 所持金
+@default 所持金
+
+@param learnSkill
+@desc ステータスに表示する覚えるスキルの項目名 初期値: 覚えるスキル
+@default 覚えるスキル
+
+@param levelUpSe
+@desc レベルアップ時に鳴らす効果音のファイル名 初期値: Up4
+@default Up4
+@type file
+@require 1
+@dir audio/se/
+
+@param levelUpSeParam
+@desc レベルアップ時に鳴らす効果音のパラメータ 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+
+@param useButton
+@desc アクター変更のボタンを表示するかどうか 初期値: 1（ 0 で表示しない）
+@default 1
+*/
 
 var Imported = Imported || {};
 Imported.TMGoldLevelUp = true;

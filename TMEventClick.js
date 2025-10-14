@@ -2,84 +2,145 @@
 // TMPlugin - イベントクリック
 // バージョン: 0.3.1b
 // 最終更新日: 2018/10/04
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc イベントをクリックして起動、ドラッグで移動させる機能を
- * 追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param dropStart
- * @type boolean
- * @desc ドラッグ＆ドロップ時にイベントを起動する。
- * 初期値: OFF ( true = ON 有効 / false = OFF 無効 )
- * @default false
- *
- * @param canMultipleDrop
- * @desc ドラッグ＆ドロップでイベントを重ねられる。
- * 初期値: OFF ( true = ON 可能 / false = OFF 不可 )
- * @default false
- *
- * @param lockTurnEnabled
- * @desc クリック（ドロップ）モード時のイベント起動による振り向き
- * 初期値: OFF ( true = ON 有効 / false = OFF 無効 )
- * @default false
- *
- * @param noDropRegions
- * @desc ドラッグ＆ドロップによる移動を禁止するリージョン
- * 半角数字で設定（カンマで区切って複数指定可能）
- * @default 
- *
- * @help
- * TMPlugin - イベントクリック ver0.3.1b
- * 
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインコマンド:
- * 
- *   stopEventClick       # 通常の操作方法に戻します。
- *   startEventClick      # イベントクリックモードを開始します。
- *   startEventDrag       # イベントドラッグモードを開始します。
- *   startEventClickDrag  # イベントクリック＆ドラッグモードを開始。
- *
- * 
- * イベントクリックモード:
- * 
- *   プレイヤーの移動ができなくなり、クリックしたイベントを即時実行します。
- *
- * 
- * イベントドラッグモード:
- * 
- *   プレイヤーの移動ができなくなり、イベントをドラッグ＆ドロップで動かせます。
- *
- * 
- * イベントクリック＆ドラッグモード:
- * 
- *   イベントクリックモードとイベントドラッグモードの両方の機能をもっています。
- *
- * 
- * メモ欄タグ（イベント）:
- * 
- *   <noClick>  # クリックによるイベントの即時実行を無効にします。
- *   <noDrag>   # ドラッグ＆ドロップによるイベント移動を無効にします。
- *
- * 
- * プラグインパラメータ補足:
- * 
- *   noDropRegions
- *     たとえば 1,2,3 と設定すると、１～３番のリージョンには
- *     ドラッグ＆ドロップによる移動ができなくなります。
- */
+@plugindesc Click to activate an event and drag to move it.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Event Click ver0.3.1b
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free to use, including commercial use, modifications, and redistribution.
+
+Plugin Commands:
+
+stopEventClick # Return to normal operation.
+startEventClick # Start event click mode.
+startEventDrag # Start event drag mode.
+startEventClickDrag # Start event click-and-drag mode.
+
+Event Click Mode:
+
+The player is prevented from moving, and clicked events are immediately executed.
+
+Event Drag Mode:
+
+The player is prevented from moving, and events can be moved by drag-and-drop.
+
+Event Click-and-Drag Mode:
+
+This plugin has the functionality of both event click mode and event drag mode.
+
+Note field Tag (Event):
+
+<noClick> # Disables immediate event execution by click.
+<noDrag> # Disables event movement by drag-and-drop.
+
+Plugin Parameter Notes:
+
+noDropRegions
+For example, if you set it to 1,2,3, regions 1 through 3 will not be able to be moved by drag and drop.
+
+@param dropStart
+@desc Triggers an event when dragging and dropping. Default: OFF ( true = ON enabled / false = OFF disabled )
+@default false
+@type boolean
+
+@param canMultipleDrop
+@desc Events can be overlapped by drag and drop. Default: OFF (true = ON possible / false = OFF not possible)
+@default false
+
+@param lockTurnEnabled
+@desc Turning around by event trigger in click (drop) mode Default: OFF ( true = ON enabled / false = OFF disabled )
+@default false
+
+@param noDropRegions
+@desc Regions where drag-and-drop movement is prohibited. Set with half-width numbers (multiple entries can be specified by separating them with commas).
+*/
+
+
+/*:ja
+@plugindesc イベントをクリックして起動、ドラッグで移動させる機能を
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - イベントクリック ver0.3.1b
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  stopEventClick       # 通常の操作方法に戻します。
+  startEventClick      # イベントクリックモードを開始します。
+  startEventDrag       # イベントドラッグモードを開始します。
+  startEventClickDrag  # イベントクリック＆ドラッグモードを開始。
+
+
+イベントクリックモード:
+
+  プレイヤーの移動ができなくなり、クリックしたイベントを即時実行します。
+
+
+イベントドラッグモード:
+
+  プレイヤーの移動ができなくなり、イベントをドラッグ＆ドロップで動かせます。
+
+
+イベントクリック＆ドラッグモード:
+
+  イベントクリックモードとイベントドラッグモードの両方の機能をもっています。
+
+
+メモ欄タグ（イベント）:
+
+  <noClick>  # クリックによるイベントの即時実行を無効にします。
+  <noDrag>   # ドラッグ＆ドロップによるイベント移動を無効にします。
+
+
+プラグインパラメータ補足:
+
+  noDropRegions
+    たとえば 1,2,3 と設定すると、１～３番のリージョンには
+    ドラッグ＆ドロップによる移動ができなくなります。
+
+@param dropStart
+@desc ドラッグ＆ドロップ時にイベントを起動する。 初期値: OFF ( true = ON 有効 / false = OFF 無効 )
+@default false
+@type boolean
+
+@param canMultipleDrop
+@desc ドラッグ＆ドロップでイベントを重ねられる。 初期値: OFF ( true = ON 可能 / false = OFF 不可 )
+@default false
+
+@param lockTurnEnabled
+@desc クリック（ドロップ）モード時のイベント起動による振り向き 初期値: OFF ( true = ON 有効 / false = OFF 無効 )
+@default false
+
+@param noDropRegions
+@desc ドラッグ＆ドロップによる移動を禁止するリージョン 半角数字で設定（カンマで区切って複数指定可能）
+*/
 
 var Imported = Imported || {};
 Imported.TMEventClick = true;

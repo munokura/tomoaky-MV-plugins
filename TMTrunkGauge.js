@@ -2,129 +2,239 @@
 // TMPlugin - 体幹ゲージ
 // バージョン: 0.1.1b
 // 最終更新日: 2019/05/13
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2019 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @target MV
- * @plugindesc バトルに体幹による崩し要素を追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param trunkState
- * @text 付与ステート
- * @type state
- * @desc 体幹が崩れた際に付与されるステート
- * @default 10
- * 
- * @param trunkMax
- * @text 体幹の最大値
- * @type number
- * @desc 体幹の最大値
- * @default 100
- * 
- * @param trunkRecover
- * @text 回復体幹値
- * @type number
- * @desc ターン終了時に回復する体幹値
- * @default 50
- * 
- * @param trunkWidth
- * @text 体幹ゲージ幅
- * @type number
- * @desc 体幹ゲージの横幅
- * @default 120
- * 
- * @param trunkHeight
- * @text 体幹ゲージ高
- * @type number
- * @desc 体幹ゲージの高さ
- * @default 12
- * 
- * @param trunkAnimation
- * @text 付与アニメーション
- * @type animation
- * @desc 体幹が崩れた際のアニメーション
- * @default 39
- *
- * @help
- * TMPlugin - 体幹ゲージ ver0.1.1b
- * 
- * 使い方:
- * 
- *   このプラグインを有効にすると、自動的にすべてのアクター、エネミーに
- *   最大体幹値 100 が設定されます。
- *   体幹攻撃力は自動的には設定されないので、スキルのメモ欄に
- *   <trunkAtk:25> タグで体幹攻撃力を設定する必要があります。
- * 
- *   体幹攻撃力が設定されたスキルが命中すると相手に体幹ダメージを与えます。
- *   体幹ダメージが最大体幹値に達すると、アニメーションが再生され、
- *   ステートが付与されます。
- *   最大値に達した体幹ダメージはターン終了時にリセットされます。
- * 
- *   体幹ダメージはターン終了時にある程度回復します。
- *   回復量は残りＨＰによって変化し、残りＨＰが５０％を下回っていると
- *   体幹ダメージの回復は止まります。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * メモ欄タグ（アクター、職業、スキル、アイテム、武器、防具、
- * 　　　　　　敵キャラ、ステート）:
- * 
- *   <trunkAtk:25>
- *   スキルに体幹攻撃力を設定します、スキル以外にこのタグを設定すると
- *   スキル使用時に与える体幹ダメージにその値が加算されます。
- *   ただし、体幹攻撃力が設定されていないスキルには加算されません。
- * 
- * 
- * メモ欄タグ（アクター、職業、武器、防具、敵キャラ、ステート）:
- * 
- *   <trunkMax:50>
- *   体幹最大値を加算します。
- *   プラグインパラメータ trunkMax が 100 で、アクターのメモ欄に
- *   <trunkMax:50> タグがある場合、このアクターの体幹最大値は 150 に
- *   なります。
- * 
- *   <trunkDef:50>
- *   体幹防御力を設定します、値が 50 の場合、受ける体幹ダメージが
- *   ５０％に軽減されます。
- * 
- *   <trunkCnt:80>
- *   体幹反撃力を設定します、値が 80 の場合、受けた体幹ダメージの
- *   ８０％を相手にも与えます。
- *   反撃ダメージは体幹防御力よりも前に計算するため、体幹防御力が
- *   １００％であっても反撃ダメージが発生します。
- * 
- * 
- * メモ欄タグ（アクター、エネミー）:
- * 
- *   <trunkWidth:60>
- *   このタグが設定されたバトラーの体幹ゲージの横幅を変更します。
- * 
- *   <trunkHeight:12>
- *   このタグが設定されたバトラーの体幹ゲージの高さを変更します。
- * 
- *   <trunkShiftX:48>
- *   このタグが設定されたバトラーの体幹ゲージの位置を
- *   右に 48 ドットずらします。
- * 
- *   <trunkShiftY:-24>
- *   このタグが設定されたバトラーの体幹ゲージの位置を
- *   上に 24 ドットずらします。
- * 
- * 
- * おまけ機能:
- * 
- *   TMBitmapEx.js を導入している場合、体幹ゲージが角丸になります。
- */
+@target MV
+@plugindesc Adds a core-based breakdown element to battles.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Trunk Gauge ver0.1.1b
+
+How to Use:
+
+When this plugin is enabled, a maximum trunk value of 100 will automatically be set for all actors and enemies.
+Trunk attack power is not automatically set, so you must set it in the skill's Note field using the <trunkAtk:25> tag.
+
+A skill with trunk attack power will deal trunk damage to the opponent when it hits.
+When trunk damage reaches the maximum trunk value, an animation will play and a state will be applied.
+Trunk damage that has reached its maximum value will be reset at the end of the turn.
+
+Some trunk damage will recover at the end of the turn.
+The amount recovered varies depending on remaining HP, and trunk damage recovery will stop if remaining HP falls below 50%.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and may be freely used for commercial purposes, modifications, and redistribution.
+
+Memo Tags (Actor, Class, Skill, Item, Weapon, Armor, Enemy, State):
+
+<trunkAtk:25>
+Sets trunk damage for the skill. If this tag is set for an item other than a skill,
+that value will be added to the trunk damage dealt when the skill is used.
+However, it will not be added to skills that do not have a trunk damage setting.
+
+Memo Tags (Actor, Class, Weapon, Armor, Enemy, State):
+
+<trunkMax:50>
+Adds the maximum trunk damage.
+If the plugin parameter trunkMax is 100 and the actor's Note field contains the <trunkMax:50> tag, the actor's maximum trunk damage will be 150.
+
+<trunkDef:50>
+Sets core defense. A value of 50 reduces core damage taken by 50%.
+
+<trunkCnt:80>
+Sets core counterattack power. A value of 80 inflicts 80% of the core damage taken.
+Counter Attack damage is calculated before core defense, so counterattack damage will occur even if core defense is 100%.
+
+Memo Tags (Actor, Enemy):
+
+<trunkWidth:60>
+Changes the width of the core gauge of the battler to which this tag is set.
+
+<trunkHeight:12>
+Changes the height of the core gauge of the battler to which this tag is set.
+
+<trunkShiftX:48>
+Shifts the position of the core gauge of the battler to which this tag is set by 48 dots to the right.
+
+<trunkShiftY:-24>
+Shifts the position of the trunk gauge of the battler to which this tag is set
+up by 24 dots upward.
+
+Bonus Traits:
+
+If you're using TMBitmapEx.js, the trunk gauge will have rounded corners.
+
+@param trunkState
+@text Granted State
+@desc State given when the core collapses
+@default 10
+@type state
+
+@param trunkMax
+@text Maximum trunk strength
+@desc Maximum trunk strength
+@default 100
+@type number
+
+@param trunkRecover
+@text Recovery Core Value
+@desc Stamina recovered at the end of the turn
+@default 50
+@type number
+
+@param trunkWidth
+@text Core Gauge Width
+@desc Width of core gauge
+@default 120
+@type number
+
+@param trunkHeight
+@text Core Gauge Height
+@desc Core gauge height
+@default 12
+@type number
+
+@param trunkAnimation
+@text Granting animation
+@desc Animation when the core collapses
+@default 39
+@type animation
+*/
+
+
+/*:ja
+@target MV
+@plugindesc バトルに体幹による崩し要素を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 体幹ゲージ ver0.1.1b
+
+使い方:
+
+  このプラグインを有効にすると、自動的にすべてのアクター、エネミーに
+  最大体幹値 100 が設定されます。
+  体幹攻撃力は自動的には設定されないので、スキルのメモ欄に
+  <trunkAtk:25> タグで体幹攻撃力を設定する必要があります。
+
+  体幹攻撃力が設定されたスキルが命中すると相手に体幹ダメージを与えます。
+  体幹ダメージが最大体幹値に達すると、アニメーションが再生され、
+  ステートが付与されます。
+  最大値に達した体幹ダメージはターン終了時にリセットされます。
+
+  体幹ダメージはターン終了時にある程度回復します。
+  回復量は残りＨＰによって変化し、残りＨＰが５０％を下回っていると
+  体幹ダメージの回復は止まります。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+メモ欄タグ（アクター、職業、スキル、アイテム、武器、防具、
+            敵キャラ、ステート）:
+
+  <trunkAtk:25>
+  スキルに体幹攻撃力を設定します、スキル以外にこのタグを設定すると
+  スキル使用時に与える体幹ダメージにその値が加算されます。
+  ただし、体幹攻撃力が設定されていないスキルには加算されません。
+
+
+メモ欄タグ（アクター、職業、武器、防具、敵キャラ、ステート）:
+
+  <trunkMax:50>
+  体幹最大値を加算します。
+  プラグインパラメータ trunkMax が 100 で、アクターのメモ欄に
+  <trunkMax:50> タグがある場合、このアクターの体幹最大値は 150 に
+  なります。
+
+  <trunkDef:50>
+  体幹防御力を設定します、値が 50 の場合、受ける体幹ダメージが
+  ５０％に軽減されます。
+
+  <trunkCnt:80>
+  体幹反撃力を設定します、値が 80 の場合、受けた体幹ダメージの
+  ８０％を相手にも与えます。
+  反撃ダメージは体幹防御力よりも前に計算するため、体幹防御力が
+  １００％であっても反撃ダメージが発生します。
+
+
+メモ欄タグ（アクター、エネミー）:
+
+  <trunkWidth:60>
+  このタグが設定されたバトラーの体幹ゲージの横幅を変更します。
+
+  <trunkHeight:12>
+  このタグが設定されたバトラーの体幹ゲージの高さを変更します。
+
+  <trunkShiftX:48>
+  このタグが設定されたバトラーの体幹ゲージの位置を
+  右に 48 ドットずらします。
+
+  <trunkShiftY:-24>
+  このタグが設定されたバトラーの体幹ゲージの位置を
+  上に 24 ドットずらします。
+
+
+おまけ機能:
+
+  TMBitmapEx.js を導入している場合、体幹ゲージが角丸になります。
+
+@param trunkState
+@text 付与ステート
+@desc 体幹が崩れた際に付与されるステート
+@default 10
+@type state
+
+@param trunkMax
+@text 体幹の最大値
+@desc 体幹の最大値
+@default 100
+@type number
+
+@param trunkRecover
+@text 回復体幹値
+@desc ターン終了時に回復する体幹値
+@default 50
+@type number
+
+@param trunkWidth
+@text 体幹ゲージ幅
+@desc 体幹ゲージの横幅
+@default 120
+@type number
+
+@param trunkHeight
+@text 体幹ゲージ高
+@desc 体幹ゲージの高さ
+@default 12
+@type number
+
+@param trunkAnimation
+@text 付与アニメーション
+@desc 体幹が崩れた際のアニメーション
+@default 39
+@type animation
+*/
 
 var Imported = Imported || {};
 Imported.TMTrunkGauge = true;

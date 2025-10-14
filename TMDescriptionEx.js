@@ -11,498 +11,842 @@
 
 // linkscape Modified 2020/08/10
 // バージョン: 2.0.4
-
 /*:
- * @target MV
- * @plugindesc アイテムやスキルの詳細情報の表示機能追加。(FTKR_CardGamesとの競合解消)
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/) linkscape
- *
- * @param descriptionKeyCode
- * @text 説明キー
- * @desc 説明ボタンとして使うキー
- * 初期値: 65
- * @default 65
- *
- * @param leftPaneWidth
- * @text 左パラメータ幅
- * @desc 左側のパラメータの幅
- * 初期値: 300
- * @default 300
- *
- * @param rightPaneWidth
- * @text 右パラメータ幅
- * @desc 右側のパラメータの幅
- * 初期値: 400
- * @default 400
- *
- * @param horzLineHeight
- * @text 横線高
- * @desc 横線の余白も含めた高さ
- * 初期値: 28
- * @default 28
- *
- * @param secretItemA
- * @text 隠しアイテムＡのタイプ名
- * @desc 隠しアイテムＡのタイプ名
- * 初期値: 隠しアイテムＡ
- * @default 隠しアイテムＡ
- *
- * @param secretItemB
- * @text 隠しアイテムＢのタイプ名
- * @desc 隠しアイテムＢのタイプ名
- * 初期値: 隠しアイテムＢ
- * @default 隠しアイテムＢ
- *
- * @param consumableText
- * @text 消耗の項目名
- * @desc 消耗の項目名
- * 初期値: 消耗
- * @default 消耗
- *
- * @param occasionText
- * @text 使用可能時の項目名
- * @desc 使用可能時の項目名
- * 初期値: 制限
- * @default 制限
- *
- * @param scopeText
- * @text 範囲の項目名
- * @desc 範囲の項目名
- * 初期値: 範囲
- * @default 範囲
- *
- * @param speedText
- * @text 速度補正の項目名
- * @desc 速度補正の項目名
- * 初期値: 速度補正
- * @default 速度補正
- *
- * @param successRateText
- * @text 成功率の項目名
- * @desc 成功率の項目名
- * 初期値: 成功率
- * @default 成功率
- *
- * @param repeatsText
- * @text 連続回数の項目名
- * @desc 連続回数の項目名
- * 初期値: 連続回数
- * @default 連続回数
- *
- * @param tpGainText
- * @text 得ＴＰの項目名
- * @desc 得ＴＰの項目名
- * 初期値: 獲得ＴＰ
- * @default 獲得ＴＰ
- *
- * @param hitTypeText
- * @text 命中タイプの項目名
- * @desc 命中タイプの項目名
- * 初期値: 命中判定
- * @default 命中判定
- *
- * @param priceText
- * @text 価格の項目名
- * @desc 価格の項目名
- * 初期値: 売却額
- * @default 売却額
- *
- * @param priceRate
- * @text 価格の表示倍率
- * @desc 価格の表示倍率
- * 初期値: 0.5
- * @default 0.5
- *
- * @param mpCostText
- * @text 消費ＭＰの項目名
- * @desc 消費ＭＰの項目名
- * 初期値: 消費ＭＰ
- * @default 消費ＭＰ
- *
- * @param tpCostText
- * @text 消費ＴＰの項目名
- * @desc 消費ＴＰの項目名
- * 初期値: 消費ＴＰ
- * @default 消費ＴＰ
- *
- * @param requiredWtypeText
- * @text 必要武器の項目名
- * @desc 必要武器の項目名
- * 初期値: 必要武器
- * @default 必要武器
- *
- * @param effectText
- * @text 使用効果の項目名
- * @desc 使用効果の項目名
- * 初期値: 効果
- * @default 効果
- *
- * @param traitText
- * @text 特徴の項目名
- * @desc 特徴の項目名
- * 初期値: 特徴
- * @default 特徴
- *
- * @param effectTextRecoverHp
- * @text ＨＰ回復の書式
- * @desc ＨＰ回復の書式
- * 初期値: ＨＰが%1回復
- * @default ＨＰが%1回復
- *
- * @param effectTextRecoverMp
- * @text ＭＰ回復の書式
- * @desc ＭＰ回復の書式
- * 初期値: ＭＰが%1回復
- * @default ＭＰが%1回復
- *
- * @param effectTextGainTp
- * @text ＴＰ増加の書式
- * @desc ＴＰ増加の書式
- * 初期値: ＴＰが%1増加
- * @default ＴＰが%1増加
- *
- * @param effectTextAddState
- * @text ステート付加の書式
- * @desc ステート付加の書式
- * 初期値: %2%の確率で%1を付加
- * @default %2%の確率で%1を付加
- *
- * @param effectTextRemoveState
- * @text ステート解除の書式
- * @desc ステート解除の書式
- * 初期値: %2%の確率で%1を解除
- * @default %2%の確率で%1を解除
- *
- * @param effectTextAddBuff
- * @text 強化の書式
- * @desc 強化の書式
- * 初期値: %2ターンの間だけ%1アップ
- * @default %2ターンの間だけ%1アップ
- *
- * @param effectTextAddDebuff
- * @text 弱体の書式
- * @desc 弱体の書式
- * 初期値: %2ターンの間だけ%1ダウン
- * @default %2ターンの間だけ%1ダウン
- *
- * @param effectTextRemoveBuff
- * @text 強化の解除の書式
- * @desc 強化の解除の書式
- * 初期値: %1アップの効果を解除
- * @default %1アップの効果を解除
- *
- * @param effectTextRemoveDebuff
- * @text 弱体の解除の書式
- * @desc 弱体の解除の書式
- * 初期値: %1ダウンの効果を解除
- * @default %1ダウンの効果を解除
- *
- * @param effectTextSpecial
- * @text 特殊効果の書式
- * @desc 特殊効果の書式
- * 初期値: 戦闘から離脱する
- * @default 戦闘から離脱する
- *
- * @param effectTextGrow
- * @text 成長の書式
- * @desc 成長の書式
- * 初期値: %1が永続的に%2上がる
- * @default %1が永続的に%2上がる
- *
- * @param effectTextLearnSkill
- * @text スキル習得の書式
- * @desc スキル習得の書式
- * 初期値: %1を習得する
- * @default %1を習得する
- *
- * @param damageTextDamageHp
- * @text 『ＨＰダメージ』の書式
- * @desc ダメージタイプ『ＨＰダメージ』の書式
- * 初期値: ＨＰに%1ダメージを与える
- * @default ＨＰに%1ダメージを与える
- *
- * @param damageTextDamageMp
- * @text 『ＭＰダメージ』の書式
- * @desc ダメージタイプ『ＭＰダメージ』の書式
- * 初期値: ＭＰに%1ダメージを与える
- * @default ＭＰに%1ダメージを与える
- *
- * @param damageTextRecoverHp
- * @text 『ＨＰ回復』の書式
- * @desc ダメージタイプ『ＨＰ回復』の書式
- * 初期値: ＨＰを回復する
- * @default ＨＰを回復する
- *
- * @param damageTextRecoverMp
- * @text 『ＭＰ回復』の書式
- * @desc ダメージタイプ『ＭＰ回復』の書式
- * 初期値: ＭＰを回復する
- * @default ＭＰを回復する
- *
- * @param damageTextDrainHp
- * @text 『ＨＰ吸収』の書式
- * @desc ダメージタイプ『ＨＰ吸収』の書式
- * 初期値: 与えたダメージをＨＰとして吸収する
- * @default 与えたダメージをＨＰとして吸収する
- *
- * @param damageTextDrainMp
- * @text 『ＭＰ吸収』の書式
- * @desc ダメージタイプ『ＭＰ吸収』の書式
- * 初期値: 与えたダメージをＭＰとして吸収する
- * @default 与えたダメージをＭＰとして吸収する
- *
- * @param traitTextElementRate
- * @text 属性有効度の書式
- * @desc 属性有効度の書式
- * 初期値: %1耐性%2%
- * @default %1耐性%2%
- *
- * @param traitTextDebuffRate
- * @text 弱体有効度の書式
- * @desc 弱体有効度の書式
- * 初期値: %1ダウン耐性%2%
- * @default %1ダウン耐性%2%
- *
- * @param traitTextStateRate
- * @text ステート有効度の書式
- * @desc ステート有効度の書式
- * 初期値: %1耐性%2%
- * @default %1耐性%2%
- *
- * @param traitTextStateResist
- * @text ステート無効化の書式
- * @desc ステート無効化の書式
- * 初期値: %1無効
- * @default %1無効
- *
- * @param traitTextParam
- * @text 通常能力値の書式
- * @desc 通常能力値の書式
- * 初期値: %1%2%
- * @default %1%2%
- *
- * @param traitTextXparam
- * @text 追加能力値の書式
- * @desc 追加能力値の書式
- * 初期値: %1%2
- * @default %1%2
- *
- * @param traitTextSparam
- * @text 特殊能力値の書式
- * @desc 特殊能力値の書式
- * 初期値: %1%2%
- * @default %1%2%
- *
- * @param traitTextAttackElement
- * @text 攻撃時属性の書式
- * @desc 攻撃時属性の書式
- * 初期値: 攻撃に%1付加
- * @default 攻撃に%1付加
- *
- * @param traitTextAttackState
- * @text 攻撃時ステートの書式
- * @desc 攻撃時ステートの書式
- * 初期値: 攻撃時に%2%の確率で%1を付加
- * @default 攻撃時に%2%の確率で%1を付加
- *
- * @param traitTextAttackSpeed
- * @text 攻撃速度補正の書式
- * @desc 攻撃速度補正の書式
- * 初期値: 攻撃速度%1
- * @default 攻撃速度%1
- *
- * @param traitTextAttackTimes
- * @text 攻撃追加回数の書式
- * @desc 攻撃追加回数の書式
- * 初期値: 攻撃回数%1
- * @default 攻撃回数%1
- *
- * @param traitTextStypeAdd
- * @text スキルタイプ追加の書式
- * @desc スキルタイプ追加の書式
- * 初期値: %1使用可能
- * @default %1使用可能
- *
- * @param traitTextStypeSeal
- * @text スキルタイプ封印の書式
- * @desc スキルタイプ封印の書式
- * 初期値: %1使用不可
- * @default %1使用不可
- *
- * @param traitTextSkillAdd
- * @text スキル追加の書式
- * @desc スキル追加の書式
- * 初期値: %1使用可能
- * @default %1使用可能
- *
- * @param traitTextSkillSeal
- * @text スキル封印の書式
- * @desc スキル封印の書式
- * 初期値: %1使用不可
- * @default %1使用不可
- *
- * @param traitTextEquipWtype
- * @text 武器タイプ装備の書式
- * @desc 武器タイプ装備の書式
- * 初期値: %1装備可能
- * @default %1装備可能
- *
- * @param traitTextEquipAtype
- * @text 防具タイプ装備の書式
- * @desc 防具タイプ装備の書式
- * 初期値: %1装備可能
- * @default %1装備可能
- *
- * @param traitTextEquipLock
- * @text 装備固定の書式
- * @desc 装備固定の書式
- * 初期値:
- * @default
- *
- * @param traitTextEquipSeal
- * @text 装備封印の書式
- * @desc 装備封印の書式
- * 初期値: %1装備不可
- * @default %1装備不可
- *
- * @param traitTextActionPlus
- * @text 行動回数追加の書式
- * @desc 行動回数追加の書式
- * 初期値: %1%の確率で連続行動
- * @default %1%の確率で連続行動
- *
- * @param xparamText
- * @text 追加能力値の項目名
- * @desc 追加能力値の項目名（カンマ区切りで１０項目）
- * 初期値: 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,…
- * @default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,Ｔ *再 生
- *
- * @param sparamText
- * @text 特殊能力値の項目名
- * @desc 特殊能力値の項目名（カンマ区切りで１０項目）
- * 初期値: 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,…
- * @default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,物理ダメ ジ*, 魔法ダメージ,床ダメージ,経験値獲得
- *
- * @param consumableValue
- * @text 消費の値
- * @desc 消費の値
- * 初期値: する,しない
- * @default する,しない
- *
- * @param occasionValue
- * @text 使用可能時の値
- * @desc 使用可能時の値
- * 初期値: なし,バトルのみ,メニューのみ,使用不可
- * @default なし,バトルのみ,メニューのみ,使用不可
- *
- * @param scopeValue
- * @text 範囲の値
- * @desc 範囲の値（カンマ区切りで１２項目）
- * 初期値: なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,…
- * @default なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,味方全体,味 *単 体,味方全体,使用者
- *
- * @param hitTypeValue
- * @text 命中タイプの値
- * @desc 命中タイプの値
- * 初期値: 必中,物理,魔法
- * @default 必中,物理,魔法
- *
- * @param slotTypeValue
- * @text 特殊能力値の値
- * @desc 特殊能力値の値
- * 初期値: 二刀流使用不可,二刀流使用可能
- * @default 二刀流使用不可,二刀流使用可能
- *
- * @param specialFlagValue
- * @text 特殊フラグの値
- * @desc 特殊フラグの値
- * 初期値: 自動戦闘,防御,身代わり,ＴＰ持ち越し
- * @default 自動戦闘,防御,身代わり,ＴＰ持ち越し
- *
- * @param partyAbilityValue
- * @text パーティ能力の値
- * @desc パーティ能力の値（カンマ区切りで６項目）
- * 初期値: エンカウント半減,エンカウント無効,不意打ち無効,…
- * @default エンカウント半減,エンカウント無効,不意打ち無効,先制攻撃率アップ,獲 金* 額２倍,アイテム入手率２倍
- *
- * @param elementFooter
- * @text 属性の接尾語
- * @desc 属性の接尾語
- * 初期値: 属性
- * @default 属性
- *
- * @param costExTextHp
- * @text 消費ＨＰの書式
- * @desc 消費ＨＰの書式（ TMSkillCostEx.js が必要）
- * 初期値: ＨＰを%1消費する
- * @default ＨＰを%1消費する
- *
- * @param costExTextItem
- * @text 消費アイテムの書式
- * @desc 消費アイテムの書式（ TMSkillCostEx.js が必要）
- * 初期値: %1を%2個消費する
- * @default %1を%2個消費する
- *
- * @param costExTextExp
- * @text 消費経験値の書式
- * @desc 消費経験値の書式（ TMSkillCostEx.js が必要）
- * 初期値: 経験値を%1消費する
- * @default 経験値を%1消費する
- *
- * @param costExTextGold
- * @text 消費金額の書式
- * @desc 消費金額の書式（ TMSkillCostEx.js が必要）
- * 初期値: お金を%1消費する
- * @default お金を%1消費する
- *
- * @param passiveAlwaysText
- * @text 常時発動の書式
- * @desc 常時発動の書式（ TMPassiveSkill.js が必要）
- * 初期値: 常に効果が適用される
- * @default 常に効果が適用される
- *
- * @param passiveTpText
- * @text ＴＰ○○以上で発動の書式
- * @desc ＴＰ○○以上で発動の書式（ TMPassiveSkill.js が必要）
- * 初期値: ＴＰ%1以上で効果が適用される
- * @default ＴＰ%1以上で効果が適用される
- *
- * @param passiveTpText2
- * @text ＴＰ○○未満で発動の書式
- * @desc ＴＰ○○未満で発動の書式（ TMPassiveSkill.js が必要）
- * 初期値: ＴＰ%1未満で効果が適用される
- * @default ＴＰ%1未満で効果が適用される
- *
- * @param passiveStateText
- * @text ○○状態で発動の書式
- * @desc ○○状態で発動の書式（ TMPassiveSkill.js が必要）
- * 初期値: %1状態で効果が適用される
- * @default %1状態で効果が適用される
- *
- * @help
- * TMPlugin - 詳細説明ウィンドウ ver2.0.3
- * 
- * 使い方:
- *
- *   このプラグインを導入すると、アイテムやスキルを選択中にＡキーを押すことで
- *   詳細説明ウィンドウが開くようになります。
- *   ヘルプウィンドウをクリック（タップ）しても開けます。
- *
- *   使用するキーは descriptionKeyCode の値を変更することで設定できます。
- *   65 ならＡ、66 ならＢ、とアルファベットが順に並んでいます、
- *   ＸやＺなど他の機能に割り当てられていないキーを設定してください。
- *
- *   プラグインコマンドはありません。
- * 
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- *
- *
- * メモ欄タグ（スキル、アイテム、武器、防具）:
- *
- *   <dType:素材>       # タイプ名（右上に表示）を素材にする
- *   <dText:テキスト>   # 右側パラメータの下部にテキストを追加（改行可能）
- */
+@target MV
+@plugindesc Added the ability to display detailed information about items and skills. (Resolved conflict with FTKR_CardGames)
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Detailed Description Window ver2.0.3
+
+How to Use:
+
+With this plugin installed, you can open the detailed description window by pressing the A key while selecting an item or skill.
+
+You can also open it by clicking (tapping) on the Help window.
+
+You can set the key to use by changing the value of descriptionKeyCode.
+65 is A, 66 is B, etc., in alphabetical order.
+
+Please set a key that is not assigned to other functions, such as X or Z.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Note field Tags (Skill, Item, Weapon, Armor):
+
+<dType:Material> # Use the type name (displayed in the upper right) as the material.
+<dText:Text> # Add text below the right parameter (line breaks allowed).
+
+@param descriptionKeyCode
+@text Description Key
+@desc Key to use as explanation button Default: 65
+@default 65
+
+@param leftPaneWidth
+@text Left Parameter Width
+@desc Left parameter width Default: 300
+@default 300
+
+@param rightPaneWidth
+@text Right Parameter Width
+@desc Right parameter width Default: 400
+@default 400
+
+@param horzLineHeight
+@text Horizontal line height
+@desc Height including margin for horizontal line Initial value: 28
+@default 28
+
+@param secretItemA
+@text Type name of hidden item A
+@desc Type name of hidden item A. Default: Hidden item A
+@default Hidden item A
+
+@param secretItemB
+@text Type name of hidden item B
+@desc Type name of hidden item B. Default: Hidden item B
+@default Hidden item B
+
+@param consumableText
+@text Consumption item name
+@desc Consumption item name Default value: Consumption
+@default Consumption
+
+@param occasionText
+@text Item name when available
+@desc Item name when available Initial value: Limit
+@default Limit
+
+@param scopeText
+@text Range item name
+@desc Range item name Initial value: Range
+@default Range
+
+@param speedText
+@text Speed correction item name
+@desc Speed correction item name Default value: Speed correction
+@default Speed correction
+
+@param successRateText
+@text Success rate item name
+@desc Success rate item name Default value: Success rate
+@default Success rate
+
+@param repeatsText
+@text Consecutive count item name
+@desc Item name of consecutive times Initial value: Repeat
+@default Repeat
+
+@param tpGainText
+@text TP Item Name
+@desc Item name of TP gained Initial value: Gain TP
+@default Gain TP
+
+@param hitTypeText
+@text Hit type item name
+@desc Hit type item name Default value: Hit judgment
+@default Hit judgment
+
+@param priceText
+@text Price item name
+@desc Price Item Name Default Value: Selling Price
+@default Selling Price
+
+@param priceRate
+@text Price display multiplier
+@desc Price display magnification Default: 0.5
+@default 0.5
+
+@param mpCostText
+@text MP consumption item name
+@desc MP Consumption Item Name Initial Value: MP cost
+@default MP cost
+
+@param tpCostText
+@text TP consumption item name
+@desc TP consumption item name Default value: TP cost
+@default TP cost
+
+@param requiredWtypeText
+@text Required Weapon Item Name
+@desc Required Weapon Item Name Default: Required Weapon
+@default Required Weapon
+
+@param effectText
+@text Usage effect item name
+@desc Usage effect item name Default value: Effect
+@default Effect
+
+@param traitText
+@text Traits name
+@desc Traits Item Name Default: Traits
+@default Traits
+
+@param effectTextRecoverHp
+@text HP recovery format
+@desc HP recovery format Default: HP recovered by %1
+@default HP recovered by %1
+
+@param effectTextRecoverMp
+@text MP recovery format
+@desc MP recovery format Default: MP recovery %1
+@default MP recovery %1
+
+@param effectTextGainTp
+@text Gain TP Format
+@desc Gain TP Format Default: TP increased by %1
+@default TP increased by %1
+
+@param effectTextAddState
+@text State addition format
+@desc State addition format Default: Add %1 with a %2% chance
+@default Add %1 with a %2% chance
+
+@param effectTextRemoveState
+@text State cancellation format
+@desc State Cancellation Format Default: %2% chance to cancel %1
+@default %2% chance to cancel %1
+
+@param effectTextAddBuff
+@text Reinforcement Format
+@desc Enhancement Format Initial Value: Increase by %1 for %2 turns
+@default Increase by %1 for %2 turns
+
+@param effectTextAddDebuff
+@text Weakened Form
+@desc Weakness Format Default: %1 Down for %2 turns
+@default %1 Down for %2 turns
+
+@param effectTextRemoveBuff
+@text Format for removing enhancements
+@desc Format for canceling enhancements Default: Cancels the effect of %1 increase
+@default Cancels the effect of %1 increase
+
+@param effectTextRemoveDebuff
+@text Format for removing debuffs
+@desc Format for removing debuffs Default: Removes the effect of %1 down
+@default Removes the effect of %1 down
+
+@param effectTextSpecial
+@text Special Effects Format
+@desc Special Effect Format Default: Leave Battle
+@default Leave Battle
+
+@param effectTextGrow
+@text Grow Format
+@desc Grow Format Default: %1 permanently increases by %2
+@default %1 permanently increases by %2
+
+@param effectTextLearnSkill
+@text Skill acquisition format
+@desc Skill acquisition format Default: Acquire %1
+@default Acquire %1
+
+@param damageTextDamageHp
+@text 『HP Damage』 Format
+@desc Damage type "HP Damage" format Default: Deals %1 damage to HP
+@default Deals %1 damage to HP
+
+@param damageTextDamageMp
+@text Format of "MP Damage"
+@desc Damage type "MP Damage" format Default: Deals %1 damage to MP
+@default Deals %1 damage to MP
+
+@param damageTextRecoverHp
+@text 『HP Recover』 Format
+@desc Damage type "HP Recover" format Default: Recover HP
+@default Recover HP
+
+@param damageTextRecoverMp
+@text Format of "MP Recover"
+@desc Damage type "MP Recover" format Default: Recover MP
+@default Recover MP
+
+@param damageTextDrainHp
+@text Format of "HP Drain"
+@desc Damage type "HP Drain" format Default: Absorbs the damage dealt as HP
+@default Absorbs the damage dealt as HP
+
+@param damageTextDrainMp
+@text Format of "MP Drain"
+@desc Damage type "MP absorption" format Default: Damage dealt is absorbed as MP
+@default Damage dealt is absorbed as MP
+
+@param traitTextElementRate
+@text Elements Efficiency Format
+@desc Elements Effectiveness Format Default: %1 Resistance %2%
+@default %1 Resistance %2%
+
+@param traitTextDebuffRate
+@text Weakness Effectiveness Format
+@desc Weakness Effectiveness Format Default: %1 Down Resistance %2%
+@default %1 Down Resistance %2%
+
+@param traitTextStateRate
+@text State Availability Format
+@desc State Effectiveness Format Default: %1 Resistance %2%
+@default %1 Resistance %2%
+
+@param traitTextStateResist
+@text State invalidation format
+@desc State invalidation format Default: %1 invalid
+@default %1 invalid
+
+@param traitTextParam
+@text Normal Param Score Format
+@desc Normal Param Format Default: %1%2%
+@default %1%2%
+
+@param traitTextXparam
+@text Bonus Param Score Format
+@desc Format of additional ability score Default: %1%2
+@default %1%2
+
+@param traitTextSparam
+@text Special Param Score Format
+@desc Special Param Format Default: %1%2%
+@default %1%2%
+
+@param traitTextAttackElement
+@text Attack Elements format
+@desc Attack Elements format Default: Add %1 to attack
+@default Add %1 to attack
+
+@param traitTextAttackState
+@text Attack state format
+@desc Attack State Format Default: Add %1 with a %2% chance when attacking
+@default Add %1 with a %2% chance when attacking
+
+@param traitTextAttackSpeed
+@text Attack speed modifier format
+@desc Attack Speed Format Default: Attack Speed %1
+@default Attack Speed %1
+
+@param traitTextAttackTimes
+@text Format for additional attacks
+@desc Format of additional attacks Default: Attacks %1
+@default Attacks %1
+
+@param traitTextStypeAdd
+@text Format for adding skill types
+@desc Add Skill Type Format Default: %1 Available
+@default %1 Available
+
+@param traitTextStypeSeal
+@text Skill Type Seal Format
+@desc Skill type seal format Default: %1 Never
+@default %1 Never
+
+@param traitTextSkillAdd
+@text Skill addition format
+@desc Skill Addition Format Default: %1 Usable
+@default %1 Usable
+
+@param traitTextSkillSeal
+@text Skill Seal Format
+@desc Skill seal format Default: %1 Never
+@default %1 Never
+
+@param traitTextEquipWtype
+@text Weapon Type Equipment Format
+@desc Weapon type equipment format Default: %1 equipable
+@default %1 equipable
+
+@param traitTextEquipAtype
+@text Armor type equipment format
+@desc Armor type equipment format Default: %1 equipable
+@default %1 equipable
+
+@param traitTextEquipLock
+@text Equipment Fixation Format
+@desc Equipment Fix Format Default:
+
+@param traitTextEquipSeal
+@text Equipment Seal Format
+@desc Equipment Seal Format Default: %1 Cannot be equipped
+@default %1 Cannot be equipped
+
+@param traitTextActionPlus
+@text Format for adding the number of actions
+@desc Format for adding the number of actions Default: %1% chance of consecutive actions
+@default %1% chance of consecutive actions
+
+@param xparamText
+@text Additional ability score item name
+@desc Additional ability value item name (10 items separated by commas) Initial value: Hit, Evasion, Critical Hit, Critical Hit Evasion, Magic Evasion, Magic Reflection, Counter Attack, ...
+@default Hit, Evasion, Critical Hit, Critical Hit Evasion, Magic Evasion, Magic Reflection, Counter Attack,HP Recover,MP Recover,TP Recover
+
+@param sparamText
+@text Special ability item name
+@desc Special ability value item name (10 items separated by commas) Initial value: Target probability, defensive effect, recovery effect, medicine knowledge, MP consumption,...
+@default Target Rate,Guard Effect,Recovery Effect,Pharmacology,MP Cost Rate,TP Charge Rate,Physical Damage,Magic Damage,Floor Damage,Experience
+@param consumableValue
+@text Consumption Value
+@desc Consumption value Initial value: Yes, No
+@default Yes,No
+
+@param occasionValue
+@text Value when available
+@desc Available values Default: None,Battle Screen,Menu Screen,Never
+@default None,Battle Screen,Menu Screen,Never
+
+@param scopeValue
+@text Range Values
+@desc Range value (12 items separated by commas) Default: None,1 Enemy,All Enemy,1 Randam Enemy,2 Randam Enemies,3 Randam Enemies,4 Randam Enemies, ...
+@default None,1 Enemy,All Enemy,1 Randam Enemy,2 Randam Enemies,3 Randam Enemies,4 Randam Enemies,1 Ally,All Allies,1 Ally (Dead),All Allies (Dead),The User
+
+@param hitTypeValue
+@text Hit Type Value
+@desc Hit type value Initial value: Certaion Hit,Physical Attack,Magical Attack
+@default Certaion Hit,Physical Attack,Magical Attack
+
+@param slotTypeValue
+@text Special Param Score
+@desc Special Param Value Initial Value: Dual Wielding Never, Dual Wielding Available
+@default Dual Wielding Never, Dual Wielding Available
+
+@param specialFlagValue
+@text Special Flag Values
+@desc Special Flag Values Default: Auto Battle,Guard,Substitute,Preserve TP
+@default Auto Battle,Guard,Substitute,Preserve TP
+
+@param partyAbilityValue
+@text Party Param Values
+@desc Party ability values (six items separated by commas) Initial value: Encounter Half,Encounter None,Cancel Surprise,Raise Preemptive,Gold Double,Drop Item Double
+@default Encounter Half,Encounter None,Cancel Surprise,Raise Preemptive,Gold Double,Drop Item Double
+
+@param elementFooter
+@text Elements Suffix
+@desc Elements suffix Default: Elements
+@default Elements
+
+@param costExTextHp
+@text HP Consumption Format
+@desc HP consumption format (TMSkillCostEx.js required) Default: Consume %1 HP
+@default Consume %1 HP
+
+@param costExTextItem
+@text Consumable Item Format
+@desc Consumable item format (requires TMSkillCostEx.js) Default: Consume %2 of %1
+@default Consume %2 of %1
+
+@param costExTextExp
+@text EXP Consumption Format
+@desc EXP consumption format (TMSkillCostEx.js required) Default: Consume %1 EXP
+@default 経験値を%1消費する
+
+@param costExTextGold
+@text Consumption amount format
+@desc Spending amount format (requires TMSkillCostEx.js) Default: Spend %1 money
+@default Consume %1 EXP
+
+@param passiveAlwaysText
+@text Always-on format
+@desc Constant activation format (Requires TMPassiveSkill.js) Default: The effect is always applied
+@default The effect is always applied
+
+@param passiveTpText
+@text Activation format for TP ○○ or more
+@desc Format for activation at TP XX or more (Requires TMPassiveSkill.js) Default: Effect is applied at TP %1 or more
+@default Effect is applied at TP %1 or more
+
+@param passiveTpText2
+@text Activation format when TP is less than ○○
+@desc Format for activation when TP is less than ○○ (Requires TMPassiveSkill.js) Default: Effect is applied when TP is less than %1
+@default Effect is applied when TP is less than %1
+
+@param passiveStateText
+@text Format for activation in ○○ state
+@desc Format for activation in XX state (Requires TMPassiveSkill.js) Default: The effect is applied in %1 state
+@default The effect is applied in %1 state
+*/
+
+
+/*:ja
+@target MV
+@plugindesc アイテムやスキルの詳細情報の表示機能追加。(FTKR_CardGamesとの競合解消)
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 詳細説明ウィンドウ ver2.0.3
+
+使い方:
+
+  このプラグインを導入すると、アイテムやスキルを選択中にＡキーを押すことで
+  詳細説明ウィンドウが開くようになります。
+  ヘルプウィンドウをクリック（タップ）しても開けます。
+
+  使用するキーは descriptionKeyCode の値を変更することで設定できます。
+  65 ならＡ、66 ならＢ、とアルファベットが順に並んでいます、
+  ＸやＺなど他の機能に割り当てられていないキーを設定してください。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+メモ欄タグ（スキル、アイテム、武器、防具）:
+
+  <dType:素材>       # タイプ名（右上に表示）を素材にする
+  <dText:テキスト>   # 右側パラメータの下部にテキストを追加（改行可能）
+
+@param descriptionKeyCode
+@text 説明キー
+@desc 説明ボタンとして使うキー 初期値: 65
+@default 65
+
+@param leftPaneWidth
+@text 左パラメータ幅
+@desc 左側のパラメータの幅 初期値: 300
+@default 300
+
+@param rightPaneWidth
+@text 右パラメータ幅
+@desc 右側のパラメータの幅 初期値: 400
+@default 400
+
+@param horzLineHeight
+@text 横線高
+@desc 横線の余白も含めた高さ 初期値: 28
+@default 28
+
+@param secretItemA
+@text 隠しアイテムＡのタイプ名
+@desc 隠しアイテムＡのタイプ名 初期値: 隠しアイテムＡ
+@default 隠しアイテムＡ
+
+@param secretItemB
+@text 隠しアイテムＢのタイプ名
+@desc 隠しアイテムＢのタイプ名 初期値: 隠しアイテムＢ
+@default 隠しアイテムＢ
+
+@param consumableText
+@text 消耗の項目名
+@desc 消耗の項目名 初期値: 消耗
+@default 消耗
+
+@param occasionText
+@text 使用可能時の項目名
+@desc 使用可能時の項目名 初期値: 制限
+@default 制限
+
+@param scopeText
+@text 範囲の項目名
+@desc 範囲の項目名 初期値: 範囲
+@default 範囲
+
+@param speedText
+@text 速度補正の項目名
+@desc 速度補正の項目名 初期値: 速度補正
+@default 速度補正
+
+@param successRateText
+@text 成功率の項目名
+@desc 成功率の項目名 初期値: 成功率
+@default 成功率
+
+@param repeatsText
+@text 連続回数の項目名
+@desc 連続回数の項目名 初期値: 連続回数
+@default 連続回数
+
+@param tpGainText
+@text 得ＴＰの項目名
+@desc 得ＴＰの項目名 初期値: 獲得ＴＰ
+@default 獲得ＴＰ
+
+@param hitTypeText
+@text 命中タイプの項目名
+@desc 命中タイプの項目名 初期値: 命中判定
+@default 命中判定
+
+@param priceText
+@text 価格の項目名
+@desc 価格の項目名 初期値: 売却額
+@default 売却額
+
+@param priceRate
+@text 価格の表示倍率
+@desc 価格の表示倍率 初期値: 0.5
+@default 0.5
+
+@param mpCostText
+@text 消費ＭＰの項目名
+@desc 消費ＭＰの項目名 初期値: 消費ＭＰ
+@default 消費ＭＰ
+
+@param tpCostText
+@text 消費ＴＰの項目名
+@desc 消費ＴＰの項目名 初期値: 消費ＴＰ
+@default 消費ＴＰ
+
+@param requiredWtypeText
+@text 必要武器の項目名
+@desc 必要武器の項目名 初期値: 必要武器
+@default 必要武器
+
+@param effectText
+@text 使用効果の項目名
+@desc 使用効果の項目名 初期値: 効果
+@default 効果
+
+@param traitText
+@text 特徴の項目名
+@desc 特徴の項目名 初期値: 特徴
+@default 特徴
+
+@param effectTextRecoverHp
+@text ＨＰ回復の書式
+@desc ＨＰ回復の書式 初期値: ＨＰが%1回復
+@default ＨＰが%1回復
+
+@param effectTextRecoverMp
+@text ＭＰ回復の書式
+@desc ＭＰ回復の書式 初期値: ＭＰが%1回復
+@default ＭＰが%1回復
+
+@param effectTextGainTp
+@text ＴＰ増加の書式
+@desc ＴＰ増加の書式 初期値: ＴＰが%1増加
+@default ＴＰが%1増加
+
+@param effectTextAddState
+@text ステート付加の書式
+@desc ステート付加の書式 初期値: %2%の確率で%1を付加
+@default %2%の確率で%1を付加
+
+@param effectTextRemoveState
+@text ステート解除の書式
+@desc ステート解除の書式 初期値: %2%の確率で%1を解除
+@default %2%の確率で%1を解除
+
+@param effectTextAddBuff
+@text 強化の書式
+@desc 強化の書式 初期値: %2ターンの間だけ%1アップ
+@default %2ターンの間だけ%1アップ
+
+@param effectTextAddDebuff
+@text 弱体の書式
+@desc 弱体の書式 初期値: %2ターンの間だけ%1ダウン
+@default %2ターンの間だけ%1ダウン
+
+@param effectTextRemoveBuff
+@text 強化の解除の書式
+@desc 強化の解除の書式 初期値: %1アップの効果を解除
+@default %1アップの効果を解除
+
+@param effectTextRemoveDebuff
+@text 弱体の解除の書式
+@desc 弱体の解除の書式 初期値: %1ダウンの効果を解除
+@default %1ダウンの効果を解除
+
+@param effectTextSpecial
+@text 特殊効果の書式
+@desc 特殊効果の書式 初期値: 戦闘から離脱する
+@default 戦闘から離脱する
+
+@param effectTextGrow
+@text 成長の書式
+@desc 成長の書式 初期値: %1が永続的に%2上がる
+@default %1が永続的に%2上がる
+
+@param effectTextLearnSkill
+@text スキル習得の書式
+@desc スキル習得の書式 初期値: %1を習得する
+@default %1を習得する
+
+@param damageTextDamageHp
+@text 『ＨＰダメージ』の書式
+@desc ダメージタイプ『ＨＰダメージ』の書式 初期値: ＨＰに%1ダメージを与える
+@default ＨＰに%1ダメージを与える
+
+@param damageTextDamageMp
+@text 『ＭＰダメージ』の書式
+@desc ダメージタイプ『ＭＰダメージ』の書式 初期値: ＭＰに%1ダメージを与える
+@default ＭＰに%1ダメージを与える
+
+@param damageTextRecoverHp
+@text 『ＨＰ回復』の書式
+@desc ダメージタイプ『ＨＰ回復』の書式 初期値: ＨＰを回復する
+@default ＨＰを回復する
+
+@param damageTextRecoverMp
+@text 『ＭＰ回復』の書式
+@desc ダメージタイプ『ＭＰ回復』の書式 初期値: ＭＰを回復する
+@default ＭＰを回復する
+
+@param damageTextDrainHp
+@text 『ＨＰ吸収』の書式
+@desc ダメージタイプ『ＨＰ吸収』の書式 初期値: 与えたダメージをＨＰとして吸収する
+@default 与えたダメージをＨＰとして吸収する
+
+@param damageTextDrainMp
+@text 『ＭＰ吸収』の書式
+@desc ダメージタイプ『ＭＰ吸収』の書式 初期値: 与えたダメージをＭＰとして吸収する
+@default 与えたダメージをＭＰとして吸収する
+
+@param traitTextElementRate
+@text 属性有効度の書式
+@desc 属性有効度の書式 初期値: %1耐性%2%
+@default %1耐性%2%
+
+@param traitTextDebuffRate
+@text 弱体有効度の書式
+@desc 弱体有効度の書式 初期値: %1ダウン耐性%2%
+@default %1ダウン耐性%2%
+
+@param traitTextStateRate
+@text ステート有効度の書式
+@desc ステート有効度の書式 初期値: %1耐性%2%
+@default %1耐性%2%
+
+@param traitTextStateResist
+@text ステート無効化の書式
+@desc ステート無効化の書式 初期値: %1無効
+@default %1無効
+
+@param traitTextParam
+@text 通常能力値の書式
+@desc 通常能力値の書式 初期値: %1%2%
+@default %1%2%
+
+@param traitTextXparam
+@text 追加能力値の書式
+@desc 追加能力値の書式 初期値: %1%2
+@default %1%2
+
+@param traitTextSparam
+@text 特殊能力値の書式
+@desc 特殊能力値の書式 初期値: %1%2%
+@default %1%2%
+
+@param traitTextAttackElement
+@text 攻撃時属性の書式
+@desc 攻撃時属性の書式 初期値: 攻撃に%1付加
+@default 攻撃に%1付加
+
+@param traitTextAttackState
+@text 攻撃時ステートの書式
+@desc 攻撃時ステートの書式 初期値: 攻撃時に%2%の確率で%1を付加
+@default 攻撃時に%2%の確率で%1を付加
+
+@param traitTextAttackSpeed
+@text 攻撃速度補正の書式
+@desc 攻撃速度補正の書式 初期値: 攻撃速度%1
+@default 攻撃速度%1
+
+@param traitTextAttackTimes
+@text 攻撃追加回数の書式
+@desc 攻撃追加回数の書式 初期値: 攻撃回数%1
+@default 攻撃回数%1
+
+@param traitTextStypeAdd
+@text スキルタイプ追加の書式
+@desc スキルタイプ追加の書式 初期値: %1使用可能
+@default %1使用可能
+
+@param traitTextStypeSeal
+@text スキルタイプ封印の書式
+@desc スキルタイプ封印の書式 初期値: %1使用不可
+@default %1使用不可
+
+@param traitTextSkillAdd
+@text スキル追加の書式
+@desc スキル追加の書式 初期値: %1使用可能
+@default %1使用可能
+
+@param traitTextSkillSeal
+@text スキル封印の書式
+@desc スキル封印の書式 初期値: %1使用不可
+@default %1使用不可
+
+@param traitTextEquipWtype
+@text 武器タイプ装備の書式
+@desc 武器タイプ装備の書式 初期値: %1装備可能
+@default %1装備可能
+
+@param traitTextEquipAtype
+@text 防具タイプ装備の書式
+@desc 防具タイプ装備の書式 初期値: %1装備可能
+@default %1装備可能
+
+@param traitTextEquipLock
+@text 装備固定の書式
+@desc 装備固定の書式 初期値:
+
+@param traitTextEquipSeal
+@text 装備封印の書式
+@desc 装備封印の書式 初期値: %1装備不可
+@default %1装備不可
+
+@param traitTextActionPlus
+@text 行動回数追加の書式
+@desc 行動回数追加の書式 初期値: %1%の確率で連続行動
+@default %1%の確率で連続行動
+
+@param xparamText
+@text 追加能力値の項目名
+@desc 追加能力値の項目名（カンマ区切りで１０項目） 初期値: 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,…
+@default 命中,回避,会心,会心回避,魔法回避,魔法反射,反撃,ＨＰ再生,ＭＰ再生,Ｔ *再 生
+
+@param sparamText
+@text 特殊能力値の項目名
+@desc 特殊能力値の項目名（カンマ区切りで１０項目） 初期値: 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,…
+@default 狙われ率,防御効果,回復効果,薬の知識,ＭＰ消費,ＴＰチャージ,物理ダメ ジ*, 魔法ダメージ,床ダメージ,経験値獲得
+
+@param consumableValue
+@text 消費の値
+@desc 消費の値 初期値: する,しない
+@default する,しない
+
+@param occasionValue
+@text 使用可能時の値
+@desc 使用可能時の値 初期値: なし,バトルのみ,メニューのみ,使用不可
+@default なし,バトルのみ,メニューのみ,使用不可
+
+@param scopeValue
+@text 範囲の値
+@desc 範囲の値（カンマ区切りで１２項目） 初期値: なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,…
+@default なし,敵単体,敵全体,敵１体,敵２体,敵３体,敵４対,味方単体,味方全体,味 *単 体,味方全体,使用者
+
+@param hitTypeValue
+@text 命中タイプの値
+@desc 命中タイプの値 初期値: 必中,物理,魔法
+@default 必中,物理,魔法
+
+@param slotTypeValue
+@text 特殊能力値の値
+@desc 特殊能力値の値 初期値: 二刀流使用不可,二刀流使用可能
+@default 二刀流使用不可,二刀流使用可能
+
+@param specialFlagValue
+@text 特殊フラグの値
+@desc 特殊フラグの値 初期値: 自動戦闘,防御,身代わり,ＴＰ持ち越し
+@default 自動戦闘,防御,身代わり,ＴＰ持ち越し
+
+@param partyAbilityValue
+@text パーティ能力の値
+@desc パーティ能力の値（カンマ区切りで６項目） 初期値: エンカウント半減,エンカウント無効,不意打ち無効,…
+@default エンカウント半減,エンカウント無効,不意打ち無効,先制攻撃率アップ,獲 金* 額２倍,アイテム入手率２倍
+
+@param elementFooter
+@text 属性の接尾語
+@desc 属性の接尾語 初期値: 属性
+@default 属性
+
+@param costExTextHp
+@text 消費ＨＰの書式
+@desc 消費ＨＰの書式（ TMSkillCostEx.js が必要） 初期値: ＨＰを%1消費する
+@default ＨＰを%1消費する
+
+@param costExTextItem
+@text 消費アイテムの書式
+@desc 消費アイテムの書式（ TMSkillCostEx.js が必要） 初期値: %1を%2個消費する
+@default %1を%2個消費する
+
+@param costExTextExp
+@text 消費経験値の書式
+@desc 消費経験値の書式（ TMSkillCostEx.js が必要） 初期値: 経験値を%1消費する
+@default 経験値を%1消費する
+
+@param costExTextGold
+@text 消費金額の書式
+@desc 消費金額の書式（ TMSkillCostEx.js が必要） 初期値: お金を%1消費する
+@default お金を%1消費する
+
+@param passiveAlwaysText
+@text 常時発動の書式
+@desc 常時発動の書式（ TMPassiveSkill.js が必要） 初期値: 常に効果が適用される
+@default 常に効果が適用される
+
+@param passiveTpText
+@text ＴＰ○○以上で発動の書式
+@desc ＴＰ○○以上で発動の書式（ TMPassiveSkill.js が必要） 初期値: ＴＰ%1以上で効果が適用される
+@default ＴＰ%1以上で効果が適用される
+
+@param passiveTpText2
+@text ＴＰ○○未満で発動の書式
+@desc ＴＰ○○未満で発動の書式（ TMPassiveSkill.js が必要） 初期値: ＴＰ%1未満で効果が適用される
+@default ＴＰ%1未満で効果が適用される
+
+@param passiveStateText
+@text ○○状態で発動の書式
+@desc ○○状態で発動の書式（ TMPassiveSkill.js が必要） 初期値: %1状態で効果が適用される
+@default %1状態で効果が適用される
+*/
 
 var Imported = Imported || {};
 Imported.TMDescriptionEx = true;

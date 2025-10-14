@@ -8,32 +8,65 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 一部ウィンドウのオープン演出をぽよっとさせます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param openSpeed
- * @desc ウィンドウが開く速度。
- * 初期値: 16
- * @default 16
- *
- * @help
- * 使い方:
- *
- *   ウィンドウのオープン演出の最後が少しやわらかくなります。
- *   プラグインを導入していない状態と比べて、完全に開くまでの時間が
- *   倍になっています。
- *   プラグインパラメータ openSpeed を 32 にすると同じ時間になります。
- *
- *   タイトルコマンドやメッセージウィンドウなど、元々オープン演出のある
- *   一部のウィンドウのみが対象となります。
- *
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.3.2 で動作確認をしています。
- */
+@plugindesc It makes some windows look soft when they open.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+How to use:
+
+Slightly softens the final moment of a window's opening animation.
+
+Compared to when the plugin is not installed, the time to fully open is doubled.
+
+Setting the plugin parameter openSpeed to 32 will achieve the same time.
+
+This applies only to certain windows that already have an opening animation, such as title commands and message windows.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.3.2.
+
+@param openSpeed
+@desc Window opening speed. Default: 16
+@default 16
+*/
+
+
+/*:ja
+@plugindesc 一部ウィンドウのオープン演出をぽよっとさせます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+使い方:
+
+  ウィンドウのオープン演出の最後が少しやわらかくなります。
+  プラグインを導入していない状態と比べて、完全に開くまでの時間が
+  倍になっています。
+  プラグインパラメータ openSpeed を 32 にすると同じ時間になります。
+
+  タイトルコマンドやメッセージウィンドウなど、元々オープン演出のある
+  一部のウィンドウのみが対象となります。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.3.2 で動作確認をしています。
+
+@param openSpeed
+@desc ウィンドウが開く速度。 初期値: 16
+@default 16
+*/
 
 var Imported = Imported || {};
 Imported.TMPoyoWindow = true;

@@ -4,32 +4,65 @@
 // Version: 1.0
 // 最終更新日: 2015/12/29
 //=============================================================================
-
 /*:
- * @plugindesc v1.0.1 レベル上限をゲーム中に増やすことができます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param maxMaxLevel
- * @text レベル上限
- * @type number
- * @min 1
- * @max 99
- * @desc 加算値込みのレベル上限
- * 初期値: 99
- * @default 99
- *
- * @help
- * プラグインコマンド:
- * gainMaxLevel 1 5
- *      # アクター１番のレベル上限を５増やす
- * getMaxLevel 2 10
- *      # アクター２番のレベル上限を変数１０番に代入
- * getMaxLevelPlus 2 3
- *      # アクター２番のレベル上限(加算値)を変数３番に代入
- * 
- * v1.0.1 プラグインパラメーターの調整と、ヘルプの誤字を修正 by ムノクラ
- */
+@plugindesc v1.0.1 You can increase the level cap during the game.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Plugin Commands:
+gainMaxLevel 1 5
+# Increase Actor 1's level cap by 5
+getMaxLevel 2 10
+# Assign Actor 2's level cap to variable 10
+getMaxLevelPlus 2 3
+# Assign Actor 2's level cap (additional value) to variable 3
+
+v1.0.1 Plugin parameters adjusted and help text typos fixed by Munokura
+
+@param maxMaxLevel
+@text Level Cap
+@desc Maximum level including additional value Initial value: 99
+@default 99
+@type number
+@min 1
+@max 99
+*/
+
+
+/*:ja
+@plugindesc v1.0.1 レベル上限をゲーム中に増やすことができます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+プラグインコマンド:
+gainMaxLevel 1 5
+     # アクター１番のレベル上限を５増やす
+getMaxLevel 2 10
+     # アクター２番のレベル上限を変数１０番に代入
+getMaxLevelPlus 2 3
+     # アクター２番のレベル上限(加算値)を変数３番に代入
+
+v1.0.1 プラグインパラメーターの調整と、ヘルプの誤字を修正 by ムノクラ
+
+@param maxMaxLevel
+@text レベル上限
+@desc 加算値込みのレベル上限 初期値: 99
+@default 99
+@type number
+@min 1
+@max 99
+*/
 
 var Imported = Imported || {};
 Imported.TMMaxLevel = true;

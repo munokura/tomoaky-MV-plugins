@@ -2,138 +2,242 @@
 // TMPlugin - ボスＨＰゲージ
 // バージョン: 1.1.0
 // 最終更新日: 2018/09/25
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2017 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンに任意のイベントのＨＰゲージを表示します。
- * TMJumpAction.jsなどのイベントにHPをもたせるプラグインが必要です。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param gaugeWindowX
- * @type number
- * @min -9999
- * @desc ＨＰゲージウィンドウのＸ座標
- * 初期値: 528
- * @default 528
- *
- * @param gaugeWindowY
- * @type number
- * @min -9999
- * @desc ＨＰゲージウィンドウのＹ座標
- * 初期値: 0
- * @default 0
- *
- * @param gaugeWindowWidth
- * @type number
- * @desc ＨＰゲージウィンドウの幅
- * 初期値: 288
- * @default 288
- *
- * @param gaugeWindowHeight
- * @type number
- * @desc ＨＰゲージウィンドウの高さ
- * 初期値: 72
- * @default 72
- *
- * @param gaugeColor
- * @desc ＨＰゲージの色
- * 初期値: #e48040 #f0c040
- * @default #e48040 #f0c040
- * 
- * @param gaugeValue
- * @type boolean
- * @desc ゲージの右端にＨＰを数値で表示する
- * 初期値: ON ( true = ON 表示 / false = OFF 非表示 )
- * @default true
- * 
- * @param bossName
- * @type boolean
- * @desc ゲージの左端にボスの名前を表示する
- * 初期値: ON ( true = ON 表示 / false = OFF 非表示 )
- * @default true
- * 
- * @param shakeTime
- * @type number
- * @desc ダメージを受けたときにウィンドウを揺らす時間（フレーム）
- * 初期値: 20 ( 0 で揺らさない )
- * @default 20
- *
- * @param windowOpacity
- * @type number
- * @max 255
- * @desc ＨＰゲージウィンドウの不透明度
- * 初期値: 255
- * @default 255
- *
- * @param collideOpacity
- * @type number
- * @max 255
- * @desc プレイヤーと重なったときの不透明度
- * 初期値: 128（ 0 ～ 255 ）
- * @default 128
- *
- * @param messageBusyHide
- * @type boolean
- * @desc メッセージウィンドウ表示中はＨＰゲージウィンドウを隠す
- * 初期値: ON ( true = ON 隠す / false = OFF 隠さない )
- * @default true
- *
- * @param eventBusyHide
- * @type boolean
- * @desc イベント起動中はＨＰゲージウィンドウを隠す
- * 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
- * @default true
- *
- * @help
- * TMPlugin - ボスＨＰゲージ ver1.1.0
- * 
- * 使い方:
- *
- *   TMJumpAction.js / TMShooting.js と併用することで動作します。
- *   プラグインコマンドでイベントを指定、または自動モードに切り替えることで
- *   対象となったイベントのＨＰゲージがマップシーンに表示されます。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインコマンド:
- *
- *   setBossHpGauge 1
- *     1 番のイベントをＨＰゲージの対象としてセットする。
- *     このコマンドを実行すると stopAutoBossHpGauge も自動実行されます。
- * 
- *   startAutoBossHpGauge
- *     以降、ダメージ判定のあったイベントを自動的に対象とする。
- * 
- *   stopAutoBossHpGauge
- *     startAutoBossHpGauge の機能を無効化する。
- * 
- *   hideBossHpGauge
- *     ＨＰゲージを隠す。
- * 
- *   showBossHpGauge
- *     hideBossHpGauge で隠したＨＰゲージを表示する。
- * 
- *
- * プラグインパラメータ補足:
- *
- *   windowOpacity / collideOpacity
- *     windowOpacity はウィンドウフレーム及び背景に影響し、collideOpacity
- *     はゲージや文字列にも影響します。
- *     windowOpacity の値が collideOpacity よりも低い場合、プレイヤーと
- *     重なった際の不透明度として windowOpacity の値が適用されます。
- *     ただし、ゲージと文字列に関しては通常どおり collideOpacity の
- *     値が適用されます。
- */
+@plugindesc Displays the HP gauge of any event on the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Boss HP Gauge ver. 1.1.0
+
+How to Use:
+
+Works in conjunction with TMJumpAction.js / TMShooting.js.
+By specifying an event with the plugin command or switching to automatic mode,
+the HP gauge for the target event will be displayed in the map scene.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free to use, including commercial use, modifications, and redistribution.
+
+Plugin Command:
+
+setBossHpGauge 1
+Sets event number 1 as the target HP gauge.
+Executing this command also automatically executes stopAutoBossHpGauge.
+
+startAutoBossHpGauge
+Automatically targets subsequent events that have been hit by damage.
+
+stopAutoBossHpGauge
+Disables the startAutoBossHpGauge function.
+
+hideBossHpGauge
+Hide the HP gauge.
+
+showBossHpGauge
+Show the HP gauge hidden with hideBossHpGauge.
+
+Plugin Parameter Notes:
+
+windowOpacity / collideOpacity
+windowOpacity affects the window frame and background, while collideOpacity
+affects gauges and text.
+If the windowOpacity value is lower than collideOpacity, the windowOpacity value is applied as the opacity when overlapping with the player.
+However, the collideOpacity value is applied as usual to gauges and text.
+
+@param gaugeWindowX
+@desc HP Gauge Window X Coordinate Default: 528
+@default 528
+@type number
+@min -9999
+
+@param gaugeWindowY
+@desc Y coordinate of HP gauge window Initial value: 0
+@default 0
+@type number
+@min -9999
+
+@param gaugeWindowWidth
+@desc HP Gauge Window Width Default: 288
+@default 288
+@type number
+
+@param gaugeWindowHeight
+@desc HP Gauge Window Height Default: 72
+@default 72
+@type number
+
+@param gaugeColor
+@desc HP gauge color Default: #e48040 #f0c040
+@default #e48040 #f0c040
+
+@param gaugeValue
+@desc Displays HP numerically on the right side of the gauge. Default: ON (true = ON Display / false = OFF Hidden)
+@default true
+@type boolean
+
+@param bossName
+@desc Display the boss name on the left side of the gauge. Default: ON ( true = ON display / false = OFF hide )
+@default true
+@type boolean
+
+@param shakeTime
+@desc Time (frames) to shake the window when taking damage. Default: 20 (0 means no shaking).
+@default 20
+@type number
+
+@param windowOpacity
+@desc HP Gauge Window Opacity Default: 255
+@default 255
+@type number
+@max 255
+
+@param collideOpacity
+@desc Opacity when overlapping with the player Initial value: 128 (0 to 255)
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc Hide the HP gauge window while the message window is displayed. Default: ON ( true = ON hide / false = OFF do not hide )
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc Hide the HP gauge window while an event is running. Default: ON (true = ON hide / false = OFF do not hide)
+@default true
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc マップシーンに任意のイベントのＨＰゲージを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ボスＨＰゲージ ver1.1.0
+
+使い方:
+
+  TMJumpAction.js / TMShooting.js と併用することで動作します。
+  プラグインコマンドでイベントを指定、または自動モードに切り替えることで
+  対象となったイベントのＨＰゲージがマップシーンに表示されます。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  setBossHpGauge 1
+    1 番のイベントをＨＰゲージの対象としてセットする。
+    このコマンドを実行すると stopAutoBossHpGauge も自動実行されます。
+
+  startAutoBossHpGauge
+    以降、ダメージ判定のあったイベントを自動的に対象とする。
+
+  stopAutoBossHpGauge
+    startAutoBossHpGauge の機能を無効化する。
+
+  hideBossHpGauge
+    ＨＰゲージを隠す。
+
+  showBossHpGauge
+    hideBossHpGauge で隠したＨＰゲージを表示する。
+
+
+プラグインパラメータ補足:
+
+  windowOpacity / collideOpacity
+    windowOpacity はウィンドウフレーム及び背景に影響し、collideOpacity
+    はゲージや文字列にも影響します。
+    windowOpacity の値が collideOpacity よりも低い場合、プレイヤーと
+    重なった際の不透明度として windowOpacity の値が適用されます。
+    ただし、ゲージと文字列に関しては通常どおり collideOpacity の
+    値が適用されます。
+
+@param gaugeWindowX
+@desc ＨＰゲージウィンドウのＸ座標 初期値: 528
+@default 528
+@type number
+@min -9999
+
+@param gaugeWindowY
+@desc ＨＰゲージウィンドウのＹ座標 初期値: 0
+@default 0
+@type number
+@min -9999
+
+@param gaugeWindowWidth
+@desc ＨＰゲージウィンドウの幅 初期値: 288
+@default 288
+@type number
+
+@param gaugeWindowHeight
+@desc ＨＰゲージウィンドウの高さ 初期値: 72
+@default 72
+@type number
+
+@param gaugeColor
+@desc ＨＰゲージの色 初期値: #e48040 #f0c040
+@default #e48040 #f0c040
+
+@param gaugeValue
+@desc ゲージの右端にＨＰを数値で表示する 初期値: ON ( true = ON 表示 / false = OFF 非表示 )
+@default true
+@type boolean
+
+@param bossName
+@desc ゲージの左端にボスの名前を表示する 初期値: ON ( true = ON 表示 / false = OFF 非表示 )
+@default true
+@type boolean
+
+@param shakeTime
+@desc ダメージを受けたときにウィンドウを揺らす時間（フレーム） 初期値: 20 ( 0 で揺らさない )
+@default 20
+@type number
+
+@param windowOpacity
+@desc ＨＰゲージウィンドウの不透明度 初期値: 255
+@default 255
+@type number
+@max 255
+
+@param collideOpacity
+@desc プレイヤーと重なったときの不透明度 初期値: 128（ 0 ～ 255 ）
+@default 128
+@type number
+@max 255
+
+@param messageBusyHide
+@desc メッセージウィンドウ表示中はＨＰゲージウィンドウを隠す 初期値: ON ( true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+
+@param eventBusyHide
+@desc イベント起動中はＨＰゲージウィンドウを隠す 初期値: ON（ true = ON 隠す / false = OFF 隠さない )
+@default true
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMBossHpGauge = true;

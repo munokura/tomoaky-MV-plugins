@@ -8,55 +8,108 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @target MZ MV
- * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMItemCategoryEx.js
- * @author tomoaky (https://twitter.com/tomoaky/)
- * @plugindesc アイテムカテゴリの追加、削除をおこないます。
- *
- * @param categoryList
- * @text アイテムカテゴリ一覧
- * @desc アイテムカテゴリの一覧 (詳しくはヘルプにて)
- * 初期値: item weapon armor keyItem
- * @default item weapon armor keyItem
- *
- * @help
- * TMPlugin - アイテムカテゴリ拡張 ver1.0.1
- *
- * 使い方:
- *
- *   プラグインパラメータでアイテムカテゴリを設定してください。
- *   item, weapon, armor, keyItem は アイテム, 武器, 防具, 大事なもの に
- *   対応しています。
- *   たとえばアイテムと武器の間に 書物 というカテゴリを追加したい場合は
- *   item 書物 weapon armor keyItem
- *   というような設定になります。
- * 
- *   追加したカテゴリは itemCategory タグを使ってアイテムに設定することが
- *   できます。タグを設定したアイテムは通常のアイテムカテゴリには
- *   表示されなくなります。
- * 
- *   また、不要なカテゴリを削除することもできます。
- *   カテゴリが 1 個しかない場合はカテゴリ選択の処理自体が省略されます。
- * 
- *   プラグインコマンドはありません。
- * 
- * 
- * メモ欄タグ（アイテム）:
- * 
- *   <itemCategory:書物>
- *     このアイテムのカテゴリを 書物 に設定します。
- *     プラグインパラメータ categoryList に 書物 というカテゴリが
- *     あればそこに表示されます。
- *
- * 
- * 利用規約:
- *   MITライセンスです。
- *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
- *   作者に無断で改変、再配布が可能で、
- *   利用形態（商用、18禁利用等）についても制限はありません。
- */
+@target MZ MV
+@plugindesc Add or delete item categories.
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMItemCategoryEx.js
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Item Category Extension ver1.0.1
+
+How to Use:
+
+Set the item category using the plugin parameters.
+
+item, weapon, armor, and keyItem correspond to items, weapons, armor, and Key Item.
+
+For example, if you want to add a category called "Books" between items and weapons, you would use the following setting:
+
+item Books Weapon Armor KeyItem
+
+Added categories can be assigned to items using the itemCategory tag. Items with this tag will no longer appear in the standard item category.
+
+You can also delete unnecessary categories.
+
+If there is only one category, the category selection process is skipped.
+
+There is no plugin command.
+
+Note field Tag (Item):
+
+<itemCategory:Books>
+Sets the category of this item to "Books."
+If the plugin parameter categoryList contains a category called "Books," it will appear there.
+
+Terms of Use:
+MIT License.
+https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+You may modify and redistribute this work without permission from the author.
+There are no restrictions on how you use it (commercial use, use for 18+ users, etc.).
+
+@param categoryList
+@text Item Category List
+@desc List of item categories (see help for details) Default: item weapon armor keyItem
+@default item weapon armor keyItem
+*/
+
+
+/*:ja
+@target MZ MV
+@plugindesc アイテムカテゴリの追加、削除をおこないます。
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMItemCategoryEx.js
+@license MIT License
+
+@help
+TMPlugin - アイテムカテゴリ拡張 ver1.0.1
+
+使い方:
+
+  プラグインパラメータでアイテムカテゴリを設定してください。
+  item, weapon, armor, keyItem は アイテム, 武器, 防具, 大事なもの に
+  対応しています。
+  たとえばアイテムと武器の間に 書物 というカテゴリを追加したい場合は
+  item 書物 weapon armor keyItem
+  というような設定になります。
+
+  追加したカテゴリは itemCategory タグを使ってアイテムに設定することが
+  できます。タグを設定したアイテムは通常のアイテムカテゴリには
+  表示されなくなります。
+
+  また、不要なカテゴリを削除することもできます。
+  カテゴリが 1 個しかない場合はカテゴリ選択の処理自体が省略されます。
+
+  プラグインコマンドはありません。
+
+
+メモ欄タグ（アイテム）:
+
+  <itemCategory:書物>
+    このアイテムのカテゴリを 書物 に設定します。
+    プラグインパラメータ categoryList に 書物 というカテゴリが
+    あればそこに表示されます。
+
+
+利用規約:
+  MITライセンスです。
+  https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+  作者に無断で改変、再配布が可能で、
+  利用形態（商用、18禁利用等）についても制限はありません。
+
+@param categoryList
+@text アイテムカテゴリ一覧
+@desc アイテムカテゴリの一覧 (詳しくはヘルプにて) 初期値: item weapon armor keyItem
+@default item weapon armor keyItem
+*/
 
 var Imported = Imported || {};
 Imported.TMItemCategoryEx = true;

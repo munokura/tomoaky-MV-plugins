@@ -8,95 +8,172 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンで直接アイテムを使用する機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param shortCutKey
- * @type string
- * @desc ショートカットウィンドウの呼び出しキー。
- * 初期値: S
- * @default S
- *
- * @param slotNumber
- * @type number
- * @desc アイテムスロットの数。
- * 初期値: 8
- * @default 8
- *
- * @param windowX
- * @type string
- * @desc ショートカットウィンドウの X 座標。
- * 初期値: 408 ( -1 でプレイヤーの頭上に表示 )
- * @default 408
- *
- * @param windowY
- * @type string
- * @desc ショートカットウィンドウの Y 座標。
- * 初期値: 0
- * @default 0
- *
- * @param windowWidth
- * @type number
- * @desc ショートカットウィンドウの幅。
- * 初期値: 408
- * @default 408
- *
- * @param windowHeight
- * @type number
- * @desc ショートカットウィンドウの高さ。
- * 初期値: 64
- * @default 64
- *
- * @param backgroundType
- * @type select
- * @option 通常
- * @value 0
- * @option 暗くする
- * @value 1
- * @option 透明
- * @value 2
- * @desc ショートカットウィンドウの背景タイプ。
- * 初期値: 0 ( 0 = 通常 / 1 = 暗くする / 2 = 透明)
- * @default 0
- *
- * @param windowHide
- * @type boolean
- * @desc 操作中以外はショートカットウィンドウを隠す。
- * 初期値: ON（ false = OFF 隠さない / true = ON 隠す ）
- * @default true
- *
- * @help
- * TMPlugin - アイテムショートカット ver1.0.3
- *
- * 使い方:
- *
- *   アイテムシーンでアイテムを選択中に S キーを押すと、ショートカット
- *   ウィンドウが開きます。このウィンドウが開いている間は ← / → キーで
- *   スロットを選択し、決定キー（ enter / space / Z ）を押せばアイテムを
- *   ショートカットに登録することができます。
- *
- *   上記の方法以外にもプラグインコマンドを使って登録することもできます。
- *
- *   ショートカットウィンドウはマップシーンで S キーを押すことでも開くこと
- *   ができます、登録時と同じ操作でアイテムを使用することができます。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- *
- *
- * プラグインコマンド:
- *
- *   setItemSC 0 1
- *     アイテム１番をスロット０番に登録します。
- * 
- *   stopItemSC
- *     アイテムショートカットの機能を一時的に無効化します。
- * 
- *   startItemSC
- *     stopItemSC による無効化を解除します。
- */
+@plugindesc Adds the ability to use items directly in the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Item Shortcuts ver. 1.0.3
+
+How to Use:
+
+Pressing the S key while selecting an item in the item scene will open the shortcut window. While this window is open, use the ←/→ keys to select a slot and press the Enter/Space/Z key to register the item to a shortcut.
+
+In addition to the above method, you can also register items using plugin commands.
+
+The shortcut window can also be opened by pressing the S key in the map scene. You can use items using the same operations as when registering them.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+Plugin Commands:
+
+setItemSC 0 1
+Registers item 1 to slot 0.
+
+stopItemSC
+Temporarily disables the item shortcut function.
+
+startItemSC
+Removes the disablement caused by stopItemSC.
+
+@param shortCutKey
+@desc Shortcut window call key. Default: S
+@default S
+@type string
+
+@param slotNumber
+@desc Number of item slots. Default: 8
+@default 8
+@type number
+
+@param windowX
+@desc X coordinate of the shortcut window. Default: 408 ( -1 displays it above the player's head).
+@default 408
+@type string
+
+@param windowY
+@desc Y coordinate of the shortcut window. Default: 0
+@default 0
+@type string
+
+@param windowWidth
+@desc Width of shortcut window. Default: 408
+@default 408
+@type number
+
+@param windowHeight
+@desc Shortcut window height. Default: 64
+@default 64
+@type number
+
+@param backgroundType
+@desc Shortcut window background type. Default: 0 (0 = normal / 1 = dark / 2 = transparent)
+@default 0
+@type select
+@option usually
+@value 0
+@option Darken
+@value 1
+@option transparent
+@value 2
+
+@param windowHide
+@desc Hides the shortcut window when not in use. Default: ON (false = OFF, not hidden / true = ON, hidden)
+@default true
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc マップシーンで直接アイテムを使用する機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - アイテムショートカット ver1.0.3
+
+使い方:
+
+  アイテムシーンでアイテムを選択中に S キーを押すと、ショートカット
+  ウィンドウが開きます。このウィンドウが開いている間は ← / → キーで
+  スロットを選択し、決定キー（ enter / space / Z ）を押せばアイテムを
+  ショートカットに登録することができます。
+
+  上記の方法以外にもプラグインコマンドを使って登録することもできます。
+
+  ショートカットウィンドウはマップシーンで S キーを押すことでも開くこと
+  ができます、登録時と同じ操作でアイテムを使用することができます。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+
+プラグインコマンド:
+
+  setItemSC 0 1
+    アイテム１番をスロット０番に登録します。
+
+  stopItemSC
+    アイテムショートカットの機能を一時的に無効化します。
+
+  startItemSC
+    stopItemSC による無効化を解除します。
+
+@param shortCutKey
+@desc ショートカットウィンドウの呼び出しキー。 初期値: S
+@default S
+@type string
+
+@param slotNumber
+@desc アイテムスロットの数。 初期値: 8
+@default 8
+@type number
+
+@param windowX
+@desc ショートカットウィンドウの X 座標。 初期値: 408 ( -1 でプレイヤーの頭上に表示 )
+@default 408
+@type string
+
+@param windowY
+@desc ショートカットウィンドウの Y 座標。 初期値: 0
+@default 0
+@type string
+
+@param windowWidth
+@desc ショートカットウィンドウの幅。 初期値: 408
+@default 408
+@type number
+
+@param windowHeight
+@desc ショートカットウィンドウの高さ。 初期値: 64
+@default 64
+@type number
+
+@param backgroundType
+@desc ショートカットウィンドウの背景タイプ。 初期値: 0 ( 0 = 通常 / 1 = 暗くする / 2 = 透明)
+@default 0
+@type select
+@option 通常
+@value 0
+@option 暗くする
+@value 1
+@option 透明
+@value 2
+
+@param windowHide
+@desc 操作中以外はショートカットウィンドウを隠す。 初期値: ON（ false = OFF 隠さない / true = ON 隠す ）
+@default true
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMItemShortCut = true;

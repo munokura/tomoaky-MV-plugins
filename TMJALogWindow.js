@@ -4,73 +4,127 @@
 // Version: 0.1b
 // 最終更新日: 2016/01/19
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンにログウィンドウを表示します。
- * (必ず TMJumpAction より下に導入してください)
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param logWindowX
- * @desc ログウィンドウの X 座標。
- * 初期値: 0
- * @default 0
- *
- * @param logWindowY
- * @desc ログウィンドウの Y 座標。
- * 初期値: 464
- * @default 464
- *
- * @param logWindowWidth
- * @desc ログウィンドウの幅。
- * 初期値: 480
- * @default 480
- *
- * @param logWindowHeight
- * @desc ログウィンドウの高さ。
- * 初期値: 160
- * @default 160
- *
- * @param lineHeight
- * @desc ログウィンドウの１行の高さ。
- * 初期値: 24
- * @default 24
- *
- * @param fontSize
- * @desc ログウィンドウのフォントサイズ。（未実装）
- * 初期値: 20
- * @default 20
- *
- * @param startVisible
- * @desc ゲーム開始時の表示状態。
- * 初期値: 1（ 0 で非表示）
- * @default 1
- *
- * @param collideOpacity
- * @desc プレイヤーと重なったときの不透明度。
- * 初期値: 128（ 0 ～ 255 ）
- * @default 128
- *
- * @param messageBusyHide
- * @desc メッセージウィンドウ表示中はログウィンドウを隠す。
- * 初期値: 1（ 0 で隠さない）
- * @default 1
- *
- * @param eventBusyHide
- * @desc イベント起動中はログウィンドウを隠す。
- * 初期値: 1（ 0 で隠さない）
- * @default 1
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * プラグインコマンド:
- *   JumpAction showLogWindow      # ログウィンドウを表示する
- *   JumpAction hideLogWindow      # ログウィンドウを隠す
- *   JumpAction addLog テキスト    # テキストをログウィンドウに追加する
- *
- *   一部の制御文字も使えます（\V[n], \N[n], \P[n], \G, \C[n]）
- */
+@plugindesc Displays the log window in the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Be sure to install this plugin below.
+
+Plugin Commands:
+JumpAction showLogWindow # Show the log window
+JumpAction hideLogWindow # Hide the log window
+JumpAction addLog text # Add text to the log window
+
+Some control characters are also allowed (\V[n], \N[n], \P[n], \G, \C[n]).
+
+@param logWindowX
+@desc X coordinate of the log window. Default: 0
+@default 0
+
+@param logWindowY
+@desc Y coordinate of the log window. Default: 464
+@default 464
+
+@param logWindowWidth
+@desc Width of the log window. Default: 480
+@default 480
+
+@param logWindowHeight
+@desc Height of the log window. Default: 160
+@default 160
+
+@param lineHeight
+@desc The height of one line in the log window. Default: 24
+@default 24
+
+@param fontSize
+@desc Log window font size. (Not implemented) Default: 20
+@default 20
+
+@param startVisible
+@desc Display state at the start of the game. Initial value: 1 (0 is hidden)
+@default 1
+
+@param collideOpacity
+@desc Opacity when overlapping with the player. Default: 128 (0 to 255)
+@default 128
+
+@param messageBusyHide
+@desc Hide the log window while the message window is displayed. Default: 1 (0: do not hide)
+@default 1
+
+@param eventBusyHide
+@desc Hide the log window while an event is running. Default: 1 (0: do not hide).
+@default 1
+*/
+
+
+/*:ja
+@plugindesc マップシーンにログウィンドウを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+プラグインコマンド:
+  JumpAction showLogWindow      # ログウィンドウを表示する
+  JumpAction hideLogWindow      # ログウィンドウを隠す
+  JumpAction addLog テキスト    # テキストをログウィンドウに追加する
+
+  一部の制御文字も使えます（\V[n], \N[n], \P[n], \G, \C[n]）
+
+@param logWindowX
+@desc ログウィンドウの X 座標。 初期値: 0
+@default 0
+
+@param logWindowY
+@desc ログウィンドウの Y 座標。 初期値: 464
+@default 464
+
+@param logWindowWidth
+@desc ログウィンドウの幅。 初期値: 480
+@default 480
+
+@param logWindowHeight
+@desc ログウィンドウの高さ。 初期値: 160
+@default 160
+
+@param lineHeight
+@desc ログウィンドウの１行の高さ。 初期値: 24
+@default 24
+
+@param fontSize
+@desc ログウィンドウのフォントサイズ。（未実装） 初期値: 20
+@default 20
+
+@param startVisible
+@desc ゲーム開始時の表示状態。 初期値: 1（ 0 で非表示）
+@default 1
+
+@param collideOpacity
+@desc プレイヤーと重なったときの不透明度。 初期値: 128（ 0 ～ 255 ）
+@default 128
+
+@param messageBusyHide
+@desc メッセージウィンドウ表示中はログウィンドウを隠す。 初期値: 1（ 0 で隠さない）
+@default 1
+
+@param eventBusyHide
+@desc イベント起動中はログウィンドウを隠す。 初期値: 1（ 0 で隠さない）
+@default 1
+*/
 
 var Imported = Imported || {};
 Imported.TMJALogWindow = true;

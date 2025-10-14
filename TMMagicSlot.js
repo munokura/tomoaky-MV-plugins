@@ -2,160 +2,283 @@
 // TMPlugin - 魔法スロット
 // バージョン: 1.2.0
 // 最終更新日: 2018/10/25
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 通常の装備とは別に魔法を記憶するシステムを追加します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param menuCommand
- * @desc メニューシーンに追加するコマンド。
- * 初期値: 魔法の記憶
- * @default 魔法の記憶
- * 
- * @param actorSelectCommand
- * @desc 魔法記憶シーンで表示するアクター選択コマンド。
- * 初期値: アクター選択 (未入力ならコマンドを非表示にする)
- * @default アクター選択
- *
- * @param magicSlot
- * @desc 魔法記憶シーンで表示する魔法スロットのパラメータ名。
- * 初期値: 記憶スロット
- * @default 記憶スロット
- *
- * @param equipCommand
- * @desc 魔法記憶シーンで表示する装備コマンド。
- * 初期値: 記憶
- * @default 記憶
- *
- * @param clearCommand
- * @type string
- * @desc 魔法記憶シーンで表示する全て外すコマンド。
- * 初期値: 全て忘れる
- * @default 全て忘れる
- *
- * @param magicTypeName
- * @type string
- * @desc 魔法として扱う武器タイプ名。
- * 初期値: 魔法
- * @default 魔法
- *
- * @param blankText
- * @type string
- * @desc 空きスロットに表示するテキスト。
- * 初期値: 空きスロット
- * @default 空きスロット
- *
- * @param slotCostColor
- * @type number
- * @max 31
- * @desc 必要な空きスロット数の文字色番号。
- * 初期値: 31
- * @default 31
- *
- * @param statusWidth
- * @type number
- * @desc 魔法記憶シーンのステータスウィンドウの幅。
- * 初期値: 340
- * @default 340
- *
- * @param maxMpText
- * @type string
- * @desc 魔法記憶シーンの最大MPの項目名。
- * 初期値: 最大%1
- * @default 最大%1
- *
- * @help
- * TMPlugin - 魔法スロット ver1.2.0
- * 
- * 使い方:
- *
- *   データベースのタイプタブにある『武器タイプ』に 魔法 という名前の
- *   新しいタイプを追加してください。このタイプを設定した武器は魔法として
- *   扱われるようになります。
- *
- *   次に、魔法として扱う武器の特徴『スキル追加』に実際に記憶する魔法を
- *   設定してください。
- *
- *   アクター、あるいは職業のメモ欄に <magicSlot:1> というタグを
- *   設定してください。ここで設定した数値が記憶できる魔法の最大数になります。
- *
- *   あとはゲーム内で魔法として設定した武器を入手し、魔法記憶シーンで
- *   アクターに記憶させれば、魔法が使えるようになります。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *
- * メモ欄タグ（アクター、職業、武器、防具）:
- *
- *   <magicSlot:1>
- *     記憶できる魔法の最大数が 1 増えます。実際の最大数はアクター、職業、
- *     装備している武器と防具に設定されたこのタグの合計値が採用されます。
- *
- *
- * メモ欄タグ（スキル）:
- *
- *   <magicSlotCost:1>
- *     記憶に必要なスロット数を 1 に設定します。たとえばこの値が 2 のスキルは
- *     スロットに 2 空きがないと記憶することができません。
- * 
- * 
- * メモ欄タグ（武器）:
- * 
- *   <equippableActor:1 2>
- *     魔法を記憶することができるアクターを番号で指定します、
- *     複数のアクターを設定する場合は半角スペースで区切ってください。
- *     このタグを省略した場合はすべてのアクターが記憶可能になります。
- * 
- *   <equippableClass:3>
- *     魔法を記憶することができる職業を番号で指定します、
- *     複数の職業を設定する場合は半角スペースで区切ってください。
- *     このタグを省略した場合はすべての職業が記憶可能になります。
- *
- *
- * プラグインコマンド:
- *
- *   callMagicEquip
- *     魔法記憶シーンを呼び出します。
- * 
- *   callMagicEquip 2
- *     アクター 2 番の魔法記憶シーンを呼び出します。
- *     指定したアクターがパーティにいない場合はパーティの先頭にいるアクターが
- *     対象になります。
- *
- *   addMagicSlot 3 1
- *     アクター 3 番の空きスロットを 1 増やします。
- *     数値には制御文字 \V[n] が使用できます。
- *
- *
- * プラグインパラメータ補足:
- *
- *   menuCommand
- *     このパラメータに何も入力しなかった場合、メニューから魔法記憶シーンを
- *     開くことができなくなります。
- *     特定の場所でのみ魔法の入れ替えをしたい場合に利用してください、
- *     その場合はプラグインコマンド callMagicEquip で魔法記憶シーンを
- *     呼び出す必要があります。
- *
- *   magicTypeName
- *     魔法として扱う武器タイプ名を変更することができます。
- *     『魔法』というタイプ名をすでに使用している場合に変更してください。
- *
- *   slotCostColor
- *     イベントコマンド『文章の表示』などで使用する制御文字 \C[n] と同じです。
- *     0 ～ 31 の範囲で値を設定してください。
- *
- *   maxMpText
- *     魔法記憶シーンに表示するアクターの最大MPの項目名を設定します。
- *     %1 という文字列がデータベースの用語で設定したMPの文字列と置換。
- *     このパラメータが空の場合は最大MPを表示しなくなります。
- */
+@plugindesc A system for memorizing magic will be added in addition to regular equipment.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Magic Slot ver1.2.0
+
+How to Use:
+
+Add a new type named "Magic" to the "Weapon Type" section of the Database Type tab. Weapons with this type will be treated as magic.
+
+Next, set the spell you want to memorize in the "Add Skill" Traits of the magic weapon.
+
+Add the tag <magicSlot:1> to the actor's or class's Note field. The value set here will determine the maximum number of spells that can be memorized.
+
+Obtain a weapon set as magic in the game and memorize it in the actor's magic memorization scene to use magic.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+Note field Tag (Actor, Class, Weapon, Armor):
+
+<magicSlot:1>
+The maximum number of spells that can be memorized will increase by 1. The actual maximum number is the sum of the values of this tag set for the actor, class, equipped weapon, and armor.
+
+Memo Tag (Skill):
+
+<magicSlotCost:1>
+Sets the number of slots required for memorization to 1. For example, a skill with a value of 2
+cannot be memorized unless there are two available slots.
+
+Memo Tag (Weapon):
+
+<equippableActor:1 2>
+Specifies the actors who can memorize the spell by number.
+If multiple actors are specified, separate them with a space.
+If this tag is omitted, all actors will be able to memorize the spell.
+
+<equippableClass:3>
+Specifies the jobs that can memorize the spell by number.
+If multiple jobs are specified, separate them with a space.
+If this tag is omitted, all jobs will be able to memorize the spell.
+
+Plugin Command:
+
+callMagicEquip
+Calls the magic memorization scene.
+
+callMagicEquip 2
+Calls the magic memorization scene for actor number 2.
+If the specified actor is not in the party, the first actor in the party will be targeted.
+
+addMagicSlot 3 1
+Increases the available slot for actor number 3 by 1.
+The control character \V[n] can be used as the value.
+
+Plugin Parameter Notes:
+
+menuCommand
+If this parameter is left empty, the magic memory scene cannot be opened from the menu.
+Use this if you want to swap magic only in specific locations.
+In that case, you will need to call the magic memory scene with the plugin command callMagicEquip.
+
+magicTypeName
+Changes the weapon type name treated as magic.
+Change this if the type name "Magic" is already in use.
+
+slotCostColor
+This is the same as the control character \C[n] used in Event's Contents such as "Show Text."
+Set a value between 0 and 31.
+
+maxMpText
+Sets the name of the actor's maximum MP to be displayed in the magic memory scene.
+The string %1 will be replaced with the MP string set in the database Terms.
+If this parameter is empty, the maximum MP will not be displayed.
+
+@param menuCommand
+@desc Command to add to the menu scene. Default: Magic Memory
+@default Magic Memory
+
+@param actorSelectCommand
+@desc Actor selection command to display in magic memory scene. Default: Actor selection (command is hidden if not entered)
+@default Actor Selection
+
+@param magicSlot
+@desc The parameter name of the magic slot to display in the magic memory scene. Default: Memory slot
+@default Memory slot
+
+@param equipCommand
+@desc The equipment command to display in the magic memory scene. Default: Memory
+@default Memory
+
+@param clearCommand
+@desc Command to remove all displayed in the magic memory scene. Default: Forget all
+@default Forget all
+@type string
+
+@param magicTypeName
+@desc The name of the weapon type to treat as magic. Default: Magic
+@default Magic
+@type string
+
+@param blankText
+@desc Text to display in empty slots. Default: empty slots
+@default empty slots
+@type string
+
+@param slotCostColor
+@desc The text color number of the required number of free slots. Default: 31
+@default 31
+@type number
+@max 31
+
+@param statusWidth
+@desc The width of the status window in the magic memory scene. Default: 340
+@default 340
+@type number
+
+@param maxMpText
+@desc Maximum MP item name for magic memory scene. Initial value: Max %1
+@default Max %1
+@type string
+*/
+
+
+/*:ja
+@plugindesc 通常の装備とは別に魔法を記憶するシステムを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 魔法スロット ver1.2.0
+
+使い方:
+
+  データベースのタイプタブにある『武器タイプ』に 魔法 という名前の
+  新しいタイプを追加してください。このタイプを設定した武器は魔法として
+  扱われるようになります。
+
+  次に、魔法として扱う武器の特徴『スキル追加』に実際に記憶する魔法を
+  設定してください。
+
+  アクター、あるいは職業のメモ欄に <magicSlot:1> というタグを
+  設定してください。ここで設定した数値が記憶できる魔法の最大数になります。
+
+  あとはゲーム内で魔法として設定した武器を入手し、魔法記憶シーンで
+  アクターに記憶させれば、魔法が使えるようになります。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+
+メモ欄タグ（アクター、職業、武器、防具）:
+
+  <magicSlot:1>
+    記憶できる魔法の最大数が 1 増えます。実際の最大数はアクター、職業、
+    装備している武器と防具に設定されたこのタグの合計値が採用されます。
+
+
+メモ欄タグ（スキル）:
+
+  <magicSlotCost:1>
+    記憶に必要なスロット数を 1 に設定します。たとえばこの値が 2 のスキルは
+    スロットに 2 空きがないと記憶することができません。
+
+
+メモ欄タグ（武器）:
+
+  <equippableActor:1 2>
+    魔法を記憶することができるアクターを番号で指定します、
+    複数のアクターを設定する場合は半角スペースで区切ってください。
+    このタグを省略した場合はすべてのアクターが記憶可能になります。
+
+  <equippableClass:3>
+    魔法を記憶することができる職業を番号で指定します、
+    複数の職業を設定する場合は半角スペースで区切ってください。
+    このタグを省略した場合はすべての職業が記憶可能になります。
+
+
+プラグインコマンド:
+
+  callMagicEquip
+    魔法記憶シーンを呼び出します。
+
+  callMagicEquip 2
+    アクター 2 番の魔法記憶シーンを呼び出します。
+    指定したアクターがパーティにいない場合はパーティの先頭にいるアクターが
+    対象になります。
+
+  addMagicSlot 3 1
+    アクター 3 番の空きスロットを 1 増やします。
+    数値には制御文字 \V[n] が使用できます。
+
+
+プラグインパラメータ補足:
+
+  menuCommand
+    このパラメータに何も入力しなかった場合、メニューから魔法記憶シーンを
+    開くことができなくなります。
+    特定の場所でのみ魔法の入れ替えをしたい場合に利用してください、
+    その場合はプラグインコマンド callMagicEquip で魔法記憶シーンを
+    呼び出す必要があります。
+
+  magicTypeName
+    魔法として扱う武器タイプ名を変更することができます。
+    『魔法』というタイプ名をすでに使用している場合に変更してください。
+
+  slotCostColor
+    イベントコマンド『文章の表示』などで使用する制御文字 \C[n] と同じです。
+    0 ～ 31 の範囲で値を設定してください。
+
+  maxMpText
+    魔法記憶シーンに表示するアクターの最大MPの項目名を設定します。
+    %1 という文字列がデータベースの用語で設定したMPの文字列と置換。
+    このパラメータが空の場合は最大MPを表示しなくなります。
+
+@param menuCommand
+@desc メニューシーンに追加するコマンド。 初期値: 魔法の記憶
+@default 魔法の記憶
+
+@param actorSelectCommand
+@desc 魔法記憶シーンで表示するアクター選択コマンド。 初期値: アクター選択 (未入力ならコマンドを非表示にする)
+@default アクター選択
+
+@param magicSlot
+@desc 魔法記憶シーンで表示する魔法スロットのパラメータ名。 初期値: 記憶スロット
+@default 記憶スロット
+
+@param equipCommand
+@desc 魔法記憶シーンで表示する装備コマンド。 初期値: 記憶
+@default 記憶
+
+@param clearCommand
+@desc 魔法記憶シーンで表示する全て外すコマンド。 初期値: 全て忘れる
+@default 全て忘れる
+@type string
+
+@param magicTypeName
+@desc 魔法として扱う武器タイプ名。 初期値: 魔法
+@default 魔法
+@type string
+
+@param blankText
+@desc 空きスロットに表示するテキスト。 初期値: 空きスロット
+@default 空きスロット
+@type string
+
+@param slotCostColor
+@desc 必要な空きスロット数の文字色番号。 初期値: 31
+@default 31
+@type number
+@max 31
+
+@param statusWidth
+@desc 魔法記憶シーンのステータスウィンドウの幅。 初期値: 340
+@default 340
+@type number
+
+@param maxMpText
+@desc 魔法記憶シーンの最大MPの項目名。 初期値: 最大%1
+@default 最大%1
+@type string
+*/
 
 var Imported = Imported || {};
 Imported.TMMagicSlot = true;

@@ -4,25 +4,51 @@
 // Version: 0.1a
 // 最終更新日: 2016/07/29
 //=============================================================================
-
 /*:
- * @plugindesc 敵キャラの行動パターン決定処理を修正します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * 使い方:
- *
- *   メモ欄にタグを付けた敵キャラの行動パターン決定処理が変化します。
- * 
- *
- * メモ欄タグ（敵キャラ）:
- *
- *   <actionPrepare:50>
- *     複数回行動時のＭＰ不足、魔法使用前に沈黙付加、などの理由で行動が実行
- *     できなくなったときに、行動の再抽選を実行します。
- *     タグに設定した数値が再抽選の実行確率となります、50 なら５０％で再抽選。
- */
+@plugindesc Corrects the Enemies behavior pattern determination process.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Usage:
+
+This changes the behavior pattern determination process for Enemies tagged in the Note field.
+
+Note field Tag (Enemies):
+
+<actionPrepare:50>
+When an action cannot be performed due to reasons such as insufficient MP when performing multiple actions or applying silence before using a spell, this will re-roll the action.
+The value set in the tag is the probability of re-rolling; for example, 50 means a 50% chance of re-rolling.
+*/
+
+
+/*:ja
+@plugindesc 敵キャラの行動パターン決定処理を修正します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+使い方:
+
+  メモ欄にタグを付けた敵キャラの行動パターン決定処理が変化します。
+
+
+メモ欄タグ（敵キャラ）:
+
+  <actionPrepare:50>
+    複数回行動時のＭＰ不足、魔法使用前に沈黙付加、などの理由で行動が実行
+    できなくなったときに、行動の再抽選を実行します。
+    タグに設定した数値が再抽選の実行確率となります、50 なら５０％で再抽選。
+*/
 
 var Imported = Imported || {};
 Imported.TMEnemyActionEx = true;

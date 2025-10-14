@@ -2,104 +2,184 @@
 // TMPlugin - バトルミスト
 // バージョン: 2.1.0
 // 最終更新日: 2018/11/28
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 戦闘シーンにそれっぽい霧を表示します。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param mistImage
- * @desc 霧として利用する画像ファイル名。
- * 初期値: mist
- * @default mist
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param mistNumber
- * @desc 表示する霧スプライトの数です。
- * 初期値: 32
- * @default 32
- *
- * @param mistTopSide
- * @desc サイドビューで霧を表示する範囲の上端の座標。
- * 初期値: 200
- * @default 200
- *
- * @param mistRangeSide
- * @desc サイドビューで霧を表示するＹ方向の範囲。
- * 初期値: 300
- * @default 300
- *
- * @param mistTopFront
- * @desc フロントビューで霧を表示する範囲の上端の座標。
- * 初期値: 240
- * @default 240
- *
- * @param mistRangeFront
- * @desc フロントビューで霧を表示するＹ方向の範囲。
- * 初期値: 340
- * @default 340
- *
- * @param mistScale
- * @desc 霧スプライトの拡大率。
- * 初期値: 1
- * @default 1
- *
- * @param mistOpacityMax
- * @desc 霧スプライトの最大不透明度。
- * 初期値: 224
- * @default 224
- *
- * @help
- * TMPlugin - バトルミスト ver2.1.0
- *
- * 使い方:
- *
- *   プラグインと一緒に配布している霧の画像を img/system フォルダに
- *   保存してください。ファイル名は mist.png となっています。
- *   ファイル名を変更しなければならない場合はプラグインパラメータの
- *   mistImage も一緒に変更してください。
- *
- *   ゲーム画面の解像度 816*624 に合わせてあるため、解像度を変更すると
- *   表示が乱れる場合があります。
- *   プラグインパラメータの値をいじって調整してください。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- * 
- * プラグインコマンド:
- *
- *   stopMist
- *     バトルミストを無効にします。この設定はセーブデータにも記録され、
- *     startMist コマンドが実行されるまで霧が表示されなくなります。
- *
- *   startMist
- *     無効になっているバトルミストを有効にします。
- *
- *   onMistMirror
- *     霧の移動方向を反転します。サイドビュー限定の機能です。この設定は
- *     セーブデータにも記録され、offMistMirror コマンドが実行されるまで
- *     反転したままとなります。
- *
- *   offMistMirror
- *     霧の移動方向反転を解除します。サイドビュー限定の機能です。
- * 
- *   setFrontMist
- *     戦闘がサイドビューであっても霧をフロントビューと同じ流れにします。
- * 
- *   setSideMist
- *     戦闘がフロントビューであっても霧をサイドビューと同じ流れにします。
- */
+@plugindesc Displays fog-like effects in battle scenes.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Battle Mist ver. 2.1.0
+
+How to Use:
+
+Save the fog image distributed with the plugin in the img/system folder. The file name is mist.png.
+If you need to change the file name, please also change the mistImage plugin parameter.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+The image is set to the game's 816*624 resolution, so changing the resolution may cause distortion.
+Adjust the plugin parameter value to suit your needs.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free to use commercially, modify, and redistribute.
+
+Plugin Commands:
+
+stopMist
+Disables Battle Mist. This setting is also saved in your save data, and the fog will not be displayed until the startMist command is executed.
+
+startMist
+Enables Battle Mist if it is disabled.
+
+onMistMirror
+Inverts the direction of fog movement. This function is only available in side view. This setting is
+stored in save data and remains inverted until the offMistMirror command is executed.
+
+offMistMirror
+Removes the inversion of fog movement direction. This function is only available in side view.
+
+setFrontMist
+Allows fog to flow in the same direction as in front view, even when Battle is in side view.
+
+setSideMist
+Allows fog to flow in the same direction as in side view, even when Battle is in front view.
+
+@param mistImage
+@desc Image file name to use as fog. Default: mist
+@default mist
+@type file
+@require 1
+@dir img/system/
+
+@param mistNumber
+@desc Number of fog sprites to display. Default: 32
+@default 32
+
+@param mistTopSide
+@desc The top coordinate of the range where fog is displayed in side view. Default: 200
+@default 200
+
+@param mistRangeSide
+@desc Range of the Y direction to display fog in side view. Default: 300
+@default 300
+
+@param mistTopFront
+@desc The top coordinate of the area where fog is displayed in the front view. Default: 240
+@default 240
+
+@param mistRangeFront
+@desc Range in Y direction to display fog in front view. Default: 340
+@default 340
+
+@param mistScale
+@desc Magnification rate of fog sprite. Default: 1
+@default 1
+
+@param mistOpacityMax
+@desc Maximum opacity of fog sprites. Default: 224
+@default 224
+*/
+
+
+/*:ja
+@plugindesc 戦闘シーンにそれっぽい霧を表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - バトルミスト ver2.1.0
+
+使い方:
+
+  プラグインと一緒に配布している霧の画像を img/system フォルダに
+  保存してください。ファイル名は mist.png となっています。
+  ファイル名を変更しなければならない場合はプラグインパラメータの
+  mistImage も一緒に変更してください。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+  ゲーム画面の解像度 816*624 に合わせてあるため、解像度を変更すると
+  表示が乱れる場合があります。
+  プラグインパラメータの値をいじって調整してください。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  stopMist
+    バトルミストを無効にします。この設定はセーブデータにも記録され、
+    startMist コマンドが実行されるまで霧が表示されなくなります。
+
+  startMist
+    無効になっているバトルミストを有効にします。
+
+  onMistMirror
+    霧の移動方向を反転します。サイドビュー限定の機能です。この設定は
+    セーブデータにも記録され、offMistMirror コマンドが実行されるまで
+    反転したままとなります。
+
+  offMistMirror
+    霧の移動方向反転を解除します。サイドビュー限定の機能です。
+
+  setFrontMist
+    戦闘がサイドビューであっても霧をフロントビューと同じ流れにします。
+
+  setSideMist
+    戦闘がフロントビューであっても霧をサイドビューと同じ流れにします。
+
+@param mistImage
+@desc 霧として利用する画像ファイル名。 初期値: mist
+@default mist
+@type file
+@require 1
+@dir img/system/
+
+@param mistNumber
+@desc 表示する霧スプライトの数です。 初期値: 32
+@default 32
+
+@param mistTopSide
+@desc サイドビューで霧を表示する範囲の上端の座標。 初期値: 200
+@default 200
+
+@param mistRangeSide
+@desc サイドビューで霧を表示するＹ方向の範囲。 初期値: 300
+@default 300
+
+@param mistTopFront
+@desc フロントビューで霧を表示する範囲の上端の座標。 初期値: 240
+@default 240
+
+@param mistRangeFront
+@desc フロントビューで霧を表示するＹ方向の範囲。 初期値: 340
+@default 340
+
+@param mistScale
+@desc 霧スプライトの拡大率。 初期値: 1
+@default 1
+
+@param mistOpacityMax
+@desc 霧スプライトの最大不透明度。 初期値: 224
+@default 224
+*/
 
 var Imported = Imported || {};
 Imported.TMBattleMist = true;

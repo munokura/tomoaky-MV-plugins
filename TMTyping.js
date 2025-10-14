@@ -4,91 +4,162 @@
 // Version: 1.1
 // 最終更新日: 2016/03/16
 //=============================================================================
-
 /*:
- * @plugindesc ミニタイピングゲームが遊べるコマンドを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param typingCommand
- * @desc 選択肢の表示コマンドで使用するタイピング起動文字列。
- * 初期値: [タイピング]
- * @default [タイピング]
- *
- * @param typingColor
- * @desc 入力済みの文字に使用する文字色番号。
- * 初期値: 2 (文章の表示コマンドで使用する文字色番号と同じ)
- * @default 2
- *
- * @param typingSe
- * @desc タイプ時に鳴らす効果音のファイル名（拡張子は付けない）
- * 初期値: Switch1
- * @default Switch1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param typingSeVolume
- * @desc タイプ時に鳴らす効果音の音量
- * 初期値: 90
- * @default 90
- *
- * @param typingSePitch
- * @desc タイプ時に鳴らす効果音のピッチ
- * 初期値: 130
- * @default 130
- *
- * @param typingSePan
- * @desc タイプ時に鳴らす効果音の位相
- * 初期値: 0
- * @default 0
- *
- * @help
- * 使い方:
- *   イベントコマンド『選択肢の表示』の選択肢１番に [タイピング] と
- *   入力することでタイピングゲームが起動します。（括弧は半角です）
- *   選択肢２番に問題文、選択肢３番に問題文を全角カタカナにしたものを
- *   忘れずに入力してください。
- *
- *   全角カタカナ以外に使える文字はこちら
- *   ０ １ ２ ３ ４ ５ ６ ７ ８ ９ ！ ？ 、 。 ー
- *   ただし、！と？のタイプにはShiftキーの入力も必要になります。
- *
- *   問題文をすべてタイプし終えると選択肢１番の処理が実行されます。
- *   Esc, Insert, Num0 キーなどでキャンセルした場合は、通常の選択肢と
- *   同様にキャンセル時の処理が実行されます。
- *
- *   選択肢４番に半角数字で制限時間を設定することができます。
- *   入力した秒数が経過するとタイピングゲームが強制終了し、
- *   選択肢４番の処理が実行されます。
- *
- * ローマ字入力の設定:
- *   このプラグインを導入すると、メインメニューのオプションに
- *   ローマ字入力関連の設定項目が追加されます。
- *   入力方法が複数ある文字をどの方法で出題するか設定することができます。
- *
- *   『ン』は NN と N,NN が選べますが、後者は次の文字が子音の場合にのみ
- *   N が適用されます。
- *
- * プラグインコマンド:
- *   typingTime 1     # 直前のタイピングゲームの所要時間を変数１番に代入
- *   typingMiss 2     # 直前のタイピングゲームのミス回数を変数２番に代入
- *
- *   typingTime コマンドで得られる値の単位はミリ秒になっていますので、
- *   秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
- *   1000 で割ってください。
- *
- *   typingTime (typingMiss) で得られる結果は直前に実行された
- *   タイピングゲームのものになります。
- *   また、タイピングゲームとプラグインコマンド実行までの間に
- *   セーブ＆ロードをはさむと結果が取得できなくなります。
- * 
- * 注意事項:
- *   キーボードが必要なため、PC環境でしか動作しません。
- *   動作環境を自動的にチェックする機能は付いていませんので、
- *   たとえばタップ操作しかできない端末でキャンセル禁止設定の
- *   タイピングゲームを起動した場合、進行不能になってしまいます。
- */
+@plugindesc Adds commands that allow you to play a mini typing game.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+How to Use:
+Enter [Typing] in option 1 of the "Show Options" Event's Contents to launch the typing game. (The parentheses are half-width characters.)
+Don't forget to enter the question in option 2 and the question in full-width katakana in option 3.
+
+Characters other than full-width katakana that can be used are:
+0 1 2 3 4 5 6 7 8 9 ! ? , . -
+However, you will also need to press the Shift key to type ! and ? .
+
+Once you have finished typing the question, option 1 will be executed.
+If you cancel with Esc, Insert, or Num0, the cancellation process will be executed as with regular options.
+
+You can set a time limit in option 4 using half-width numbers.
+When the number of seconds you entered has elapsed, the typing game will be forced to quit, and option 4 will be executed.
+
+Romanization Settings:
+Installing this plugin will add romanization-related settings to the main menu options.
+You can set which input method to use for characters with multiple input methods.
+
+You can choose NN or N,NN for the character "n," but the latter option only applies if the next character is a consonant.
+
+Plugin Commands:
+typingTime 1 # Assigns the time required for the most recent typing game to variable 1.
+typingMiss 2 # Assigns the number of mistakes made in the most recent typing game to variable 2.
+
+The value returned by the typingTime command is in milliseconds.
+To convert it to seconds, use the "Variable Operation" Event's Contents and divide this value by 1000.
+
+The result returned by typingTime (typingMiss) is for the most recent typing game.
+Also, if you save and load between the typing game and the execution of the plugin command, you will not be able to retrieve the result.
+
+Note:
+Since a keyboard is required, this command only works on PC.
+There is no function to automatically check the operating environment, so if you launch a typing game with cancel prohibition on a device that only supports tapping, for example, you will be unable to proceed.
+
+@param typingCommand
+@desc Typing activation string used in the Show Choices command. Default: [Typing]
+@default [Typing]
+
+@param typingColor
+@desc The character color number to use for the entered characters. Default: 2 (same as the character color number used in the text display command)
+@default 2
+
+@param typingSe
+@desc File name of the sound effect to play when typing (without extension) Default: Switch1
+@default Switch1
+@type file
+@require 1
+@dir audio/se/
+
+@param typingSeVolume
+@desc Volume of the sound effect played when typing Default: 90
+@default 90
+
+@param typingSePitch
+@desc Pitch of the sound effect played when typing. Default: 130
+@default 130
+
+@param typingSePan
+@desc Phase of the sound effect played when typing. Default: 0
+@default 0
+*/
+
+
+/*:ja
+@plugindesc ミニタイピングゲームが遊べるコマンドを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+使い方:
+  イベントコマンド『選択肢の表示』の選択肢１番に [タイピング] と
+  入力することでタイピングゲームが起動します。（括弧は半角です）
+  選択肢２番に問題文、選択肢３番に問題文を全角カタカナにしたものを
+  忘れずに入力してください。
+
+  全角カタカナ以外に使える文字はこちら
+  ０ １ ２ ３ ４ ５ ６ ７ ８ ９ ！ ？ 、 。 ー
+  ただし、！と？のタイプにはShiftキーの入力も必要になります。
+
+  問題文をすべてタイプし終えると選択肢１番の処理が実行されます。
+  Esc, Insert, Num0 キーなどでキャンセルした場合は、通常の選択肢と
+  同様にキャンセル時の処理が実行されます。
+
+  選択肢４番に半角数字で制限時間を設定することができます。
+  入力した秒数が経過するとタイピングゲームが強制終了し、
+  選択肢４番の処理が実行されます。
+
+ローマ字入力の設定:
+  このプラグインを導入すると、メインメニューのオプションに
+  ローマ字入力関連の設定項目が追加されます。
+  入力方法が複数ある文字をどの方法で出題するか設定することができます。
+
+  『ン』は NN と N,NN が選べますが、後者は次の文字が子音の場合にのみ
+  N が適用されます。
+
+プラグインコマンド:
+  typingTime 1     # 直前のタイピングゲームの所要時間を変数１番に代入
+  typingMiss 2     # 直前のタイピングゲームのミス回数を変数２番に代入
+
+  typingTime コマンドで得られる値の単位はミリ秒になっていますので、
+  秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
+  1000 で割ってください。
+
+  typingTime (typingMiss) で得られる結果は直前に実行された
+  タイピングゲームのものになります。
+  また、タイピングゲームとプラグインコマンド実行までの間に
+  セーブ＆ロードをはさむと結果が取得できなくなります。
+
+注意事項:
+  キーボードが必要なため、PC環境でしか動作しません。
+  動作環境を自動的にチェックする機能は付いていませんので、
+  たとえばタップ操作しかできない端末でキャンセル禁止設定の
+  タイピングゲームを起動した場合、進行不能になってしまいます。
+
+@param typingCommand
+@desc 選択肢の表示コマンドで使用するタイピング起動文字列。 初期値: [タイピング]
+@default [タイピング]
+
+@param typingColor
+@desc 入力済みの文字に使用する文字色番号。 初期値: 2 (文章の表示コマンドで使用する文字色番号と同じ)
+@default 2
+
+@param typingSe
+@desc タイプ時に鳴らす効果音のファイル名（拡張子は付けない） 初期値: Switch1
+@default Switch1
+@type file
+@require 1
+@dir audio/se/
+
+@param typingSeVolume
+@desc タイプ時に鳴らす効果音の音量 初期値: 90
+@default 90
+
+@param typingSePitch
+@desc タイプ時に鳴らす効果音のピッチ 初期値: 130
+@default 130
+
+@param typingSePan
+@desc タイプ時に鳴らす効果音の位相 初期値: 0
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMTyping = true;

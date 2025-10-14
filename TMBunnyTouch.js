@@ -8,230 +8,422 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 数字を順番にタッチしていくミニゲームを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param characterName
- * @type file
- * @desc バニーとして使用する歩行画像のファイル名
- * 初期値: People2
- * @default People2
- * @require 1
- * @dir img/characters/
- * 
- * @param characterIndex
- * @type number
- * @desc バニーとして使用する歩行画像のインデックス
- * 初期値: 7
- * @default 7
- * 
- * @param numberColor
- * @desc バニーに描画する数字の色
- * 初期値: #000000
- * @default #000000
- * 
- * @param numberOutlineColor
- * @desc バニーに描画する数字の縁の色
- * 初期値: #ffffff
- * @default #ffffff
- * 
- * @param selectColor
- * @desc バニーに描画する数字の色 (選択中)
- * 初期値: #e02000
- * @default #e02000
- * 
- * @param selectOutlineColor
- * @desc バニーに描画する数字の縁の色 (選択中)
- * 初期値: #ffffe0
- * @default #ffffe0
- * 
- * @param helpLines
- * @number
- * @desc ヘルプテキストを表示するウィンドウの行数
- * 初期値: 2
- * @default 2
- * 
- * @param helpTexts
- * @type struct<HelpText>
- * @desc ヘルプテキストの表示内容 (バニータッチ)
- * @default {"prestart":"数字が小さい順にタッチしてね!!\\n(クリック or タップ でタッチ開始)","end":"\\C[2]タッチ完了!!\\C[0]\\n所要時間: %1秒 (ミス%2回 × %3秒)", "timeup":"\\C[2]時間切れ!!\\C[0]\\n成功タッチ: %1回 (ミス%2回 × %3秒)"}
- * 
- * @param helpCalcTexts
- * @type struct<HelpText>
- * @desc ヘルプテキストの表示内容 (バニー計算)
- * @default {"prestart":"合計がお題と同じになるようにタッチしてね!!\\n(クリック or タップ でタッチ開始)","end":"\\C[2]タッチ完了!!\\C[0]\\n所要時間: %1秒", "timeup":"\\C[2]時間切れ!!\\C[0]"}
- * 
- * @param stateText
- * @desc 連続プレイオプションが有効なときのプレイ回数の書式
- * (%1 = 現在のプレイ数 / %2 = 最大プレイ数)
- * @default %1/%2回
- * 
- * @param giveupText
- * @desc shiftキーによるギブアップで表示されるメッセージ
- * @default ギブアップしました。
- * 
- * @param penalty
- * @type number
- * @desc ミスタッチのペナルティ時間 (ミリ秒)
- * 初期値: 1000
- * @default 1000
- * 
- * @param vnResultTime
- * @type variable
- * @desc 結果（所要時間）を代入するゲーム変数
- * 初期値: 1
- * @default 1
- * 
- * @param vnResultSuccess
- * @type variable
- * @desc 結果（成功タッチ）を代入するゲーム変数
- * 初期値: 2
- * @default 2
- * 
- * @param seTouchSuccess
- * @type struct<SoundEffect>
- * @desc 成功タッチの効果音
- * @default {"name":"Item3","volume":"90","pitch":"150","pan":"0"}
- *
- * @param seTouchMiss
- * @type struct<SoundEffect>
- * @desc ミスタッチの効果音
- * @default {"name":"Buzzer2","volume":"90","pitch":"100","pan":"0"}
- *
- * @param seCalcSelectOn
- * @type struct<SoundEffect>
- * @desc 選択タッチの効果音 (バニー計算)
- * @default {"name":"Cursor2","volume":"90","pitch":"100","pan":"0"}
- *
- * @param seCalcSelectOff
- * @type struct<SoundEffect>
- * @desc 解除タッチの効果音 (バニー計算)
- * @default {"name":"Cancel1","volume":"90","pitch":"100","pan":"0"}
- *
- * @param seTouchStart
- * @type struct<SoundEffect>
- * @desc タッチ開始の効果音
- * @default {"name":"Magic3","volume":"90","pitch":"120","pan":"0"}
- *
- * @param seTouchEnd
- * @type struct<SoundEffect>
- * @desc タッチ終了の効果音
- * @default {"name":"Applause1","volume":"90","pitch":"100","pan":"0"}
- *
- * @param seTimeup
- * @type struct<SoundEffect>
- * @desc タイムアップの効果音
- * @default {"name":"Applause2","volume":"90","pitch":"80","pan":"0"}
- *
- * @help
- * TMPlugin - バニータッチ ver1.1.0
- *
- * 使い方:
- *
- *   イベントコマンド『プラグインコマンド』で startBunnyTouch を
- *   実行するとバニータッチゲームが起動します。
- * 
- *   バニータッチが終わると結果がゲーム変数に代入されます、
- *   この値で条件分岐させることで、結果に応じた処理が作れます。
- *   初期設定では1番に所要時間、2番に成功タッチ数が代入されます。
- *   時間切れの場合は所要時間に -1 が代入されます。
- * 
- *   BGMを再生する機能はありません、バニータッチ起動直前に
- *   イベントコマンドで好きなBGMを流してください。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインコマンド:
- * 
- *   startBunnyTouch 5 3 2 10 1.0
- *     バニータッチを開始します。
- *     数値は順に バニーの数、列数、行数、制限時間、拡大率 となります。
- *     上記の例は、横3マス×縦2マスの場に5人のバニーさんが配置され、
- *     制限時間は10秒という設定になっています。
- *     制限時間に 0 を設定すると、制限時間がなくなります。
- * 
- *     場が狭く、画面の余白が広くなってしまう場合は、拡大率の値を
- *     大きく設定することで、場を拡大表示することができます。
- * 
- *     また、下記のようにオプション値を付けることもできます。
- *     startBunnyTouch 5 3 2 10 1.0 rm
- *     r = 数字が連続しなくなる
- *     m = 数字が左右反転する
- *     rm なら両方のオプションが有効になります。
- * 
- *   startBunnyCalc 6 4 3 2 30 1.0
- *     バニー計算を開始します。
- *     数値は順に バニーの数、お題バニーの数、列数、行数、制限時間、
- *     拡大率 となります。
- *     上記の例では6人のバニーのうち、4人の合計がお題となり、
- *     合計がお題と同じになるようにタッチするゲームになります。
- * 
- *     他の数値はバニータッチと同様です、オプション値も利用できます。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   helpTexts
- *     \C[n] や \} などの制御文字も利用できます、改行したい場合は
- *     \n で改行することができます。
- * 
- *   helpCalcTexts
- *     バニー計算のルールでは成功タッチ、ミス回数がカウントされません。
- */
+@plugindesc Add a mini-game where you touch numbers in order.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Bunny Touch ver. 1.1.0
+
+How to Use:
+
+Executing the "startBunnyTouch" Event's Contents ("Plugin Command")
+will launch the Bunny Touch game.
+
+When Bunny Touch ends, the result is assigned to a game variable.
+By using this value for conditional branching, you can create processing based on the result.
+By default, the required time is assigned to variable 1, and the number of successful touches is assigned to variable 2.
+If time runs out, the required time is assigned to -1.
+
+There is no function to play BGM. Please play your favorite BGM using the Event's Contents
+just before Bunny Touch starts.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License. It is free to use, including commercial use, modifications, and redistribution.
+
+Plugin Command:
+
+startBunnyTouch 5 3 2 10 1.0
+Starts Bunny Touch.
+The values represent, in order, the number of bunnies, the number of columns, the number of rows, the time limit, and the magnification rate.
+In the example above, five bunnies are placed on a 3x2 grid,
+and the time limit is set to 10 seconds.
+Setting the time limit to 0 will remove the time limit.
+
+If the grid is small and takes up a lot of white space on the screen, you can enlarge the grid by setting the magnification rate
+to a larger value.
+
+You can also add optional values, as shown below.
+startBunnyTouch 5 3 2 10 1.0 rm
+r = Numbers are no longer consecutive
+m = Numbers are reversed left and right
+rm enables both options.
+
+startBunnyCalc 6 4 3 2 30 1.0
+Starts the bunny calculation.
+The values represent, in order, the number of bunnies, the number of theme bunnies, the number of columns, the number of rows, the time limit, and
+the magnification rate.
+In the above example, the total number of four of the six bunnies is the theme.
+The game involves touching the bunnies until the total equals the theme.
+
+The other values are the same as for Bunny Touch, and optional values can also be used.
+
+Additional plugin parameter information:
+
+helpTexts
+Control characters such as \C[n] and \} can also be used. To create a new line,
+you can use \n to create a new line.
+
+helpCalcTexts
+The rules of Bunny Calculation do not count successful touches or misses.
+
+@param characterName
+@desc File name of the walking image to use as the bunny Default: People2
+@default People2
+@type file
+@require 1
+@dir img/characters/
+
+@param characterIndex
+@desc Index of the walking image to use as the bunny Default: 7
+@default 7
+@type number
+
+@param numberColor
+@desc Color of numbers drawn on bunny Default: #000000
+@default #000000
+
+@param numberOutlineColor
+@desc The color of the border of the numbers drawn on the bunny. Default: #ffffff
+@default #ffffff
+
+@param selectColor
+@desc Color of numbers drawn on bunny (selected) Default: #e02000
+@default #e02000
+
+@param selectOutlineColor
+@desc The color of the border of the numbers drawn on the bunny (selected). Default: #ffffe0
+@default #ffffe0
+
+@param helpLines
+@desc Number of lines in the window where the help text is displayed. Default: 2
+@default 2
+
+@param helpTexts
+@desc Help text display (Bunny Touch)
+@default {"prestart":"Touch the numbers in ascending order!\\n(Click or tap to start touching)","end":"\\C[2]Touch complete!!\\C[0]\\nTime required: %1 seconds (%2 misses × %3 seconds)", "timeup":"\\C[2]Time's up!!\\C[0]\\nSuccessful touches: %1 (%2 misses × %3 seconds)"}
+@type struct<HelpText>
+
+@param helpCalcTexts
+@desc Help text display (Bunny Calculation)
+@default {"prestart":"Touch so that the total is the same as the theme!\\n(Click or tap to start touching)","end":"\\C[2]Touch complete!!\\C[0]\\nTime required: %1 seconds", "timeup":"\\C[2]Time's up!!\\C[0]"}
+@type struct<HelpText>
+
+@param stateText
+@desc Format for number of plays when continuous play option is enabled (%1 = current number of plays / %2 = maximum number of plays)
+@default %1/%2 times
+
+@param giveupText
+@desc Message displayed when giving up using the shift key
+@default I gave up.
+
+@param penalty
+@desc Mistouch penalty time (ms) Default: 1000
+@default 1000
+@type number
+
+@param vnResultTime
+@desc Game variable to assign the result (time required) Initial value: 1
+@default 1
+@type variable
+
+@param vnResultSuccess
+@desc Game variable to assign the result (successful touch) Initial value: 2
+@default 2
+@type variable
+
+@param seTouchSuccess
+@desc Successful touch sound effect
+@default {"name":"Item3","volume":"90","pitch":"150","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchMiss
+@desc Mistouch sound effect
+@default {"name":"Buzzer2","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seCalcSelectOn
+@desc Selection touch sound effect (Bunny Calculation)
+@default {"name":"Cursor2","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seCalcSelectOff
+@desc Release Touch Sound Effect (Bunny Calculation)
+@default {"name":"Cancel1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchStart
+@desc Touch start sound effect
+@default {"name":"Magic3","volume":"90","pitch":"120","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchEnd
+@desc Touch end sound effect
+@default {"name":"Applause1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTimeup
+@desc Time's up sound effect
+@default {"name":"Applause2","volume":"90","pitch":"80","pan":"0"}
+@type struct<SoundEffect>
+*/
+
+
 /*~struct~SoundEffect:
- *
- * @param name
- * @type file
- * @dir audio/se/
- * @desc 効果音のファイル名
- * @default 
- * @require 1
- *
- * @param volume
- * @type number
- * @max 100
- * @desc 効果音の音量
- * 初期値: 90
- * @default 90
- *
- * @param pitch
- * @type number
- * @min 50
- * @max 150
- * @desc 効果音のピッチ
- * 初期値: 100
- * @default 100
- *
- * @param pan
- * @type number
- * @min -100
- * @max 100
- * @desc 効果音の位相
- * 初期値: 0
- * @default 0
- *
- */
+@param name
+@desc Sound effect file name
+@type file
+@require 1
+@dir audio/se/
+
+@param volume
+@desc Sound effect volume Default: 90
+@default 90
+@type number
+@max 100
+
+@param pitch
+@desc Sound effect pitch Default: 100
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc Sound effect phase Initial value: 0
+@default 0
+@type number
+@min -100
+@max 100
+*/
+
 /*~struct~HelpText:
- *
- * @param prestart
- * @desc バニータッチ開始前に表示するヘルプテキスト
- *
- * @param end
- * @desc バニータッチ終了時に表示するヘルプテキスト
- * (%1 = 所要時間 / %2 = ミス回数 / %3 = ペナルティ秒数)
- *
- * @param timeup
- * @desc 時間切れの際に表示するヘルプテキスト
- * (%1 = 成功タッチ / %2 = ミス回数 / %3 = ペナルティ秒数)
- *
- */
+@param prestart
+@desc Help text to display before starting Bunny Touch
+
+@param end
+@desc Help text to display when Bunny Touch ends (%1 = time required / %2 = number of mistakes / %3 = penalty seconds)
+
+@param timeup
+@desc Help text to display when time runs out (%1 = successful touches / %2 = number of misses / %3 = penalty seconds)
+*/
+
+
+/*:ja
+@plugindesc 数字を順番にタッチしていくミニゲームを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - バニータッチ ver1.1.0
+
+使い方:
+
+  イベントコマンド『プラグインコマンド』で startBunnyTouch を
+  実行するとバニータッチゲームが起動します。
+
+  バニータッチが終わると結果がゲーム変数に代入されます、
+  この値で条件分岐させることで、結果に応じた処理が作れます。
+  初期設定では1番に所要時間、2番に成功タッチ数が代入されます。
+  時間切れの場合は所要時間に -1 が代入されます。
+
+  BGMを再生する機能はありません、バニータッチ起動直前に
+  イベントコマンドで好きなBGMを流してください。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  startBunnyTouch 5 3 2 10 1.0
+    バニータッチを開始します。
+    数値は順に バニーの数、列数、行数、制限時間、拡大率 となります。
+    上記の例は、横3マス×縦2マスの場に5人のバニーさんが配置され、
+    制限時間は10秒という設定になっています。
+    制限時間に 0 を設定すると、制限時間がなくなります。
+
+    場が狭く、画面の余白が広くなってしまう場合は、拡大率の値を
+    大きく設定することで、場を拡大表示することができます。
+
+    また、下記のようにオプション値を付けることもできます。
+    startBunnyTouch 5 3 2 10 1.0 rm
+    r = 数字が連続しなくなる
+    m = 数字が左右反転する
+    rm なら両方のオプションが有効になります。
+
+  startBunnyCalc 6 4 3 2 30 1.0
+    バニー計算を開始します。
+    数値は順に バニーの数、お題バニーの数、列数、行数、制限時間、
+    拡大率 となります。
+    上記の例では6人のバニーのうち、4人の合計がお題となり、
+    合計がお題と同じになるようにタッチするゲームになります。
+
+    他の数値はバニータッチと同様です、オプション値も利用できます。
+
+
+プラグインパラメータ補足:
+
+  helpTexts
+    \C[n] や \} などの制御文字も利用できます、改行したい場合は
+    \n で改行することができます。
+
+  helpCalcTexts
+    バニー計算のルールでは成功タッチ、ミス回数がカウントされません。
+
+@param characterName
+@desc バニーとして使用する歩行画像のファイル名 初期値: People2
+@default People2
+@type file
+@require 1
+@dir img/characters/
+
+@param characterIndex
+@desc バニーとして使用する歩行画像のインデックス 初期値: 7
+@default 7
+@type number
+
+@param numberColor
+@desc バニーに描画する数字の色 初期値: #000000
+@default #000000
+
+@param numberOutlineColor
+@desc バニーに描画する数字の縁の色 初期値: #ffffff
+@default #ffffff
+
+@param selectColor
+@desc バニーに描画する数字の色 (選択中) 初期値: #e02000
+@default #e02000
+
+@param selectOutlineColor
+@desc バニーに描画する数字の縁の色 (選択中) 初期値: #ffffe0
+@default #ffffe0
+
+@param helpLines
+@desc ヘルプテキストを表示するウィンドウの行数 初期値: 2
+@default 2
+
+@param helpTexts
+@desc ヘルプテキストの表示内容 (バニータッチ)
+@default {"prestart":"数字が小さい順にタッチしてね!!\\n(クリック or タップ でタッチ開始)","end":"\\C[2]タッチ完了!!\\C[0]\\n所要時間: %1秒 (ミス%2回 × %3秒)", "timeup":"\\C[2]時間切れ!!\\C[0]\\n成功タッチ: %1回 (ミス%2回 × %3秒)"}
+@type struct<HelpText>
+
+@param helpCalcTexts
+@desc ヘルプテキストの表示内容 (バニー計算)
+@default {"prestart":"合計がお題と同じになるようにタッチしてね!!\\n(クリック or タップ でタッチ開始)","end":"\\C[2]タッチ完了!!\\C[0]\\n所要時間: %1秒", "timeup":"\\C[2]時間切れ!!\\C[0]"}
+@type struct<HelpText>
+
+@param stateText
+@desc 連続プレイオプションが有効なときのプレイ回数の書式 (%1 = 現在のプレイ数 / %2 = 最大プレイ数)
+@default %1/%2回
+
+@param giveupText
+@desc shiftキーによるギブアップで表示されるメッセージ
+@default ギブアップしました。
+
+@param penalty
+@desc ミスタッチのペナルティ時間 (ミリ秒) 初期値: 1000
+@default 1000
+@type number
+
+@param vnResultTime
+@desc 結果（所要時間）を代入するゲーム変数 初期値: 1
+@default 1
+@type variable
+
+@param vnResultSuccess
+@desc 結果（成功タッチ）を代入するゲーム変数 初期値: 2
+@default 2
+@type variable
+
+@param seTouchSuccess
+@desc 成功タッチの効果音
+@default {"name":"Item3","volume":"90","pitch":"150","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchMiss
+@desc ミスタッチの効果音
+@default {"name":"Buzzer2","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seCalcSelectOn
+@desc 選択タッチの効果音 (バニー計算)
+@default {"name":"Cursor2","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seCalcSelectOff
+@desc 解除タッチの効果音 (バニー計算)
+@default {"name":"Cancel1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchStart
+@desc タッチ開始の効果音
+@default {"name":"Magic3","volume":"90","pitch":"120","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTouchEnd
+@desc タッチ終了の効果音
+@default {"name":"Applause1","volume":"90","pitch":"100","pan":"0"}
+@type struct<SoundEffect>
+
+@param seTimeup
+@desc タイムアップの効果音
+@default {"name":"Applause2","volume":"90","pitch":"80","pan":"0"}
+@type struct<SoundEffect>
+*/
+
+
+/*~struct~SoundEffect:ja
+@param name
+@desc 効果音のファイル名
+@type file
+@require 1
+@dir audio/se/
+
+@param volume
+@desc 効果音の音量 初期値: 90
+@default 90
+@type number
+@max 100
+
+@param pitch
+@desc 効果音のピッチ 初期値: 100
+@default 100
+@type number
+@min 50
+@max 150
+
+@param pan
+@desc 効果音の位相 初期値: 0
+@default 0
+@type number
+@min -100
+@max 100
+*/
+
+/*~struct~HelpText:ja
+@param prestart
+@desc バニータッチ開始前に表示するヘルプテキスト
+
+@param end
+@desc バニータッチ終了時に表示するヘルプテキスト (%1 = 所要時間 / %2 = ミス回数 / %3 = ペナルティ秒数)
+
+@param timeup
+@desc 時間切れの際に表示するヘルプテキスト (%1 = 成功タッチ / %2 = ミス回数 / %3 = ペナルティ秒数)
+*/
 
 var Imported = Imported || {};
 Imported.TMBunnyTouch = true;

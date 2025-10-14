@@ -4,98 +4,178 @@
 // Version: 0.31b
 // 最終更新日: 2016/03/04
 //=============================================================================
-
 /*:
- * @plugindesc いわゆるさめがめっぽいものを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param samegameCommand
- * @desc 『選択肢の表示』コマンドで使用するSameGame起動文字列。
- * 初期値: [samegame]
- * @default [samegame]
- *
- * @param samegameIcons
- * @desc ゲームに使用するアイコン番号（半角スペース区切り）
- * 初期値: 97 128 176 265 301
- * @default 97 128 176 265 301
- *
- * @param timeupSe
- * @desc 時間切れ時に鳴らす効果音（ファイル名 音量 ピッチ パン）
- * 初期値: Explosion2 90 100 0
- * @default Explosion2 90 100 0
- *
- * @param clearSe
- * @desc ゲーム終了時に鳴らす効果音（ファイル名 音量 ピッチ パン）
- * 初期値: Applause1 90 100 0
- * @default Applause1 90 100 0
- *
- * @requiredAssets img/system/SamegameCursor
- *
- * @help
- * 準備:
- *   画像ファイル SamegameCursor.png を img/system フォルダに置いてください。
- *   このプラグインの配布元ページで一緒に配布しています。
- *
- * ルール:
- *   同じ種類のアイコンが２個以上隣接しているところをクリック（タップ）
- *   することでそのアイコンを消すことができます。
- *   同時により多くの数のアイコンを消すと得られる得点がアップします。
- *
- * 使い方:
- *   イベントコマンド『選択肢の表示』の選択肢１番に [samegame] と
- *   入力することでSameGameが起動します。（括弧は半角です）
- *   選択肢２番には以下の５つの数値を半角スペースで区切って入力します。
- *   ・横に並ぶアイコンの数
- *   ・縦に並ぶアイコンの数
- *   ・アイコン１つの幅（ドット数）
- *   ・アイコン１つの高さ（ドット数）
- *   ・アイコンの種類
- *   例）14 8 32 32 5
- *   この例では１つが32*32ドットのアイコン５種類を、横に１４、縦に８、
- *   計１１２個ランダムに並べた状態でスタートします。
- *
- *   これ以上消せるアイコンがない状態になるとゲーム終了となり、選択肢１番の
- *   処理が実行されます。
- *
- *   選択肢３番に半角数字で制限時間を設定することができます。入力した秒数が
- *   経過するとSameGameが強制終了し、選択肢３番の処理が実行されます。
- *
- * プラグインコマンド:
- *   samegameScore 4        # 得点を変数４番に代入
- *   samegameTime 5         # 所要時間を変数５番に代入
- *   samegameAllIcons 7     # 残りの総アイコン数を変数７番に代入
- *   samegameIcons 0 8      # 種類別の残りアイコン数を変数８番に代入
- *                            最初の数値でアイコンの種類を指定します
- *                            アイコンが５種類なら 0 ～ 4
- *   samegameAllIconsS 9    # 開始時の総アイコン数を変数９番に代入
- *   samegameIconsS 0 11    # 開始時の種類別アイコン数を変数１１番に代入
- *
- *   これらのコマンドで得られる結果は直前に実行されたSamegameのものに
- *   なります。SameGameとプラグインコマンド実行までの間にセーブ＆ロードを
- *   はさむと結果が取得できなくなります。
- *
- *   samegameTime コマンドで得られる値の単位はミリ秒になっていますので、
- *   秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
- *   1000 で割ってください。
- *
- * 注意事項:
- *   『文章の表示』コマンドの直後にSameGameを起動した場合、
- *   メッセージウィンドウが閉じずにそのままSameGameが起動します。
- *   メッセージウィンドウを閉じてからSameGameを起動したい場合は
- *   『文章の表示』と『選択肢の表示』の間に『ウェイト』を 1 フレーム以上
- *   入れてください。
- *
- *   また、SameGameウィンドウの上下位置はメッセージウィンドウの
- *   上下位置に影響を受けるので、背景が透明で内容が空のメッセージウィンドウを
- *   使えばSameGameウィンドウの上下位置を変更することができます。
- *
- * 特殊な使い方:
- *   SameGameの実行中に並列イベントを使ってプラグインコマンドを使用すると
- *   現在の得点や所要時間を取得することができます。
- *   これを使えば残り時間が少なくなったときにピクチャや効果音で知らせるなど
- *   いろいろとアレンジができると思います。
- */
+@plugindesc We will add something that looks like Samegame.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Preparation:
+Place the image file SamegameCursor.png in the img/system folder.
+It is distributed together with this plugin on the distribution page.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+Rules:
+Click (tap) on an area where two or more icons of the same type are adjacent to each other to remove them.
+The more icons you remove at once, the higher your score.
+
+How to Use:
+Start SameGame by entering [samegame]
+in option 1 of the "Show Options" Event's Contents. (The brackets are half-width characters.)
+In option 2, enter the following five numbers, separated by a space:
+- Number of icons arranged horizontally
+- Number of icons arranged vertically
+- Width of each icon (number of dots)
+- Height of each icon (number of dots)
+- Type of icon
+Example: 14 8 32 32 5
+In this example, we start with five types of 32x32 dot icons, arranged randomly, 14 horizontally and 8 vertically, for a total of 112 icons.
+
+When there are no more icons to clear, the game ends and option 1 is executed.
+
+You can set a time limit in option 3 using half-width numbers. After the number of seconds you entered has elapsed, SameGame will be forced to close and option 3 will be executed.
+
+Plugin Commands:
+samegameScore 4 # Assign score to variable 4
+samegameTime 5 # Assign required time to variable 5
+samegameAllIcons 7 # Assign total remaining icons to variable 7
+samegameIcons 0 8 # Assign remaining icons by type to variable 8
+The first number specifies the icon type.
+If there are 5 icon types, use 0 to 4.
+samegameAllIconsS 9 # Assign total initial icons to variable 9
+samegameIconsS 0 11 # Assign initial initial icons by type to variable 11.
+
+The results obtained from these commands will be those of the most recently executed SameGame. If you save and load between the execution of SameGame and the execution of the plugin command, you will not be able to obtain the results.
+
+The value obtained from the samegameTime command is in milliseconds.
+To convert it to seconds, use the "Variable Operation" Event's Contents and divide the value by 1000.
+
+Notes:
+If you launch SameGame immediately after issuing the "Show Text" command,
+the message window will not close and SameGame will launch without closing.
+If you want to launch SameGame after closing the message window,
+add a "Wait" of at least one frame between "Show Text" and "Show Choices."
+
+Also, the vertical position of the SameGame window is affected by the vertical position of the message window, so you can change the vertical position of the SameGame window by using a message window with a transparent background and empty content.
+
+Special Uses:
+By using a plugin command with a parallel event while SameGame is running,
+you can obtain the current score and time required.
+This allows for a variety of tweaks, such as notifying players with pictures or sound effects when time is running low.
+
+@param samegameCommand
+@desc SameGame launch string used for the "Show options" command. Default: [samegame]
+@default [samegame]
+
+@param samegameIcons
+@desc Icon numbers to be used in the game (separated by spaces) Default: 97 128 176 265 301
+@default 97 128 176 265 301
+
+@param timeupSe
+@desc Sound effect played when time runs out (file name, volume, pitch, pan) Default: Explosion2 90 100 0
+@default Explosion2 90 100 0
+
+@param clearSe
+@desc Sound effect played when the game ends (file name, volume, pitch, pan) Default: Applause1 90 100 0
+@default Applause1 90 100 0
+*/
+
+
+/*:ja
+@plugindesc いわゆるさめがめっぽいものを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+準備:
+  画像ファイル SamegameCursor.png を img/system フォルダに置いてください。
+  このプラグインの配布元ページで一緒に配布しています。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+ルール:
+  同じ種類のアイコンが２個以上隣接しているところをクリック（タップ）
+  することでそのアイコンを消すことができます。
+  同時により多くの数のアイコンを消すと得られる得点がアップします。
+
+使い方:
+  イベントコマンド『選択肢の表示』の選択肢１番に [samegame] と
+  入力することでSameGameが起動します。（括弧は半角です）
+  選択肢２番には以下の５つの数値を半角スペースで区切って入力します。
+  ・横に並ぶアイコンの数
+  ・縦に並ぶアイコンの数
+  ・アイコン１つの幅（ドット数）
+  ・アイコン１つの高さ（ドット数）
+  ・アイコンの種類
+  例）14 8 32 32 5
+  この例では１つが32*32ドットのアイコン５種類を、横に１４、縦に８、
+  計１１２個ランダムに並べた状態でスタートします。
+
+  これ以上消せるアイコンがない状態になるとゲーム終了となり、選択肢１番の
+  処理が実行されます。
+
+  選択肢３番に半角数字で制限時間を設定することができます。入力した秒数が
+  経過するとSameGameが強制終了し、選択肢３番の処理が実行されます。
+
+プラグインコマンド:
+  samegameScore 4        # 得点を変数４番に代入
+  samegameTime 5         # 所要時間を変数５番に代入
+  samegameAllIcons 7     # 残りの総アイコン数を変数７番に代入
+  samegameIcons 0 8      # 種類別の残りアイコン数を変数８番に代入
+                           最初の数値でアイコンの種類を指定します
+                           アイコンが５種類なら 0 ～ 4
+  samegameAllIconsS 9    # 開始時の総アイコン数を変数９番に代入
+  samegameIconsS 0 11    # 開始時の種類別アイコン数を変数１１番に代入
+
+  これらのコマンドで得られる結果は直前に実行されたSamegameのものに
+  なります。SameGameとプラグインコマンド実行までの間にセーブ＆ロードを
+  はさむと結果が取得できなくなります。
+
+  samegameTime コマンドで得られる値の単位はミリ秒になっていますので、
+  秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
+  1000 で割ってください。
+
+注意事項:
+  『文章の表示』コマンドの直後にSameGameを起動した場合、
+  メッセージウィンドウが閉じずにそのままSameGameが起動します。
+  メッセージウィンドウを閉じてからSameGameを起動したい場合は
+  『文章の表示』と『選択肢の表示』の間に『ウェイト』を 1 フレーム以上
+  入れてください。
+
+  また、SameGameウィンドウの上下位置はメッセージウィンドウの
+  上下位置に影響を受けるので、背景が透明で内容が空のメッセージウィンドウを
+  使えばSameGameウィンドウの上下位置を変更することができます。
+
+特殊な使い方:
+  SameGameの実行中に並列イベントを使ってプラグインコマンドを使用すると
+  現在の得点や所要時間を取得することができます。
+  これを使えば残り時間が少なくなったときにピクチャや効果音で知らせるなど
+  いろいろとアレンジができると思います。
+
+@param samegameCommand
+@desc 『選択肢の表示』コマンドで使用するSameGame起動文字列。 初期値: [samegame]
+@default [samegame]
+
+@param samegameIcons
+@desc ゲームに使用するアイコン番号（半角スペース区切り） 初期値: 97 128 176 265 301
+@default 97 128 176 265 301
+
+@param timeupSe
+@desc 時間切れ時に鳴らす効果音（ファイル名 音量 ピッチ パン） 初期値: Explosion2 90 100 0
+@default Explosion2 90 100 0
+
+@param clearSe
+@desc ゲーム終了時に鳴らす効果音（ファイル名 音量 ピッチ パン） 初期値: Applause1 90 100 0
+@default Applause1 90 100 0
+*/
 
 var Imported = Imported || {};
 Imported.TMSameGame = true;

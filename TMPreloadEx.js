@@ -8,84 +8,164 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ゲーム起動時にシステム画像をプリロードするかどうかを、
- * 画像ごとに設定します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param iconSet
- * @type boolean
- * @desc IconSet.pngをプリロードする。
- * @default true
- *
- * @param balloon
- * @type boolean
- * @desc Balloon.pngをプリロードする。
- * @default true
- *
- * @param shadow1
- * @type boolean
- * @desc Shadow1.pngをプリロードする。
- * @default true
- *
- * @param shadow2
- * @type boolean
- * @desc Shadow2.pngをプリロードする。
- * @default true
- *
- * @param damage
- * @type boolean
- * @desc Damage.pngをプリロードする。
- * @default true
- *
- * @param states
- * @type boolean
- * @desc States.pngをプリロードする。
- * @default true
- *
- * @param weapons1
- * @type boolean
- * @desc Weapons1.pngをプリロードする。
- * @default true
- *
- * @param weapons2
- * @type boolean
- * @desc Weapons2.pngをプリロードする。
- * @default true
- *
- * @param weapons3
- * @type boolean
- * @desc Weapons3.pngをプリロードする。
- * @default true
- *
- * @param buttonSet
- * @type boolean
- * @desc ButtonSet.pngをプリロードする。
- * @default true
- * 
- * @param others
- * @desc 指定した画像をプリロードする。
- * (拡張子不要、複数指定する場合はカンマで区切る)
- * @default 
- *
- * @help
- * TMPlugin - プリロード設定 ver1.0.0
- *
- * 使い方:
- *
- *   このプラグインはScene_Bootにおけるプリロード処理を丸ごと上書きします。
- *   他のプラグインや、バージョンの違うコアスクリプトとの併用によって
- *   不具合が発生する場合があります。
- * 
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Whether to preload the system image when the game starts.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Preload Settings ver. 1.0.0
+
+How to Use:
+
+This plugin completely overwrites the preloading process in Scene_Boot.
+
+Using it in conjunction with other plugins or different versions of the core script may cause problems.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free to use, modify, redistribute, and use commercially.
+
+@param iconSet
+@desc Preload IconSet.png.
+@default true
+@type boolean
+
+@param balloon
+@desc Preload Balloon.png.
+@default true
+@type boolean
+
+@param shadow1
+@desc Preload Shadow1.png.
+@default true
+@type boolean
+
+@param shadow2
+@desc Preload Shadow2.png.
+@default true
+@type boolean
+
+@param damage
+@desc Preload Damage.png.
+@default true
+@type boolean
+
+@param states
+@desc Preload States.png.
+@default true
+@type boolean
+
+@param weapons1
+@desc Preload Weapons1.png.
+@default true
+@type boolean
+
+@param weapons2
+@desc Preload Weapons2.png.
+@default true
+@type boolean
+
+@param weapons3
+@desc Preload Weapons3.png.
+@default true
+@type boolean
+
+@param buttonSet
+@desc Preload ButtonSet.png.
+@default true
+@type boolean
+
+@param others
+@desc Preloads the specified images. (No extension required, separate multiple images with commas.)
+*/
+
+
+/*:ja
+@plugindesc ゲーム起動時にシステム画像をプリロードするかどうかを、
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - プリロード設定 ver1.0.0
+
+使い方:
+
+  このプラグインはScene_Bootにおけるプリロード処理を丸ごと上書きします。
+  他のプラグインや、バージョンの違うコアスクリプトとの併用によって
+  不具合が発生する場合があります。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param iconSet
+@desc IconSet.pngをプリロードする。
+@default true
+@type boolean
+
+@param balloon
+@desc Balloon.pngをプリロードする。
+@default true
+@type boolean
+
+@param shadow1
+@desc Shadow1.pngをプリロードする。
+@default true
+@type boolean
+
+@param shadow2
+@desc Shadow2.pngをプリロードする。
+@default true
+@type boolean
+
+@param damage
+@desc Damage.pngをプリロードする。
+@default true
+@type boolean
+
+@param states
+@desc States.pngをプリロードする。
+@default true
+@type boolean
+
+@param weapons1
+@desc Weapons1.pngをプリロードする。
+@default true
+@type boolean
+
+@param weapons2
+@desc Weapons2.pngをプリロードする。
+@default true
+@type boolean
+
+@param weapons3
+@desc Weapons3.pngをプリロードする。
+@default true
+@type boolean
+
+@param buttonSet
+@desc ButtonSet.pngをプリロードする。
+@default true
+@type boolean
+
+@param others
+@desc 指定した画像をプリロードする。 (拡張子不要、複数指定する場合はカンマで区切る)
+*/
 
 var Imported = Imported || {};
 Imported.TMPreloadEx = true;

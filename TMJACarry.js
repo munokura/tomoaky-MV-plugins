@@ -4,45 +4,85 @@
 // Version: 0.2b
 // 最終更新日: 2015/11/13
 //=============================================================================
-
 /*:
- * @plugindesc イベントを持ち上げて投げられるようになります。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param Carry Weight
- * @desc 持ち上げられる重さの差。
- * 初期値: 1（ 0 なら同じ重さで持ち上げられる）
- * @default 1
- *
- * @param Se Carry
- * @desc イベントを持ち上げたときに鳴らす効果音。
- * 初期値: {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
- * @default {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
- *
- * @param Se Hurl
- * @desc イベントを投げたときに鳴らす効果音。
- * 初期値: {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
- * @default {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * イベントの上に乗った状態で ↓ を押しながら A で持ち上げ、
- * 再度 A で持ち上げているイベントを投げます。
- * 
- * イベントの重さ + Carry Weight の値がプレイヤーの重さより重い場合は
- * 持ち上げることができません。
- * 
- * 持ち上げられているイベントはその間すべての動作を停止します、
- * また、壁や他のイベントと接触している間は投げられません。
- * 
- * 拡張プラグイン シューティングを導入している場合、持ち上げ中は
- * 弾を撃つことができなくなります。
- * 
- * プラグインコマンドはありません。
- * 
- */
+@plugindesc You will be able to lift and throw the event.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Be sure to install this plugin below.
+
+While standing on an event, press ↓ and A to lift it,
+then press A again to throw the event you're carrying.
+
+If the event's weight + carry weight is heavier than the player's weight,
+it cannot be lifted.
+
+All functions of the event will be stopped while being lifted,
+and it cannot be thrown while in contact with a wall or another event.
+
+If you have installed the Shooting expansion plugin,
+you will not be able to fire bullets while carrying it.
+
+There are no plugin commands.
+
+@param Carry Weight
+@desc The difference in the weight that can be lifted. Default: 1 (0 means the same weight can be lifted)
+@default 1
+
+@param Se Carry
+@desc The sound effect played when the event is picked up. Default: {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
+@default {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
+
+@param Se Hurl
+@desc The sound effect to play when the event is thrown. Default: {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
+@default {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
+*/
+
+
+/*:ja
+@plugindesc イベントを持ち上げて投げられるようになります。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+イベントの上に乗った状態で ↓ を押しながら A で持ち上げ、
+再度 A で持ち上げているイベントを投げます。
+
+イベントの重さ + Carry Weight の値がプレイヤーの重さより重い場合は
+持ち上げることができません。
+
+持ち上げられているイベントはその間すべての動作を停止します、
+また、壁や他のイベントと接触している間は投げられません。
+
+拡張プラグイン シューティングを導入している場合、持ち上げ中は
+弾を撃つことができなくなります。
+
+プラグインコマンドはありません。
+
+@param Carry Weight
+@desc 持ち上げられる重さの差。 初期値: 1（ 0 なら同じ重さで持ち上げられる）
+@default 1
+
+@param Se Carry
+@desc イベントを持ち上げたときに鳴らす効果音。 初期値: {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
+@default {name: "Cancel1", volume: 90, pitch: 70, pan: 0}
+
+@param Se Hurl
+@desc イベントを投げたときに鳴らす効果音。 初期値: {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
+@default {name: "Evasion1", volume: 90, pitch: 70, pan: 0}
+*/
 
 var Imported = Imported || {};
 Imported.TMJACarry = true;

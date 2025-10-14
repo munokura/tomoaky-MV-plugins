@@ -8,58 +8,114 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc プレイヤーとタイミングを合わせて移動するイベントを作成できます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - ターン移動 ver1.0.2
- *
- * 使い方:
- * 
- *   イベントのメモ、または実行内容の一番上にある注釈コマンド内に
- *   <turnMove> というタグを書き込むことで、そのイベントにだけ
- *   ターン移動を適用します。
- *   <turnMove> の代わりに <ターン移動> でもかまいません。
- * 
- *   ターン移動イベントの自律移動は以下のように設定してください。
- *     プレイヤーと同じ速度で移動する場合
- *       速度  4:標準速
- *       頻度  3:標準
- * 
- *     プレイヤーが１歩移動する間に２歩移動する場合
- *       速度  5:２倍速
- *       頻度  4:高
- * 
- *     プレイヤーが２歩移動する間に１歩移動する場合
- *       速度  4:標準速
- *       頻度  1:最低
- * 
- *   また、<turnMove> / <ターン移動> タグの代わりに
- *   <alwaysTurnMove> / <常にターン移動> タグを使用することで、
- *   イベントが画面外にいてもターン移動が実行されるようになります。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * プラグインコマンド:
- * 
- *   stopTurnMove
- *     すべてのイベントのターン移動を無効化します。
- *     (ゲーム開始時はターン移動が有効になっています)
- * 
- *   startTurnMove
- *     stopTurnMove で無効化したターン移動を有効化します。
- * 
- *   skipTurnMove
- *     プレイヤーを移動させずにターン移動イベントのみを移動させます、
- *     移動量はプレイヤーの１歩分です。
- */
+@plugindesc You can create events that move in sync with the player.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Turn Movement ver1.0.2
+
+How to Use:
+
+By adding the <turnMove> tag to an event's notes or the annotation command at the top of its execution, you can apply turn movement to that event only.
+You can also use <TurnMove> instead of <turnMove>.
+
+Set the autonomous movement for turn movement events as follows:
+
+To move at the same speed as the player:
+Speed 4: Standard
+Frequency 3: Standard
+
+To move two steps for every one step the player takes:
+Speed 5: Double Speed
+Frequency 4: High
+
+To move one step for every two steps the player takes:
+Speed 4: Standard
+Frequency 1: Lowest
+
+Also, by using the <alwaysTurnMove> tag instead of the <turnMove> tag, turn movement will be performed even if the event is off-screen.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and may be freely used, including for commercial purposes, modifications, and redistribution.
+
+Plugin Commands:
+
+stopTurnMove
+Disables turn movement for all events.
+(Turn movement is enabled at the start of the game.)
+
+startTurnMove
+Enables turn movement disabled by stopTurnMove.
+
+skipTurnMove
+Moves only turn movement events without moving the player.
+The movement amount is one player step.
+*/
+
+
+/*:ja
+@plugindesc プレイヤーとタイミングを合わせて移動するイベントを作成できます。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ターン移動 ver1.0.2
+
+使い方:
+
+  イベントのメモ、または実行内容の一番上にある注釈コマンド内に
+  <turnMove> というタグを書き込むことで、そのイベントにだけ
+  ターン移動を適用します。
+  <turnMove> の代わりに <ターン移動> でもかまいません。
+
+  ターン移動イベントの自律移動は以下のように設定してください。
+    プレイヤーと同じ速度で移動する場合
+      速度  4:標準速
+      頻度  3:標準
+
+    プレイヤーが１歩移動する間に２歩移動する場合
+      速度  5:２倍速
+      頻度  4:高
+
+    プレイヤーが２歩移動する間に１歩移動する場合
+      速度  4:標準速
+      頻度  1:最低
+
+  また、<turnMove> / <ターン移動> タグの代わりに
+  <alwaysTurnMove> / <常にターン移動> タグを使用することで、
+  イベントが画面外にいてもターン移動が実行されるようになります。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  stopTurnMove
+    すべてのイベントのターン移動を無効化します。
+    (ゲーム開始時はターン移動が有効になっています)
+
+  startTurnMove
+    stopTurnMove で無効化したターン移動を有効化します。
+
+  skipTurnMove
+    プレイヤーを移動させずにターン移動イベントのみを移動させます、
+    移動量はプレイヤーの１歩分です。
+*/
 
 var Imported = Imported || {};
 Imported.TMTurnMove = true;

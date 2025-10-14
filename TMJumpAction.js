@@ -8,524 +8,917 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンをそれっぽいアクションゲームにします。
- * 使用方法などは配布サイトを参照してください。
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param gravity
- * @type string
- * @desc 重力の強さ。
- * 初期値: 0.004
- * @default 0.004
- *
- * @param friction
- * @type string
- * @desc 通常の地形とイベントの摩擦の強さ。
- * 初期値: 0.001
- * @default 0.001
- *
- * @param tileMarginTop
- * @type string
- * @desc 地形との接触判定に使う座標をどれだけ上へずらすか。
- * 初期値: 0.5
- * @default 0.5
- *
- * @param stepsForTurn
- * @type number
- * @desc 何マスの移動で１ターン経過するか。
- * 初期値: 20
- * @default 20
- *
- * @param allDeadEvent
- * @type number
- * @desc 全滅時に起動するコモンイベント番号。
- * 初期値: 0
- * @default 0
- * 
- * @param guardState
- * @type state
- * @desc 防御状態として扱うステート番号
- * 初期値: 2
- * @default 2
- * 
- * @param guardMoveRate
- * @type number
- * @desc 防御状態の移動速度補正（％）
- * 初期値: 25
- * @default 25
- * 
- * @param jumpRule
- * @type select
- * @option 地面に足がついていなくてもジャンプ可能
- * @value 1
- * @option 地面に足がついてるときのみジャンプ可能
- * @value 2
- * @desc ジャンプのルール設定です。
- * このルールはジャンプ回数が 1 回のときのみ適用されます。
- * @default 1
- * 
- * @param eventCollapse
- * @type boolean
- * @desc イベント戦闘不能時に崩壊エフェクトを使う。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- * 
- * @param hpGauge
- * @type boolean
- * @desc 足元にHPゲージを表示する機能を利用する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param floorDamage
- * @type number
- * @desc ダメージ床から受けるダメージ。
- * 初期値: 10
- * @default 10
- * 
- * @param damageFallRate
- * @type number
- * @desc 落下ダメージの倍率。
- * 初期値: 10
- * @default 10
- *
- * @param damageFallHeight
- * @type number
- * @desc 落下ダメージを受ける高さ。
- * 初期値: 5
- * @default 5
- *
- * @param flickWeight
- * @type number
- * @desc はじき飛ばせる重さの差。
- * 初期値: 1（ 0 なら同じ重さではじき飛ばせる )
- * @default 1
- *
- * @param flickSkill
- * @type skill
- * @desc はじき飛ばしのダメージ計算に使うスキル番号。
- * 初期値: 1（ 0 ならダメージなし )
- * @default 1
- *
- * @param stageRegion
- * @type number
- * @desc 足場として扱うリージョン番号。
- * 初期値: 60
- * @default 60
- *
- * @param wallRegion
- * @type number
- * @desc 壁として扱うリージョン番号。
- * 初期値: 61
- * @default 61
- *
- * @param slipWallRegion
- * @type number
- * @desc 壁ジャンプができない壁として扱うリージョン番号。
- * 初期値: 62
- * @default 62
- *
- * @param slipFloorRegion
- * @type number
- * @desc すべる床として扱うリージョン番号。
- * 初期値: 63
- * @default 63
- *
- * @param roughFloorRegion
- * @type number
- * @desc 移動速度半減の床として扱うリージョン番号。
- * 初期値: 64
- * @default 64
- *
- * @param marshFloorRegion
- * @type number
- * @desc 移動できない床として扱うリージョン番号。
- * 初期値: 65
- * @default 65
- *
- * @param waterTerrainTag
- * @type number
- * @desc 水中として扱う地形タグ番号。
- * 初期値: 1
- * @default 1
- *
- * @param levelupPopup
- * @type string
- * @desc レベルアップ時に表示するポップアップ。
- * 初期値: LEVEL UP!!
- * @default LEVEL UP!!
- *
- * @param levelupAnimationId
- * @desc レベルアップ時に表示するアニメーション番号。
- * 初期値: 46
- * @default 46
- * @require 1
- * @type animation
- * 
- * @param attackToOk
- * @type boolean
- * @desc 攻撃ボタンをメニューの決定ボタンとしても使うかどうか
- * 初期値: ON ( false = OFF 無効 / true =  ON 有効 )
- * @default true
- *
- * @param jumpToCancel
- * @type boolean
- * @desc ジャンプボタンをメニューのキャンセルボタンとしても使うかどうか
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param useEventSeSwim
- * @type boolean
- * @desc 水に入ったときの効果音をイベントに適用する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param jumpSe
- * @desc ジャンプ効果音のファイル名。
- * 初期値: Crossbow
- * @default Crossbow
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param jumpSeParam
- * @type string
- * @desc ジャンプ効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @param dashSe
- * @desc ダッシュ効果音のファイル名。
- * 初期値: Wind4
- * @default Wind4
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param dashSeParam
- * @type string
- * @desc ダッシュ効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":50, "pan":0}
- * @default {"volume":90, "pitch":50, "pan":0}
- * 
- * @param flickSe
- * @desc ダッシュはじき効果音のファイル名。
- * 初期値: Damage1
- * @default Damage1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param flickSeParam
- * @type string
- * @desc ダッシュはじき効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @param swimSe
- * @desc 入水効果音のファイル名。
- * 初期値: Water1
- * @default Water1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param swimSeParam
- * @type string
- * @desc 入水効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @param changeSe
- * @desc 操作キャラ切り替え効果音のファイル名。
- * 初期値: Sword1
- * @default Sword1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param changeSeParam
- * @type string
- * @desc 操作キャラ切り替え効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @param carrySe
- * @desc イベント持ち上げ効果音のファイル名。
- * 初期値: Cancel1
- * @default Cancel1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param carrySeParam
- * @type string
- * @desc イベント持ち上げ効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":70, "pan":0}
- * @default {"volume":90, "pitch":70, "pan":0}
- * 
- * @param hurlSe
- * @desc イベント投げ効果音のファイル名。
- * 初期値: Evasion1
- * @default Evasion1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param hurlSeParam
- * @type string
- * @desc イベント投げ効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":70, "pan":0}
- * @default {"volume":90, "pitch":70, "pan":0}
- * 
- * @param guardSe
- * @desc 防御効果音のファイル名。
- * 初期値: Equip1
- * @default Equip1
- * @require 1
- * @dir audio/se/
- * @type file
- *
- * @param guardSeParam
- * @type string
- * @desc 防御効果音のパラメータ。
- * 初期値: {"volume":90, "pitch":150, "pan":0}
- * @default {"volume":90, "pitch":150, "pan":0}
- * 
- * @param playerBulletsMax
- * @type number
- * @desc プレイヤーの弾の最大数。
- * 初期値: 32
- * @default 32
- *
- * @param enemyBulletsMax
- * @type number
- * @desc イベントの弾の最大数。
- * 初期値: 256
- * @default 256
- *
- * @param weaponSprite
- * @type boolean
- * @desc 弾発射時に武器画像を表示する。
- * 初期値: ON ( false = OFF 無効 / true = ON 有効 )
- * @default true
- * 
- * @param autoDamageSe
- * @type boolean
- * @desc 着弾時に自動で効果音を再生する。
- * 初期値: ON (false = OFF 無効 / true = ON 有効 )
- * @default true
- *
- * @param bulletTypeName1
- * @desc 弾タイプ 1 の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param bulletTypeName2
- * @desc 弾タイプ 2 の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param bulletTypeName3
- * @desc 弾タイプ 3 の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param bulletTypeName4
- * @desc 弾タイプ 4 の画像ファイル名。
- * 初期値: Bullet1
- * @default Bullet1
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param bulletTypeSize
- * @type string
- * @desc 弾タイプごとの当たり判定のサイズ。
- * 初期値: 6,6,6,6
- * @default 6,6,6,6
- *
- * @param attackKey
- * @type string
- * @desc プレイヤーの弾発射に使用するキー
- * 初期値: Z
- * @default Z
- *
- * @param jumpKey
- * @type string
- * @desc プレイヤーのジャンプに使用するキー
- * 初期値: X
- * @default X
- *
- * @param dashKey
- * @type string
- * @desc プレイヤーのダッシュに使用するキー
- * 初期値: C
- * @default C
- *
- * @param padButtons
- * @type string
- * @desc 利用するパッドボタンのコード
- * 初期値: ok,cancel,menu,shift,attack,jump,pageup,pagedown
- * @default ok,cancel,menu,shift,attack,jump,pageup,pagedown
- *
- * @param padButtonNames
- * @type string
- * @desc パッドボタンの名前
- * padButtonsと同じ並び順でボタンの名前を設定してください
- * @default 決定,キャンセル,メニュー,ダッシュ,アタック,ジャンプ,キャラ変更(前),キャラ変更(次)
+@plugindesc Make the map scene look like an action game.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
 
- * @param defaultPadButtons
- * @type string
- * @desc パッドボタンの初期配置
- * 初期値: ボタン 1 ～ 12 に対応するコードを設定してください
- * @default cancel,ok,shift,jump,pageup,pagedown,attack,menu,menu,menu,menu,menu
- *
- * @param padConfigCommand
- * @type string
- * @desc パッドボタン配置のコマンド名 (空にすると機能を無効化)
- * 初期値: パッドボタン配置
- * @default パッドボタン配置
- * 
- * @param stepAnimeConstantA
- * @type string
- * @desc 足踏み速度定数Ａ
- * 初期値: 0.1
- * @default 0.1
- *
- * @param stepAnimeConstantB
- * @type string
- * @desc 足踏み速度定数Ｂ
- * 初期値: 300
- * @default 300
- *
- * @noteParam shot_se_name
- * @noteRequire 1
- * @noteDir audio/se/
- * @noteType file
- * @noteData weapons
- *
- * @requiredAssets img/system/TMJumpActionShield
- * 
- * @help
- * TMPlugin - ジャンプアクション ver1.0.4
- *
- * 使い方:
- *
- *   詳細は配布サイトを参照してください。
- *
- *   このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * メモ欄タグ（アクター、装備、ステート）:
- * 
- *   <move_speed:0.05>        # 歩行速度
- *   <jump_speed:0.14>        # ジャンプ力
- *   <swim_speed:0.02>        # 泳ぐ速度
- *   <ladder_speed:0.04>      # はしご移動速度
- *   <accele:0.003>           # 歩行加速度
- *   <ladder_accele:0.003>    # はしご移動加速度
- *   <jump_input:0>           # ジャンプ追加入力時間
- *   <swim_jump:0.1>          # 水中ジャンプ力
- *   <mulch_jump:1>           # 連続ジャンプ回数
- *   <weight:2>               # 重さ
- *   <gravity:0.0045>         # 重力
- *   <friction:0>             # 摩擦
- *   <wall_jump>              # 壁ジャンプ
- *   <dash_speed_x:0.14>      # ダッシュ速度（横方向）
- *   <dash_speed_y:0.03>      # ダッシュ速度（縦方向）
- *   <dash_count:15>          # ダッシュ時間
- *   <dash_delay:30>          # ダッシュ後硬直時間
- *   <dash_mp_cost:0>         # ダッシュに必要なＭＰ
- *   <fall_guard:50>          # 落下ダメージ耐性
- *   <guard_speed:15>         # 防御状態への移行速度
- *   <invincible_time:30>     # 被ダメージ後の無敵時間
- *   <shot_way:1>             # 同時に発射する弾の数
- *   <shot_space:0.2>         # 弾同士の間隔（ラジアン）
- *   <shot_speed:0.07>        # 弾の移動速度
- *   <shot_count:30>          # 弾の寿命
- *   <shot_type:1>            # 弾のタイプ
- *   <shot_index:0>           # 弾画像のインデックス
- *   <shot_skill:1>           # 弾のスキル番号
- *   <shot_delay:10>          # 発射後の硬直時間
- *   <shot_se_name:Attack2>   # 弾発射効果音のファイル名
- *   <shot_se_volume:90>      # 弾発射効果音のボリューム
- *   <shot_se_pitch:150>      # 弾発射効果音のピッチ
- *
- * 
- * メモ欄タグ（イベント）:
- * 
- *   <w:0.375>                # 当たり判定（中心から左右の端までのサイズ）
- *   <h:0.75>                 # 当たり判定（足元から頭までのサイズ）
- *   <enemy:1>                # バトラー（敵番号）
- *   <dead:A>                 # バトラー戦闘不能時セルフスイッチ
- *   <repop:300>              # 再出現までの時間（フレーム）
- *   <lift>                   # リフト属性
- *   <weight:1>               # 重さ
- *   <gravity:0.004>          # 重力
- * 
- * 
- * メモ欄タグ（スキル）:
- * 
- *   <bullet_anime:67>        # 着弾時に再生するアニメーション
- *   <map_through>            # 弾が地形を無視して貫通する
- *   <map_reflect>            # 弾が地形に当たると消えずに跳ね返る
- * 
- *   <time_bomb:6 0 0.2 45 1 0 1>
- *     弾が時間切れで削除される際に新しく弾を発射する。
- *     パラメータはプラグインコマンド『nallShot』の n ～ skillId までを
- *     設定します。
- *
- * 
- * プラグインコマンド:
- * 
- *   actGainHp -1 -5          # プレイヤーに 5 ダメージを与える。
- *   actGainHp 1 -100         # イベント 1 番に 100 ダメージを与える。
- *   actHp 1 2                # イベント 1 番のHPをゲーム変数 2 番に代入。
- *   actForceX -1 0.1         # プレイヤーの X 速度を 0.1 に強制変更。
- *   actForceY 1 -0.15        # イベント 1 番の Y 速度を -0.15 に強制変更。
- *   actForceStop -1          # プレイヤーの速度を 0 に強制変更。
- *   actChangeActor 2         # 操作キャラクターをアクター 2 番に変更。
- *   actHideHpGauge           # 足元HPゲージを隠す
- *   actShowHpGauge           # 足元HPゲージを表示する
- * 
- *   actPopup -1 テキスト #ff0000
- *     プレイヤーに赤色のテキストをポップアップ
- * 
- *   nwayShot eventId n space angle speed count type index skillId
- *     eventId: 弾を発射するイベントの番号（ -1 でプレイヤー）
- *     n:       同時に発射する弾の数
- *     space:   弾同士の間隔（ラジアン）
- *     angle:   発射する方向（ラジアン）
- *     speed:   弾の移動速度
- *     count:   弾の寿命
- *     type:    弾のタイプ
- *     index:   弾画像のインデックス
- *     skillId: 弾のスキル（ダメージ計算用、省略可）
- * 
- *   nwayAim eventId n space angle speed count type index skillId
- *     nway_shot と同様ですが、angleにプレイヤーがいる方向（ラジアン）を
- *     自動的に加算します。angleが 0 なら自機狙いになります。
- *
- *   nallShot eventId n angle speed count type index skillId
- *     全方位に向けて弾を発射します、弾同士の間隔は自動で設定されます。
- *
- *   nallAim eventId n space angle speed count type index skillId
- *     nall_shot の自機狙い版です。
- */
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Jump Action ver. 1.0.4
+
+How to Use:
+
+For details, please refer to the distribution site.
+
+This plugin has been tested with RPG Maker MV Version 1.5.0.
+
+This plugin is distributed under the MIT License. You are free to use it commercially, modify it, redistribute it, and more.
+
+Sample image
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+Sample Project
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+
+Memo Tags (Actor, Equipment, State):
+
+<move_speed:0.05> # Walking Speed
+<jump_speed:0.14> # Jumping Power
+<swim_speed:0.02> # Swimming Speed
+<ladder_speed:0.04> # Ladder Movement Speed
+<accele:0.003> # Walking Acceleration
+<ladder_accele:0.003> # Ladder Movement Acceleration
+<jump_input:0> # Additional Jump Input Time
+<swim_jump:0.1> # Underwater Jump Power
+<mulch_jump:1> # Number of Consecutive Jumps
+<weight:2> # Weight
+<gravity:0.0045> # Gravity
+<friction:0> # Friction
+<wall_jump> # Wall Jump
+<dash_speed_x:0.14> # Dash Speed (Horizontal)
+<dash_speed_y:0.03> # Dash speed (vertical)
+<dash_count:15> # Dash duration
+<dash_delay:30> # Post-dash recovery time
+<dash_mp_cost:0> # MP required for dash
+<fall_guard:50> # Fall damage resistance
+<guard_speed:15> # Guard transition speed
+<invincible_time:30> # Invincible time after taking damage
+<shot_way:1> # Number of shots fired simultaneously
+<shot_space:0.2> # Distance between shots (radians)
+<shot_speed:0.07> # Shot travel speed
+<shot_count:30> # Shot lifespan
+<shot_type:1> # Shot type
+<shot_index:0> # Shot image index
+<shot_skill:1> # Shot skill number
+<shot_delay:10> # Post-fire freeze time
+<shot_se_name:Attack2> # Bullet firing sound effect filename
+<shot_se_volume:90> # Bullet firing sound effect volume
+<shot_se_pitch:150> # Bullet firing sound effect pitch
+
+Memo Tag (Event):
+
+<w:0.375> # Hitbox (size from center to left and right edges)
+<h:0.75> # Hitbox (size from feet to head)
+<enemy:1> # Butler (enemy number)
+<dead:A> # Self-switch when Butler is KO'd
+<repop:300> # Time until respawn (frames)
+<lift> # Lift Elements
+<weight:1> # Weight
+<gravity:0.004> # Gravity
+
+Memo Tag (Skill):
+
+<bullet_anime:67> # Animation played upon impact
+<map_through> # Bullets penetrate terrain regardless of terrain.
+<map_Reflection> # Bullets bounce off terrain without disappearing.
+
+<time_bomb:6 0 0.2 45 1 0 1>
+Fires a new bullet when the previous one is deleted due to timeout.
+Set the parameters from n to skillId of the "nallShot" plugin command.
+
+Plugin Command:
+
+actGainHp -1 -5 # Deals 5 damage to the player.
+actGainHp 1 -100 # Deals 100 damage to Event 1.
+actHp 1 2 # Assigns Event 1's HP to Game Variable 2.
+actForceX -1 0.1 # Forces the player's X velocity to 0.1.
+actForceY 1 -0.15 # Forces Event 1's Y velocity to -0.15.
+actForceStop -1 # Force the player's speed to 0.
+actChangeActor 2 # Change the controlled character to actor number 2.
+actHideHpGauge # Hides the HP gauge at your feet
+actShowHpGauge # Shows the HP gauge at your feet
+
+actPopup -1 text #ff0000
+Pops up red text for the player.
+
+nwayShot eventId n space angle speed count type index skillId
+eventId: Number of bullets fired (-1 for player)
+n: Number of bullets fired simultaneously
+space: Distance between bullets (radians)
+angle: Fire direction (radians)
+speed: Bullet speed
+count: Bullet lifespan
+type: Bullet type
+index: Bullet image index
+skillId: Bullet skill (for damage calculation, optional)
+
+nwayAim eventId n space angle speed count type index skillId
+Similar to nway_shot, but the angle automatically adds the player's direction (radians). A value of 0 will aim at the player.
+
+nallShot eventId n angle speed count type index skillId
+Fires bullets in all directions. The spacing between bullets is set automatically.
+
+nallAim eventId n space angle speed count type index skillId
+This is the player-aiming version of nall_shot.
+
+@param gravity
+@desc Gravity strength. Default: 0.004
+@default 0.004
+@type string
+
+@param friction
+@desc Strength of normal terrain and event friction. Default: 0.001
+@default 0.001
+@type string
+
+@param tileMarginTop
+@desc How much to shift the coordinates used to detect contact with the terrain upwards. Default: 0.5
+@default 0.5
+@type string
+
+@param stepsForTurn
+@desc How many squares does it take to move one turn? Default: 20
+@default 20
+@type number
+
+@param allDeadEvent
+@desc Common event number to be triggered when all enemies are wiped out. Default: 0
+@default 0
+@type number
+
+@param guardState
+@desc State number to treat as defensive state Initial value: 2
+@default 2
+@type state
+
+@param guardMoveRate
+@desc Defensive Movement Speed Correction (%) Default: 25
+@default 25
+@type number
+
+@param jumpRule
+@desc This is the jump rule setting. This rule is only applied when there is one jump.
+@default 1
+@type select
+@option You can jump even if your feet are not on the ground
+@value 1
+@option You can only jump when your feet are on the ground
+@value 2
+
+@param eventCollapse
+@desc Use the collapse effect when the event is defeated. Default: ON (false = OFF disabled / true = ON enabled)
+@default true
+@type boolean
+
+@param hpGauge
+@desc Uses the function to display the HP gauge at your feet. Default: ON (false = OFF disabled / true = ON enabled)
+@default true
+@type boolean
+
+@param floorDamage
+@desc Damage received from floors. Default: 10
+@default 10
+@type number
+
+@param damageFallRate
+@desc Fall damage multiplier. Default: 10
+@default 10
+@type number
+
+@param damageFallHeight
+@desc Height at which fall damage is taken. Default: 5
+@default 5
+@type number
+
+@param flickWeight
+@desc The difference in weight that can be repelled. Default: 1 (0 means the same weight can be repelled)
+@default 1
+@type number
+
+@param flickSkill
+@desc Skill number used to calculate knockback damage. Default: 1 (0 means no damage).
+@default 1
+@type skill
+
+@param stageRegion
+@desc Region number to treat as a base. Default: 60
+@default 60
+@type number
+
+@param wallRegion
+@desc Region number to treat as wall. Default: 61
+@default 61
+@type number
+
+@param slipWallRegion
+@desc Region number that cannot be used for wall jumping. Default: 62
+@default 62
+@type number
+
+@param slipFloorRegion
+@desc Region number to treat as slippery floor. Default: 63
+@default 63
+@type number
+
+@param roughFloorRegion
+@desc Region number to treat as floor where movement speed is halved. Default: 64
+@default 64
+@type number
+
+@param marshFloorRegion
+@desc Region number to treat as immovable floor. Default: 65
+@default 65
+@type number
+
+@param waterTerrainTag
+@desc Terrain tag number to treat as underwater. Default: 1
+@default 1
+@type number
+
+@param levelupPopup
+@desc Pop-up displayed when leveling up. Default: LEVEL UP!!
+@default LEVEL UP!!
+@type string
+
+@param levelupAnimationId
+@desc Animation number displayed when leveling up. Default: 46
+@default 46
+@type animation
+@require 1
+
+@param attackToOk
+@desc Whether to use the attack button as the menu confirm button. Default: ON ( false = OFF - disabled / true = ON - enabled )
+@default true
+@type boolean
+
+@param jumpToCancel
+@desc Whether to use the jump button as a cancel button for the menu. Default: ON ( false = OFF - disabled / true = ON - enabled )
+@default true
+@type boolean
+
+@param useEventSeSwim
+@desc Apply the sound effect when entering water to the event. Default: ON ( false = OFF disabled / true = ON enabled )
+@default true
+@type boolean
+
+@param jumpSe
+@desc Jump sound effect filename. Default: Crossbow
+@default Crossbow
+@type file
+@require 1
+@dir audio/se/
+
+@param jumpSeParam
+@desc Jump sound effect parameters. Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param dashSe
+@desc Dash sound effect file name. Default: Wind4
+@default Wind4
+@type file
+@require 1
+@dir audio/se/
+
+@param dashSeParam
+@desc Parameters for dash sound effect. Default: {"volume":90, "pitch":50, "pan":0}
+@default {"volume":90, "pitch":50, "pan":0}
+@type string
+
+@param flickSe
+@desc File name of the dash flick sound effect. Default: Damage1
+@default Damage1
+@type file
+@require 1
+@dir audio/se/
+
+@param flickSeParam
+@desc Parameters for the dash flick sound effect. Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param swimSe
+@desc File name of water entry sound effect. Default: Water1
+@default Water1
+@type file
+@require 1
+@dir audio/se/
+
+@param swimSeParam
+@desc Parameters for the water entry sound effect. Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param changeSe
+@desc The file name of the sound effect when switching between playable characters. Default: Sword1
+@default Sword1
+@type file
+@require 1
+@dir audio/se/
+
+@param changeSeParam
+@desc Parameters for the sound effect when switching between controlled characters. Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param carrySe
+@desc Event lift sound effect file name. Default: Cancel1
+@default Cancel1
+@type file
+@require 1
+@dir audio/se/
+
+@param carrySeParam
+@desc Event lift sound effect parameters. Default: {"volume":90, "pitch":70, "pan":0}
+@default {"volume":90, "pitch":70, "pan":0}
+@type string
+
+@param hurlSe
+@desc Event throw sound effect file name. Default: Evasion1
+@default Evasion1
+@type file
+@require 1
+@dir audio/se/
+
+@param hurlSeParam
+@desc Event throw sound effect parameters. Default: {"volume":90, "pitch":70, "pan":0}
+@default {"volume":90, "pitch":70, "pan":0}
+@type string
+
+@param guardSe
+@desc Defensive sound effect file name. Default: Equip1
+@default Equip1
+@type file
+@require 1
+@dir audio/se/
+
+@param guardSeParam
+@desc Defensive sound effect parameters. Default: {"volume":90, "pitch":150, "pan":0}
+@default {"volume":90, "pitch":150, "pan":0}
+@type string
+
+@param playerBulletsMax
+@desc Maximum number of bullets for the player. Default: 32
+@default 32
+@type number
+
+@param enemyBulletsMax
+@desc Maximum number of bullets for the event. Default: 256
+@default 256
+@type number
+
+@param weaponSprite
+@desc Displays the weapon image when firing a bullet. Default: ON ( false = OFF - disabled / true = ON - enabled )
+@default true
+@type boolean
+
+@param autoDamageSe
+@desc Automatically plays a sound effect when a bullet hits the target. Default: ON (false = OFF disabled / true = ON enabled)
+@default true
+@type boolean
+
+@param bulletTypeName1
+@desc Image file name for bullet type 1. Default: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName2
+@desc Image file name for bullet type 2. Default: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName3
+@desc Image file name for bullet type 3. Default: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName4
+@desc Image file name for bullet type 4. Default: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeSize
+@desc Hitbox size for each bullet type. Default: 6,6,6,6
+@default 6,6,6,6
+@type string
+
+@param attackKey
+@desc Key used to fire the player's bullet Default: Z
+@default Z
+@type string
+
+@param jumpKey
+@desc Key used to make the player jump Default: X
+@default X
+@type string
+
+@param dashKey
+@desc Key used to sprint the player Default: C
+@default C
+@type string
+
+@param padButtons
+@desc Pad button code to use Default: ok,cancel,menu,shift,attack,jump,pageup,pagedown
+@default ok,cancel,menu,shift,attack,jump,pageup,pagedown
+@type string
+
+@param padButtonNames
+@desc Pad Button Names Please set the button names in the same order as padButtons
+@default ok,cancel,menu,shift,attack,jump,pageup,pagedown
+@type string
+
+@param defaultPadButtons
+@desc Pad button default layout Default: Please set the code corresponding to buttons 1 to 12
+@default cancel,ok,shift,jump,pageup,pagedown,attack,menu,menu,menu,menu,menu
+@type string
+
+@param padConfigCommand
+@desc Command name of pad button layout (if empty, function is disabled) Default: Pad button layout
+@default Pad button layout
+@type string
+
+@param stepAnimeConstantA
+@desc Stepping speed constant A Initial value: 0.1
+@default 0.1
+@type string
+
+@param stepAnimeConstantB
+@desc Stepping speed constant B Initial value: 300
+@default 300
+@type string
+*/
+
+
+/*:ja
+@plugindesc マップシーンをそれっぽいアクションゲームにします。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ジャンプアクション ver1.0.4
+
+使い方:
+
+  詳細は配布サイトを参照してください。
+
+  このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+サンプル画像
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+サンプルプロジェクト
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+
+メモ欄タグ（アクター、装備、ステート）:
+
+  <move_speed:0.05>        # 歩行速度
+  <jump_speed:0.14>        # ジャンプ力
+  <swim_speed:0.02>        # 泳ぐ速度
+  <ladder_speed:0.04>      # はしご移動速度
+  <accele:0.003>           # 歩行加速度
+  <ladder_accele:0.003>    # はしご移動加速度
+  <jump_input:0>           # ジャンプ追加入力時間
+  <swim_jump:0.1>          # 水中ジャンプ力
+  <mulch_jump:1>           # 連続ジャンプ回数
+  <weight:2>               # 重さ
+  <gravity:0.0045>         # 重力
+  <friction:0>             # 摩擦
+  <wall_jump>              # 壁ジャンプ
+  <dash_speed_x:0.14>      # ダッシュ速度（横方向）
+  <dash_speed_y:0.03>      # ダッシュ速度（縦方向）
+  <dash_count:15>          # ダッシュ時間
+  <dash_delay:30>          # ダッシュ後硬直時間
+  <dash_mp_cost:0>         # ダッシュに必要なＭＰ
+  <fall_guard:50>          # 落下ダメージ耐性
+  <guard_speed:15>         # 防御状態への移行速度
+  <invincible_time:30>     # 被ダメージ後の無敵時間
+  <shot_way:1>             # 同時に発射する弾の数
+  <shot_space:0.2>         # 弾同士の間隔（ラジアン）
+  <shot_speed:0.07>        # 弾の移動速度
+  <shot_count:30>          # 弾の寿命
+  <shot_type:1>            # 弾のタイプ
+  <shot_index:0>           # 弾画像のインデックス
+  <shot_skill:1>           # 弾のスキル番号
+  <shot_delay:10>          # 発射後の硬直時間
+  <shot_se_name:Attack2>   # 弾発射効果音のファイル名
+  <shot_se_volume:90>      # 弾発射効果音のボリューム
+  <shot_se_pitch:150>      # 弾発射効果音のピッチ
+
+
+メモ欄タグ（イベント）:
+
+  <w:0.375>                # 当たり判定（中心から左右の端までのサイズ）
+  <h:0.75>                 # 当たり判定（足元から頭までのサイズ）
+  <enemy:1>                # バトラー（敵番号）
+  <dead:A>                 # バトラー戦闘不能時セルフスイッチ
+  <repop:300>              # 再出現までの時間（フレーム）
+  <lift>                   # リフト属性
+  <weight:1>               # 重さ
+  <gravity:0.004>          # 重力
+
+
+メモ欄タグ（スキル）:
+
+  <bullet_anime:67>        # 着弾時に再生するアニメーション
+  <map_through>            # 弾が地形を無視して貫通する
+  <map_reflect>            # 弾が地形に当たると消えずに跳ね返る
+
+  <time_bomb:6 0 0.2 45 1 0 1>
+    弾が時間切れで削除される際に新しく弾を発射する。
+    パラメータはプラグインコマンド『nallShot』の n ～ skillId までを
+    設定します。
+
+
+プラグインコマンド:
+
+  actGainHp -1 -5          # プレイヤーに 5 ダメージを与える。
+  actGainHp 1 -100         # イベント 1 番に 100 ダメージを与える。
+  actHp 1 2                # イベント 1 番のHPをゲーム変数 2 番に代入。
+  actForceX -1 0.1         # プレイヤーの X 速度を 0.1 に強制変更。
+  actForceY 1 -0.15        # イベント 1 番の Y 速度を -0.15 に強制変更。
+  actForceStop -1          # プレイヤーの速度を 0 に強制変更。
+  actChangeActor 2         # 操作キャラクターをアクター 2 番に変更。
+  actHideHpGauge           # 足元HPゲージを隠す
+  actShowHpGauge           # 足元HPゲージを表示する
+
+  actPopup -1 テキスト #ff0000
+    プレイヤーに赤色のテキストをポップアップ
+
+  nwayShot eventId n space angle speed count type index skillId
+    eventId: 弾を発射するイベントの番号（ -1 でプレイヤー）
+    n:       同時に発射する弾の数
+    space:   弾同士の間隔（ラジアン）
+    angle:   発射する方向（ラジアン）
+    speed:   弾の移動速度
+    count:   弾の寿命
+    type:    弾のタイプ
+    index:   弾画像のインデックス
+    skillId: 弾のスキル（ダメージ計算用、省略可）
+
+  nwayAim eventId n space angle speed count type index skillId
+    nway_shot と同様ですが、angleにプレイヤーがいる方向（ラジアン）を
+    自動的に加算します。angleが 0 なら自機狙いになります。
+
+  nallShot eventId n angle speed count type index skillId
+    全方位に向けて弾を発射します、弾同士の間隔は自動で設定されます。
+
+  nallAim eventId n space angle speed count type index skillId
+    nall_shot の自機狙い版です。
+
+@param gravity
+@desc 重力の強さ。 初期値: 0.004
+@default 0.004
+@type string
+
+@param friction
+@desc 通常の地形とイベントの摩擦の強さ。 初期値: 0.001
+@default 0.001
+@type string
+
+@param tileMarginTop
+@desc 地形との接触判定に使う座標をどれだけ上へずらすか。 初期値: 0.5
+@default 0.5
+@type string
+
+@param stepsForTurn
+@desc 何マスの移動で１ターン経過するか。 初期値: 20
+@default 20
+@type number
+
+@param allDeadEvent
+@desc 全滅時に起動するコモンイベント番号。 初期値: 0
+@default 0
+@type number
+
+@param guardState
+@desc 防御状態として扱うステート番号 初期値: 2
+@default 2
+@type state
+
+@param guardMoveRate
+@desc 防御状態の移動速度補正（％） 初期値: 25
+@default 25
+@type number
+
+@param jumpRule
+@desc ジャンプのルール設定です。 このルールはジャンプ回数が 1 回のときのみ適用されます。
+@default 1
+@type select
+@option 地面に足がついていなくてもジャンプ可能
+@value 1
+@option 地面に足がついてるときのみジャンプ可能
+@value 2
+
+@param eventCollapse
+@desc イベント戦闘不能時に崩壊エフェクトを使う。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param hpGauge
+@desc 足元にHPゲージを表示する機能を利用する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param floorDamage
+@desc ダメージ床から受けるダメージ。 初期値: 10
+@default 10
+@type number
+
+@param damageFallRate
+@desc 落下ダメージの倍率。 初期値: 10
+@default 10
+@type number
+
+@param damageFallHeight
+@desc 落下ダメージを受ける高さ。 初期値: 5
+@default 5
+@type number
+
+@param flickWeight
+@desc はじき飛ばせる重さの差。 初期値: 1（ 0 なら同じ重さではじき飛ばせる )
+@default 1
+@type number
+
+@param flickSkill
+@desc はじき飛ばしのダメージ計算に使うスキル番号。 初期値: 1（ 0 ならダメージなし )
+@default 1
+@type skill
+
+@param stageRegion
+@desc 足場として扱うリージョン番号。 初期値: 60
+@default 60
+@type number
+
+@param wallRegion
+@desc 壁として扱うリージョン番号。 初期値: 61
+@default 61
+@type number
+
+@param slipWallRegion
+@desc 壁ジャンプができない壁として扱うリージョン番号。 初期値: 62
+@default 62
+@type number
+
+@param slipFloorRegion
+@desc すべる床として扱うリージョン番号。 初期値: 63
+@default 63
+@type number
+
+@param roughFloorRegion
+@desc 移動速度半減の床として扱うリージョン番号。 初期値: 64
+@default 64
+@type number
+
+@param marshFloorRegion
+@desc 移動できない床として扱うリージョン番号。 初期値: 65
+@default 65
+@type number
+
+@param waterTerrainTag
+@desc 水中として扱う地形タグ番号。 初期値: 1
+@default 1
+@type number
+
+@param levelupPopup
+@desc レベルアップ時に表示するポップアップ。 初期値: LEVEL UP!!
+@default LEVEL UP!!
+@type string
+
+@param levelupAnimationId
+@desc レベルアップ時に表示するアニメーション番号。 初期値: 46
+@default 46
+@type animation
+@require 1
+
+@param attackToOk
+@desc 攻撃ボタンをメニューの決定ボタンとしても使うかどうか 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param jumpToCancel
+@desc ジャンプボタンをメニューのキャンセルボタンとしても使うかどうか 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param useEventSeSwim
+@desc 水に入ったときの効果音をイベントに適用する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param jumpSe
+@desc ジャンプ効果音のファイル名。 初期値: Crossbow
+@default Crossbow
+@type file
+@require 1
+@dir audio/se/
+
+@param jumpSeParam
+@desc ジャンプ効果音のパラメータ。 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param dashSe
+@desc ダッシュ効果音のファイル名。 初期値: Wind4
+@default Wind4
+@type file
+@require 1
+@dir audio/se/
+
+@param dashSeParam
+@desc ダッシュ効果音のパラメータ。 初期値: {"volume":90, "pitch":50, "pan":0}
+@default {"volume":90, "pitch":50, "pan":0}
+@type string
+
+@param flickSe
+@desc ダッシュはじき効果音のファイル名。 初期値: Damage1
+@default Damage1
+@type file
+@require 1
+@dir audio/se/
+
+@param flickSeParam
+@desc ダッシュはじき効果音のパラメータ。 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param swimSe
+@desc 入水効果音のファイル名。 初期値: Water1
+@default Water1
+@type file
+@require 1
+@dir audio/se/
+
+@param swimSeParam
+@desc 入水効果音のパラメータ。 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param changeSe
+@desc 操作キャラ切り替え効果音のファイル名。 初期値: Sword1
+@default Sword1
+@type file
+@require 1
+@dir audio/se/
+
+@param changeSeParam
+@desc 操作キャラ切り替え効果音のパラメータ。 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+@type string
+
+@param carrySe
+@desc イベント持ち上げ効果音のファイル名。 初期値: Cancel1
+@default Cancel1
+@type file
+@require 1
+@dir audio/se/
+
+@param carrySeParam
+@desc イベント持ち上げ効果音のパラメータ。 初期値: {"volume":90, "pitch":70, "pan":0}
+@default {"volume":90, "pitch":70, "pan":0}
+@type string
+
+@param hurlSe
+@desc イベント投げ効果音のファイル名。 初期値: Evasion1
+@default Evasion1
+@type file
+@require 1
+@dir audio/se/
+
+@param hurlSeParam
+@desc イベント投げ効果音のパラメータ。 初期値: {"volume":90, "pitch":70, "pan":0}
+@default {"volume":90, "pitch":70, "pan":0}
+@type string
+
+@param guardSe
+@desc 防御効果音のファイル名。 初期値: Equip1
+@default Equip1
+@type file
+@require 1
+@dir audio/se/
+
+@param guardSeParam
+@desc 防御効果音のパラメータ。 初期値: {"volume":90, "pitch":150, "pan":0}
+@default {"volume":90, "pitch":150, "pan":0}
+@type string
+
+@param playerBulletsMax
+@desc プレイヤーの弾の最大数。 初期値: 32
+@default 32
+@type number
+
+@param enemyBulletsMax
+@desc イベントの弾の最大数。 初期値: 256
+@default 256
+@type number
+
+@param weaponSprite
+@desc 弾発射時に武器画像を表示する。 初期値: ON ( false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param autoDamageSe
+@desc 着弾時に自動で効果音を再生する。 初期値: ON (false = OFF 無効 / true = ON 有効 )
+@default true
+@type boolean
+
+@param bulletTypeName1
+@desc 弾タイプ 1 の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName2
+@desc 弾タイプ 2 の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName3
+@desc 弾タイプ 3 の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeName4
+@desc 弾タイプ 4 の画像ファイル名。 初期値: Bullet1
+@default Bullet1
+@type file
+@require 1
+@dir img/system/
+
+@param bulletTypeSize
+@desc 弾タイプごとの当たり判定のサイズ。 初期値: 6,6,6,6
+@default 6,6,6,6
+@type string
+
+@param attackKey
+@desc プレイヤーの弾発射に使用するキー 初期値: Z
+@default Z
+@type string
+
+@param jumpKey
+@desc プレイヤーのジャンプに使用するキー 初期値: X
+@default X
+@type string
+
+@param dashKey
+@desc プレイヤーのダッシュに使用するキー 初期値: C
+@default C
+@type string
+
+@param padButtons
+@desc 利用するパッドボタンのコード 初期値: ok,cancel,menu,shift,attack,jump,pageup,pagedown
+@default ok,cancel,menu,shift,attack,jump,pageup,pagedown
+@type string
+
+@param padButtonNames
+@desc パッドボタンの名前 padButtonsと同じ並び順でボタンの名前を設定してください
+@default 決定,キャンセル,メニュー,ダッシュ,アタック,ジャンプ,キャラ変更(前),キャラ変更(次)
+@type string
+
+@param defaultPadButtons
+@desc パッドボタンの初期配置 初期値: ボタン 1 ～ 12 に対応するコードを設定してください
+@default cancel,ok,shift,jump,pageup,pagedown,attack,menu,menu,menu,menu,menu
+@type string
+
+@param padConfigCommand
+@desc パッドボタン配置のコマンド名 (空にすると機能を無効化) 初期値: パッドボタン配置
+@default パッドボタン配置
+@type string
+
+@param stepAnimeConstantA
+@desc 足踏み速度定数Ａ 初期値: 0.1
+@default 0.1
+@type string
+
+@param stepAnimeConstantB
+@desc 足踏み速度定数Ｂ 初期値: 300
+@default 300
+@type string
+*/
 
 var Imported = Imported || {};
 Imported.TMJumpAction = true;

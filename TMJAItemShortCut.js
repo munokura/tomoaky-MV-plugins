@@ -4,61 +4,108 @@
 // Version: 0.12b
 // 最終更新日: 2016/06/30
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンでアイテムを使用する機能を追加します。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param slotNumber
- * @desc アイテムスロットの数。
- * 初期値: 8
- * @default 8
- *
- * @param windowX
- * @desc ショートカットウィンドウの X 座標。
- * 初期値: 408（ -1 でプレイヤーの頭上に表示）
- * @default 408
- *
- * @param windowY
- * @desc ショートカットウィンドウの Y 座標。
- * 初期値: 0
- * @default 0
- *
- * @param windowWidth
- * @desc ショートカットウィンドウの幅。
- * 初期値: 408
- * @default 408
- *
- * @param windowHeight
- * @desc ショートカットウィンドウの高さ。
- * 初期値: 64
- * @default 64
- *
- * @param windowHide
- * @desc 操作中以外はショートカットウィンドウを隠す。
- * 初期値: 1（ 0 で隠さない）
- * @default 1
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * 使い方:
- *   アイテムシーンでアイテムを選択中にshiftキーを押すと、ショートカット
- *   ウィンドウが開きます。このウィンドウが開いている間は ← / → キーで
- *   スロットを選択し、決定キー（ enter / space / Z ）を押せばアイテムを
- *   ショートカットに登録することができます。
- *
- *   上記の方法以外にもプラグインコマンドを使って登録することもできます。
- *
- *   ショートカットウィンドウはマップシーンでshiftキーを押すことでも開く
- *   ことができます、登録時と同じ操作で登録したアイテムを使用することがで
- *   きます。
- *
- * プラグインコマンド:
- *   JumpAction setItemSC 0 1     # アイテム１番をスロット０番に登録
- *
- */
+@plugindesc Adds the ability to use items in map scenes.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Be sure to install this plugin below.
+
+How to use:
+Press the shift key while selecting an item in the item scene to open the shortcut window.
+While this window is open, use the ← / → keys to select a slot and press the confirm key (enter / space / Z) to register the item to a shortcut.
+
+In addition to the above method, you can also register items using plugin commands.
+
+The shortcut window can also be opened by pressing the shift key in the map scene. You can use registered items using the same procedure as when registering them.
+
+Plugin command:
+JumpAction setItemSC 0 1 # Register item 1 to slot 0
+
+@param slotNumber
+@desc Number of item slots. Default: 8
+@default 8
+
+@param windowX
+@desc X coordinate of the shortcut window. Default: 408 (-1 displays it above the player's head).
+@default 408
+
+@param windowY
+@desc Y coordinate of the shortcut window. Default: 0
+@default 0
+
+@param windowWidth
+@desc Width of shortcut window. Default: 408
+@default 408
+
+@param windowHeight
+@desc Shortcut window height. Default: 64
+@default 64
+
+@param windowHide
+@desc Hide the shortcut window when not in use. Default: 1 (0: do not hide)
+@default 1
+*/
+
+
+/*:ja
+@plugindesc マップシーンでアイテムを使用する機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+使い方:
+  アイテムシーンでアイテムを選択中にshiftキーを押すと、ショートカット
+  ウィンドウが開きます。このウィンドウが開いている間は ← / → キーで
+  スロットを選択し、決定キー（ enter / space / Z ）を押せばアイテムを
+  ショートカットに登録することができます。
+
+  上記の方法以外にもプラグインコマンドを使って登録することもできます。
+
+  ショートカットウィンドウはマップシーンでshiftキーを押すことでも開く
+  ことができます、登録時と同じ操作で登録したアイテムを使用することがで
+  きます。
+
+プラグインコマンド:
+  JumpAction setItemSC 0 1     # アイテム１番をスロット０番に登録
+
+@param slotNumber
+@desc アイテムスロットの数。 初期値: 8
+@default 8
+
+@param windowX
+@desc ショートカットウィンドウの X 座標。 初期値: 408（ -1 でプレイヤーの頭上に表示）
+@default 408
+
+@param windowY
+@desc ショートカットウィンドウの Y 座標。 初期値: 0
+@default 0
+
+@param windowWidth
+@desc ショートカットウィンドウの幅。 初期値: 408
+@default 408
+
+@param windowHeight
+@desc ショートカットウィンドウの高さ。 初期値: 64
+@default 64
+
+@param windowHide
+@desc 操作中以外はショートカットウィンドウを隠す。 初期値: 1（ 0 で隠さない）
+@default 1
+*/
+
 var Imported = Imported || {};
 Imported.TMJAItemShortCut = true;
 

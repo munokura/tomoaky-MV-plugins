@@ -4,86 +4,146 @@
 // Version: 0.1b
 // 最終更新日: 2015/11/16
 //=============================================================================
-
 /*:
- * @plugindesc オプションシーンにパッドのボタン配置変更機能を追加します。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param optionWindowWidth
- * @desc オプションウィンドウの幅
- * 初期値: 500
- * @default 500
- *
- * @param optionWindowStatusWidth
- * @desc オプションウィンドウの設定値の幅
- * 初期値: 220
- * @default 220
- *
- * @param padButton1
- * @desc ボタン１の初期設定
- * 初期値: ok
- * @default ok
- *
- * @param padButton2
- * @desc ボタン２の初期設定
- * 初期値: cancel
- * @default cancel
- *
- * @param padButton3
- * @desc ボタン３の初期設定
- * 初期値: dash
- * @default dash
- *
- * @param padButton4
- * @desc ボタン４の初期設定
- * 初期値: jump
- * @default jump
- *
- * @param padButton5
- * @desc ボタン５の初期設定
- * 初期値: pageup
- * @default pageup
- *
- * @param padButton6
- * @desc ボタン６の初期設定
- * 初期値: pagedown
- * @default pagedown
- *
- * @param padButton7
- * @desc ボタン７の初期設定
- * 初期値: menu
- * @default menu
- *
- * @param padButton8
- * @desc ボタン８の初期設定
- * 初期値: attack
- * @default attack
- *
- * @param padButton9
- * @desc ボタン９の初期設定
- * 初期値: ok
- * @default ok
- *
- * @param padButton10
- * @desc ボタン１０の初期設定
- * 初期値: ok
- * @default ok
- *
- * @param padButton11
- * @desc ボタン１１の初期設定
- * 初期値: ok
- * @default ok
- *
- * @param padButton12
- * @desc ボタン１２の初期設定
- * 初期値: ok
- * @default ok
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- */
+@plugindesc Added a function to change the pad button layout to the optional scenes.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Please be sure to install this plugin below.
+
+@param optionWindowWidth
+@desc Option window width Default: 500
+@default 500
+
+@param optionWindowStatusWidth
+@desc Width of setting value in option window Default: 220
+@default 220
+
+@param padButton1
+@desc Button 1 initial setting Default: ok
+@default ok
+
+@param padButton2
+@desc Button 2 initial setting Default: cancel
+@default cancel
+
+@param padButton3
+@desc Button 3 initial setting Default: dash
+@default dash
+
+@param padButton4
+@desc Button 4 initial setting Default: jump
+@default jump
+
+@param padButton5
+@desc Button 5 initial setting Default: pageup
+@default pageup
+
+@param padButton6
+@desc Button 6 initial setting Default: pagedown
+@default pagedown
+
+@param padButton7
+@desc Button 7 initial setting Default: menu
+@default menu
+
+@param padButton8
+@desc Button 8 initial setting Default: attack
+@default attack
+
+@param padButton9
+@desc Button 9 initial setting Default: ok
+@default ok
+
+@param padButton10
+@desc Button 10 initial setting Default: ok
+@default ok
+
+@param padButton11
+@desc Button 11 initial setting Default: ok
+@default ok
+
+@param padButton12
+@desc Button 12 initial setting Default: ok
+@default ok
+*/
+
+
+/*:ja
+@plugindesc オプションシーンにパッドのボタン配置変更機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+@param optionWindowWidth
+@desc オプションウィンドウの幅 初期値: 500
+@default 500
+
+@param optionWindowStatusWidth
+@desc オプションウィンドウの設定値の幅 初期値: 220
+@default 220
+
+@param padButton1
+@desc ボタン１の初期設定 初期値: ok
+@default ok
+
+@param padButton2
+@desc ボタン２の初期設定 初期値: cancel
+@default cancel
+
+@param padButton3
+@desc ボタン３の初期設定 初期値: dash
+@default dash
+
+@param padButton4
+@desc ボタン４の初期設定 初期値: jump
+@default jump
+
+@param padButton5
+@desc ボタン５の初期設定 初期値: pageup
+@default pageup
+
+@param padButton6
+@desc ボタン６の初期設定 初期値: pagedown
+@default pagedown
+
+@param padButton7
+@desc ボタン７の初期設定 初期値: menu
+@default menu
+
+@param padButton8
+@desc ボタン８の初期設定 初期値: attack
+@default attack
+
+@param padButton9
+@desc ボタン９の初期設定 初期値: ok
+@default ok
+
+@param padButton10
+@desc ボタン１０の初期設定 初期値: ok
+@default ok
+
+@param padButton11
+@desc ボタン１１の初期設定 初期値: ok
+@default ok
+
+@param padButton12
+@desc ボタン１２の初期設定 初期値: ok
+@default ok
+*/
+
 var Imported = Imported || {};
 Imported.TMJAPadConfig = true;
 

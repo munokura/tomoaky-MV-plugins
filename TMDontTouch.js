@@ -4,36 +4,72 @@
 // Version: 1.0
 // 最終更新日: 2015/11/07
 //=============================================================================
-
 /*:
- * @target MZ MV
- * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMDontTouch.js
- * @author tomoaky (https://twitter.com/tomoaky/)
- * @plugindesc 指定したリージョンをタップ（クリック）できなくします。
- *
- * @param Dont Touch Region
- * @text タップ不可リージョン番号
- * @type number
- * @max 255
- * @desc タップ（クリック）できないリージョン番号。
- * 初期値: 1
- * @default 1
- *
- * @help TMVplugin - ボタンピクチャと併用する場合、PluginManager内の
- * 並び順によって優先度が変わります。
- * ドントタッチリージョンとボタンピクチャの領域が重なっている場合、
- * ドントタッチが下にあればボタンピクチャは反応しません。
- * 逆にボタンピクチャが下にあるとボタンピクチャが反応します。
- *
- * プラグインコマンドはありません。
- * 
- * 
- * 利用規約:
- *   MITライセンスです。
- *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
- *   作者に無断で改変、再配布が可能で、
- *   利用形態（商用、18禁利用等）についても制限はありません。
- */
+@target MZ MV
+@plugindesc Prevents the specified region from being tapped (clicked).
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMDontTouch.js
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+The order of order determines the priority.
+If the Don't Touch region and button picture area overlap,
+the button picture will not respond if the Don't Touch is underneath.
+Conversely, the button picture will respond if the button picture is underneath.
+
+There are no plugin commands.
+
+Terms of Use:
+MIT License.
+https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+You may modify and redistribute this without permission from the author,
+and there are no restrictions on its use (commercial, R18+, etc.).
+
+@param Dont Touch Region
+@text Non-tappable region number
+@desc Region number that cannot be tapped (clicked). Default: 1
+@default 1
+@type number
+@max 255
+*/
+
+
+/*:ja
+@target MZ MV
+@plugindesc 指定したリージョンをタップ（クリック）できなくします。
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMDontTouch.js
+@license MIT License
+
+@help
+並び順によって優先度が変わります。
+ドントタッチリージョンとボタンピクチャの領域が重なっている場合、
+ドントタッチが下にあればボタンピクチャは反応しません。
+逆にボタンピクチャが下にあるとボタンピクチャが反応します。
+
+プラグインコマンドはありません。
+
+
+利用規約:
+  MITライセンスです。
+  https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+  作者に無断で改変、再配布が可能で、
+  利用形態（商用、18禁利用等）についても制限はありません。
+
+@param Dont Touch Region
+@text タップ不可リージョン番号
+@desc タップ（クリック）できないリージョン番号。 初期値: 1
+@default 1
+@type number
+@max 255
+*/
 
 var Imported = Imported || {};
 Imported.TMDontTouch = true;

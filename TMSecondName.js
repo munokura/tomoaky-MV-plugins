@@ -8,135 +8,236 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 二つ名に実績機能と付け替えによるパラメータ変化を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param secondNameCommand
- * @desc メニューコマンド名
- * 初期値: 二つ名
- * @default 二つ名
- *
- * @param defaultSecondNameId
- * @type number
- * @desc アクターの初期二つ名ID
- * 初期値: 1
- * @default 1
- *
- * @param vnSecondNameExp
- * @type number
- * @desc 獲得済み二つ名の合計価値を代入するゲーム変数番号
- * 初期値: 0（ 0 で無効 / 1 以上で有効 )
- * @default 0
- *
- * @param dateFontSize
- * @type number
- * @desc 日付表示のフォントサイズ
- * 初期値: 20
- * @default 20
- *
- * @param equipText
- * @desc 装備中テキスト
- * 初期値: 【装備中】
- * @default 【装備中】
- *
- * @param infoWindowWidth
- * @type number
- * @desc 情報ウィンドウの幅
- * 初期値: 240
- * @default 240
- *
- * @param infoWindowNumberText
- * @desc 二つ名獲得数のテキスト
- * 初期値: 集めた数
- * @default 集めた数
- *
- * @param infoWindowExpText
- * @desc 合計価値のテキスト（空欄なら合計価値を表示しない）
- * 初期値: スコア
- * @default スコア
- * 
- * @param hidePartyMember
- * @type boolean
- * @desc パーティメンバーの二つ名装備状況を無視する
- * ( 一人旅ゲームにおいて先頭アクター以外を隠したい時のため )
- * @default false
- *
- * @help
- * TMPlugin - 付け替え二つ名 ver1.0.1
- * 
- * 使い方:
- * 
- *   二つ名（実績）はデータベースの『防具』に設定します。
- *
- *   設定した二つ名はプラグインコマンド gainSecondName を使って獲得できます。
- *   獲得後はメニューの『二つ名』コマンドから確認することができ、アクターに
- *   装備させることが可能になります。
- *
- *   アクターが装備できない防具は二つ名としてセットすることができません。また、
- *   別のアクターがすでにセットしている二つ名もセットできません。
- * 
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- *
- * 使用例:
- *
- *   １番の防具に名前（二つ名のテキスト）と、説明（二つ名の効果や獲得条件）、
- *   特徴（とりあえずわかりやすく最大ＨＰ * 110%）を設定します。
- *   この状態でゲームを開始すると、アクターの二つ名として１番の防具がセット
- *   され、最大ＨＰが１０％上昇しているはずです。メニューの『二つ名』から
- *   二つ名を獲得した日時も確認することができます。
- *
- *   同様に２番の防具に別の二つ名を設定し、下記のプラグインコマンドを実行
- *   してください。
- *     gainSecondName 2
- *   メニューの『二つ名』に新しい二つ名が追加され、アクターの二つ名を自由に
- *   付け替えることができるようになっているはずです。
- *   付け替えできない場合は防具の装備条件を満たしているかどうかを確認して
- *   ください。
- *
- *
- * メモ欄タグ（アクター）:
- *
- *   <secondName:1>
- *     １番の防具をこのアクターの初期二つ名として設定します。アクターが加入
- *     した時点でこの二つ名を獲得していない場合、一度別の二つ名をセットすると
- *     元の二つ名に戻せなくなります。アクターの加入と同時に獲得処理を実行して
- *     ください。
- *     このタグがないアクターには、プラグインパラメータ defaultSecondNameId
- *     に設定された番号の防具が二つ名としてセットされます。
- *
- *
- * メモ欄タグ（防具）:
- *
- *   <secondNameExp:1>
- *     二つ名の価値を設定します。プラグインパラメータ vnSecondNameExp に
- *     1 以上の値が設定されていれば、その番号のゲーム変数に獲得済み二つ名の
- *     合計価値が自動的に代入されます。
- *
- *
- * プラグインコマンド:
- *
- *   gainSecondName 1
- *     １番の防具を二つ名として獲得します。視覚効果などはありませんので、
- *     ピクチャやアニメーションを使って作成してください。
- *
- *   hasSecondName 1 5
- *     １番の防具を二つ名として獲得しているかどうかを取得します。獲得済みの
- *     場合はゲームスイッチ５番がオンに、まだの場合はオフになります。
- *
- *
- * プラグインパラメータ補足:
- *
- *   defaultSecondNameId
- *     ここに設定された防具（二つ名）はアクターの初期二つ名として利用される
- *     と同時に、ゲーム開始時に自動的に獲得します。
- */
+@plugindesc Added achievement function to nicknames and parameter changes when swapped.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Nickname Changer ver1.0.1
+
+How to Use:
+
+Nicknames (achievements) are set for "Armor" in the database.
+
+You can acquire the set nickname using the plugin command gainSecondName.
+
+Once acquired, you can check it using the "Nickname" command in the menu and equip it to your actor.
+
+Armor that cannot be equipped by the actor cannot be set as a nickname. Also, you cannot set a nickname that has already been set by another actor.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free to use, including commercial use, modifications, and redistribution.
+
+Usage Example:
+
+Set the name (nickname text), description (nickname effect and acquisition conditions), and characteristic (maximum HP * 110% for clarity) for armor #1.
+If you start the game in this state, Armor #1 will be set as the actor's nickname, and their maximum HP will increase by 10%. You can also check the date and time the nickname was acquired from the "Nickname" menu.
+
+Similarly, set a different nickname for Armor #2 and execute the following plugin command:
+
+gainSecondName 2
+The new nickname will be added to the "Nickname" menu, and you should be able to freely change the actor's nickname.
+
+If you are unable to change it, please check whether the armor equipment requirements are met.
+
+Note field Tag (Actor):
+
+<secondName:1>
+Sets Armor #1 as this actor's initial nickname. If the actor has not yet acquired this nickname when joining, once a different nickname is set, it will be impossible to revert to the original nickname. Execute the acquisition process immediately when the actor joins.
+
+For actors without this tag, the nickname will be set to the armor number set in the plugin parameter defaultSecondNameId.
+
+Memo Tag (Armor):
+
+<secondNameExp:1>
+Sets the value of the nickname. If the plugin parameter vnSecondNameExp is set to a value greater than or equal to 1, the total value of all currently acquired nicknames will automatically be assigned to the game variable with that number.
+
+Plugin Command:
+
+gainSecondName 1
+Acquires the first piece of armor as a nickname. There are no visual effects, so create one using a picture or animation.
+
+hasSecondName 1 5
+Retrieves whether the first piece of armor has been acquired as a nickname. If it has been acquired, game switch 5 will be turned on; if it has not, it will be turned off.
+
+Plugin Parameter Notes:
+
+defaultSecondNameId
+The armor (nickname) set here will be used as the actor's initial nickname and will automatically be acquired at the start of the game.
+
+@param secondNameCommand
+@desc Menu command name Default: Nickname
+@default Nickname
+
+@param defaultSecondNameId
+@desc Actor's initial nickname ID Default: 1
+@default 1
+@type number
+
+@param vnSecondNameExp
+@desc Game variable number to which the total value of acquired nicknames is assigned. Initial value: 0 (0 disables / 1 or more enables)
+@default 0
+@type number
+
+@param dateFontSize
+@desc Date display font size Default: 20
+@default 20
+@type number
+
+@param equipText
+@desc Equipped Text Default: [Equipped]
+@default [Equipped]
+
+@param infoWindowWidth
+@desc Info window width Default: 240
+@default 240
+@type number
+
+@param infoWindowNumberText
+@desc Text of the number of nicknames acquired Initial value: Number collected
+@default Number collected
+
+@param infoWindowExpText
+@desc Total value text (if blank, total value is not displayed) Default: Score
+@default Score
+
+@param hidePartyMember
+@desc Ignores the nickname equipment status of party members (for when you want to hide everyone except the lead actor in a solo travel game)
+@default false
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc 二つ名に実績機能と付け替えによるパラメータ変化を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 付け替え二つ名 ver1.0.1
+
+使い方:
+
+  二つ名（実績）はデータベースの『防具』に設定します。
+
+  設定した二つ名はプラグインコマンド gainSecondName を使って獲得できます。
+  獲得後はメニューの『二つ名』コマンドから確認することができ、アクターに
+  装備させることが可能になります。
+
+  アクターが装備できない防具は二つ名としてセットすることができません。また、
+  別のアクターがすでにセットしている二つ名もセットできません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+使用例:
+
+  １番の防具に名前（二つ名のテキスト）と、説明（二つ名の効果や獲得条件）、
+  特徴（とりあえずわかりやすく最大ＨＰ * 110%）を設定します。
+  この状態でゲームを開始すると、アクターの二つ名として１番の防具がセット
+  され、最大ＨＰが１０％上昇しているはずです。メニューの『二つ名』から
+  二つ名を獲得した日時も確認することができます。
+
+  同様に２番の防具に別の二つ名を設定し、下記のプラグインコマンドを実行
+  してください。
+    gainSecondName 2
+  メニューの『二つ名』に新しい二つ名が追加され、アクターの二つ名を自由に
+  付け替えることができるようになっているはずです。
+  付け替えできない場合は防具の装備条件を満たしているかどうかを確認して
+  ください。
+
+
+メモ欄タグ（アクター）:
+
+  <secondName:1>
+    １番の防具をこのアクターの初期二つ名として設定します。アクターが加入
+    した時点でこの二つ名を獲得していない場合、一度別の二つ名をセットすると
+    元の二つ名に戻せなくなります。アクターの加入と同時に獲得処理を実行して
+    ください。
+    このタグがないアクターには、プラグインパラメータ defaultSecondNameId
+    に設定された番号の防具が二つ名としてセットされます。
+
+
+メモ欄タグ（防具）:
+
+  <secondNameExp:1>
+    二つ名の価値を設定します。プラグインパラメータ vnSecondNameExp に
+    1 以上の値が設定されていれば、その番号のゲーム変数に獲得済み二つ名の
+    合計価値が自動的に代入されます。
+
+
+プラグインコマンド:
+
+  gainSecondName 1
+    １番の防具を二つ名として獲得します。視覚効果などはありませんので、
+    ピクチャやアニメーションを使って作成してください。
+
+  hasSecondName 1 5
+    １番の防具を二つ名として獲得しているかどうかを取得します。獲得済みの
+    場合はゲームスイッチ５番がオンに、まだの場合はオフになります。
+
+
+プラグインパラメータ補足:
+
+  defaultSecondNameId
+    ここに設定された防具（二つ名）はアクターの初期二つ名として利用される
+    と同時に、ゲーム開始時に自動的に獲得します。
+
+@param secondNameCommand
+@desc メニューコマンド名 初期値: 二つ名
+@default 二つ名
+
+@param defaultSecondNameId
+@desc アクターの初期二つ名ID 初期値: 1
+@default 1
+@type number
+
+@param vnSecondNameExp
+@desc 獲得済み二つ名の合計価値を代入するゲーム変数番号 初期値: 0（ 0 で無効 / 1 以上で有効 )
+@default 0
+@type number
+
+@param dateFontSize
+@desc 日付表示のフォントサイズ 初期値: 20
+@default 20
+@type number
+
+@param equipText
+@desc 装備中テキスト 初期値: 【装備中】
+@default 【装備中】
+
+@param infoWindowWidth
+@desc 情報ウィンドウの幅 初期値: 240
+@default 240
+@type number
+
+@param infoWindowNumberText
+@desc 二つ名獲得数のテキスト 初期値: 集めた数
+@default 集めた数
+
+@param infoWindowExpText
+@desc 合計価値のテキスト（空欄なら合計価値を表示しない） 初期値: スコア
+@default スコア
+
+@param hidePartyMember
+@desc パーティメンバーの二つ名装備状況を無視する ( 一人旅ゲームにおいて先頭アクター以外を隠したい時のため )
+@default false
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMSecondName = true;

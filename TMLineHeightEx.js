@@ -8,59 +8,110 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ウィンドウの行の高さを変更します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param helpLineRate
- * @type number
- * @decimals 2
- * @desc ヘルプの行の高さの補正倍率
- * 初期値: 1.00
- * @default 1.00
- *
- * @param itemListLineRate
- * @type number
- * @decimals 2
- * @desc アイテムリストの行の高さの補正倍率
- * 初期値: 1.00
- * @default 1.00
- *
- * @param skillListLineRate
- * @type number
- * @decimals 2
- * @desc スキルリストの行の高さの補正倍率
- * 初期値: 1.00
- * @default 1.00
- *
- * @param equipSlotLineRate
- * @type number
- * @decimals 2
- * @desc 装備スロットの行の高さの補正倍率
- * 初期値: 1.00
- * @default 1.00
- *
- * @param equipStatusLineRate
- * @type number
- * @decimals 2
- * @desc 装備ステータスの行の高さの補正倍率
- * 初期値: 1.00
- * @default 1.00
- *
- * @help
- * TMPlugin - 行の高さを変更 ver1.0.0
- *
- * 使い方:
- *
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Changes the row height of the window.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Change Line Height ver. 1.0.0
+
+How to Use:
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License. You are free to use it commercially, modify it, and redistribute it.
+
+@param helpLineRate
+@desc Help line height correction factor Default: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param itemListLineRate
+@desc Correction factor for the row height of the item list. Initial value: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param skillListLineRate
+@desc Skill list row height correction factor Initial value: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param equipSlotLineRate
+@desc Equipment slot row height correction factor Default: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param equipStatusLineRate
+@desc Equipment status line height correction factor Initial value: 1.00
+@default 1.00
+@type number
+@decimals 2
+*/
+
+
+/*:ja
+@plugindesc ウィンドウの行の高さを変更します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - 行の高さを変更 ver1.0.0
+
+使い方:
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param helpLineRate
+@desc ヘルプの行の高さの補正倍率 初期値: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param itemListLineRate
+@desc アイテムリストの行の高さの補正倍率 初期値: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param skillListLineRate
+@desc スキルリストの行の高さの補正倍率 初期値: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param equipSlotLineRate
+@desc 装備スロットの行の高さの補正倍率 初期値: 1.00
+@default 1.00
+@type number
+@decimals 2
+
+@param equipStatusLineRate
+@desc 装備ステータスの行の高さの補正倍率 初期値: 1.00
+@default 1.00
+@type number
+@decimals 2
+*/
 
 var Imported = Imported || {};
 Imported.TMLineHeightEx = true;

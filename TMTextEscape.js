@@ -8,49 +8,98 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 文章の表示に使える制御文字を追加します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @help
- * TMPlugin - メッセージ制御文字拡張 ver1.4.1
- * 
- * 使い方:
- * 
- *   イベントコマンド『文章の表示』と『選択肢の表示』、
- *   データベースの『説明』などで下記の制御文字が使えるようになります。
- *
- *   \J[n]      # n 番の職業名に置き換えます。
- *   \AJ[n]     # n 番のアクターの現在の職業名に置き換えます。
- *   \PJ[n]     # n 番目のパーティメンバーの現在の職業名に置き換えます。
- *   \ANN[n]    # n 番のアクターの現在の二つ名に置き換えます。
- *   \PNN[n]    # n 番目のパーティメンバーの現在の二つ名に置き換えます。
- *   \IN[n]     # n 番のアイテム名（アイコン付き）に置き換えます。
- *   \WN[n]     # n 番の武器名（アイコン付き）に置き換えます。
- *   \AN[n]     # n 番の防具名（アイコン付き）に置き換えます。
- *   \SN[n]     # n 番のスキル名（アイコン付き）に置き換えます。
- *   \ML[n]     # n 番のアクターのレベル上限に置き換えます。
- *   \INUM[n]   # n 番のアイテムの所持数に置き換えます。( 0 番 = 所持金 )
- *   \WNUM[n]   # n 番の武器の所持数に置き換えます。
- *   \ANUM[n]   # n 番の防具の所持数に置き換えます。
- *   \MAP[n]    # n 番のマップ名（表示名ではない）に置き換えます。
- * 
- *   以下はイベントコマンド『文章の表示』でのみ有効な機能です。
- *   \AF[n]     # n 番のアクターの現在の顔グラフィックを表示します。
- * 
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- * 
- * おまけ機能:
- * 
- *   動的な説明が設定されたアイテム（スキル）の説明文が戦闘中に
- *   更新されない場合があるという不都合を修正します。
- */
+@plugindesc Adds control characters that can be used to Show Text.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Message Control Character Extension ver1.4.1
+
+Usage:
+
+The following control characters can now be used in the Event's Contents "Show Text" and "Show Choices,"
+and in the database "Description."
+
+\J[n] # Replaces with the nth job name.
+\AJ[n] # Replaces with the nth actor's current job name.
+\PJ[n] # Replaces with the nth party member's current job name.
+\ANN[n] # Replaces with the nth actor's current nickname.
+\PNN[n] # Replaces with the nth party member's current nickname.
+\IN[n] # Replaces with the nth item name (with icon).
+\WN[n] # Replaces with the nth weapon name (with icon).
+\AN[n] # Replaces with the nth armor name (with icon).
+\SN[n] # Replaces with the nth skill name (with icon).
+\ML[n] # Replace with the level cap of actor n.
+\INUM[n] # Replace with the number of item n owned. (0 = money)
+\WNUM[n] # Replace with the number of weapon n owned.
+\ANUM[n] # Replace with the number of armor n owned.
+\MAP[n] # Replace with the name of map n (not the display name).
+
+The following functions are only valid for the "Show Text" Event's Contents.
+\AF[n] # Displays the current facial graphic of actor n.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License and is free to use, including for commercial purposes, modifications, and redistribution.
+
+Bonus Traits:
+
+Fixes an issue where the descriptions of items (skills) with dynamic descriptions would not update during battle.
+*/
+
+
+/*:ja
+@plugindesc 文章の表示に使える制御文字を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - メッセージ制御文字拡張 ver1.4.1
+
+使い方:
+
+  イベントコマンド『文章の表示』と『選択肢の表示』、
+  データベースの『説明』などで下記の制御文字が使えるようになります。
+
+  \J[n]      # n 番の職業名に置き換えます。
+  \AJ[n]     # n 番のアクターの現在の職業名に置き換えます。
+  \PJ[n]     # n 番目のパーティメンバーの現在の職業名に置き換えます。
+  \ANN[n]    # n 番のアクターの現在の二つ名に置き換えます。
+  \PNN[n]    # n 番目のパーティメンバーの現在の二つ名に置き換えます。
+  \IN[n]     # n 番のアイテム名（アイコン付き）に置き換えます。
+  \WN[n]     # n 番の武器名（アイコン付き）に置き換えます。
+  \AN[n]     # n 番の防具名（アイコン付き）に置き換えます。
+  \SN[n]     # n 番のスキル名（アイコン付き）に置き換えます。
+  \ML[n]     # n 番のアクターのレベル上限に置き換えます。
+  \INUM[n]   # n 番のアイテムの所持数に置き換えます。( 0 番 = 所持金 )
+  \WNUM[n]   # n 番の武器の所持数に置き換えます。
+  \ANUM[n]   # n 番の防具の所持数に置き換えます。
+  \MAP[n]    # n 番のマップ名（表示名ではない）に置き換えます。
+
+  以下はイベントコマンド『文章の表示』でのみ有効な機能です。
+  \AF[n]     # n 番のアクターの現在の顔グラフィックを表示します。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+おまけ機能:
+
+  動的な説明が設定されたアイテム（スキル）の説明文が戦闘中に
+  更新されない場合があるという不都合を修正します。
+*/
 
 var Imported = Imported || {};
 Imported.TMTextEscape = true;

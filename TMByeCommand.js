@@ -8,55 +8,105 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc メニューコマンドに仲間と別れる機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param byeCommand
- * @desc さよならコマンドのコマンド名。
- * 初期値: 別れる
- * @default 別れる
- *
- * @param byeSe
- * @desc さよならコマンド実行時に鳴らす効果音のファイル名
- * 初期値: Decision1
- * @default Decision1
- * @require 1
- * @dir audio/se/
- * @type file
- * 
- * @param byeSeParam
- * @desc さよならコマンド効果音のパラメータ
- * 初期値: {"volume":90, "pitch":100, "pan":0}
- * @default {"volume":90, "pitch":100, "pan":0}
- * 
- * @help
- * TMPlugin - さよならコマンド ver1.0.0
- *
- * 使い方:
- *
- *   このプラグインを導入するとメニューコマンドに『別れる』が追加されます。
- *   パーティメンバーが 1 名以下の場合、コマンドを実行することはできません。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- * 
- * 
- * プラグインコマンド:
- * 
- *   disableBye
- *     さよならコマンドをメニューコマンドから除外します。
- * 
- *   enableBye
- *     除外したさよならコマンドを元に戻します。
- * 
- * 
- * メモ欄タグ（アクター）:
- * 
- *   <disableBye>
- *     メモ欄にこのタグがついているアクターは別れることができません。
- */
+@plugindesc Added the ability to separate from companions to the menu commands.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Goodbye Command ver. 1.0.0
+
+How to Use:
+
+This plugin adds the "Bye" menu command.
+The command cannot be executed if there is one or fewer party members.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Plugin Commands:
+
+disableBye
+Excludes the "Bye" command from the menu.
+
+enableBye
+Restores a previously excluded "Bye" command.
+
+Memo Tag (Actor):
+
+<disableBye>
+Actors with this tag in the Note field cannot be bidden.
+
+@param byeCommand
+@desc Command name for the goodbye command. Default: Break up
+@default break up
+
+@param byeSe
+@desc File name of the sound effect to be played when the goodbye command is executed. Default: Decision1
+@default Decision1
+@type file
+@require 1
+@dir audio/se/
+
+@param byeSeParam
+@desc Goodbye command sound effect parameters Default: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+*/
+
+
+/*:ja
+@plugindesc メニューコマンドに仲間と別れる機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - さよならコマンド ver1.0.0
+
+使い方:
+
+  このプラグインを導入するとメニューコマンドに『別れる』が追加されます。
+  パーティメンバーが 1 名以下の場合、コマンドを実行することはできません。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+プラグインコマンド:
+
+  disableBye
+    さよならコマンドをメニューコマンドから除外します。
+
+  enableBye
+    除外したさよならコマンドを元に戻します。
+
+
+メモ欄タグ（アクター）:
+
+  <disableBye>
+    メモ欄にこのタグがついているアクターは別れることができません。
+
+@param byeCommand
+@desc さよならコマンドのコマンド名。 初期値: 別れる
+@default 別れる
+
+@param byeSe
+@desc さよならコマンド実行時に鳴らす効果音のファイル名 初期値: Decision1
+@default Decision1
+@type file
+@require 1
+@dir audio/se/
+
+@param byeSeParam
+@desc さよならコマンド効果音のパラメータ 初期値: {"volume":90, "pitch":100, "pan":0}
+@default {"volume":90, "pitch":100, "pan":0}
+*/
 
 var Imported = Imported || {};
 Imported.TMByeCommand = true;

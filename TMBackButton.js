@@ -8,153 +8,261 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc メニューシーンにタップ操作用の戻るボタンを表示します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param buttonImage
- * @desc ボタンとして表示する画像。
- * 初期値: backButton
- * @default backButton
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param sceneMenuX
- * @desc Scene_Menuの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneMenuY
- * @desc Scene_Menuの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneItemX
- * @desc Scene_Itemの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneItemY
- * @desc Scene_Itemの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneSkillX
- * @desc Scene_Skillの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneSkillY
- * @desc Scene_Skillの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneEquipX
- * @desc Scene_Equipの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneEquipY
- * @desc Scene_Equipの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneStatusX
- * @desc Scene_Statusの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneStatusY
- * @desc Scene_Statusの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneOptionsX
- * @desc Scene_Optionsの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneOptionsY
- * @desc Scene_Optionsの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneSaveX
- * @desc Scene_Saveの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneSaveY
- * @desc Scene_Saveの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneLoadX
- * @desc Scene_Loadの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneLoadY
- * @desc Scene_Loadの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneGameEndX
- * @desc Scene_GameEndの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneGameEndY
- * @desc Scene_GameEndの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneShopX
- * @desc Scene_Shopの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneShopY
- * @desc Scene_Shopの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneNameX
- * @desc Scene_Nameの戻るボタンＸ座標。
- * 初期値: 0
- * @default 0
- *
- * @param sceneNameY
- * @desc Scene_Nameの戻るボタンＹ座標。
- * 初期値: 0
- * @default 0
- *
- * @help
- * 準備:
- *
- *   プラグインと一緒に配布しているボタン画像を img/system フォルダに
- *   保存してください。ファイル名は backButton.png となっています。
- *   オリジナルのボタン画像を使用する場合は上記ファイル名と同名のものを
- *   用意するか、プラグインパラメータ buttonImage を変更してください。
- *
- *
- * 使い方:
- *
- *   ボタン画像を img/system フォルダ内に置いた状態で、このプラグインを
- *   導入すれば、自動的に戻るボタンが表示されるようになります。
- *
- *   プラグインパラメータでボタンの表示位置をシーンごとに調節できますので
- *   お好みで変更してください。
- *
- *   ボタン画像の透過部分（アルファ値が 0 ）はタップに反応しません。
- *
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.3.3 で動作確認をしています。
- */
+@plugindesc Displays a back button for tapping in the menu scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Preparation:
+
+Save the button image distributed with the plugin in the img/system folder.
+The file name is backButton.png.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+If you want to use your own button image, either create one with the same name as the one above, or change the plugin parameter buttonImage.
+
+How to Use:
+
+If you install this plugin with the button image in the img/system folder, the back button will automatically be displayed.
+
+You can adjust the button's position for each scene using the plugin parameters, so change it to your liking.
+
+Transparent areas of the button image (alpha value 0) will not respond to taps.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.3.3.
+
+@param buttonImage
+@desc Image to display as a button. Default: backButton
+@default backButton
+@type file
+@require 1
+@dir img/system/
+
+@param sceneMenuX
+@desc Scene_Menu back button X coordinate. Initial value: 0
+@default 0
+
+@param sceneMenuY
+@desc Scene_Menu back button Y coordinate. Initial value: 0
+@default 0
+
+@param sceneItemX
+@desc Scene_Item back button X coordinate. Initial value: 0
+@default 0
+
+@param sceneItemY
+@desc Back button Y coordinate of Scene_Item. Initial value: 0
+@default 0
+
+@param sceneSkillX
+@desc Scene_Skill back button X coordinate. Default: 0
+@default 0
+
+@param sceneSkillY
+@desc Scene_Skill back button Y coordinate. Default: 0
+@default 0
+
+@param sceneEquipX
+@desc Back button X coordinate of Scene_Equip. Default value: 0
+@default 0
+
+@param sceneEquipY
+@desc Back button Y coordinate of Scene_Equip. Initial value: 0
+@default 0
+
+@param sceneStatusX
+@desc Back button X coordinate of Scene_Status. Initial value: 0
+@default 0
+
+@param sceneStatusY
+@desc Back button Y coordinate of Scene_Status. Initial value: 0
+@default 0
+
+@param sceneOptionsX
+@desc Back button X coordinate of Scene_Options. Default value: 0
+@default 0
+
+@param sceneOptionsY
+@desc Back button Y coordinate of Scene_Options. Initial value: 0
+@default 0
+
+@param sceneSaveX
+@desc Scene_Save back button X coordinate. Default: 0
+@default 0
+
+@param sceneSaveY
+@desc Scene_Save back button Y coordinate. Default: 0
+@default 0
+
+@param sceneLoadX
+@desc Back button X coordinate of Scene_Load. Default value: 0
+@default 0
+
+@param sceneLoadY
+@desc Scene_Load back button Y coordinate. Default: 0
+@default 0
+
+@param sceneGameEndX
+@desc Scene_GameEnd back button X coordinate. Initial value: 0
+@default 0
+
+@param sceneGameEndY
+@desc Scene_GameEnd back button Y coordinate. Initial value: 0
+@default 0
+
+@param sceneShopX
+@desc Scene_Shop back button X coordinate. Initial value: 0
+@default 0
+
+@param sceneShopY
+@desc Scene_Shop back button Y coordinate. Initial value: 0
+@default 0
+
+@param sceneNameX
+@desc Back button X coordinate of Scene_Name. Default: 0
+@default 0
+
+@param sceneNameY
+@desc Back button Y coordinate of Scene_Name. Default: 0
+@default 0
+*/
+
+
+/*:ja
+@plugindesc メニューシーンにタップ操作用の戻るボタンを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+準備:
+
+  プラグインと一緒に配布しているボタン画像を img/system フォルダに
+  保存してください。ファイル名は backButton.png となっています。
+  オリジナルのボタン画像を使用する場合は上記ファイル名と同名のものを
+  用意するか、プラグインパラメータ buttonImage を変更してください。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+使い方:
+
+  ボタン画像を img/system フォルダ内に置いた状態で、このプラグインを
+  導入すれば、自動的に戻るボタンが表示されるようになります。
+
+  プラグインパラメータでボタンの表示位置をシーンごとに調節できますので
+  お好みで変更してください。
+
+  ボタン画像の透過部分（アルファ値が 0 ）はタップに反応しません。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.3.3 で動作確認をしています。
+
+@param buttonImage
+@desc ボタンとして表示する画像。 初期値: backButton
+@default backButton
+@type file
+@require 1
+@dir img/system/
+
+@param sceneMenuX
+@desc Scene_Menuの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneMenuY
+@desc Scene_Menuの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneItemX
+@desc Scene_Itemの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneItemY
+@desc Scene_Itemの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneSkillX
+@desc Scene_Skillの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneSkillY
+@desc Scene_Skillの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneEquipX
+@desc Scene_Equipの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneEquipY
+@desc Scene_Equipの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneStatusX
+@desc Scene_Statusの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneStatusY
+@desc Scene_Statusの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneOptionsX
+@desc Scene_Optionsの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneOptionsY
+@desc Scene_Optionsの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneSaveX
+@desc Scene_Saveの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneSaveY
+@desc Scene_Saveの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneLoadX
+@desc Scene_Loadの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneLoadY
+@desc Scene_Loadの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneGameEndX
+@desc Scene_GameEndの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneGameEndY
+@desc Scene_GameEndの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneShopX
+@desc Scene_Shopの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneShopY
+@desc Scene_Shopの戻るボタンＹ座標。 初期値: 0
+@default 0
+
+@param sceneNameX
+@desc Scene_Nameの戻るボタンＸ座標。 初期値: 0
+@default 0
+
+@param sceneNameY
+@desc Scene_Nameの戻るボタンＹ座標。 初期値: 0
+@default 0
+*/
 
 var Imported = Imported || {};
 Imported.TMBackButton = true;

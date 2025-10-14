@@ -4,74 +4,129 @@
 // Version: 0.3b
 // 最終更新日: 2016/01/19
 //=============================================================================
-
 /*:
- * @plugindesc マップシーンに顔グラフィックとＨＰゲージを表示します。
- * (必ず TMJumpAction より下に導入してください)
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param Gauge Window X
- * @desc ＨＰゲージウィンドウの X 座標。
- * 初期値: 0
- * @default 0
- *
- * @param Gauge Window Y
- * @desc ＨＰゲージウィンドウの Y 座標。
- * 初期値: 0
- * @default 0
- *
- * @param Gauge Offset X
- * @desc ＨＰゲージの X 座標補正値。
- * 初期値: 12
- * @default 12
- *
- * @param Gauge Offset Y
- * @desc ＨＰゲージの Y 座標補正値。
- * 初期値: 0
- * @default 0
- *
- * @param Face Offset X
- * @desc 顔グラフィックの X 座標補正値。
- * 初期値: -4
- * @default -4
- *
- * @param Face Offset Y
- * @desc 顔グラフィックの Y 座標補正値。
- * 初期値: -4
- * @default -4
- *
- * @param Shake Time
- * @desc ダメージを受けたときにウィンドウを揺らす時間。
- * 初期値: 20（ 0 で揺らさない）
- * @default 20
- *
- * @param Start Visible
- * @desc ゲーム開始時の表示状態。
- * 初期値: 1（ 0 で非表示）
- * @default 1
- *
- * @param Collide Opacity
- * @desc プレイヤーと重なったときの不透明度。
- * 初期値: 128（ 0 ～ 255 ）
- * @default 128
- *
- * @param messageBusyHide
- * @desc メッセージウィンドウ表示中はログウィンドウを隠す。
- * 初期値: 1（ 0 で隠さない）
- * @default 1
- *
- * @param eventBusyHide
- * @desc イベント起動中はログウィンドウを隠す。
- * 初期値: 1（ 0 で隠さない）
- * @default 1
- *
- * @help このプラグインの動作には TMVplugin - ジャンプアクション Ver0.2b 以上
- * が必要です。必ずこちらのプラグインを下に導入してください。
- *
- * プラグインコマンド:
- *   JumpAction show_hp_gauge      # ＨＰゲージを表示する
- *   JumpAction hide_hp_gauge      # ＨＰゲージを隠す
- */
+@plugindesc Displays face graphics and HP gauges on the map scene.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+is required. Please be sure to install this plugin below.
+
+Plugin Commands:
+JumpAction show_hp_gauge # Show the HP gauge
+JumpAction hide_hp_gauge # Hide the HP gauge
+
+@param Gauge Window X
+@desc X coordinate of the HP gauge window. Default: 0
+@default 0
+
+@param Gauge Window Y
+@desc Y coordinate of the HP gauge window. Initial value: 0
+@default 0
+
+@param Gauge Offset X
+@desc HP gauge X coordinate correction value. Initial value: 12
+@default 12
+
+@param Gauge Offset Y
+@desc Y coordinate correction value for HP gauge. Initial value: 0
+@default 0
+
+@param Face Offset X
+@desc X coordinate offset value for face graphics. Default: -4
+@default -4
+
+@param Face Offset Y
+@desc Y coordinate offset value for face graphics. Default: -4
+@default -4
+
+@param Shake Time
+@desc Time to shake the window when taking damage. Default: 20 (0 means no shaking)
+@default 20
+
+@param Start Visible
+@desc Display state at the start of the game. Initial value: 1 (0 is hidden)
+@default 1
+
+@param Collide Opacity
+@desc Opacity when overlapping with the player. Default: 128 (0 to 255)
+@default 128
+
+@param messageBusyHide
+@desc Hide the log window while the message window is displayed. Default: 1 (0: do not hide)
+@default 1
+
+@param eventBusyHide
+@desc Hide the log window while an event is running. Default: 1 (0: do not hide).
+@default 1
+*/
+
+
+/*:ja
+@plugindesc マップシーンに顔グラフィックとＨＰゲージを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+が必要です。必ずこちらのプラグインを下に導入してください。
+
+プラグインコマンド:
+  JumpAction show_hp_gauge      # ＨＰゲージを表示する
+  JumpAction hide_hp_gauge      # ＨＰゲージを隠す
+
+@param Gauge Window X
+@desc ＨＰゲージウィンドウの X 座標。 初期値: 0
+@default 0
+
+@param Gauge Window Y
+@desc ＨＰゲージウィンドウの Y 座標。 初期値: 0
+@default 0
+
+@param Gauge Offset X
+@desc ＨＰゲージの X 座標補正値。 初期値: 12
+@default 12
+
+@param Gauge Offset Y
+@desc ＨＰゲージの Y 座標補正値。 初期値: 0
+@default 0
+
+@param Face Offset X
+@desc 顔グラフィックの X 座標補正値。 初期値: -4
+@default -4
+
+@param Face Offset Y
+@desc 顔グラフィックの Y 座標補正値。 初期値: -4
+@default -4
+
+@param Shake Time
+@desc ダメージを受けたときにウィンドウを揺らす時間。 初期値: 20（ 0 で揺らさない）
+@default 20
+
+@param Start Visible
+@desc ゲーム開始時の表示状態。 初期値: 1（ 0 で非表示）
+@default 1
+
+@param Collide Opacity
+@desc プレイヤーと重なったときの不透明度。 初期値: 128（ 0 ～ 255 ）
+@default 128
+
+@param messageBusyHide
+@desc メッセージウィンドウ表示中はログウィンドウを隠す。 初期値: 1（ 0 で隠さない）
+@default 1
+
+@param eventBusyHide
+@desc イベント起動中はログウィンドウを隠す。 初期値: 1（ 0 で隠さない）
+@default 1
+*/
 
 var Imported = Imported || {};
 Imported.TMJAHpGauge = true;

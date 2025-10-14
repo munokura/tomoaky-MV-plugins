@@ -8,94 +8,183 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc イベントにアニメーション付きの明かりを表示します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param range
- * @desc アニメーションの大きさ。
- * 初期値: 0.1 ( 0.1 でプラスマイナス 10% の拡大縮小アニメ)
- * @default 0.1
- *
- * @param defaultZ
- * @desc アニメーションのＺ座標。
- * 初期値: 4
- * @default 4
- *
- * @param frames
- * @desc アニメーションにかけるフレーム数。
- * 初期値: 30
- * @default 30
- *
- * @help
- * 準備:
- *
- *   プラグインと一緒に配布している明かり画像を img/system フォルダに
- *   保存してください。ファイル名は自由に変更可能です。
- *   使用する画像はどんなものでもかまいません、イベントごとに違う画像を
- *   表示することもできます。
- *
- *
- * 使い方:
- *
- *   イベントのメモ欄に <animeLight:ファイル名> というタグを書き込めば、
- *   明かりが表示されるようになります。
- *
- *   明かりの位置もタグを使って調整することができます。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- *
- *
- * メモ欄（イベント）タグ:
- *
- *   <animeLight:TMAnimeLight1 192 24 -44 4>
- *     画像 TMAnimeLight1.png を不透明度 192 で、イベントの足元から右に 24、
- *     上に 44 ドットずらした位置にＺ座標 4 で表示します。
- *     不透明度の最大値は 255 です。
- *
- *   イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも
- *   同様のタグで名前を設定することができます。
- *   メモ欄と注釈の両方にタグがある場合は注釈が優先されます。
- *
- *
- * プラグインコマンド:
- *
- *   animeLight 1 TMAnimeLight1 255 0 -44 4
- *     イベント 1 番に明かりを適用します。
- *     イベント番号、ファイル名、不透明度、Ｘ座標補正、Ｙ座標補正、Ｚ座標
- *     の順に設定してください。
- *     Ｚ座標を省略した場合はプラグインパラメータ animeLightZ の値を
- *     使用します。
- *
- *   animeLight 1
- *     イベント 1 番の明かりを削除します。
- *
- *   イベント番号（ひとつ目の数値）は以下の規則にしたがって対象を指定します。
- *     -1     … プレイヤーを対象にする
- *     0      … コマンドを実行しているイベントを対象にする
- *     1 以上 … その番号のイベントを対象にする
- *
- *
- * おまけ機能:
- *
- *   メモ欄タグ、注釈、プラグインコマンドすべてに共通で、Ｚ座標のあとに
- *   1 という数値を付与することでアニメーションのない画像を表示できます。
- *   例: <animeLight:TMAnimeLight1 192 0 0 4 1>
- *   この場合Ｚ座標を省略することはできません。
- *
- *
- * プラグインパラメータ補足:
- *
- *   defaultZ
- *     明かりの描画順を設定します、これによりイベントよりも下に表示するか
- *     上に表示するかが決まります。
- *     0 … プライオリティ『通常キャラの下』より下
- *     2 … プライオリティ『通常キャラと同じ』より下
- *     4 … プライオリティ『通常キャラと同じ』より上
- *     6 … プライオリティ『通常キャラの上』より上
- */
+@plugindesc Displays animated lights at the event.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Preparation:
+
+Save the light image distributed with the plugin in the img/system folder. You can freely change the file name.
+
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+
+You can use any image, and even display a different image for each event.
+
+How to Use:
+
+Enter the tag <animeLight:filename> in the event's Note field to display the light.
+
+You can also adjust the light's position using the tag.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Note field (Event) Tag:
+
+<animeLight:TMAnimeLight1 192 24 -44 4>
+Displays the image TMAnimeLight1.png with an opacity of 192, 24 dots to the right and 44 dots up from the event's base, with a Z coordinate of 4.
+The maximum opacity is 255.
+
+In addition to the event Note field, you can also set names using similar tags in the annotation command at the top of the action content.
+If a tag is present in both the Note field and the annotation, the annotation takes priority.
+
+Plugin Command:
+
+animeLight 1 TMAnimeLight1 255 0 -44 4
+Applies lighting to event 1.
+Set the following in order: event number, file name, opacity, X offset, Y offset, and Z coordinate.
+
+If the Z coordinate is omitted, the value of the plugin parameter animeLightZ will be used.
+
+animeLight 1
+Deletes lighting from event 1.
+
+The event number (the first number) specifies the target according to the following rules:
+-1 ... Targets the player
+0 ... Targets the event executing the command
+1 or greater ... Targets the event with that number
+
+Bonus Traits:
+
+Common to Note field tags, annotations, and plugin commands, you can display a non-animated image by adding the number 1 after the Z coordinate.
+Example: <animeLight:TMAnimeLight1 192 0 0 4 1>
+In this case, the Z coordinate cannot be omitted.
+
+Plugin Parameter Notes:
+
+defaultZ
+Sets the drawing order of the light, determining whether it will be displayed below or above events.
+
+0 ... Lower than priority "Below normal characters"
+
+2 ... Lower than priority "Same as normal characters"
+
+4 ... Higher than priority "Same as normal characters"
+
+6 ... Higher than priority "Above normal characters"
+
+@param range
+@desc Size of animation. Default: 0.1 (0.1 means +/- 10% scaling animation)
+@default 0.1
+
+@param defaultZ
+@desc Animation Z coordinate. Default: 4
+@default 4
+
+@param frames
+@desc Number of frames for the animation. Default: 30
+@default 30
+*/
+
+
+/*:ja
+@plugindesc イベントにアニメーション付きの明かりを表示します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+準備:
+
+  プラグインと一緒に配布している明かり画像を img/system フォルダに
+  保存してください。ファイル名は自由に変更可能です。
+  使用する画像はどんなものでもかまいません、イベントごとに違う画像を
+  表示することもできます。
+
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+
+
+使い方:
+
+  イベントのメモ欄に <animeLight:ファイル名> というタグを書き込めば、
+  明かりが表示されるようになります。
+
+  明かりの位置もタグを使って調整することができます。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+メモ欄（イベント）タグ:
+
+  <animeLight:TMAnimeLight1 192 24 -44 4>
+    画像 TMAnimeLight1.png を不透明度 192 で、イベントの足元から右に 24、
+    上に 44 ドットずらした位置にＺ座標 4 で表示します。
+    不透明度の最大値は 255 です。
+
+  イベントのメモ欄以外に、実行内容の一番上にある注釈コマンド内でも
+  同様のタグで名前を設定することができます。
+  メモ欄と注釈の両方にタグがある場合は注釈が優先されます。
+
+
+プラグインコマンド:
+
+  animeLight 1 TMAnimeLight1 255 0 -44 4
+    イベント 1 番に明かりを適用します。
+    イベント番号、ファイル名、不透明度、Ｘ座標補正、Ｙ座標補正、Ｚ座標
+    の順に設定してください。
+    Ｚ座標を省略した場合はプラグインパラメータ animeLightZ の値を
+    使用します。
+
+  animeLight 1
+    イベント 1 番の明かりを削除します。
+
+  イベント番号（ひとつ目の数値）は以下の規則にしたがって対象を指定します。
+    -1     … プレイヤーを対象にする
+    0      … コマンドを実行しているイベントを対象にする
+    1 以上 … その番号のイベントを対象にする
+
+
+おまけ機能:
+
+  メモ欄タグ、注釈、プラグインコマンドすべてに共通で、Ｚ座標のあとに
+  1 という数値を付与することでアニメーションのない画像を表示できます。
+  例: <animeLight:TMAnimeLight1 192 0 0 4 1>
+  この場合Ｚ座標を省略することはできません。
+
+
+プラグインパラメータ補足:
+
+  defaultZ
+    明かりの描画順を設定します、これによりイベントよりも下に表示するか
+    上に表示するかが決まります。
+    0 … プライオリティ『通常キャラの下』より下
+    2 … プライオリティ『通常キャラと同じ』より下
+    4 … プライオリティ『通常キャラと同じ』より上
+    6 … プライオリティ『通常キャラの上』より上
+
+@param range
+@desc アニメーションの大きさ。 初期値: 0.1 ( 0.1 でプラスマイナス 10% の拡大縮小アニメ)
+@default 0.1
+
+@param defaultZ
+@desc アニメーションのＺ座標。 初期値: 4
+@default 4
+
+@param frames
+@desc アニメーションにかけるフレーム数。 初期値: 30
+@default 30
+*/
 
 var Imported = Imported || {};
 Imported.TMAnimeLight = true;

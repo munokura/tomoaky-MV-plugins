@@ -8,85 +8,150 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ふしぎうさぎ様の USG_Matter.js を各種パラメータの
- * 設定ができるように拡張します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param gravityX
- * @type number
- * @min -100
- * @decimals 2
- * @desc 横方向の重力
- * 初期値: 0
- * @default 0
- *
- * @param gravityY
- * @type number
- * @min -100
- * @decimals 2
- * @desc 縦方向の重力
- * 初期値: 0
- * @default 0
- *
- * @param maxSpeed
- * @type number
- * @decimals 2
- * @desc 最高速度の補正倍率
- * 初期値: 1
- * @default 1
- * 
- * @param controlType
- * @type select
- * @option FLICK
- * @option FREE
- * @desc 操作タイプを設定する
- * 初期値: FLICK ( FLICK / FREE )
- * @default FLICK
- * 
- * @param eventControl
- * @type boolean
- * @desc イベントを操作できるかどうか
- * 初期値: OFF ( false = OFF 操作不可 / true = ON 操作可能 )
- * @default false
- * 
- * @param flickCommonEvent
- * @type common_event
- * @desc フリック操作時に実行するコモンイベント
- * 初期値: 0
- * @default 0
- * 
- * @param seFlick
- * @type file
- * @dir audio/se/
- * @require 1
- * @desc フリック操作の効果音
- * 初期値: Wind4
- * @default Wind4
- * 
- * @requiredAssets img/system/SwipeArrow
- * 
- * @help
- * TMPlugin - USG_Matter.js拡張 ver1.0.0
- *
- * 使い方:
- * 
- *   ツクマテにてふしぎうさぎ様が公開されている USG_Matter.js を拡張します。
- *   http://tm.lucky-duet.com/viewtopic.php?t=4387
- * 
- *   この拡張プラグインは tomoaky が個人的に作成したものです、不具合修正などの
- *   サポートを元プラグイン作者のふしぎうさぎ様に求めるようなことは
- *   絶対にしないでください。
- * 
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
- * 
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- */
+@plugindesc Fushigi Usagi's USG_Matter.js with various parameters
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - USG_Matter.js Extension ver. 1.0.0
+
+How to Use:
+
+This plugin extends USG_Matter.js, published by Fushigi Usagi on Tsukumate.
+http://tm.lucky-duet.com/viewtopic.php?t=4387
+
+This extension plugin was created by tomoaky personally. Please do not request support from the original plugin author, Fushigi Usagi, for bug fixes or other issues.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.5.1.
+
+This plugin is distributed under the MIT License. You are free to use it commercially, modify it, and redistribute it.
+
+@param gravityX
+@desc Horizontal gravity default value: 0
+@default 0
+@type number
+@min -100
+@decimals 2
+
+@param gravityY
+@desc Vertical gravity default: 0
+@default 0
+@type number
+@min -100
+@decimals 2
+
+@param maxSpeed
+@desc Maximum speed correction factor Default: 1
+@default 1
+@type number
+@decimals 2
+
+@param controlType
+@desc Set the operation type. Default: FLICK ( FLICK / FREE )
+@default FLICK
+@type select
+@option FLICK
+@option FREE
+
+@param eventControl
+@desc Whether events can be controlled. Default: OFF (false = OFF, cannot be controlled / true = ON, can be controlled)
+@default false
+@type boolean
+
+@param flickCommonEvent
+@desc Common event executed when flicking Initial value: 0
+@default 0
+@type common_event
+
+@param seFlick
+@desc Flick operation sound effect Default: Wind4
+@default Wind4
+@type file
+@require 1
+@dir audio/se/
+*/
+
+
+/*:ja
+@plugindesc ふしぎうさぎ様の USG_Matter.js を各種パラメータの
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - USG_Matter.js拡張 ver1.0.0
+
+使い方:
+
+  ツクマテにてふしぎうさぎ様が公開されている USG_Matter.js を拡張します。
+  http://tm.lucky-duet.com/viewtopic.php?t=4387
+
+  この拡張プラグインは tomoaky が個人的に作成したものです、不具合修正などの
+  サポートを元プラグイン作者のふしぎうさぎ様に求めるようなことは
+  絶対にしないでください。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.5.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+@param gravityX
+@desc 横方向の重力 初期値: 0
+@default 0
+@type number
+@min -100
+@decimals 2
+
+@param gravityY
+@desc 縦方向の重力 初期値: 0
+@default 0
+@type number
+@min -100
+@decimals 2
+
+@param maxSpeed
+@desc 最高速度の補正倍率 初期値: 1
+@default 1
+@type number
+@decimals 2
+
+@param controlType
+@desc 操作タイプを設定する 初期値: FLICK ( FLICK / FREE )
+@default FLICK
+@type select
+@option FLICK
+@option FREE
+
+@param eventControl
+@desc イベントを操作できるかどうか 初期値: OFF ( false = OFF 操作不可 / true = ON 操作可能 )
+@default false
+@type boolean
+
+@param flickCommonEvent
+@desc フリック操作時に実行するコモンイベント 初期値: 0
+@default 0
+@type common_event
+
+@param seFlick
+@desc フリック操作の効果音 初期値: Wind4
+@default Wind4
+@type file
+@require 1
+@dir audio/se/
+*/
 
 var Imported = Imported || {};
 Imported.TMMatterEx = true;

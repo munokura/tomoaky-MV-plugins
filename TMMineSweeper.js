@@ -8,111 +8,205 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 有名な地雷撤去ゲームっぽいものを追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param command
- * @desc 『選択肢の表示』コマンドで使用するマインスウィーパ起動文字列。
- * 初期値: [マインスウィーパ]
- * @default [マインスウィーパ]
- *
- * @param iconImage
- * @desc 地雷アイコンとして利用する画像ファイル名。
- * 初期値: MineSweeper
- * @default MineSweeper
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param bombSe
- * @desc 地雷爆発時に鳴らす効果音のファイル名。
- * 初期値: Explosion2
- * @default Explosion2
- * @require 1
- * @dir audio/se/
- * @type file
+@plugindesc I'll add something similar to the famous mine clearance game.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
 
- * @param bombSeParameters
- * @desc 地雷爆発時に鳴らす効果音の音量、ピッチ、パン。
- * 初期値: 90 100 0
- * @default 90 100 0
- *
- * @param clearSe
- * @desc 地雷撤去完了時に鳴らす効果音のファイル名。
- * 初期値: Applause1
- * @default Applause1
- * @require 1
- * @dir audio/se/
- * @type file
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+Preparation:
 
- * @param clearSeParameters
- * @desc 地雷撤去完了時に鳴らす効果音の音量、ピッチ、パン。
- * 初期値: 90 100 0
- * @default 90 100 0
- *
- * @help
- * 準備:
- *
- *   プラグインと一緒に配布しているマインスウィーパのアイコン画像を
- *   img/system フォルダに保存してください。
- *   ファイル名は MineSweeper.png となっています。
- *   ファイル名を変更しなければならない場合はプラグインパラメータの
- *   iconImage も一緒に変更してください。
- *
- *
- * 使い方:
- *
- *   イベントコマンド『選択肢の表示』の選択肢 1 番に [マインスウィーパ] と
- *   入力することでマインスウィーパが起動します。（括弧は半角です）
- *   選択肢 2 番には以下の 5 つの数値を半角スペースで区切って入力します。
- *   ・横に並ぶマスの数
- *   ・縦に並ぶマスの数
- *   ・マス 1 つの幅（ドット数）
- *   ・マス 1 つの高さ（ドット数）
- *   ・地雷の数
- *   例）14 8 32 32 20
- *   この例では 1 つが32*32ドットのマスを横に 14、縦に 8、計 112 個並べ、
- *   そのうち 20 個のマスに地雷が隠されている状態でスタートします。
- *
- *   地雷の埋まっていないマスをすべて調査すれば選択肢 1 番の処理が実行され、
- *   途中で地雷のあるマスを調査してしまった場合は 2 番が実行されます。
- *
- *   選択肢 3 番に半角数字で制限時間を設定することができます。
- *   入力した秒数が経過するとマインスウィーパが強制終了し、
- *   選択肢 3 番の処理が実行されます。
- *
- *   このプラグインは RPGツクールMV Version 1.3.0 で動作確認をしています。
- *
- *
- * プラグインコマンド:
- *
- *   mineTime 1
- *     直前のマインスウィーパの所要時間をゲーム変数 1 番に代入します。
- *
- *     mineTime コマンドで得られる値の単位はミリ秒になっていますので、
- *     秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
- *     1000 で割ってください。
- *
- *     mineTime で得られる結果は直前に実行されたマインスウィーパのものです。
- *     また、マインスウィーパとプラグインコマンド実行までの間に
- *     セーブ＆ロードをはさむと結果が取得できなくなります。
- *
- *
- * 注意事項:
- *
- *   『文章の表示』コマンドの直後にマインスウィーパを起動した場合、
- *   メッセージウィンドウが閉じずにそのままマインスウィーパが起動します。
- *   メッセージウィンドウを閉じてからマインスウィーパを起動したい場合は
- *   『文章の表示』と『選択肢の表示』の間に『ウェイト』を 1 フレーム以上
- *   入れてください。
- *
- *   また、マインスウィーパウィンドウの上下位置はメッセージウィンドウの
- *   上下位置に影響を受けるので、背景が透明で内容が空のメッセージウィンドウを
- *   使えばマインスウィーパウィンドウの上下位置を変更することができます。
- */
+Save the Minesweeper icon image distributed with the plugin
+in the img/system folder.
+The file name is MineSweeper.png.
+If you need to change the file name, please also change the iconImage plugin parameter.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+How to Use:
+
+To launch Minesweeper, enter [MineSweeper]
+in option 1 of the "Show Options" Event's Contents. (The brackets are half-width characters.)
+In option 2, enter the following five numbers, separated by spaces:
+- Number of squares in a row
+- Number of squares in a row
+- Width of a square (number of dots)
+- Height of a square (number of dots)
+- Number of mines
+Example: 14 8 32 32 20
+In this example, 14 squares are arranged horizontally and 8 vertically, totaling 112 squares, each 32x32 pixels in size.
+20 of these squares contain hidden mines.
+
+Option 1 will be executed if all squares without mines are investigated.
+If a square containing a mine is investigated during the investigation, option 2 will be executed.
+
+Option 3 allows you to set a time limit using half-width numbers.
+After the entered number of seconds has elapsed, Minesweeper will be forced to quit,
+and option 3 will be executed.
+
+This plugin has been tested with RPG Maker MV Version 1.3.0.
+
+Plugin Command:
+
+mineTime 1
+Assigns the time required for the most recent Minesweeper run to game variable 1.
+
+The value returned by the mineTime command is in milliseconds.
+To convert it to seconds, use the "Operate Variable" Event's Contents and divide this value by 1000.
+
+The result returned by mineTime is for the most recent run of Minesweeper.
+Also, if you save and load between running Minesweeper and executing the plugin command, you will not be able to obtain the result.
+
+Note:
+
+If you launch Minesweeper immediately after the "Show Text" command,
+the message window will not close and Minesweeper will launch without closing.
+If you want to launch Minesweeper after closing the message window,
+add a "Wait" of at least one frame between "Show Text" and "Show Choices."
+
+Additionally, the vertical position of the Minesweeper window is affected by the vertical position of the message window, so you can change the vertical position of the Minesweeper window by using a message window with a transparent background and empty content.
+
+@param command
+@desc Minesweeper launch string used for the "Show options" command. Default: [Minesweeper]
+@default [Minesweeper]
+
+@param iconImage
+@desc The image file name to use as the mine icon. Default: MineSweeper
+@default MineSweeper
+@type file
+@require 1
+@dir img/system/
+
+@param bombSe
+@desc The file name of the sound effect that plays when a mine explodes. Default: Explosion2
+@default Explosion2
+@type file
+@require 1
+@dir audio/se/
+
+@param bombSeParameters
+@desc Volume, pitch, and pan of the sound effect that plays when a mine explodes. Default: 90 100 0
+@default 90 100 0
+
+@param clearSe
+@desc The file name of the sound effect to be played when the mine clearance is completed. Default: Applause1
+@default Applause1
+@type file
+@require 1
+@dir audio/se/
+
+@param clearSeParameters
+@desc Volume, pitch, and pan of the sound effect that plays when the mine is cleared. Default: 90 100 0
+@default 90 100 0
+*/
+
+
+/*:ja
+@plugindesc 有名な地雷撤去ゲームっぽいものを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+準備:
+
+  プラグインと一緒に配布しているマインスウィーパのアイコン画像を
+  img/system フォルダに保存してください。
+  ファイル名は MineSweeper.png となっています。
+  ファイル名を変更しなければならない場合はプラグインパラメータの
+  iconImage も一緒に変更してください。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+使い方:
+
+  イベントコマンド『選択肢の表示』の選択肢 1 番に [マインスウィーパ] と
+  入力することでマインスウィーパが起動します。（括弧は半角です）
+  選択肢 2 番には以下の 5 つの数値を半角スペースで区切って入力します。
+  ・横に並ぶマスの数
+  ・縦に並ぶマスの数
+  ・マス 1 つの幅（ドット数）
+  ・マス 1 つの高さ（ドット数）
+  ・地雷の数
+  例）14 8 32 32 20
+  この例では 1 つが32*32ドットのマスを横に 14、縦に 8、計 112 個並べ、
+  そのうち 20 個のマスに地雷が隠されている状態でスタートします。
+
+  地雷の埋まっていないマスをすべて調査すれば選択肢 1 番の処理が実行され、
+  途中で地雷のあるマスを調査してしまった場合は 2 番が実行されます。
+
+  選択肢 3 番に半角数字で制限時間を設定することができます。
+  入力した秒数が経過するとマインスウィーパが強制終了し、
+  選択肢 3 番の処理が実行されます。
+
+  このプラグインは RPGツクールMV Version 1.3.0 で動作確認をしています。
+
+
+プラグインコマンド:
+
+  mineTime 1
+    直前のマインスウィーパの所要時間をゲーム変数 1 番に代入します。
+
+    mineTime コマンドで得られる値の単位はミリ秒になっていますので、
+    秒に変換したい場合はイベントコマンド『変数の操作』を使い、この値を
+    1000 で割ってください。
+
+    mineTime で得られる結果は直前に実行されたマインスウィーパのものです。
+    また、マインスウィーパとプラグインコマンド実行までの間に
+    セーブ＆ロードをはさむと結果が取得できなくなります。
+
+
+注意事項:
+
+  『文章の表示』コマンドの直後にマインスウィーパを起動した場合、
+  メッセージウィンドウが閉じずにそのままマインスウィーパが起動します。
+  メッセージウィンドウを閉じてからマインスウィーパを起動したい場合は
+  『文章の表示』と『選択肢の表示』の間に『ウェイト』を 1 フレーム以上
+  入れてください。
+
+  また、マインスウィーパウィンドウの上下位置はメッセージウィンドウの
+  上下位置に影響を受けるので、背景が透明で内容が空のメッセージウィンドウを
+  使えばマインスウィーパウィンドウの上下位置を変更することができます。
+
+@param command
+@desc 『選択肢の表示』コマンドで使用するマインスウィーパ起動文字列。 初期値: [マインスウィーパ]
+@default [マインスウィーパ]
+
+@param iconImage
+@desc 地雷アイコンとして利用する画像ファイル名。 初期値: MineSweeper
+@default MineSweeper
+@type file
+@require 1
+@dir img/system/
+
+@param bombSe
+@desc 地雷爆発時に鳴らす効果音のファイル名。 初期値: Explosion2
+@default Explosion2
+@type file
+@require 1
+@dir audio/se/
+
+@param bombSeParameters
+@desc 地雷爆発時に鳴らす効果音の音量、ピッチ、パン。 初期値: 90 100 0
+@default 90 100 0
+
+@param clearSe
+@desc 地雷撤去完了時に鳴らす効果音のファイル名。 初期値: Applause1
+@default Applause1
+@type file
+@require 1
+@dir audio/se/
+
+@param clearSeParameters
+@desc 地雷撤去完了時に鳴らす効果音の音量、ピッチ、パン。 初期値: 90 100 0
+@default 90 100 0
+*/
 
 var Imported = Imported || {};
 Imported.TMMineSweeper = true;

@@ -8,89 +8,165 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 名前や二つ名をランダムなものに変更する機能を追加します。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param randomKeyName
- * @desc 名前入力の処理コマンドにおけるランダムキーの表示名。
- * 初期値: AT
- * @default AT
- *
- * @help
- * TMPlugin - ランダムネーム ver1.1.0
- *
- * 使い方:
- * 
- *   イベントコマンド『名前入力の処理』にランダムに文字を選択する「AT」が
- *   追加されます。元々あった「～」は英数ページにもあるので、そちらから
- *   入力することができます。
- * 
- *   プラグインコマンドでアクターの名前や二つ名をランダムに変更することも
- *   できます。
- * 
- *   文字の候補を設定するプラグインパラメータはありませんので、プラグインを
- *   直接編集してください。
- * 
- *   アイテムのメモ欄に <nameRandom:5> などのタグをつけることで、
- *   名前変更アイテムを作成することもできます。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- * 
- * 
- * プラグインコマンド:
- * 
- *   setNameRandom 1 5
- *     アクター 1 番の名前を最低 2 文字、最大 5 文字のランダムな名前に
- *     変更します。
- *     文字はカタカナの中からランダムに選ばれます。
- * 
- *   setNameRandom 1 5 1
- *     changeNameRandom に値をひとつ加えると、文字がカタカナではなく
- *     ひらがなになります。
- * 
- *   setNicknameRandom 1
- *     アクター 1 番の二つ名をランダムなものに変更します。
- * 
- *   setProfileRandom 1
- *     アクター 1 番のプロフィールをランダムなものに変更します。
- * 
- * 
- * メモ欄タグ（アイテム）:
- * 
- *   <nameRandom:5>
- *     使用したアクターの名前を最低 2 文字、最大 5 文字のランダムな名前に
- *     変更します。
- * 
- *   <nameRandom:5 1>
- *     ひとつ値を加えると、カタカナではなくひらがなになります。
- * 
- *   <nicknameRandom>
- *     使用したアクターの二つ名をランダムに変更します。
- * 
- *   <profileRandom>
- *     使用したアクターのプロフィールをランダムに変更します。
- * 
- * 
- * スクリプトコマンド:
- * 
- *   this.randomKatakana(1, 5)
- *     最低 1 文字、最大 5 文字のカタカナ文字列を返します。
- * 
- *   this.randomHiragana(1, 5)
- *     最低 1 文字、最大 5 文字のカタカナ文字列を返します。
- * 
- *   this.randomNickname()
- *     二つの文字列を組み合わせたものを返します、文字列の候補を
- *     追加したい場合はプラグインを直接編集してください。
- * 
- *   this.randomProfile()
- *     四つの文字列を組み合わせたものを返します、文字列の候補を
- *     追加したり、組み合わせパターンを変更したい場合はプラグインを
- *     直接編集してください。
- */
+@plugindesc Adds the ability to change names and nicknames to random ones.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Random Name ver1.1.0
+
+How to Use:
+
+The "AT" command, which randomly selects characters, has been added to the "Name Input Processing" Event's Contents. The original "~" character is also available on the Alphanumeric page, so you can enter it there.
+
+You can also randomly change an actor's name or nickname using plugin commands.
+
+There is no plugin parameter for setting character suggestions, so please edit the plugin directly.
+
+You can also create a renamed item by adding a tag such as <nameRandom:5> to the item's Note field.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Plugin Command:
+
+setNameRandom 1 5
+Changes the name of actor #1 to a random name of at least two characters and a maximum of five characters.
+Characters are randomly selected from the katakana alphabet.
+
+setNameRandom 1 5 1
+Adding a value to changeNameRandom will change the characters to hiragana instead of katakana.
+
+setNicknameRandom 1
+Changes the nickname of actor #1 to a random name.
+
+setProfileRandom 1
+Changes the profile of actor #1 to a random name.
+
+Memo Tag (Item):
+
+<nameRandom:5>
+Changes the name of the used actor to a random name with a minimum of 2 characters and a maximum of 5 characters.
+
+<nameRandom:5 1>
+Adding a value will change the characters to hiragana instead of katakana.
+
+<nicknameRandom>
+Changes the nickname of the used actor to a random name.
+
+<profileRandom>
+Changes the profile of the used actor to a random name.
+
+Script Commands:
+
+this.randomKatakana(1, 5)
+Returns a katakana string with a minimum of one character and a maximum of five.
+
+this.randomHiragana(1, 5)
+Returns a katakana string with a minimum of one character and a maximum of five.
+
+this.randomNickname()
+Returns a combination of two strings. To add string candidates, edit the plugin directly.
+
+this.randomProfile()
+Returns a combination of four strings. To add string candidates or change the combination pattern, edit the plugin directly.
+
+@param randomKeyName
+@desc Display name of random key in name input processing command. Default: AT
+@default AT
+*/
+
+
+/*:ja
+@plugindesc 名前や二つ名をランダムなものに変更する機能を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ランダムネーム ver1.1.0
+
+使い方:
+
+  イベントコマンド『名前入力の処理』にランダムに文字を選択する「AT」が
+  追加されます。元々あった「～」は英数ページにもあるので、そちらから
+  入力することができます。
+
+  プラグインコマンドでアクターの名前や二つ名をランダムに変更することも
+  できます。
+
+  文字の候補を設定するプラグインパラメータはありませんので、プラグインを
+  直接編集してください。
+
+  アイテムのメモ欄に <nameRandom:5> などのタグをつけることで、
+  名前変更アイテムを作成することもできます。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+プラグインコマンド:
+
+  setNameRandom 1 5
+    アクター 1 番の名前を最低 2 文字、最大 5 文字のランダムな名前に
+    変更します。
+    文字はカタカナの中からランダムに選ばれます。
+
+  setNameRandom 1 5 1
+    changeNameRandom に値をひとつ加えると、文字がカタカナではなく
+    ひらがなになります。
+
+  setNicknameRandom 1
+    アクター 1 番の二つ名をランダムなものに変更します。
+
+  setProfileRandom 1
+    アクター 1 番のプロフィールをランダムなものに変更します。
+
+
+メモ欄タグ（アイテム）:
+
+  <nameRandom:5>
+    使用したアクターの名前を最低 2 文字、最大 5 文字のランダムな名前に
+    変更します。
+
+  <nameRandom:5 1>
+    ひとつ値を加えると、カタカナではなくひらがなになります。
+
+  <nicknameRandom>
+    使用したアクターの二つ名をランダムに変更します。
+
+  <profileRandom>
+    使用したアクターのプロフィールをランダムに変更します。
+
+
+スクリプトコマンド:
+
+  this.randomKatakana(1, 5)
+    最低 1 文字、最大 5 文字のカタカナ文字列を返します。
+
+  this.randomHiragana(1, 5)
+    最低 1 文字、最大 5 文字のカタカナ文字列を返します。
+
+  this.randomNickname()
+    二つの文字列を組み合わせたものを返します、文字列の候補を
+    追加したい場合はプラグインを直接編集してください。
+
+  this.randomProfile()
+    四つの文字列を組み合わせたものを返します、文字列の候補を
+    追加したり、組み合わせパターンを変更したい場合はプラグインを
+    直接編集してください。
+
+@param randomKeyName
+@desc 名前入力の処理コマンドにおけるランダムキーの表示名。 初期値: AT
+@default AT
+*/
 
 var Imported = Imported || {};
 Imported.TMRandomName = true;

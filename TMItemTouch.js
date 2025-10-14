@@ -4,29 +4,56 @@
 // Version: 1.0
 // 最終更新日: 2015/11/23
 //=============================================================================
-
 /*:
- * @plugindesc アイテムシーンをアイコンベースのものに変更します。
- * 
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param newItemArea
- * @desc 新規獲得アイテムの初期位置エリアの広さ
- * 初期値: 100
- * @default 100
- *
- * @param nullIconIndex
- * @desc 空アイテム（はずす）のアイコンインデックス
- * 初期値: 74
- * @default 74
- *
- * @help プラグインコマンドはありません。
- * 
- * アイテムシーンでウィンドウの下部へ置いたアイテムが
- * 別のシーンで画面外に出てしまう現象は不具合ではありません。
- * この仕様は道具袋の底のほうにある装備品がすぐには装備できないという
- * リアリティあふれる演出のためのものです。
- */
+@plugindesc Change the item scene to an icon-based one.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+
+It is not a bug that items placed at the bottom of the window during an item scene
+will appear off-screen in another scene.
+This Traits is designed to create a more realistic effect, as if equipment at the bottom of the tool bag cannot be immediately equipped.
+
+@param newItemArea
+@desc Size of the initial location area for newly acquired items. Default: 100
+@default 100
+
+@param nullIconIndex
+@desc Empty item (remove) icon index Default: 74
+@default 74
+*/
+
+
+/*:ja
+@plugindesc アイテムシーンをアイコンベースのものに変更します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT
+
+@help
+
+アイテムシーンでウィンドウの下部へ置いたアイテムが
+別のシーンで画面外に出てしまう現象は不具合ではありません。
+この仕様は道具袋の底のほうにある装備品がすぐには装備できないという
+リアリティあふれる演出のためのものです。
+
+@param newItemArea
+@desc 新規獲得アイテムの初期位置エリアの広さ 初期値: 100
+@default 100
+
+@param nullIconIndex
+@desc 空アイテム（はずす）のアイコンインデックス 初期値: 74
+@default 74
+*/
 
 var Imported = Imported || {};
 Imported.TMItemTouch = true;

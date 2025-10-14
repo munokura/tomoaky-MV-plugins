@@ -7,68 +7,126 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc アクターとほどよく同期したイベントを作成します。
- * パーティにいないときのみ同じ歩行グラフィックで出現します。
- *
- * @author tomoaky (https://twitter.com/tomoaky)
- *
- * @param actorTag
- * @desc イベントにアクターを設定するためのタグ名
- * 初期値: actor
- * @default actor
- *
- * @param useActorPosition
- * @type boolean
- * @desc アクター座標記憶システムを利用する
- * 初期値: OFF ( ON = 有効 / OFF = 無効 )
- * @default false
- * 
- * @param useActorDirection
- * @type boolean
- * @desc アクターの向きも記憶させる
- * 初期値: OFF ( ON = 有効 / OFF = 無効 )
- * @default false
- *
- * @help
- * TMPlugin - アクターイベント ver1.2.0
- *
- * 使い方:
- * 
- *   このプラグインを導入し、イベントのメモ欄に actor タグをつけることで
- *   そのイベントと指定したアクターがほどよく同期します。
- * 
- *   アクターがパーティに加入するとイベントは消え、パーティから外れると
- *   イベントが出現します。
- *   また、イベントの見た目もアクターと同じものになります。
- * 
- *   このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
- * 
- * 
- * メモ欄タグ (イベント):
- * 
- *   <actor:2>
- *     イベントにアクター 2 番をほどよく同期させます。
- *     このタグ名はプラグインパラメータで変更することができます、
- *     併用している他のプラグインが actor タグを使っている場合は
- *     他の文字列に変更してください。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   useActorPosition
- *     この値が 1 の場合、アクターイベントが同期しているアクターが
- *     最後にパーティから外れた場所を記憶し、以後その場所に出現するように
- *     なります。
- *     この位置記憶はアクターイベントが配置されているマップでのみ発生します。
- * 
- * 
- * プラグインコマンド:
- * 
- *   clearActorPosition 4
- *     アクター 4 番の位置記憶をリセットします。
- */
+@plugindesc Create events that are well synchronized with your actors.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Actor Event ver. 1.2.0
+
+How to Use:
+
+By installing this plugin and adding the actor tag to an event's Note field,
+the event will be properly synchronized with the specified actor.
+
+When an actor joins a party, the event will disappear, and when an actor leaves the party,
+the event will appear.
+
+This plugin has been tested with RPG Maker MV Version 1.6.2.
+
+Note field Tag (Event):
+
+<actor:2>
+Properly synchronizes actor 2 with the event.
+This tag name can be changed in the plugin parameters.
+If another plugin you are using uses the actor tag,
+please change it to another string.
+
+Plugin Parameter Notes:
+
+useActorPosition
+If this value is 1, the actor with which the actor event is synchronized
+will remember the location where it last left the party and will appear at that location thereafter.
+This position memory only occurs on the map where the actor event is located.
+
+Plugin Command:
+
+clearActorPosition 4
+Resets the position memory for actor number 4.
+
+@param actorTag
+@desc Tag name to set actor for event. Default: actor
+@default actor
+
+@param useActorPosition
+@desc Use actor coordinate storage system Default: OFF ( ON = enabled / OFF = disabled )
+@default false
+@type boolean
+
+@param useActorDirection
+@desc Remember actor orientation Default: OFF (ON = enabled / OFF = disabled)
+@default false
+@type boolean
+*/
+
+
+/*:ja
+@plugindesc アクターとほどよく同期したイベントを作成します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - アクターイベント ver1.2.0
+
+使い方:
+
+  このプラグインを導入し、イベントのメモ欄に actor タグをつけることで
+  そのイベントと指定したアクターがほどよく同期します。
+
+  アクターがパーティに加入するとイベントは消え、パーティから外れると
+  イベントが出現します。
+  また、イベントの見た目もアクターと同じものになります。
+
+  このプラグインは RPGツクールMV Version 1.6.2 で動作確認をしています。
+
+
+メモ欄タグ (イベント):
+
+  <actor:2>
+    イベントにアクター 2 番をほどよく同期させます。
+    このタグ名はプラグインパラメータで変更することができます、
+    併用している他のプラグインが actor タグを使っている場合は
+    他の文字列に変更してください。
+
+
+プラグインパラメータ補足:
+
+  useActorPosition
+    この値が 1 の場合、アクターイベントが同期しているアクターが
+    最後にパーティから外れた場所を記憶し、以後その場所に出現するように
+    なります。
+    この位置記憶はアクターイベントが配置されているマップでのみ発生します。
+
+
+プラグインコマンド:
+
+  clearActorPosition 4
+    アクター 4 番の位置記憶をリセットします。
+
+@param actorTag
+@desc イベントにアクターを設定するためのタグ名 初期値: actor
+@default actor
+
+@param useActorPosition
+@desc アクター座標記憶システムを利用する 初期値: OFF ( ON = 有効 / OFF = 無効 )
+@default false
+@type boolean
+
+@param useActorDirection
+@desc アクターの向きも記憶させる 初期値: OFF ( ON = 有効 / OFF = 無効 )
+@default false
+@type boolean
+*/
 
 var Imported = Imported || {};
 Imported.TMActorEvent = true;

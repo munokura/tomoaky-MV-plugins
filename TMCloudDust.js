@@ -8,133 +8,243 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc ジャンプとダッシュに土煙のエフェクトを追加します。
- * 任意のタイミングで土煙を表示することもできます。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param dustImage
- * @desc 土煙として利用する画像ファイル名。
- * 初期値: Dust1
- * @default Dust1
- * @require 1
- * @dir img/system/
- * @type file
- *
- * @param maxDusts
- * @type number
- * @desc 同時に表示できるスプライトの数。
- * 初期値: 64
- * @default 64
- *
- * @param jumpDusts
- * @type number
- * @desc ジャンプの着地時に表示するスプライト数。
- * 初期値: 5
- * @default 5
- *
- * @param dashDusts
- * @type number
- * @desc ダッシュ時に表示するスプライト数。
- * 初期値: 3
- * @default 3
- *
- * @help
- * TMPlugin - つちけむり ver2.1.0
- * 
- * 使い方:
- *
- *   プラグインと一緒に配布している土煙の画像を img/system フォルダに
- *   保存してください。ファイル名は Dust1.png となっています。
- *   ファイル名を変更しなければならない場合はプラグインパラメータの
- *   dustImage も一緒に変更してください。
- *
- *   プラグインを有効にすると、キャラクターがジャンプ後に着地したタイミング
- *   で土煙が表示されるようになります。
- *   また、プレイヤーがダッシュ（shiftキー押しながら or クリック）で移動する
- *   ときにも土煙が表示されます。
- *
- *   プラグインコマンドを使用することによって任意のタイミングで指定した座標
- *   に土煙を表示することもできます。
- *
- *   このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- * 
- *
- * プラグインコマンド:
- *
- *   setDustXy 5 8
- *     指定した座標に土煙を表示します。数値はイベントコマンド『場所移動』で
- *     利用する座標と同じです、画面のドット数ではありません。
- *     setDustXy 5.5 8 のように小数点以下を入力することによって座標(5, 8)と
- *     座標(6, 8)の中間を指定することもできます。
- *
- *   setDustXy 5 8 3
- *     指定した座標に土煙を 3 つ表示します。設定が省略された場合は 1 つしか
- *     表示されません。
- *
- *   setDustXy 5 8 1 0.04
- *     表示する土煙の移動速度を設定します。設定が省略された場合は 0.02 が
- *     適用されます。
- *
- *   setDustXy 5 8 1 0.02 3.14
- *     表示する土煙の移動方向を限定します。数値は右を 0 として、時計回りに
- *     6.28 で 1 周となります。
- *     上記のように3.14を指定した場合は土煙が左に向かって少し移動します。
- *
- *   setDustEvent 3
- *     イベント 3 番の足元に土煙を表示します。0 を指定した場合はコマンドを
- *     実行しているイベント自体が、-1 を指定した場合はプレイヤーが対象に
- *     なります。
- *     setDustXy と同様に土煙の数や移動方向、移動速度も指定できます。
- *     イベント番号に続けて、土煙の数、移動速度、移動方向の順に数値を
- *     足していってください。
- * 
- *   setJumpDusts 5
- *     ジャンプの着地時に表示するスプライト数を指定した値に変更します。
- * 
- *   setDashDusts 3
- *     ダッシュ時に表示するスプライト数を指定した値に変更します。
- * 
- *   stopDust
- *     新しい土煙が表示できなくなります。
- *     すでに表示されている土煙には影響しません。
- * 
- *   startDust
- *     stopDust の効果を解除し、新しい土煙を表示できるようにします。
- *
- *   コマンドに続くパラメータは、途中のものだけを省略することができません。
- *   移動方向を指定する場合は個数と移動速度も指定する必要があります。
- *
- *
- * プラグインパラメータ補足:
- *
- *   dustImage
- *     土煙の画像ファイル名を拡張子抜きで指定します。ファイルは img/system
- *     フォルダに保存してください。
- *
- *   maxDusts
- *     このパラメータに指定した数を超える土煙を同時に表示しようとした場合は
- *     何も表示されず、プラグインコマンドは無視されます。
- *     数値を大きくすればたくさんの土煙を表示することができますが、それだけ
- *     処理が重くなり、低スペック環境ではFPSが低下する原因になります。
- *
- *   jumpDusts
- *     キャラクターをイベントコマンド『移動ルートの設定』などでジャンプ
- *     させた後、着地の際に表示する土煙の数です。数値の分だけ土煙が重なり、
- *     より濃い土煙になります。
- *     0 を指定すれば着地時の土煙は表示されなくなります。
- * 
- *   dashDusts
- *     プレイヤーがダッシュで移動した際に表示する土煙の数です。数値の分だけ
- *     土煙が重なり、より濃い土煙になります。
- *     0 を指定すればダッシュ時の土煙は表示されなくなります。
- * 
- */
+@plugindesc Adds dust effects to jumps and dashes.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Dust Smoke ver2.1.0
+
+How to Use:
+
+Save the dust image distributed with the plugin in the img/system folder. The file name is Dust1.png.
+If you need to change the file name, please also change the dustImage plugin parameter.
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+When the plugin is enabled, dust will be displayed when the character lands after a jump.
+Dust will also be displayed when the player sprints (by holding down the shift key or clicking).
+
+You can also use the plugin command to display dust at specified coordinates at any time.
+
+This plugin has been tested with RPG Maker MV Version 1.5.0.
+
+This plugin is distributed under the MIT License and is free to use, including for commercial purposes, modifications, and redistribution.
+
+Plugin Command:
+
+setDustXy 5 8
+Displays dust at the specified coordinates. The values are the same as the coordinates used in the "Move Location" Event's Contents, not the screen resolution.
+You can also specify a point halfway between coordinates (5, 8) and (6, 8) by entering a decimal point, such as setDustXy 5.5 8.
+
+setDustXy 5 8 3
+Displays three dust clouds at the specified coordinates. If this setting is omitted, only one will be displayed.
+
+setDustXy 5 8 1 0.04
+Sets the movement speed of the dust clouds to be displayed. If this setting is omitted, 0.02 will be applied.
+
+setDustXy 5 8 1 0.02 3.14
+Limits the movement direction of the dust clouds to be displayed. The value is 0 for right, and 6.28 for one full rotation clockwise.
+Specifying 3.14 as shown above will move the dust clouds slightly to the left.
+
+setDustEvent 3
+Displays dust clouds at the feet of event 3. Specifying 0 targets the event executing the command, while specifying -1 targets the player.
+
+As with setDustXy, you can also specify the number of dust clouds, movement direction, and movement speed.
+Add the event number, number of dust clouds, movement speed, and movement direction, in that order.
+
+setJumpDusts 5
+Changes the number of sprites displayed when landing from a jump to the specified value.
+
+setDashDusts 3
+Changes the number of sprites displayed when sprinting to the specified value.
+
+stopDust
+Prevents new dust clouds from being displayed.
+Does not affect dust clouds already displayed.
+
+startDust
+Cancels the effect of stopDust, allowing new dust clouds to be displayed.
+
+Parameters following the command cannot be omitted.
+When specifying a movement direction, you must also specify the number and movement speed.
+
+Plugin Parameter Notes:
+
+dustImage
+Specify the dust image filename (without the extension). Save the file in the img/system folder.
+
+maxDusts
+If you attempt to display more dust particles than specified in this parameter,
+nothing will be displayed and the plugin command will be ignored.
+Increasing the value will allow more dust particles to be displayed, but it will also increase processing load and cause FPS drops on low-spec systems.
+
+jumpDusts
+This parameter specifies the number of dust particles to display when the character lands after jumping using the "Set Movement Route" Event's Contents, etc.
+The dust particles will overlap by this number,
+resulting in a denser dust cloud.
+Setting this parameter to 0 will hide the dust particles upon landing.
+
+dashDusts
+This parameter specifies the number of dust particles to display when the player dashes.
+The dust particles will overlap by this number,
+resulting in a denser dust cloud.
+Setting this parameter to 0 will hide the dust particles when dashing.
+
+@param dustImage
+@desc Image file name to use as dust cloud. Default: Dust1
+@default Dust1
+@type file
+@require 1
+@dir img/system/
+
+@param maxDusts
+@desc Number of sprites that can be displayed simultaneously. Default: 64
+@default 64
+@type number
+
+@param jumpDusts
+@desc Number of sprites to display when landing from a jump. Default: 5
+@default 5
+@type number
+
+@param dashDusts
+@desc Number of sprites to display when dashing. Default: 3
+@default 3
+@type number
+*/
+
+
+/*:ja
+@plugindesc ジャンプとダッシュに土煙のエフェクトを追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - つちけむり ver2.1.0
+
+使い方:
+
+  プラグインと一緒に配布している土煙の画像を img/system フォルダに
+  保存してください。ファイル名は Dust1.png となっています。
+  ファイル名を変更しなければならない場合はプラグインパラメータの
+  dustImage も一緒に変更してください。
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/img/system
+
+  プラグインを有効にすると、キャラクターがジャンプ後に着地したタイミング
+  で土煙が表示されるようになります。
+  また、プレイヤーがダッシュ（shiftキー押しながら or クリック）で移動する
+  ときにも土煙が表示されます。
+
+  プラグインコマンドを使用することによって任意のタイミングで指定した座標
+  に土煙を表示することもできます。
+
+  このプラグインは RPGツクールMV Version 1.5.0 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+
+プラグインコマンド:
+
+  setDustXy 5 8
+    指定した座標に土煙を表示します。数値はイベントコマンド『場所移動』で
+    利用する座標と同じです、画面のドット数ではありません。
+    setDustXy 5.5 8 のように小数点以下を入力することによって座標(5, 8)と
+    座標(6, 8)の中間を指定することもできます。
+
+  setDustXy 5 8 3
+    指定した座標に土煙を 3 つ表示します。設定が省略された場合は 1 つしか
+    表示されません。
+
+  setDustXy 5 8 1 0.04
+    表示する土煙の移動速度を設定します。設定が省略された場合は 0.02 が
+    適用されます。
+
+  setDustXy 5 8 1 0.02 3.14
+    表示する土煙の移動方向を限定します。数値は右を 0 として、時計回りに
+    6.28 で 1 周となります。
+    上記のように3.14を指定した場合は土煙が左に向かって少し移動します。
+
+  setDustEvent 3
+    イベント 3 番の足元に土煙を表示します。0 を指定した場合はコマンドを
+    実行しているイベント自体が、-1 を指定した場合はプレイヤーが対象に
+    なります。
+    setDustXy と同様に土煙の数や移動方向、移動速度も指定できます。
+    イベント番号に続けて、土煙の数、移動速度、移動方向の順に数値を
+    足していってください。
+
+  setJumpDusts 5
+    ジャンプの着地時に表示するスプライト数を指定した値に変更します。
+
+  setDashDusts 3
+    ダッシュ時に表示するスプライト数を指定した値に変更します。
+
+  stopDust
+    新しい土煙が表示できなくなります。
+    すでに表示されている土煙には影響しません。
+
+  startDust
+    stopDust の効果を解除し、新しい土煙を表示できるようにします。
+
+  コマンドに続くパラメータは、途中のものだけを省略することができません。
+  移動方向を指定する場合は個数と移動速度も指定する必要があります。
+
+
+プラグインパラメータ補足:
+
+  dustImage
+    土煙の画像ファイル名を拡張子抜きで指定します。ファイルは img/system
+    フォルダに保存してください。
+
+  maxDusts
+    このパラメータに指定した数を超える土煙を同時に表示しようとした場合は
+    何も表示されず、プラグインコマンドは無視されます。
+    数値を大きくすればたくさんの土煙を表示することができますが、それだけ
+    処理が重くなり、低スペック環境ではFPSが低下する原因になります。
+
+  jumpDusts
+    キャラクターをイベントコマンド『移動ルートの設定』などでジャンプ
+    させた後、着地の際に表示する土煙の数です。数値の分だけ土煙が重なり、
+    より濃い土煙になります。
+    0 を指定すれば着地時の土煙は表示されなくなります。
+
+  dashDusts
+    プレイヤーがダッシュで移動した際に表示する土煙の数です。数値の分だけ
+    土煙が重なり、より濃い土煙になります。
+    0 を指定すればダッシュ時の土煙は表示されなくなります。
+
+@param dustImage
+@desc 土煙として利用する画像ファイル名。 初期値: Dust1
+@default Dust1
+@type file
+@require 1
+@dir img/system/
+
+@param maxDusts
+@desc 同時に表示できるスプライトの数。 初期値: 64
+@default 64
+@type number
+
+@param jumpDusts
+@desc ジャンプの着地時に表示するスプライト数。 初期値: 5
+@default 5
+@type number
+
+@param dashDusts
+@desc ダッシュ時に表示するスプライト数。 初期値: 3
+@default 3
+@type number
+*/
 
 var Imported = Imported || {};
 Imported.TMCloudDust = true;

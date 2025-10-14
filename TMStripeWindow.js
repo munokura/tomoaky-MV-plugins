@@ -8,50 +8,95 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc 項目が 1 列に並ぶコマンドウィンドウの背景を縞々にします。
- *
- * @author tomoaky (http://hikimoki.sakura.ne.jp/)
- *
- * @param backColor1
- * @desc 縞色1
- * 初期値: #000000
- * @default #000000
- *
- * @param backColor2
- * @desc 縞色2
- * 初期値: #201018
- * @default #201018
- *
- * @param stripeOpacity
- * @desc 縞色の不透明度
- * 初期値: 192 ( 0 ～ 255 )
- * @default 192
- *
- * @help
- * TMPlugin - ストライプウィンドウ ver1.0.0
- *
- * 使い方:
- * 
- *   スクリプトを導入すると自動的にコマンドウィンドウの背景が縞々になります。
- *
- *   プラグインコマンドはありません。
- *
- *   このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   backColor1 / backColor2
- *     半角のシャープに続けて赤、緑、青の 3 つの色成分を 2 桁の 2 進数で
- *     設定してください。
- *     完全な赤なら #ff0000、白なら #ffffff となります。
- * 
- *   stripeOpacity
- *     実際に表示される際の不透明度はウィンドウ側の設定も影響するため、
- *     ここで設定した値よりも低く（薄く）なります。
- */
+@plugindesc Stripes the background of a single-line command window.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Striped Window ver. 1.0.0
+
+How to Use:
+
+Installing this script automatically creates a striped background in the command window.
+
+There are no plugin commands.
+
+This plugin has been tested with RPG Maker MV Version 1.3.4.
+
+Plugin Parameter Notes:
+
+backColor1 / backColor2
+Set the three color components (red, green, and blue) using a two-digit binary number followed by a half-width sharp.
+
+Full red is #ff0000, and white is #ffffff.
+
+stripeOpacity
+The actual opacity will be lower (lighter) than the value set here, as it is affected by the window settings.
+
+@param backColor1
+@desc Stripe color 1 Initial value: #000000
+@default #000000
+
+@param backColor2
+@desc Stripe color 2 Default: #201018
+@default #201018
+
+@param stripeOpacity
+@desc Stripe color opacity Default: 192 (0 to 255)
+@default 192
+*/
+
+
+/*:ja
+@plugindesc 項目が 1 列に並ぶコマンドウィンドウの背景を縞々にします。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - ストライプウィンドウ ver1.0.0
+
+使い方:
+
+  スクリプトを導入すると自動的にコマンドウィンドウの背景が縞々になります。
+
+  プラグインコマンドはありません。
+
+  このプラグインは RPGツクールMV Version 1.3.4 で動作確認をしています。
+
+
+プラグインパラメータ補足:
+
+  backColor1 / backColor2
+    半角のシャープに続けて赤、緑、青の 3 つの色成分を 2 桁の 2 進数で
+    設定してください。
+    完全な赤なら #ff0000、白なら #ffffff となります。
+
+  stripeOpacity
+    実際に表示される際の不透明度はウィンドウ側の設定も影響するため、
+    ここで設定した値よりも低く（薄く）なります。
+
+@param backColor1
+@desc 縞色1 初期値: #000000
+@default #000000
+
+@param backColor2
+@desc 縞色2 初期値: #201018
+@default #201018
+
+@param stripeOpacity
+@desc 縞色の不透明度 初期値: 192 ( 0 ～ 255 )
+@default 192
+*/
 
 var Imported = Imported || {};
 Imported.TMStripeWindow = true;

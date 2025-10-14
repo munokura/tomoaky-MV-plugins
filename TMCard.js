@@ -2,322 +2,495 @@
 // TMPlugin - カードゲーム
 // バージョン: 0.1.7b
 // 最終更新日: 2019/05/14
-// 配布元　　: https://hikimoki.sakura.ne.jp/
+// 配布元    : https://hikimoki.sakura.ne.jp/
 //-----------------------------------------------------------------------------
 // Copyright (c) 2016 tomoaky
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc デッキ構成で勝敗が決まるタイプのカードゲームが
- * 遊べるようになります。
- *
- * @author tomoaky (https://hikimoki.sakura.ne.jp/)
- *
- * @param vnResult
- * @desc カードゲームの結果が代入されるゲーム変数番号。
- * 初期値: 1
- * @default 1
- *
- * @param vnMaxDeck
- * @desc 登録可能なデッキの最大数として扱うゲーム変数番号。
- * 初期値: 2
- * @default 2
- *
- * @param vnMaxCard
- * @desc 組み込めるカードの最大数として扱うゲーム変数番号。
- * 初期値: 3
- * @default 3
- *
- * @param vnMaxCost
- * @desc デッキのコスト上限として扱うゲーム変数番号。
- * 初期値: 4
- * @default 4
- *
- * @param fixCardNum
- * @desc デッキのカード枚数を最大値に固定するかどうか。
- * 初期値: 1 ( 0 で少ない枚数を許可 / 1 で最大値に限定 )
- * @default 1
- *
- * @param sameCard
- * @desc 同じカードを複数組み込めるかどうか。
- * 初期値: 1 ( 0 で組み込めない / 1 で組み込める )
- * @default 1
- *
- * @param useItemCard
- * @desc アイテムカードを利用するかどうか。
- * 初期値: 1 ( 0 で利用しない / 1 で利用する )
- * @default 1
- *
- * @param useAutoText
- * @desc カードグラフィックをスクリプトで生成するかどうか。
- * 初期値: 1 ( 0 で画像そのまま / 1 で自動生成 )
- * @default 1
- *
- * @param commandDeckEdit
- * @desc メニューのデッキ編集コマンド。
- * 初期値: デッキ編集
- * @default デッキ編集
- * 
- * @param statusWindowWidth
- * @desc デッキ編集のカードステータスウィンドウの幅。
- * 初期値: 360
- * @default 360
- *
- * @param maxAtk
- * @desc 攻撃力の上限。
- * 初期値: 8
- * @default 8
- *
- * @param maxTurn
- * @desc このターン数を超えたら引き分けにする。
- * 初期値: 50
- * @default 50
- *
- * @param animationAttack
- * @desc 攻撃のアニメーション番号。
- * 初期値: 1
- * @default 1
- * @require 1
- * @type animation
- * 
- * @param animationEnemyAttack
- * @desc 攻撃のアニメーション番号（エネミーカード）。
- * 初期値: 1
- * @default 1
- * @require 1
- * @type animation
- * 
- * @param animationTypeBonus
- * @desc タイプボーナスのアニメーション番号。
- * 初期値: 52
- * @default 52
- * @require 1
- * @type animation
- * 
- * @param paramNames
- * @desc 各種パラメータの名称。
- * 初期値: 名前 レア度 コスト ＨＰ 攻撃力 タイプ スキル 固有スキル 継承スキル 属性
- * @default 名前 レア度 コスト ＨＰ 攻撃力 タイプ スキル 固有スキル 継承スキル 属性
- *
- * @param itemCardParamNames
- * @desc アイテムカードの各種パラメータのの名称。
- * 初期値: ため時間 基本効果 特殊効果
- * @default ため時間 基本効果 特殊効果
- *
- * @param typeIcons
- * @desc カードタイプのアイコン番号。
- * 初期値: 76 77 81 79 176
- * @default 76 77 81 79 176
- *
- * @param typeSpeed
- * @desc カードタイプのスピード値。
- * 初期値: 1 4 0 2
- * @default 1 4 0 2
- *
- * @param elementIcons
- * @desc カード属性のアイコン番号。
- * 初期値: 64 65 66 67 68 69 70 71
- * @default 64 65 66 67 68 69 70 71
- *
- * @param rareNames
- * @desc カード稀少度の名称。
- * 初期値: Common Uncommon Rare Legend
- * @default Common Uncommon Rare Legend
- *
- * @param costIcon
- * @desc コスト表示のアイコン番号。
- * 初期値: 87
- * @default 87
- *
- * @param costIconSpace
- * @desc コスト表示のアイコン間隔。
- * 初期値: 20
- * @default 20
- *
- * @param positionNames
- * @desc カードポジションの名称。
- * 初期値: 1st 2nd 3rd 4th 5th
- * @default 1st 2nd 3rd 4th 5th
- *
- * @param itemCardPositionName
- * @desc アイテムカードのポジションの名称。
- * 初期値: ITM
- * @default ITM
- *
- * @param deckNames
- * @desc デッキの名称。
- * 初期値: デッキＡ デッキＢ デッキＣ デッキＤ デッキＥ
- * @default デッキＡ デッキＢ デッキＣ デッキＤ デッキＥ
- *
- * @param playerCardPositions
- * @desc プレイヤーカードの表示座標。
- * 初期値: 128,264 272,184 368,184 464,184 560,184
- * @default 128,264 272,184 368,184 464,184 560,184
- *
- * @param playerItemCardPosition
- * @desc プレイヤーアイテムカードの表示座標。
- * 初期値: 272,344
- * @default 272,344
- *
- * @param enemyCardPositions
- * @desc エネミーカードの表示座標。
- * 初期値: 688,264 544,344 448,344 352,344 256,344
- * @default 688,264 544,344 448,344 352,344 256,344
- *
- * @param enemyItemCardPosition
- * @desc エネミーアイテムカードの表示座標。
- * 初期値: 544,184
- * @default 544,184
- *
- * @param numberPositions
- * @desc ＨＰと攻撃力の表示座標。
- * 初期値: 128,488 208,456 688,488 608,456
- * @default 128,488 208,456 688,488 608,456
- * 
- * @param messageWindowY
- * @type number
- * @desc カードゲームのメッセージウィンドウＹ座標
- * 初期値: 544
- * @default 544
- *
- * @requiredAssets img/pictures/c_back_0
- * @requiredAssets img/pictures/c_back_1
- * @requiredAssets img/pictures/c_back_2
- * @requiredAssets img/pictures/c_back_3
- * @requiredAssets img/pictures/c_back_i
- * @requiredAssets img/pictures/c_cursor
- * @requiredAssets img/pictures/c_frame_0
- * @requiredAssets img/pictures/c_frame_1
- * @requiredAssets img/pictures/c_frame_2
- * @requiredAssets img/pictures/c_frame_3
- * @requiredAssets img/pictures/c_frame_4
- * @requiredAssets img/pictures/c_frame_5
- * @requiredAssets img/pictures/c_frame_6
- * @requiredAssets img/pictures/c_frame_7
- * @requiredAssets img/pictures/c_frame_i
- * @requiredAssets img/pictures/c_rare_0
- * @requiredAssets img/pictures/c_rare_1
- * @requiredAssets img/pictures/c_rare_2
- * @requiredAssets img/pictures/c_rare_3
- * @requiredAssets img/pictures/c_rare_4
- * @requiredAssets img/pictures/c_rare_5
- * @requiredAssets img/pictures/c_rare_6
- * @requiredAssets img/pictures/c_rare_7
- * @requiredAssets img/pictures/card_0
- * 
- * @noteParam cardImage
- * @noteRequire 1
- * @noteDir img/pictures/
- * @noteType file
- * @noteData items
- * 
- * @noteParam cardAttackAnimation
- * @noteRequire 1
- * @noteType animation
- * @noteData items
- * 
- * @help
- * TMPlugin - カードゲーム ver0.1.7b
- *
- * 使い方:
- *
- *   このプラグインを動作させるために必要な準備等については配布サイトを
- * 　参照してください。
- *
- *   このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
- *
- *   このプラグインはMITライセンスのもとに配布しています、商用利用、
- *   改造、再配布など、自由にお使いいただけます。
- *
- * 
- * メモ欄タグ (アイテム):
- * 
- *   <cardCost:1>
- *     このアイテムをコスト 1 のカードとして扱うようになります。
- * 
- *   <cardHp:10>
- *     このアイテムのカードとしての耐久値を 10 に設定します。
- * 
- *   <cardAtk:2>
- *     このアイテムのカードとしての攻撃力を 2 に設定します。 
- * 
- *   <cardType:0>
- *     このアイテムのカードタイプを 0 番のものに設定します。
- *     タイプ値が 4 のカードはアイテムカードとして扱われます。
- * 
- *   <cardElement:1>
- *     このアイテムのカード属性を 1 番のものに設定します。
- * 
- *   <cardRare:2>
- *     このアイテムのカード稀少度を 2 番のものに設定します。
- * 
- *   <unitSkill:20>
- *     このアイテムの固有スキルとして 20 番のスキルを設定します。
- * 
- *   <partySkill:21>
- *     このアイテムのパーティスキルとして 21 番のスキルを設定します。
- * 
- *   <cardAttackAnimation:2>
- *     このアイテムの攻撃アニメーションを 2 番に設定します。
- *     省略された場合はプラグインパラメータ『animationAttack』及び
- *     『animationEnemyAttack』が適用されます。
- * 
- *   <cardImage:sample_card>
- *     img/pictures フォルダ内の sample_card.png というファイルを
- *     カード画像として設定します。
- *     このタグがない場合 card_ という文字列にアイテム番号を
- *     付与したファイル名になります。
- *
- *
- *   メモ欄タグ (スキル):
- *
- *   <cardEffect:1,2> 
- *     カードスキルとしての効果を設定します。
- * 
- *   <cardRules:2,0 7,5>
- *     カードスキルとしての発動条件を設定します。
- *     半角スペースで区切ることで複数の条件を設定できます。
- * 
- *   <cardRepeats:2>
- *     カードスキルの効果が発動する回数を設定します。
- *
- * 
- * プラグインコマンド:
- * 
- *   startCardBattle 村人Ａ 0 1,2,3
- *     対戦相手の名前、アイテムカード番号、デッキ(カンマで区切ったカード番号)
- *     を指定してカードゲームを開始します。
- *     プレイヤーが使用するデッキは、カードがセットされているデッキの中で
- *     最も上にあるものとなります。
- * 
- *   startDeckSelect 村人Ａ 0 1,2,3
- *     カードゲーム開始前にプレイヤーがデッキを選択することができます。
- *     デッキ選択がキャンセルされた場合、結果変数に -1 が代入されます。
- * 
- *   isDeckReady 1
- *     プレイヤーが有効なデッキをひとつ以上組んでいるかどうかを判定します。
- *     カードゲームが可能な状態であれば、指定した番号のゲームスイッチが
- *     オンになり、不可能な状態(カードをセットしたデッキがない)であれば
- *     オフになります。
- * 
- *   startDeckEdit
- *     デッキ編集シーンを呼び出します。
- * 
- *   disableTypeBonus
- *     タイプボーナスの機能を無効にします。
- *     ゲーム開始時にはタイプボーナスが有効になっています。
- * 
- *   enableTypeBonus
- *     無効にしたタイプボーナスの機能を元に戻します。
- *	
- * 
- * 注意:
- * 
- *   登録できるデッキの最大数が 0 の場合、メインメニューにデッキ編集コマンドが
- *   表示されなくなります。
- */
+@plugindesc A card game where the outcome is determined by the deck composition
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Card Game ver0.1.7b
+
+How to Use:
+
+Please refer to the distribution site for information on the necessary preparations to run this plugin.
+
+This plugin has been tested with RPG Maker MV Version 1.6.1.
+
+This plugin is distributed under the MIT License and is free for commercial use, modification, and redistribution.
+
+Sample Project
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+Memo Tags (Item):
+
+<cardCost:1>
+This item will be treated as a card with a cost of 1.
+
+<cardHp:10>
+Sets the durability of this item to 10.
+
+<cardAtk:2>
+Sets the attack power of this item to 2.
+
+<cardType:0>
+Sets the card type of this item to 0.
+Cards with a type value of 4 will be treated as item cards.
+
+<cardElement:1>
+Sets the card Elements of this item to 1.
+
+<cardRare:2>
+Sets this item's card rarity to 2.
+
+<unitSkill:20>
+Sets skill number 20 as this item's unique skill.
+
+<partySkill:21>
+Sets skill number 21 as this item's party skill.
+
+<cardAttackAnimation:2>
+Sets this item's attack animation to 2.
+If omitted, the plugin parameters "animationAttack" and "animationEnemyAttack" will be applied.
+
+<cardImage:sample_card>
+Sets the file named sample_card.png in the img/pictures folder as the card image.
+If this tag is omitted, the file name will be the string "card_" followed by the item number.
+
+Memo Tag (Skill):
+
+<cardEffect:1,2>
+Sets the effect as a card skill.
+
+<cardRules:2,0 7,5>
+Sets the activation conditions for a card skill.
+You can set multiple conditions by separating them with a space.
+
+<cardRepeats:2>
+Sets the number of times the card skill's effect is activated.
+
+Plugin Commands:
+
+startCardBattle Villager A 0 1,2,3
+Starts a card game by specifying the opponent's name, item card number, and deck (card numbers separated by commas).
+The deck used by the player will be the topmost deck containing cards.
+
+startDeckSelect Villager A 0 1,2,3
+The player can select a deck before the card game begins.
+If deck selection is canceled, the result variable is set to -1.
+
+isDeckReady 1
+Determines whether the player has assembled at least one valid deck.
+If a card game is possible, the game switch with the specified number will be turned on.
+If a card game is not possible (no decks containing cards), the switch will be turned off.
+
+startDeckEdit
+Invokes the deck editing scene.
+
+disableTypeBonus
+Disables the type bonus Traits.
+Type bonuses are enabled at the start of the game.
+
+enableTypeBonus
+Restores the type bonus Traits after it has been disabled.
+
+Note:
+
+If the maximum number of decks that can be registered is 0, the deck editing command will not appear in the main menu.
+
+@param vnResult
+@desc The game variable number to which the result of the card game is assigned. Initial value: 1
+@default 1
+
+@param vnMaxDeck
+@desc The game variable number used as the maximum number of decks that can be registered. Default: 2
+@default 2
+
+@param vnMaxCard
+@desc Game variable number used as the maximum number of cards that can be included. Default: 3
+@default 3
+
+@param vnMaxCost
+@desc Game variable number used as the deck's cost limit. Default: 4
+@default 4
+
+@param fixCardNum
+@desc Whether to limit the number of cards in the deck to the maximum. Default: 1 ( 0 allows fewer cards / 1 limits to the maximum)
+@default 1
+
+@param sameCard
+@desc Whether or not the same card can be included multiple times. Default: 1 (0 means not included / 1 means included)
+@default 1
+
+@param useItemCard
+@desc Whether to use item cards. Default: 1 (0: Do not use / 1: Use)
+@default 1
+
+@param useAutoText
+@desc Whether to generate card graphics by script. Default: 1 ( 0 = image as is / 1 = auto-generate)
+@default 1
+
+@param commandDeckEdit
+@desc Edit Deck command in the menu. Default: Edit Deck
+@default Edit Deck
+
+@param statusWindowWidth
+@desc Width of the card status window in deck editor. Default: 360
+@default 360
+
+@param maxAtk
+@desc Maximum attack power. Default: 8
+@default 8
+
+@param maxTurn
+@desc If this number of turns is exceeded, the game will end in a draw. Default: 50
+@default 50
+
+@param animationAttack
+@desc Attack animation number. Default: 1
+@default 1
+@type animation
+@require 1
+
+@param animationEnemyAttack
+@desc Attack animation number (enemy card). Default: 1
+@default 1
+@type animation
+@require 1
+
+@param animationTypeBonus
+@desc Type bonus animation number. Default: 52
+@default 52
+@type animation
+@require 1
+
+@param paramNames
+@desc Names of various parameters. Initial values: Name Rarity Cost HP AttackPower TypeSkill UniqueSkill InheritedSkill Elements
+@default Initial values: Name Rarity Cost HP AttackPower TypeSkill UniqueSkill InheritedSkill Elements
+
+@param itemCardParamNames
+@desc Names of various parameters of item cards. Initial value: ChargeTime BasicEffect SpecialEffect
+@default ChargeTime BasicEffect SpecialEffect
+
+@param typeIcons
+@desc Card type icon number. Default: 76 77 81 79 176
+@default 76 77 81 79 176
+
+@param typeSpeed
+@desc Card type speed value. Default: 1 4 0 2
+@default 1 4 0 2
+
+@param elementIcons
+@desc Card Elements icon number. Default: 64 65 66 67 68 69 70 71
+@default 64 65 66 67 68 69 70 71
+
+@param rareNames
+@desc Card rarity name. Default: Common Uncommon Rare Legend
+@default Common Uncommon Rare Legend
+
+@param costIcon
+@desc Cost display icon number. Default: 87
+@default 87
+
+@param costIconSpace
+@desc Cost display icon spacing. Default: 20
+@default 20
+
+@param positionNames
+@desc Name of card position. Default: 1st 2nd 3rd 4th 5th
+@default 1st 2nd 3rd 4th 5th
+
+@param itemCardPositionName
+@desc The name of the item card's position. Default: ITM
+@default ITM
+
+@param deckNames
+@desc Deck name. Default: DeckA DeckB DeckC DeckD DeckE
+@default DeckA DeckB DeckC DeckD DeckE
+
+@param playerCardPositions
+@desc Display coordinates of player card. Default: 128,264 272,184 368,184 464,184 560,184
+@default 128,264 272,184 368,184 464,184 560,184
+
+@param playerItemCardPosition
+@desc Display coordinates of player item card. Default: 272,344
+@default 272,344
+
+@param enemyCardPositions
+@desc Display coordinates of enemy cards. Default: 688,264 544,344 448,344 352,344 256,344
+@default 688,264 544,344 448,344 352,344 256,344
+
+@param enemyItemCardPosition
+@desc Display coordinates of enemy item cards. Default: 544,184
+@default 544,184
+
+@param numberPositions
+@desc Display coordinates for HP and attack power. Initial value: 128,488 208,456 688,488 608,456
+@default 128,488 208,456 688,488 608,456
+
+@param messageWindowY
+@desc Card game message window Y coordinate Default: 544
+@default 544
+@type number
+*/
+
+
+/*:ja
+@plugindesc デッキ構成で勝敗が決まるタイプのカードゲームが
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+TMPlugin - カードゲーム ver0.1.7b
+
+使い方:
+
+  このプラグインを動作させるために必要な準備等については配布サイトを
+  参照してください。
+
+  このプラグインは RPGツクールMV Version 1.6.1 で動作確認をしています。
+
+  このプラグインはMITライセンスのもとに配布しています、商用利用、
+  改造、再配布など、自由にお使いいただけます。
+
+Sample Project
+https://github.com/munokura/tomoaky-MV-plugins/tree/master/zip
+
+メモ欄タグ (アイテム):
+
+  <cardCost:1>
+    このアイテムをコスト 1 のカードとして扱うようになります。
+
+  <cardHp:10>
+    このアイテムのカードとしての耐久値を 10 に設定します。
+
+  <cardAtk:2>
+    このアイテムのカードとしての攻撃力を 2 に設定します。
+
+  <cardType:0>
+    このアイテムのカードタイプを 0 番のものに設定します。
+    タイプ値が 4 のカードはアイテムカードとして扱われます。
+
+  <cardElement:1>
+    このアイテムのカード属性を 1 番のものに設定します。
+
+  <cardRare:2>
+    このアイテムのカード稀少度を 2 番のものに設定します。
+
+  <unitSkill:20>
+    このアイテムの固有スキルとして 20 番のスキルを設定します。
+
+  <partySkill:21>
+    このアイテムのパーティスキルとして 21 番のスキルを設定します。
+
+  <cardAttackAnimation:2>
+    このアイテムの攻撃アニメーションを 2 番に設定します。
+    省略された場合はプラグインパラメータ『animationAttack』及び
+    『animationEnemyAttack』が適用されます。
+
+  <cardImage:sample_card>
+    img/pictures フォルダ内の sample_card.png というファイルを
+    カード画像として設定します。
+    このタグがない場合 card_ という文字列にアイテム番号を
+    付与したファイル名になります。
+
+
+  メモ欄タグ (スキル):
+
+  <cardEffect:1,2>
+    カードスキルとしての効果を設定します。
+
+  <cardRules:2,0 7,5>
+    カードスキルとしての発動条件を設定します。
+    半角スペースで区切ることで複数の条件を設定できます。
+
+  <cardRepeats:2>
+    カードスキルの効果が発動する回数を設定します。
+
+
+プラグインコマンド:
+
+  startCardBattle 村人Ａ 0 1,2,3
+    対戦相手の名前、アイテムカード番号、デッキ(カンマで区切ったカード番号)
+    を指定してカードゲームを開始します。
+    プレイヤーが使用するデッキは、カードがセットされているデッキの中で
+    最も上にあるものとなります。
+
+  startDeckSelect 村人Ａ 0 1,2,3
+    カードゲーム開始前にプレイヤーがデッキを選択することができます。
+    デッキ選択がキャンセルされた場合、結果変数に -1 が代入されます。
+
+  isDeckReady 1
+    プレイヤーが有効なデッキをひとつ以上組んでいるかどうかを判定します。
+    カードゲームが可能な状態であれば、指定した番号のゲームスイッチが
+    オンになり、不可能な状態(カードをセットしたデッキがない)であれば
+    オフになります。
+
+  startDeckEdit
+    デッキ編集シーンを呼び出します。
+
+  disableTypeBonus
+    タイプボーナスの機能を無効にします。
+    ゲーム開始時にはタイプボーナスが有効になっています。
+
+  enableTypeBonus
+    無効にしたタイプボーナスの機能を元に戻します。
+
+
+注意:
+
+  登録できるデッキの最大数が 0 の場合、メインメニューにデッキ編集コマンドが
+  表示されなくなります。
+
+@param vnResult
+@desc カードゲームの結果が代入されるゲーム変数番号。 初期値: 1
+@default 1
+
+@param vnMaxDeck
+@desc 登録可能なデッキの最大数として扱うゲーム変数番号。 初期値: 2
+@default 2
+
+@param vnMaxCard
+@desc 組み込めるカードの最大数として扱うゲーム変数番号。 初期値: 3
+@default 3
+
+@param vnMaxCost
+@desc デッキのコスト上限として扱うゲーム変数番号。 初期値: 4
+@default 4
+
+@param fixCardNum
+@desc デッキのカード枚数を最大値に固定するかどうか。 初期値: 1 ( 0 で少ない枚数を許可 / 1 で最大値に限定 )
+@default 1
+
+@param sameCard
+@desc 同じカードを複数組み込めるかどうか。 初期値: 1 ( 0 で組み込めない / 1 で組み込める )
+@default 1
+
+@param useItemCard
+@desc アイテムカードを利用するかどうか。 初期値: 1 ( 0 で利用しない / 1 で利用する )
+@default 1
+
+@param useAutoText
+@desc カードグラフィックをスクリプトで生成するかどうか。 初期値: 1 ( 0 で画像そのまま / 1 で自動生成 )
+@default 1
+
+@param commandDeckEdit
+@desc メニューのデッキ編集コマンド。 初期値: デッキ編集
+@default デッキ編集
+
+@param statusWindowWidth
+@desc デッキ編集のカードステータスウィンドウの幅。 初期値: 360
+@default 360
+
+@param maxAtk
+@desc 攻撃力の上限。 初期値: 8
+@default 8
+
+@param maxTurn
+@desc このターン数を超えたら引き分けにする。 初期値: 50
+@default 50
+
+@param animationAttack
+@desc 攻撃のアニメーション番号。 初期値: 1
+@default 1
+@type animation
+@require 1
+
+@param animationEnemyAttack
+@desc 攻撃のアニメーション番号（エネミーカード）。 初期値: 1
+@default 1
+@type animation
+@require 1
+
+@param animationTypeBonus
+@desc タイプボーナスのアニメーション番号。 初期値: 52
+@default 52
+@type animation
+@require 1
+
+@param paramNames
+@desc 各種パラメータの名称。 初期値: 名前 レア度 コスト ＨＰ 攻撃力 タイプ スキル 固有スキル 継承スキル 属性
+@default 名前 レア度 コスト ＨＰ 攻撃力 タイプ スキル 固有スキル 継承スキル 属性
+
+@param itemCardParamNames
+@desc アイテムカードの各種パラメータのの名称。 初期値: ため時間 基本効果 特殊効果
+@default ため時間 基本効果 特殊効果
+
+@param typeIcons
+@desc カードタイプのアイコン番号。 初期値: 76 77 81 79 176
+@default 76 77 81 79 176
+
+@param typeSpeed
+@desc カードタイプのスピード値。 初期値: 1 4 0 2
+@default 1 4 0 2
+
+@param elementIcons
+@desc カード属性のアイコン番号。 初期値: 64 65 66 67 68 69 70 71
+@default 64 65 66 67 68 69 70 71
+
+@param rareNames
+@desc カード稀少度の名称。 初期値: Common Uncommon Rare Legend
+@default Common Uncommon Rare Legend
+
+@param costIcon
+@desc コスト表示のアイコン番号。 初期値: 87
+@default 87
+
+@param costIconSpace
+@desc コスト表示のアイコン間隔。 初期値: 20
+@default 20
+
+@param positionNames
+@desc カードポジションの名称。 初期値: 1st 2nd 3rd 4th 5th
+@default 1st 2nd 3rd 4th 5th
+
+@param itemCardPositionName
+@desc アイテムカードのポジションの名称。 初期値: ITM
+@default ITM
+
+@param deckNames
+@desc デッキの名称。 初期値: デッキＡ デッキＢ デッキＣ デッキＤ デッキＥ
+@default デッキＡ デッキＢ デッキＣ デッキＤ デッキＥ
+
+@param playerCardPositions
+@desc プレイヤーカードの表示座標。 初期値: 128,264 272,184 368,184 464,184 560,184
+@default 128,264 272,184 368,184 464,184 560,184
+
+@param playerItemCardPosition
+@desc プレイヤーアイテムカードの表示座標。 初期値: 272,344
+@default 272,344
+
+@param enemyCardPositions
+@desc エネミーカードの表示座標。 初期値: 688,264 544,344 448,344 352,344 256,344
+@default 688,264 544,344 448,344 352,344 256,344
+
+@param enemyItemCardPosition
+@desc エネミーアイテムカードの表示座標。 初期値: 544,184
+@default 544,184
+
+@param numberPositions
+@desc ＨＰと攻撃力の表示座標。 初期値: 128,488 208,456 688,488 608,456
+@default 128,488 208,456 688,488 608,456
+
+@param messageWindowY
+@desc カードゲームのメッセージウィンドウＹ座標 初期値: 544
+@default 544
+@type number
+*/
 
 var Imported = Imported || {};
 Imported.TMCard = true;

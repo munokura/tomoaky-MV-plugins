@@ -8,83 +8,156 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @plugindesc エネミーに遠近感や息づかいの表現を追加します。
- *
- * @author tomoaky
- *
- * @param baseY
- * @text 拡大率が等倍になるＹ座標
- * @desc 拡大率が等倍になるＹ座標。
- * 初期値: 400
- * @default 400
- * 
- * @param breathH
- * @text 息づかいの大きさ
- * @desc 息づかいの大きさ。
- * 初期値: 0.05
- * @default 0.05
- * 
- * @param mirrorRate
- * @text 左右反転の確率
- * @desc 左右反転の確率。
- * 初期値: 0.4（ 0 ～ 1 ）
- * @default 0.4
- * 
- * @param breathStop
- * @text 行動不能時呼吸
- * @desc 行動不能時に息づかいを止める。
- * 初期値: true
- * @type boolean
- * @on 有効
- * @off 無効
- * @default true
- * 
- * @param shakeEffect
- * @text 点滅エフェクト差替
- * @desc 点滅エフェクトを揺れエフェクトに差し替える。
- * 初期値: true
- * @type boolean
- * @on 有効
- * @off 無効
- * @default true
- *
- * @help
- * 使い方:
- *
- *   このプラグインを導入すると、敵キャラの表示に以下の演出が追加されます。
- *     ・画面の上の方に出現する敵が小さく表示される（遠近感）
- *     ・ゆっくりと拡大縮小を繰り返す（息づかい）
- *     ・ランダムに左右が反転する
- *
- *   サイドビューでは左右反転が無効になります。
- *   敵キャラのメモ欄にタグを書き込むことで、敵キャラごとに演出の強弱を
- *   設定することができます。
- *
- *   プラグインコマンドはありません。
- *
- *
- * メモ欄（敵キャラ）タグ:
- *
- *   <scale:1>
- *     拡大率を個別に設定します、このタグがある敵キャラには遠近感の表現が
- *     適用されません。
- *
- *   <breathH:0.05>
- *     息づかいの大きさを個別に設定します。
- *
- *   <noMirror>
- *     左右反転を禁止します。
- * 
- * 2021/5/15 v.2.0.1 プラグインパラメーターの調整
- *
- * 利用規約:
- *   MITライセンスです。
- *   https://licenses.opensource.jp/MIT/MIT.html
- *   作者に無断で改変、再配布が可能で、
- *   利用形態（商用、18禁利用等）についても制限はありません。
- */
+@plugindesc Adds a sense of perspective and breathing to enemies.
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+How to Use:
+
+This plugin adds the following effects to Enemies display:
+- Enemies appearing at the top of the screen are displayed smaller (perspective)
+- Slowly zoom in and out repeatedly (breathing)
+- Randomly flip left and right
+
+Horizontal flipping is disabled in side view.
+You can adjust the intensity of the effects for each Enemies by entering tags in the Enemies's Note field.
+
+There are no plugin commands.
+
+Note field (Enemies) Tags:
+
+<scale:1>
+Sets the magnification individually. Perspective effects will not be applied to enemies with this tag.
+
+<breathH:0.05>
+Sets the breathing volume individually.
+
+<noMirror>
+Disables horizontal flipping.
+
+2021/5/15 v.2.0.1 Plugin Parameter Adjustments
+
+Terms of Use:
+MIT License.
+https://licenses.opensource.jp/MIT/MIT.html
+You may modify and redistribute this software without permission from the author.
+There are no restrictions on its use (commercial, 18+, etc.).
+
+@param baseY
+@text Y coordinate where the magnification becomes 1x
+@desc Y coordinate where the magnification becomes 1x. Default: 400
+@default 400
+
+@param breathH
+@text The volume of your breathing
+@desc Breath volume. Default: 0.05
+@default 0.05
+
+@param mirrorRate
+@text Probability of left-right reversal
+@desc Probability of flipping left and right. Default value: 0.4 (0 to 1)
+@default 0.4
+
+@param breathStop
+@text Collapse breathing
+@desc Stop breathing when unable to act. Default: true
+@default true
+@type boolean
+@on valid
+@off invalid
+
+@param shakeEffect
+@text Blinking effect replacement
+@desc Replaces the blinking effect with a shaking effect. Default: true
+@default true
+@type boolean
+@on valid
+@off invalid
+*/
+
+
+/*:ja
+@plugindesc エネミーに遠近感や息づかいの表現を追加します。
+@author tomoaky
+@url https://github.com/munokura/tomoaky-MV-plugins
+@license MIT License
+
+@help
+使い方:
+
+  このプラグインを導入すると、敵キャラの表示に以下の演出が追加されます。
+    ・画面の上の方に出現する敵が小さく表示される（遠近感）
+    ・ゆっくりと拡大縮小を繰り返す（息づかい）
+    ・ランダムに左右が反転する
+
+  サイドビューでは左右反転が無効になります。
+  敵キャラのメモ欄にタグを書き込むことで、敵キャラごとに演出の強弱を
+  設定することができます。
+
+  プラグインコマンドはありません。
+
+
+メモ欄（敵キャラ）タグ:
+
+  <scale:1>
+    拡大率を個別に設定します、このタグがある敵キャラには遠近感の表現が
+    適用されません。
+
+  <breathH:0.05>
+    息づかいの大きさを個別に設定します。
+
+  <noMirror>
+    左右反転を禁止します。
+
+2021/5/15 v.2.0.1 プラグインパラメーターの調整
+
+利用規約:
+  MITライセンスです。
+  https://licenses.opensource.jp/MIT/MIT.html
+  作者に無断で改変、再配布が可能で、
+  利用形態（商用、18禁利用等）についても制限はありません。
+
+@param baseY
+@text 拡大率が等倍になるＹ座標
+@desc 拡大率が等倍になるＹ座標。 初期値: 400
+@default 400
+
+@param breathH
+@text 息づかいの大きさ
+@desc 息づかいの大きさ。 初期値: 0.05
+@default 0.05
+
+@param mirrorRate
+@text 左右反転の確率
+@desc 左右反転の確率。 初期値: 0.4（ 0 ～ 1 ）
+@default 0.4
+
+@param breathStop
+@text 行動不能時呼吸
+@desc 行動不能時に息づかいを止める。 初期値: true
+@default true
+@type boolean
+@on 有効
+@off 無効
+
+@param shakeEffect
+@text 点滅エフェクト差替
+@desc 点滅エフェクトを揺れエフェクトに差し替える。 初期値: true
+@default true
+@type boolean
+@on 有効
+@off 無効
+*/
 
 var Imported = Imported || {};
 Imported.TMBattlerEx = true;

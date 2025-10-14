@@ -8,67 +8,126 @@
 // Released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 //=============================================================================
-
 /*:
- * @target MZ MV
- * @url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMPassiveSkill.js
- * @plugindesc 使用せずとも常に効果が発動しつづけるスキルを追加します。
- *
- * @author tomoaky (https://twitter.com/tomoaky/)
- *
- * @param passiveCommands
- * @text 戦闘中非表示スキルタイプ
- * @type string
- * @desc パッシヴスキルのスキルタイプ番号を半角数字で設定します。
- * 複数指定する場合は半角スペースで区切ってください。
- * @default 
- *
- * @help
- * TMPlugin - パッシヴスキル ver1.1.1
- * 
- * 使い方:
- * 
- *   このプラグインは、データベースに設定されているスキルと武器を紐付けて
- *   パッシヴスキルを作成します。
- *   スキルのメモ欄に <passive:50> というタグを書き込むと、
- *   このスキルを習得している間、50 番の武器を装備したときと
- *   同じ効果が得られるようになります。
- * 
- *   特徴の『スキル追加』ではパッシヴスキルの効果は適用されません。
- *
- *   パッシヴスキルに必要武器が設定されている場合、該当するタイプの武器を
- *   装備している間だけパッシヴスキルの効果が適用されます。
- *   武器タイプ以外にもメモ欄タグを使ってＴＰやステートを効果適用の条件に
- *   指定することができます。
- *
- *   プラグインコマンドはありません。
- * 
- *
- * メモ欄タグ（スキル）:
- * 
- *   <passive:50>     # 50 番の武器を効果とするパッシヴスキルになる
- *   <passiveTp:75>   # 残りＴＰが 75 以上のときだけパッシヴ効果が適用される
- *   <passiveTp:-25>  # 残りＴＰが 25 未満のときだけパッシヴ効果が適用される
- *   <passiveState:4> # 4 番のステートが有効なときだけパッシヴ効果が適用される
- *   <passiveTurn:2>  # 戦闘中 2 ターン目にのみパッシヴ効果が適用される
- *
- *   パッシヴ効果はスキルだけでなく装備品に設定することもできます。
- * 
- * 
- * プラグインパラメータ補足:
- * 
- *   passiveCommands を設定すると、該当するスキルタイプはバトル中に
- *   表示されなくなります。
- *   パッシヴスキルのスキルタイプ番号を指定すれば、コマンドからパッシヴスキルを
- *   除外することができます。
- * 
- * 
- * 利用規約:
- *   MITライセンスです。
- *   https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
- *   作者に無断で改変、再配布が可能で、
- *   利用形態（商用、18禁利用等）についても制限はありません。
- */
+@target MZ MV
+@plugindesc Adds a skill that remains active even when not in use.
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMPassiveSkill.js
+@license MIT License
+
+@help
+English Help Translator: munokura
+This is an unofficial English translation of the plugin help,
+created to support global RPG Maker users.
+Feedback is welcome to improve translation quality
+(see: https://github.com/munokura/tomoaky-MV-plugins ).
+Original plugin by tomoaky.
+-----
+TMPlugin - Passive Skills ver. 1.1.1
+
+How to Use:
+
+This plugin creates passive skills by linking skills and weapons set in the database.
+
+By adding the tag <passive:50> to a skill's Note field,
+
+while learning this skill, you will receive the same effect as equipping weapon number 50.
+
+The "Add Skill" Traits does not apply the effects of passive skills.
+
+If a required weapon is set for a passive skill, the passive skill's effect will only be applied while the corresponding weapon type is equipped.
+
+In addition to weapon type, you can also use Note field tags to specify TP or state as conditions for applying the effect.
+
+There are no plugin commands.
+
+Memo Tags (Skills):
+
+<passive:50> # Passive skill that uses weapon number 50.
+<passiveTp:75> # Passive effect only applies when TP is 75 or more.
+<passiveTp:-25> # Passive effect only applies when TP is less than 25.
+<passiveState:4> # Passive effect only applies when state number 4 is active.
+<passiveTurn:2> # Passive effect only applies on the second turn of battle.
+
+Passive effects can be set not only for skills but also for equipment.
+
+Plugin Parameter Notes:
+
+Setting passiveCommands will hide the corresponding skill type during battle.
+
+You can exclude passive skills from commands by specifying their skill type number.
+
+Terms of Use:
+MIT License.
+https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+You may modify and redistribute this work without permission from the author.
+There are no restrictions on how you use it (commercial use, use for 18+ users, etc.).
+
+@param passiveCommands
+@text Skill types hidden during battle
+@desc Set the skill type number of the passive skill in half-width numbers. If specifying multiple passive skills, separate them with half-width spaces.
+@type string
+*/
+
+
+/*:ja
+@target MZ MV
+@plugindesc 使用せずとも常に効果が発動しつづけるスキルを追加します。
+@author tomoaky
+@url https://raw.githubusercontent.com/munokura/tomoaky-MV-plugins/master/TMPassiveSkill.js
+@license MIT License
+
+@help
+TMPlugin - パッシヴスキル ver1.1.1
+
+使い方:
+
+  このプラグインは、データベースに設定されているスキルと武器を紐付けて
+  パッシヴスキルを作成します。
+  スキルのメモ欄に <passive:50> というタグを書き込むと、
+  このスキルを習得している間、50 番の武器を装備したときと
+  同じ効果が得られるようになります。
+
+  特徴の『スキル追加』ではパッシヴスキルの効果は適用されません。
+
+  パッシヴスキルに必要武器が設定されている場合、該当するタイプの武器を
+  装備している間だけパッシヴスキルの効果が適用されます。
+  武器タイプ以外にもメモ欄タグを使ってＴＰやステートを効果適用の条件に
+  指定することができます。
+
+  プラグインコマンドはありません。
+
+
+メモ欄タグ（スキル）:
+
+  <passive:50>     # 50 番の武器を効果とするパッシヴスキルになる
+  <passiveTp:75>   # 残りＴＰが 75 以上のときだけパッシヴ効果が適用される
+  <passiveTp:-25>  # 残りＴＰが 25 未満のときだけパッシヴ効果が適用される
+  <passiveState:4> # 4 番のステートが有効なときだけパッシヴ効果が適用される
+  <passiveTurn:2>  # 戦闘中 2 ターン目にのみパッシヴ効果が適用される
+
+  パッシヴ効果はスキルだけでなく装備品に設定することもできます。
+
+
+プラグインパラメータ補足:
+
+  passiveCommands を設定すると、該当するスキルタイプはバトル中に
+  表示されなくなります。
+  パッシヴスキルのスキルタイプ番号を指定すれば、コマンドからパッシヴスキルを
+  除外することができます。
+
+
+利用規約:
+  MITライセンスです。
+  https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license
+  作者に無断で改変、再配布が可能で、
+  利用形態（商用、18禁利用等）についても制限はありません。
+
+@param passiveCommands
+@text 戦闘中非表示スキルタイプ
+@desc パッシヴスキルのスキルタイプ番号を半角数字で設定します。 複数指定する場合は半角スペースで区切ってください。
+@type string
+*/
 
 var Imported = Imported || {};
 Imported.TMPassiveSkill = true;
